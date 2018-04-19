@@ -5,6 +5,14 @@
 
 ## Install
 
+Clear compose cache (if needs)
+
+```bash
+composer clearcache
+```
+
+Install Site Package
+
 ```bash
 composer create-project marceloxp/laravel:@dev www --no-interaction
 ```
