@@ -4,7 +4,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
-	"minimum-stability": "stable",
+	"minimum-stability": "dev",
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
