@@ -1,0 +1,1 @@
+<small>Content of Footer</small>

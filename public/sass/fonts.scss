@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'CorporateACon-Reg';
+  src: url('fonts/CorporateACon-Reg.eot');
+  src:        url('fonts/CorporateACon-Reg.ttf') format('truetype'),
+       url('fonts/CorporateACon-Reg.svg#CorporateACon-Reg') format('svg'),
+       // url('fonts/CorporateACon-Reg.woff2') format('woff2'),
+       // url('fonts/CorporateACon-Reg.woff') format('woff'),
+       url('fonts/CorporateACon-Reg.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'CorporateA-Regular';
+  src: url('fonts/CorporateA-Regular.eot');
+  src: url('fonts/CorporateA-Regular.woff2') format('woff2'),
+       url('fonts/CorporateA-Regular.woff') format('woff'),
+       url('fonts/CorporateA-Regular.ttf') format('truetype'),
+       url('fonts/CorporateA-Regular.svg#CorporateA-Regular') format('svg'),
+       url('fonts/CorporateA-Regular.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CorporateA-Bold';
+  src: url('fonts/CorporateA-Bold.eot');
+  src: url('fonts/CorporateA-Bold.woff2') format('woff2'),
+       url('fonts/CorporateA-Bold.woff') format('woff'),
+       url('fonts/CorporateA-Bold.ttf') format('truetype'),
+       url('fonts/CorporateA-Bold.svg#CorporateA-Bold') format('svg'),
+       url('fonts/CorporateA-Bold.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'CorporateACon';
+    src: url('fonts/corporateacon-reg-webfont.woff2') format('woff2'),
+         url('fonts/corporateacon-reg-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'CorporateS';
+    src: url('fonts/corporates-bold-webfont.woff2') format('woff2'),
+         url('fonts/corporates-bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'CorporateS';
+    src: url('fonts/corporatespro-demi-webfont.woff2') format('woff2'),
+         url('fonts/corporatespro-demi-webfont.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CorporateS';
+    src: url('fonts/corporatespro-regular-webfont.woff2') format('woff2'),
+         url('fonts/corporatespro-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
