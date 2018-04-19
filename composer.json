@@ -22,7 +22,8 @@
     },
     "autoload": {
 		"files": [
-			"app/Http/Umstudio/Helpers/helpers.php"
+			"app/Http/Umstudio/Helpers/helpers.php",
+			"app/Http/Umstudio/Helpers/admin.php"
 		],
         "classmap": [
             "database/seeds",

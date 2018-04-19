@@ -1,0 +1,1 @@
+<script type="text/javascript" src="{{asset('/admin-lte-custom/index.js')}}"></script>

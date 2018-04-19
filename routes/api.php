@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Middleware\CheckReferer;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +17,10 @@ use Illuminate\Http\Request;
 
 Route::group
 (
-    ['middleware' => 'referer'],
-    function()
-    {
-        Route::post('addconfig', 'ConfigsController@store');
-        Route::post('configs'  , 'ConfigsController@index');
-    }
+	['middleware' => 'referer'],
+	function()
+	{
+		Route::post('addconfig', 'ConfigsController@store');
+		Route::post('configs'  , 'ConfigsController@index');
+	}
 );
