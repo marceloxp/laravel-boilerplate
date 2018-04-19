@@ -1,12 +1,12 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.1
+> Version 0.0.2
 
 ## Install
 
 ```bash
-composer create-project marceloxp/laravel:@dev www
+composer create-project marceloxp/laravel:@dev www --no-interaction
 ```
 
 ## Framework
