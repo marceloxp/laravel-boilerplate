@@ -1,12 +1,18 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.2
+> Version 0.0.3
 
 ## Install
 
 ```bash
 composer create-project marceloxp/laravel:@dev www --no-interaction
+```
+
+Configure .env file and run migration
+
+```bash
+php artisan migrate:refresh --seed"
 ```
 
 ## Framework
@@ -21,3 +27,7 @@ composer create-project marceloxp/laravel:@dev www --no-interaction
 ## Libraries
 
 - cjsbaseclass: <https://www.npmjs.com/package/cjsbaseclass>
+
+## Admin Template
+
+- AdminLTE: <https://adminlte.io/themes/AdminLTE/>
