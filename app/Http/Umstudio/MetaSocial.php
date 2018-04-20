@@ -4,6 +4,7 @@ namespace App\Http\Umstudio;
 
 class MetaSocial
 {
+	private static $config_use = 'default';
 	private static $custom_config = [];
 
 	private static function getTemplate()
@@ -13,6 +14,7 @@ class MetaSocial
 			<meta name="title" content="{:title}">
 			<meta name="description" content="{:description}">
 			<meta name="keywords" content="{:keywords}">
+			<meta name="theme-color" content="{:theme_color}">
 
 			<!-- FACEBOOK -->
 			<meta property="og:title" content="{:title}">
@@ -28,16 +30,34 @@ class MetaSocial
 			<meta itemprop="description" content="{:description}">
 
 			<!-- TWITTER -->
+			<meta name="twitter:card" content="{:twitter_card}">
 			<meta name="twitter:title" content="{:title}">
+			<meta name="twitter:creator" content="{:twitter_creator}">
 			<meta name="twitter:image:src" content="{:image}">
 			<meta name="twitter:site" content="{:url}">
 			<meta name="twitter:description" content="{:description}">
 		';
 	}
 
-	private static function get($key)
+	public static function use($p_config_use)
 	{
-		$configs = array_merge(self::$custom_config, config('metasocial'));
+		self::$config_use = $p_config_use;
+	}
+
+	public static function getFinalConfig()
+	{
+		$result = array_merge
+		(
+			config('metasocial.default'),
+			config('metasocial.' . self::$config_use),
+			self::$custom_config
+		);
+		return $result;
+	}
+
+	public static function get($key)
+	{
+		$configs = self::getFinalConfig();
 		return $configs[$key] ?? '';
 	}
 
@@ -63,10 +83,22 @@ class MetaSocial
 	public static function build()
 	{
 		$result = self::getTemplate();
-		$configs = array_merge(config('metasocial'), self::$custom_config);
+		$configs = self::getFinalConfig();
 
-		if (!array_key_exists('type', $configs)) { $configs['type'] = 'website'; }
-		if (!array_key_exists('url' , $configs)) { $configs['url']  = ''       ; }
+		if (!array_key_exists('type'            , $configs)) { $configs['type']                 = 'website'       ; }
+		if (!array_key_exists('url'             , $configs)) { $configs['url']                  = url()->current(); }
+		if (!array_key_exists('twitter_card'    , $configs)) { $configs['summary_large_image']  = ''              ; }
+		if (!array_key_exists('twitter_creator' , $configs)) { $configs['twitter_creator']      = ''              ; }
+		
+		if (array_key_exists('facebook_id', $configs))
+		{
+			if (!empty($configs['facebook_id']))
+			{
+				$result .= PHP_EOL;
+				$result .= '			<!-- FACEBOOK APP -->' . PHP_EOL;
+				$result .= sprintf('			<meta property="fb:app_id" content="%s">' . PHP_EOL, $configs['facebook_id']);
+			}
+		}
 
 		foreach ($configs as $key => $value)
 		{
@@ -100,6 +132,7 @@ class MetaSocial
 								$result .= '			<!-- IMAGE SIZE -->' . PHP_EOL;
 								$result .= sprintf('			<meta property="og:image:width"  content="%s">' . PHP_EOL, $size[0]);
 								$result .= sprintf('			<meta property="og:image:height" content="%s">' . PHP_EOL, $size[1]);
+								$result .= sprintf('			<meta property="og:image:type" content="%s">' . PHP_EOL, $size['mime']);
 							}
 						}
 						catch (\Exception $e)
