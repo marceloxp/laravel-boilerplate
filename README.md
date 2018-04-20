@@ -25,8 +25,6 @@ composer create-project marceloxp/laravel:@dev www --no-interaction
 php artisan migrate:refresh --seed
 ```
 
-- Add `.env` on `.gitignore`
-
 ## Framework
 
 - Laravel 5.5.x: <https://laravel.com/>
@@ -63,7 +61,7 @@ Datasite::add(compact('url'));
 ### Cached
 
 ```php
-Cached::get('brasil', 'states', $states, 10);
+Cached::get('brasil', 'states', $states, 10); // Minutes
 Cached::get('brasil', 'regions', $regions, 10);
 Cached::forget('admin', 'states');
 Cached::forget('admin'); // Clear all files on admin prefix
@@ -73,10 +71,10 @@ Cached::flush(); // Clear all cache
 ### MetaSocial
 
 ```php
+MetaSocial::use('sobre');
 MetaSocial::append('title', ' - Fale Conosco');
 MetaSocial::set('description', 'Entre em contato conosco.');
-
-Metasocial::print()
+Metasocial::print();
 ```
 
 ### Helpers
