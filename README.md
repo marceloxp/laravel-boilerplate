@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.5
+> Version 0.0.6
 
 ## Install
 
@@ -76,6 +76,16 @@ MetaSocial::append('title', ' - Fale Conosco');
 MetaSocial::set('description', 'Entre em contato conosco.');
 Metasocial::print();
 ```
+
+### Hooks
+
+| Hook                                   | Location      | Description  |
+| -----------                            | ------------- | -------------|
+| admin_index_search_fields_{table_name} | Index         | Fields in search Combobox |
+| admin_index_sort_fields_{table_name}   | Index         | Fields in sort Combobox |
+| admin_index_{table_name}_{field_name}  | Index         | Before print field on index table |
+| admin_show_{table_name}_{field_name}   | Show          | Before print field on show register |
+| admin_edit_{table_name}_{field_name}   | Add/Edit      | Before print field on add/edit register |
 
 ### Helpers
 
