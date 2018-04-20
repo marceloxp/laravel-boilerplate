@@ -13,13 +13,15 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $now = Carbon::now();
+        $now    = Carbon::now();
+        $prefix = trim(DB::getTablePrefix(), '_');
+        $year   = Carbon::now()->year;
 
         $admin_user = 
         [
             'name'       => 'Admin',
             'email'      => 'change@host.com.br',
-            'password'   => Hash::make('mbz2018admin'),
+            'password'   => Hash::make( sprintf('%s%s%s', $prefix, $year, 'admin') ),
             'created_at' => $now
         ];
 
@@ -27,7 +29,7 @@ class UsersSeeder extends Seeder
         [
             'name'       => 'Master',
             'email'      => 'projetos@umstudio.com',
-            'password'   => Hash::make('mbz2018studio0001'),
+            'password'   => Hash::make( sprintf('%s%s%s', $prefix, $year, 'master') ),
             'created_at' => $now
         ];
 
@@ -35,7 +37,7 @@ class UsersSeeder extends Seeder
         [
             'name'       => 'Developer',
             'email'      => 'projetos.developer@umstudio.com',
-            'password'   => Hash::make('mbz2018studio0001'),
+            'password'   => Hash::make( sprintf('%s%s%s', $prefix, $year, 'developer') ),
             'created_at' => $now
         ];
 
