@@ -81,6 +81,20 @@ Route::group
 						Route::post('delete/'   , 'RolesController@destroy')->name('roles_delete');
 					}
 				);
+
+				//Vídeos
+				Route::group
+				(
+					['prefix' => 'videos'],
+					function()
+					{
+						Route::get ('/'         , 'VideosController@index'  )->name('videos');
+						Route::get ('edit/{id?}', 'VideosController@create' )->name('videos_edit');
+						Route::post('edit/{id?}', 'VideosController@store'  )->name('videos_save');
+						Route::get ('show/{id}' , 'VideosController@show'   )->name('videos_show');
+						Route::post('delete/'   , 'VideosController@destroy')->name('videos_delete');
+					}
+				);
 			}
 		);
 	}

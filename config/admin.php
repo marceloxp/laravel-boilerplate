@@ -44,37 +44,22 @@ return [
 				]
 			]
 		],
-		// 'tables' =>
-		// [
-		// 	'type'    => 'header',
-		// 	'caption' => 'Tabelas',
-		// 	'ico'     => 'fa-table',
-		// 	'items'   => 
-		// 	[
-		// 		[
-		// 			'type'    => 'link',
-		// 			'caption' => 'Cadastros',
-		// 			'ico'     => 'fa-user',
-		// 			'route'   => 'leads',
-		// 			'link'    => 'leads'
-		// 		],
-		// 		[
-		// 			'type'    => 'link',
-		// 			'caption' => 'Sites',
-		// 			'ico'     => 'fa-globe',
-		// 			'route'   => 'sites',
-		// 			'link'    => 'sites'
-		// 		],
-		// 		[
-		// 			'roles'   => ['Master'],
-		// 			'type'    => 'link',
-		// 			'caption' => 'Concessionárias',
-		// 			'ico'     => 'fa-car',
-		// 			'route'   => 'dealers',
-		// 			'link'    => 'dealers'
-		// 		]
-		// 	]
-		// ],
+		'tables' =>
+		[
+			'type'    => 'header',
+			'caption' => 'Tabelas',
+			'ico'     => 'fa-table',
+			'items'   => 
+			[
+				[
+					'type'    => 'link',
+					'caption' => 'Vídeos',
+					'ico'     => 'fa-youtube',
+					'route'   => 'videos',
+					'link'    => 'videos'
+				]
+			]
+		],
 		'cache' =>
 		[
 			'roles'   => ['Master','Developer'],
