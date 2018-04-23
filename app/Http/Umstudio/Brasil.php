@@ -2,6 +2,8 @@
 
 namespace App\Http\Umstudio;
 
+use App\Http\Umstudio\Result;
+
 class Brasil
 {
 	private static $datasite = [];
