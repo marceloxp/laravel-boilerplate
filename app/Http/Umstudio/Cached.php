@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\Cache;
 
 class Cached
 {
-	public static function get($prefix, $p_key, $value, $minutes = 10)
+	public static function get($p_prefix, $p_key, $value, $minutes = 10)
 	{
-		$key = (is_array($p_key)) ? implode('-', $p_key) : $p_key;
+		$prefix = mb_strtoupper($p_prefix);
+		$key    = (is_array($p_key)) ? implode('-', $p_key) : $p_key;
+		$key    = mb_strtoupper($key);
+
 		$cache_name = sprintf('%s-%s', $prefix, $key);
 		if (Cache::has($cache_name))
 		{
@@ -48,13 +51,15 @@ class Cached
 		return $caches->toArray();
 	}
 
-    public static function forget($prefix, $p_key = null)
+    public static function forget($p_prefix, $p_key = null)
 	{
+		$prefix = mb_strtoupper($p_prefix);
 		$caches = Cache::get('gcache-prefixes') ?? collect([]);
 
 		if ($p_key !== null)
 		{
 			$key = (is_array($p_key)) ? implode('-', $p_key) : $p_key;
+			$key    = mb_strtoupper($key);
 			$cache_name = sprintf('%s-%s', $prefix, $key);
 			Cache::forget($cache_name);
 
