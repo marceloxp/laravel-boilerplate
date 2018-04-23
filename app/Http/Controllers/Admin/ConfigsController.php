@@ -13,6 +13,12 @@ use Hook;
 
 class ConfigsController extends AdminController
 {
+    public function __construct()
+	{
+		$this->caption = 'Configurações';
+		parent::__construct();
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -20,7 +26,7 @@ class ConfigsController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = 'Configurações';
+		$panel_title    = $this->caption;
 		$fields_schema  = Config::getFieldsMetaData();
 		$perpage        = $this->getPerPage($request);
 		$table_name     = (new Config())->getTable();
@@ -60,7 +66,7 @@ class ConfigsController extends AdminController
 		$table_name     = (new Config())->getTable();
 		$register       = ($id) ? Config::find($id) : new Config;
 		$is_creating    = (empty($id));
-		$panel_title    = ['Configurações', ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
+		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
 		$table_name     = (new Config())->getTable();
 		$display_fields = ['id', 'name', 'value', 'status'];
 		$fields_schema  = Config::getFieldsMetaData();
@@ -123,7 +129,7 @@ class ConfigsController extends AdminController
 	{
 		$table_name     = (new Config())->getTable();
 		$register       = ($id) ? Config::find($id) : new Config;
-		$panel_title    = ['Configurações', 'Visualizar', 'fa-fw fa-eye'];
+		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
 		$display_fields = ['id', 'name', 'value','status','created_at','updated_at','deleted_at'];
 		$fields_schema  = Config::getFieldsMetaData();
 

@@ -15,6 +15,7 @@ class UsersController extends AdminController
 {
     public function __construct()
 	{
+		$this->caption = 'Usuários';
 		$this->appends = ['roles' => 'Permissões'];
 		parent::__construct();
 	}
@@ -26,7 +27,7 @@ class UsersController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = 'Usuários';
+		$panel_title    = $this->caption;
 		$fields_schema  = User::getFieldsMetaData($this->appends);
 		$perpage        = $this->getPerPage($request);
 		$table_name     = (new User())->getTable();
@@ -97,7 +98,7 @@ class UsersController extends AdminController
 		$table_name     = (new User())->getTable();
 		$register       = ($id) ? User::find($id) : new User;
 		$is_creating    = (empty($id));
-		$panel_title    = ['Usuários', ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
+		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
 		$table_name     = (new User())->getTable();
 		$display_fields = ['id','name','email','password','roles'];
 		$fields_schema  = User::getFieldsMetaData($this->appends);
@@ -220,7 +221,7 @@ class UsersController extends AdminController
 	{
 		$table_name     = (new User())->getTable();
 		$register       = ($id) ? User::find($id) : new User;
-		$panel_title    = ['Usuários', 'Visualizar', 'fa-fw fa-eye'];
+		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
 		$display_fields = ['id','name','email','roles','created_at','updated_at','deleted_at'];
 		$fields_schema  = User::getFieldsMetaData($this->appends);
 

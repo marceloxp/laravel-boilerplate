@@ -13,6 +13,12 @@ use Hook;
 
 class VideosController extends AdminController
 {
+	public function __construct()
+	{
+		$this->caption = 'Vídeos';
+		parent::__construct();
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -20,7 +26,7 @@ class VideosController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = 'Vídeos';
+		$panel_title    = $this->caption;
 		$fields_schema  = Video::getFieldsMetaData();
 		$perpage        = $this->getPerPage($request);
 		$table_name     = (new Video())->getTable();
@@ -59,7 +65,7 @@ class VideosController extends AdminController
 		$table_name     = (new Video())->getTable();
 		$register       = ($id) ? Video::find($id) : new Video;
 		$is_creating    = (empty($id));
-		$panel_title    = ['Vídeos', ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
+		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
 		$table_name     = (new Video())->getTable();
 		$display_fields = ['id', 'name', 'youtube'];
 		$fields_schema  = Video::getFieldsMetaData();
@@ -122,7 +128,7 @@ class VideosController extends AdminController
 	{
 		$table_name     = (new Video())->getTable();
 		$register       = ($id) ? Video::find($id) : new Video;
-		$panel_title    = ['Vídeos', 'Visualizar', 'fa-fw fa-eye'];
+		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
 		$display_fields = ['id','name','youtube','created_at','updated_at','deleted_at'];
 		$fields_schema  = Video::getFieldsMetaData();
 

@@ -13,6 +13,12 @@ use Hook;
 
 class RolesController extends AdminController
 {
+    public function __construct()
+	{
+		$this->caption = 'Permissões';
+		parent::__construct();
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -20,7 +26,7 @@ class RolesController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = 'Permissões';
+		$panel_title    = $this->caption;
 		$fields_schema  = Role::getFieldsMetaData();
 		$perpage        = $this->getPerPage($request);
 		$table_name     = (new Role())->getTable();
@@ -65,7 +71,7 @@ class RolesController extends AdminController
 		$table_name     = (new Role())->getTable();
 		$register       = ($id) ? Role::find($id) : new Role;
 		$is_creating    = (empty($id));
-		$panel_title    = ['Permissões', ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
+		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
 		$table_name     = (new Role())->getTable();
 		$display_fields = ['id', 'name', 'description','color'];
 		$fields_schema  = Role::getFieldsMetaData();
@@ -128,7 +134,7 @@ class RolesController extends AdminController
 	{
 		$table_name     = (new Role())->getTable();
 		$register       = ($id) ? Role::find($id) : new Role;
-		$panel_title    = ['Permissões', 'Visualizar', 'fa-fw fa-eye'];
+		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
 		$display_fields = ['id','name','description','color','created_at','updated_at','deleted_at'];
 		$fields_schema  = Role::getFieldsMetaData();
 
