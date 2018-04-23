@@ -29,7 +29,7 @@ class CitiesSeeder extends Seeder
 				$states[$uf] = $state->id;
 			}
 
-			$cities[] = ['name' => $name, 'city_id' => $states[$uf], 'created_at' => $now, 'updated_at' => $now];
+			$cities[] = ['name' => $name, 'state_id' => $states[$uf], 'created_at' => $now, 'updated_at' => $now];
 		}
 
 		App\Models\City::insert($cities);

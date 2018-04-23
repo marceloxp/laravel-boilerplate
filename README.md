@@ -77,6 +77,11 @@ MetaSocial::set('description', 'Entre em contato conosco.');
 Metasocial::print();
 ```
 
+### Predefined API routes
+
+- {{url}}/api/brasil/states
+- {{url}}/api/brasil/cities/rj
+
 ### Hooks
 
 | Hook                                   | Location      | Description  |

@@ -24,3 +24,29 @@ Route::group
 		Route::post('configs'  , 'ConfigsController@index');
 	}
 );
+
+Route::prefix('brasil')->group
+(
+	function()
+	{
+		Route::get
+		(
+			'states',
+			function()
+			{
+				$data = \App\Http\Umstudio\Brasil::getStates();
+				return response($data['value'])->withHeaders($data['header']);
+			}
+		);
+
+		Route::get
+		(
+			'cities/{uf}',
+			function($uf)
+			{
+				$data = \App\Http\Umstudio\Brasil::getCitiesByUf($uf);
+				return response($data['value'])->withHeaders($data['header']);
+			}
+		);
+	}
+);
