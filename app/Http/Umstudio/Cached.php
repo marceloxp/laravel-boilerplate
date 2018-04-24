@@ -21,18 +21,20 @@ class Cached
 		else
 		{
 			$data = (is_callable($value)) ? $value() : $value;
-			Cache::put($cache_name, $data, $minutes);
-
-			$caches = Cache::get('gcache-prefixes') ?? collect([]);
-
-			if (!$caches->has($prefix))
+			if ( ($data !== false) && ($data !== null) )
 			{
-				$caches->put($prefix, collect([]));
+				Cache::put($cache_name, $data, $minutes);
+
+				$caches = Cache::get('gcache-prefixes') ?? collect([]);
+				if (!$caches->has($prefix))
+				{
+					$caches->put($prefix, collect([]));
+				}
+
+				$caches[$prefix]->put($key, $data);
+
+				Cache::forever('gcache-prefixes', $caches);
 			}
-
-			$caches[$prefix]->put($key, $data);
-
-			Cache::forever('gcache-prefixes', $caches);
 
 			return Result::cached('', $data, false);
 		}

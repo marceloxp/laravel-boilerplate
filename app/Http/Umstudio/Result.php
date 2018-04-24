@@ -54,7 +54,11 @@ class Result
 
 	public static function undefined($message = '', $data = [], $message_log = '')
 	{
-		$use_message = $message ?? 'Ocorreu um erro na solcitação.';
+		$use_message = $message;
+		if (empty($message))
+		{
+			$use_message = 'Ocorreu um erro na solcitação.';
+		}
 		return self::get(false, $use_message, $data, false, $message_log);
 	}
 

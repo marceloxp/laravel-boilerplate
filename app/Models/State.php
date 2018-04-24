@@ -20,7 +20,7 @@ class State extends MasterModel
 				function() use ($p_uf)
 				{
 					$state = \App\Models\State::select('id')->where('uf', $p_uf)->first();
-					return ($state) ? $state->id : false;
+					return $state->id ?? false;
 				}
 			);
 
@@ -28,7 +28,7 @@ class State extends MasterModel
 		}
 		catch (\Exception $e)
 		{
-			return Result::exception($e);
+			return false;
 		}
 	}
 
