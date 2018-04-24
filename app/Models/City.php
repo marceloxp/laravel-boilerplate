@@ -12,6 +12,7 @@ class City extends MasterModel
 	{
 		$uf_id = \App\Models\State::getStateIdByUf($p_uf);
 		$uf_id = $uf_id['value'] ?? $uf_id;
+
 		return Cached::get
 		(
 			'App\Models\City',

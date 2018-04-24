@@ -51,14 +51,14 @@ php artisan checkadmin
 
 ## Custom Classes
 
-### Datasite
+### Datasite `\App\Http\Umstudio\Datasite`
 
 ```php
 Datasite::add('csrf_token', csrf_token());
 Datasite::add(compact('url'));
 ```
 
-### Cached
+### Cached `\App\Http\Umstudio\Cached`
 
 ```php
 Cached::get('brasil', 'states', $states, 10); // Minutes
@@ -68,13 +68,36 @@ Cached::forget('admin'); // Clear all files on admin prefix
 Cached::flush(); // Clear all cache
 ```
 
-### MetaSocial
+### MetaSocial `\App\Http\Umstudio\MetaSocial`
 
 ```php
 MetaSocial::use('sobre');
 MetaSocial::append('title', ' - Fale Conosco');
 MetaSocial::set('description', 'Entre em contato conosco.');
 Metasocial::print();
+```
+
+### HttpCurl `\App\Http\Umstudio\HttpCurl`
+
+```php
+$json_data = HttpCurl::json('https://viacep.com.br/ws/05415030/json/');
+```
+
+### Cep `\App\Http\Umstudio\Cep`
+
+```php
+$address = Cep::get('05415-030');
+```
+
+### Result `\App\Http\Umstudio\Result`
+
+```php
+return Result::exception($e);
+return Result::success('Dados cadastrados com sucesso.', { 'id': 396 });
+return Result::error('Ocorreu um erro na gravação do registro');
+return Result::cached('', { 'id': 1, 'uf': 'sp' });
+return Result::undefined();
+return Result::exception($e);
 ```
 
 ### Predefined API routes
@@ -118,6 +141,12 @@ css('/css/style.css');
 ```php
 app_version('0.0.3')
 // returns version value from config/app.php or default.
+```
+
+#### cached_headers
+
+```php
+return response($result)->withHeaders(cached_headers($result));
 ```
 
 ### Custom configs

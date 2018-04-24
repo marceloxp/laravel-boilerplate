@@ -3,6 +3,7 @@
 namespace App\Http\Umstudio;
 
 use Illuminate\Support\Facades\Cache;
+use App\Http\Umstudio\Result;
 
 class Cached
 {
@@ -15,11 +16,7 @@ class Cached
 		$cache_name = sprintf('%s-%s', $prefix, $key);
 		if (Cache::has($cache_name))
 		{
-			return [
-				'header' => ['cached' => 'true'],
-				'cached' => true,
-				'value'  => Cache::get($cache_name)
-			];
+			return Result::cached('', Cache::get($cache_name), true);
 		}
 		else
 		{
@@ -37,11 +34,7 @@ class Cached
 
 			Cache::forever('gcache-prefixes', $caches);
 
-			return [
-				'header' => ['cached' => 'false'],
-				'cached' => false,
-				'value'  => $data
-			];
+			return Result::cached('', $data, false);
 		}
     }
 
