@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.6
+> Version 0.0.7
 
 ## Install
 
@@ -37,6 +37,7 @@ php artisan migrate:refresh --seed
 ## Libraries
 
 - cjsbaseclass: <https://www.npmjs.com/package/cjsbaseclass>
+- highlight.js: <https://highlightjs.org/>
 
 ## Admin Template
 
