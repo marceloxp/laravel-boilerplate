@@ -68,16 +68,16 @@ umsadmin.Tadmin_config_cache = function($, objname, options)
 				{
 					if (p_response.message)
 					{
-						alert(p_response.message);
+						swal('Atenção', p_response.message, 'success');
 					}
 				},
 				'fail': function()
 				{
-					alert('Ocorreu um erro na solicitação.');
+					swal('Atenção', 'Ocorreu um erro na solicitação.', 'error');
 				},
 				'exception': function()
 				{
-					alert('Ocorreu um erro na solicitação.');
+					swal('Atenção', 'Ocorreu um erro na solicitação.', 'error');
 				}
 			}
 		);

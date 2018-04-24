@@ -359,6 +359,29 @@ umsappadmin.Tindex = function($, objname, options)
 		window.location.href = new_url;
 	};
 
+	this.confirmDelete = function(p_callback)
+	{
+		swal
+		(
+			{
+				title     : 'Atenção!',
+				text      : 'Deseja realmente excluir o(s) registro(s) selecionado(s)?',
+				icon      : 'error',
+				buttons   : true,
+				dangerMode: true,
+		})
+		.then
+		(
+			(willDelete) =>
+			{
+				if (willDelete)
+				{
+					p_callback();
+				}
+			}
+		);
+	}
+
 	this.onDeleteButtonClick = function()
 	{
 		if ($('.ck-row:checked').length <= 0)
@@ -366,67 +389,74 @@ umsappadmin.Tindex = function($, objname, options)
 			return;
 		}
 
-		if (!confirm('Deseja realmente excluir os registros selecionados?'))
-		{
-			return;
-		}
-
-		var ids = [];
-		$('.ck-row:checked').each
+		this.confirmDelete
 		(
 			function()
 			{
-				ids.push($(this).attr('data-ids'));
-			}
-		);
-		ids = ids.join(',');
+				var ids = [];
+				$('.ck-row:checked').each
+				(
+					function()
+					{
+						ids.push($(this).attr('data-ids'));
+					}
+				);
+				ids = ids.join(',');
 
-		self.ajax
-		(
-			{
-				'options':
-				{
-					slug     : 'on-delete',
-					exclusive: true,
-					url      : datasite.url.current + '/delete',
-					type     : 'POST',
-					dataType : 'json',
-					data     :
+				self.ajax
+				(
 					{
-						'_token': datasite._token,
-						'ids'   : ids
+						'options':
+						{
+							slug     : 'on-delete',
+							exclusive: true,
+							url      : datasite.url.current + '/delete',
+							type     : 'POST',
+							dataType : 'json',
+							data     :
+							{
+								'_token': datasite._token,
+								'ids'   : ids
+							}
+						},
+						'before': function()
+						{
+							
+						},
+						'done': function(p_response)
+						{
+							if (p_response.success)
+							{
+								swal('Atenção', p_response.message, 'success')
+								.then
+								(
+									function()
+									{
+										window.location.reload();
+									}
+								);
+							}
+							else
+							{
+								swal('Atenção', p_response.message, 'warning');
+							}
+						},
+						'fail': function()
+						{
+							swal('Atenção', 'Ocorreu um erro na requisição.', 'error');
+						},
+						'always': function()
+						{
+							
+						},
+						'exception': function()
+						{
+							swal('Atenção', 'Ocorreu um erro na requisição.', 'error');
+						}
 					}
-				},
-				'before': function()
-				{
-					
-				},
-				'done': function(p_response)
-				{
-					if (p_response.success)
-					{
-						alert(p_response.message);
-						window.location.reload();
-					}
-					else
-					{
-						alert(p_response.message);
-					}
-				},
-				'fail': function()
-				{
-					alert('Ocorreu um erro na requisição.');
-				},
-				'always': function()
-				{
-					
-				},
-				'exception': function()
-				{
-					alert('Ocorreu um erro na requisição.');
-				}
+				);
 			}
-		);
+		)
 	};
 
 	this.onExportButtonClick = function()
