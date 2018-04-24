@@ -23,17 +23,21 @@ class Cached
 			$data = (is_callable($value)) ? $value() : $value;
 			if ( ($data !== false) && ($data !== null) )
 			{
-				Cache::put($cache_name, $data, $minutes);
-
-				$caches = Cache::get('gcache-prefixes') ?? collect([]);
-				if (!$caches->has($prefix))
+				$use_cache = config('cache.use', 's');
+				if ($use_cache == 's')
 				{
-					$caches->put($prefix, collect([]));
+					Cache::put($cache_name, $data, $minutes);
+
+					$caches = Cache::get('gcache-prefixes') ?? collect([]);
+					if (!$caches->has($prefix))
+					{
+						$caches->put($prefix, collect([]));
+					}
+
+					$caches[$prefix]->put($key, $data);
+
+					Cache::forever('gcache-prefixes', $caches);
 				}
-
-				$caches[$prefix]->put($key, $data);
-
-				Cache::forever('gcache-prefixes', $caches);
 			}
 
 			return Result::cached('', $data, false);
@@ -46,44 +50,58 @@ class Cached
 		return $caches->toArray();
 	}
 
+	public static function count()
+	{
+		$caches = Cache::get('gcache-prefixes') ?? collect([]);
+		return $caches->count();
+	}
+
     public static function forget($p_prefix, $p_key = null)
 	{
-		$prefix = mb_strtoupper($p_prefix);
-		$caches = Cache::get('gcache-prefixes') ?? collect([]);
-
-		if ($p_key !== null)
+		try
 		{
-			$key = (is_array($p_key)) ? implode('-', $p_key) : $p_key;
-			$key    = mb_strtoupper($key);
-			$cache_name = sprintf('%s-%s', $prefix, $key);
-			Cache::forget($cache_name);
+			$prefix = mb_strtoupper($p_prefix);
+			$caches = Cache::get('gcache-prefixes') ?? collect([]);
+
+			if ($p_key !== null)
+			{
+				$key = (is_array($p_key)) ? implode('-', $p_key) : $p_key;
+				$key    = mb_strtoupper($key);
+				$cache_name = sprintf('%s-%s', $prefix, $key);
+				Cache::forget($cache_name);
+
+				if ($caches->has($prefix))
+				{
+					if ($caches->get($prefix)->has($key))
+					{
+						$caches[$prefix] = $caches[$prefix]->except([$key]);
+					}
+				}
+
+				return true;
+			}
 
 			if ($caches->has($prefix))
 			{
-				if ($caches->get($prefix)->has($key))
-				{
-					$caches[$prefix] = $caches[$prefix]->except([$key]);
-				}
+				$caches->get($prefix)->each
+				(
+					function($item, $key) use ($prefix)
+					{
+						$cache_name = sprintf('%s-%s', $prefix, $key);
+						Cache::forget($cache_name);
+					}
+				);
+
+				unset($caches[$prefix]);
 			}
 
 			return true;
 		}
-
-		if ($caches->has($prefix))
+		catch (\Exception $e)
 		{
-			$caches->get($prefix)->each
-			(
-				function($item, $key) use ($prefix)
-				{
-					$cache_name = sprintf('%s-%s', $prefix, $key);
-					Cache::forget($cache_name);
-				}
-			);
-
-			unset($caches[$prefix]);
+			return false;
+			report($e);
 		}
-
-		return true;
     }
 
 	public static function flush()

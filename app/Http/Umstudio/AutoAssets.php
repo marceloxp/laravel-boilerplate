@@ -13,7 +13,15 @@ class AutoAssets
 		$routename = Route::currentRouteName();
 		if (!empty($routename))
 		{
-			$asset_file = sprintf('%s/%s.%s', $p_type, $routename, $p_type);
+			if (strpos($routename, 'admin_') === false)
+			{
+				$asset_file = sprintf('%s/%s.%s', $p_type, $routename, $p_type);
+			}
+			else
+			{
+				$asset_file = sprintf('%s/admin/%s.%s', $p_type, $routename, $p_type);
+			}
+
 			if (file_exists(public_path($asset_file)))
 			{
 				$auto_assets[] = $asset_file;

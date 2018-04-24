@@ -52,6 +52,11 @@ class Result
 		return self::get(false, $message, $data, false, $message_log);
 	}
 
+	public static function ifthen($boolean_value, $success_message = 'Solicitação realizada com sucesso.', $error_message = 'Ocorreu um erro na solcitação.')
+	{
+		return ($boolean_value) ? self::success($success_message) : self::error($error_message);
+	}
+
 	public static function undefined($message = '', $data = [], $message_log = '')
 	{
 		$use_message = $message;

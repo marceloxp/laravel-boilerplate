@@ -62,7 +62,7 @@
 		
 		<!-- Page Scripts -->
 		@section('scripts')
-			{{AutoAssets::print('js')}}
+			{{ AutoAssets::print('js') }}
 		@show
 	</body>
 </html>

@@ -16,7 +16,8 @@ class ConfigsSeeder extends Seeder
 
         $data = array
         (
-            array('name' => 'dbconfig.ready', 'value' => '1', 'created_at' => $now)
+            array('name' => 'dbconfig.ready', 'value' => '1', 'created_at' => $now),
+            array('name' => 'cache.use'     , 'value' => 's', 'created_at' => $now)
         );
 
         Config::insert($data);

@@ -39,8 +39,8 @@ return [
 					'type'    => 'link',
 					'caption' => 'Dashboard',
 					'ico'     => 'fa-dashboard',
-					'route'   => 'dashboard',
-					'link'    => 'dashboard'
+					'route'   => 'admin_dashboard',
+					'link'    => 'admin_dashboard'
 				]
 			]
 		],
@@ -55,8 +55,8 @@ return [
 					'type'    => 'link',
 					'caption' => 'Vídeos',
 					'ico'     => 'fa-youtube',
-					'route'   => 'videos',
-					'link'    => 'videos'
+					'route'   => 'admin_videos',
+					'link'    => 'admin_videos'
 				]
 			]
 		],
@@ -69,20 +69,20 @@ return [
 			'items'   => 
 			[
 				[
-					'roles'   => ['Developer'],
+					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Listar',
 					'ico'     => 'fa-list',
-					'route'   => 'list_cache',
-					'link'    => 'list_cache'
+					'route'   => 'admin_cache_list',
+					'link'    => 'admin_cache_list'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
-					'caption' => 'Limpar',
-					'ico'     => 'fa-trash',
-					'route'   => 'clear_cache',
-					'link'    => 'clear_cache'
+					'caption' => 'Configurar',
+					'ico'     => 'fa-gears',
+					'route'   => 'admin_cache_index',
+					'link'    => 'admin_cache_index'
 				]
 			]
 		],
@@ -98,39 +98,39 @@ return [
 					'type'    => 'link',
 					'caption' => 'Configurações',
 					'ico'     => 'fa-gear',
-					'route'   => 'configs',
-					'link'    => 'configs'
+					'route'   => 'admin_configs',
+					'link'    => 'admin_configs'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Permissões',
 					'ico'     => 'fa-gear',
-					'route'   => 'roles',
-					'link'    => 'roles'
+					'route'   => 'admin_roles',
+					'link'    => 'admin_roles'
 				],
 				[
 					'roles'   => ['Developer'],
 					'type'    => 'link',
 					'caption' => 'phpinfo',
 					'ico'     => 'fa-info-circle',
-					'route'   => 'phpinfo',
-					'link'    => 'phpinfo'
+					'route'   => 'admin_phpinfo',
+					'link'    => 'admin_phpinfo'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Usuários',
 					'ico'     => 'fa-user',
-					'route'   => 'users',
-					'link'    => 'users'
+					'route'   => 'admin_users',
+					'link'    => 'admin_users'
 				],
 				[
 					'type'    => 'link',
 					'caption' => 'Sair',
 					'ico'     => 'fa-close',
-					'route'   => 'logout',
-					'link'    => 'logout'
+					'route'   => 'admin_logout',
+					'link'    => 'admin_logout'
 				]
 			]
 		]

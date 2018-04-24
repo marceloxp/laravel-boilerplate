@@ -1,10 +1,18 @@
+@php
+	use App\http\Umstudio\AutoAssets;
+@endphp
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,Chrome=1" >
+		<meta name="env" content="{{env('APP_ENV', 'undefined')}}">
+		<meta name="now" content="{{date('Y-m-d H:i:s')}}">
 		<meta name="framework-version" content="{{ App::VERSION() }}">
 		<meta name="app-version" content="{{ app_version() }}">
+
 		<title>{{env('ADMIN_TITLE', 'Admin')}}</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -40,7 +48,7 @@
 		<div class="wrapper">
 			<header class="main-header">
 				<!-- Logo -->
-				<a href="{{route('dashboard')}}" class="logo">
+				<a href="{{route('admin_dashboard')}}" class="logo">
 					<!-- mini logo for sidebar mini 50x50 pixels -->
 					<span class="logo-mini">{{env('ADMIN_SLUG', 'ADM')}}</span>
 					<!-- logo for regular state and mobile devices -->
@@ -122,5 +130,7 @@
 		<script type="text/javascript" src="{{vasset('/js/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
 		<!-- User Scripts -->
 		@yield('scripts')
+
+		{{ AutoAssets::print('js') }}
 	</body>
 </html>
