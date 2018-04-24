@@ -128,7 +128,7 @@
 			};
 		</script>
 		<script type="text/javascript" src="{{vasset('/js/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		{!! script('/js/admin/lib/sweetalert.min.js') !!}
 		<!-- User Scripts -->
 		@yield('scripts')
 

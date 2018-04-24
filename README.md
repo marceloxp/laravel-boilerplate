@@ -36,8 +36,11 @@ php artisan migrate:refresh --seed
 
 ## Libraries
 
-- cjsbaseclass: <https://www.npmjs.com/package/cjsbaseclass>
-- highlight.js: <https://highlightjs.org/>
+| Local  | Library          | Site                                           | Description                          |
+| ------ | ---------------- | ---------------------------------------------- | ------------------------------------ |
+| Global | cjsbaseclass.js  | <https://www.npmjs.com/package/cjsbaseclass>   | Base JS class                        |
+| Admin  | prism.js         | <http://prismjs.com/>                          | Syntax highlighter                   |
+| Admin  | sweetalert.js    | <https://sweetalert.js.org/>                   | A beautiful replacement for messages |
 
 ## Admin Template
 
