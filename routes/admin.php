@@ -20,7 +20,7 @@ Route::group
 	function()
 	{
 		// Authentication Routes...
-		$this->get('login' , 'Auth\LoginController@showLoginForm')->name('admin_login');
+		$this->get('login' , 'Auth\LoginController@showLoginForm')->name('login');
 		$this->post('login', 'Auth\LoginController@login');
 		$this->get('logout', 'Auth\LoginController@logout')->name('admin_logout');
 
@@ -32,7 +32,7 @@ Route::group
 
 		Route::group
 		(
-			['middleware' => 'auth', 'namespace' => 'Admin'],
+			['middleware' => ['auth','admin'], 'namespace' => 'Admin'],
 			function()
 			{
 				Route::get('/'      , 'DashboardController@index'  )->name('admin_dashboard');

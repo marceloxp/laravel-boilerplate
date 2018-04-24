@@ -1,5 +1,6 @@
 @php
 	use App\http\Umstudio\AutoAssets;
+	use App\Http\Umstudio\Datasite;
 @endphp
 
 <!DOCTYPE html>
@@ -41,6 +42,10 @@
 
 		@section('styles')
 			
+		@show
+
+		@section('datasite')
+			<script>window.datasite = @json(Datasite::get())</script>
 		@show
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -115,18 +120,6 @@
 		<!-- AdminLTE App -->
 		<script src="{{vasset('/admin-lte/dist/js/app.min.js')}}"></script>
 		<!-- Scripts -->
-		<script>
-			window.datasite = 
-			{
-				'url': 
-				{
-					'base'   : '{{env('APP_URL')}}',
-					'admin'  : '{{env('APP_URL')}}/admin',
-					'current': '{{url()->current()}}'
-				},
-				'_token' : '{{ csrf_token() }}'
-			};
-		</script>
 		<script type="text/javascript" src="{{vasset('/js/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
 		{!! script('/js/admin/lib/sweetalert.min.js') !!}
 		<!-- User Scripts -->
