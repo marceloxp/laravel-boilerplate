@@ -129,8 +129,8 @@ return [
 					'type'    => 'link',
 					'caption' => 'Sair',
 					'ico'     => 'fa-close',
-					'route'   => 'admin_logout',
-					'link'    => 'admin_logout'
+					'route'   => 'logout',
+					'link'    => 'logout'
 				]
 			]
 		]
