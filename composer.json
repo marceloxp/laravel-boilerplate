@@ -4,7 +4,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
-	"version" : "0.0.7",
+	"version" : "0.0.8",
 	"minimum-stability": "dev",
     "require": {
         "php": ">=7.0.0",
@@ -25,7 +25,9 @@
 		"files": [
 			"app/Http/Umstudio/Helpers/helpers.php",
 			"app/Http/Umstudio/Helpers/admin.php",
-			"app/Http/Umstudio/Helpers/cached.php"
+			"app/Http/Umstudio/Helpers/cached.php",
+			"app/Http/Umstudio/Helpers/lang.php",
+			"app/Http/Umstudio/Helpers/developer.php"
 		],
         "classmap": [
             "database/seeds",

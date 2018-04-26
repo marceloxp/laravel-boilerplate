@@ -46,10 +46,12 @@ class MetaSocial
 
 	public static function getFinalConfig()
 	{
+		$locale = config('app.locale', 'pt-br');
 		$result = array_merge
 		(
-			config('metasocial.default'),
-			config('metasocial.' . self::$config_use),
+			config(sprintf('metasocial.%s.default', $locale)) ?? [],
+			config(sprintf('metasocial.pt-br.default', $locale)) ?? [],
+			config(sprintf('metasocial.%s.%s', $locale, self::$config_use)) ?? [],
 			self::$custom_config
 		);
 		return $result;

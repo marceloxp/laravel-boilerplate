@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.7
+> Version 0.0.8
 
 ## Install
 
@@ -104,6 +104,23 @@ return Result::undefined();
 return Result::exception($e);
 ```
 
+### RouteLang `\App\Http\Umstudio\RouteLang`
+
+> Used in `/routes/multilanguague.php`
+
+```php
+RouteLang::lang();                    // returns current language, string empty if is default language (pt-br). Ex.: ''
+RouteLang::lang('pt-br');             // returns current language, string empty if is default language. Ex.: ''
+RouteLang::lang('en');                // returns current language, string empty if is default language. Ex.: 'en'
+RouteLang::root();                    // returns current site root language
+RouteLang::rootUrl();                 // returns current site full root url language
+RouteLang::rootUrl('en');             // returns full root url to language [enb]
+RouteLang::prefix('/sobre');          // Translate prefix to current language
+RouteLang::route($route, '/empresa'); // Translate url route to current language
+RouteLang::getDefaultLocale();        // Returns app default locale config
+RouteLang::getCurrentLocale();        // Returns app current locale config (dynamic)
+```
+
 ### Predefined API routes
 
 - {{url}}/api/brasil/states
@@ -151,6 +168,26 @@ app_version('0.0.3')
 
 ```php
 return response($result)->withHeaders(cached_headers($result));
+```
+
+#### developer
+
+Execute `dump` and `die`.
+
+```php
+ddd($var);
+```
+
+#### lang
+
+Prints variable in current language, defaults to parameter.
+
+```php
+echo dic('Página Inicial');
+{{ dic('Página Inicial') }}
+
+echo lang_home_link(); // returns current language root url
+echo lang_home_link('en'); // returns root url for language [en]
 ```
 
 ### Custom configs

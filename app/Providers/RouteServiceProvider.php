@@ -36,10 +36,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
-
-        //
     }
 
     /**
@@ -56,7 +53,14 @@ class RouteServiceProvider extends ServiceProvider
 			'namespace' => $this->namespace,
 		], function ($router) {
 			require base_path('routes/admin.php');
-			require base_path('routes/web.php');
+			if (!config('app.multilanguague'))
+			{
+				require base_path('routes/web.php');
+			}
+			else
+			{
+				require base_path('routes/multilanguague.php');
+			}
 		});
 	}
 

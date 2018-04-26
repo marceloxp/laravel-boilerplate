@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Umstudio\RouteLang;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,24 +15,31 @@
 
 Route::group
 (
-    [
-        'middleware' => 'frontend',
-        'namespace'  => 'Site'
-    ],
-    function()
-    {
-        Route::get('/'           , 'PagesController@index')->name('home');
-        Route::get('/faleconosco', 'PagesController@faleconosco')->name('faleconosco');
+	[
+		'middleware' => 'frontend',
+		'namespace'  => 'Site'
+	],
+	function()
+	{
+		Route::group
+		(
+			[],
+			function()
+			{
+				Route::get('/'           , 'PagesController@index'      )->name('home');
+				Route::get('/faleconosco', 'PagesController@faleconosco')->name('faleconosco');
+			}
+		);
 
-        Route::group
-        (
-            ['prefix' => 'sobre'],
-            function()
-            {
-                Route::get('/'         , 'SobreController@index'   )->name('sobre');
-                Route::get('empresa'   , 'SobreController@empresa' )->name('sobre_empresa');
-                Route::get('tradicao'  , 'SobreController@tradicao')->name('sobre_tradicao');
-            }
-        );
-    }
+		Route::group
+		(
+			['prefix' => '/sobre'],
+			function()
+			{
+				Route::get('/'        , 'SobreController@index'   )->name('sobre');
+				Route::get('/empresa' , 'SobreController@empresa' )->name('sobre_empresa');
+				Route::get('/tradicao', 'SobreController@tradicao')->name('sobre_tradicao');
+			}
+		);
+	}
 );
