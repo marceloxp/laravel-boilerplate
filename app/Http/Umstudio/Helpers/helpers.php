@@ -19,7 +19,7 @@ if (!function_exists('script'))
 {
     function script($p_source)
 	{
-		return sprintf('<script type="text/javascript" src="%s"></script>', vasset($p_source));
+		return new \Illuminate\Support\HtmlString( sprintf('<script type="text/javascript" src="%s"></script>', vasset($p_source)) );
     }
 }
 
@@ -27,6 +27,14 @@ if (!function_exists('css'))
 {
     function css($p_source)
 	{
-		return sprintf('<link rel="stylesheet" type="text/css" href="%s">', vasset($p_source));
+		return new \Illuminate\Support\HtmlString( sprintf('<link rel="stylesheet" type="text/css" href="%s">', vasset($p_source)) );
+    }
+}
+
+if (!function_exists('img'))
+{
+    function img($p_source, $p_properties = '')
+	{
+		return new \Illuminate\Support\HtmlString( sprintf('<img src="%s" %s>', vasset($p_source), $p_properties) );
     }
 }

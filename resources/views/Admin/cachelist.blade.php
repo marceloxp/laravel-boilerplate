@@ -20,9 +20,9 @@
 @endsection
 
 @section('styles')
-	{!! css('/admin-lte-custom/css/prism.css') !!}
+	{{ css('/admin-lte-custom/css/prism.css') }}
 @endsection
 
 @section('scripts')
-	{!! script('/admin-lte-custom/js/prism.js') !!}
+	{{ script('/admin-lte-custom/js/prism.js') }}
 @endsection

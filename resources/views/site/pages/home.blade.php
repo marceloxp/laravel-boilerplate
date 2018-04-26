@@ -25,4 +25,8 @@
 
 @section('content')
 	<div id="home">Content of home page</div>
+
+	<div style="padding: 20px; background-color: orange; width: 320px;">
+		{{ img('/images/share.png', 'width="300"') }}
+	</div>
 @endsection
