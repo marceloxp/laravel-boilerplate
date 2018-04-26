@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.9
+> Version 0.0.10
 
 ## Install
 
@@ -19,7 +19,7 @@ composer create-project marceloxp/laravel:@dev www --no-interaction
 
 ### File `.env` configuration
 
-- Configure .env database config and run migration:
+> Configure .env database config and run migration:
 
 ```bash
 php artisan migrate:refresh --seed
@@ -44,7 +44,7 @@ php artisan migrate:refresh --seed
 
 ## Admin Template
 
-- AdminLTE: <https://adminlte.io/themes/AdminLTE/>
+> AdminLTE: <https://adminlte.io/themes/AdminLTE/>
 
 ## Artisan commands
 
@@ -90,7 +90,11 @@ $json_data = HttpCurl::json('https://viacep.com.br/ws/05415030/json/');
 ### Cep `\App\Http\Umstudio\Cep`
 
 ```php
-$address = Cep::get('05415-030');
+$address = Cep::get('04045-004');     // Returns Adddress
+$valid = Cep:valid('04045-004');      // Returns true
+$valid = Cep:valid('5');              // Returns false
+$masket = Cep:mask('4045004');        // Returns '04045-004'
+$masket = Cep:toNumeric('04045-004'); // Returns 4045004
 ```
 
 ### Result `\App\Http\Umstudio\Result`
@@ -123,8 +127,8 @@ RouteLang::getCurrentLocale();        // Returns app current locale config (dyna
 
 ### Predefined API routes
 
-- {{url}}/api/brasil/states
-- {{url}}/api/brasil/cities/rj
+- `{{url}}/api/brasil/states`
+- `{{url}}/api/brasil/cities/rj`
 
 ### Hooks
 
@@ -172,7 +176,7 @@ return response($result)->withHeaders(cached_headers($result));
 
 #### developer
 
-Execute `dump` and `die`.
+> Execute `dump` and `die`.
 
 ```php
 ddd($var);
@@ -180,7 +184,7 @@ ddd($var);
 
 #### lang
 
-Prints variable in current language, defaults to parameter.
+> Prints variable in current language, defaults to parameter.
 
 ```php
 echo dic('Página Inicial');
@@ -188,6 +192,13 @@ echo dic('Página Inicial');
 
 echo lang_home_link(); // returns current language root url
 echo lang_home_link('en'); // returns root url for language [en]
+```
+
+#### string
+
+```php
+echo str_mask('04045004', '##.###-###'); // Returns '04.045-004
+echo str_mask('04045004', '#####-###'); // Returns '04045-004
 ```
 
 ### Custom configs
