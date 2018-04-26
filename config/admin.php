@@ -80,6 +80,14 @@ return [
 			'items'   => 
 			[
 				[
+					'type'    => 'link',
+					'target'  => '_blank',
+					'caption' => 'Ir ao Site',
+					'ico'     => 'fa-home',
+					'route'   => 'home',
+					'link'    => 'home'
+				],
+				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Configurações',
@@ -91,7 +99,7 @@ return [
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Permissões',
-					'ico'     => 'fa-gear',
+					'ico'     => 'fa-unlock-alt',
 					'route'   => 'admin_roles',
 					'link'    => 'admin_roles'
 				],

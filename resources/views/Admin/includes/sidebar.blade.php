@@ -31,9 +31,10 @@
 										{
 											$print_menu = $user->roles->whereIn('name', $item['roles'])->count() > 0;
 										}
+										$target = $item['target'] ?? '_self';
 									@endphp
 									@if ($print_menu)
-										<li class="{{$active}}"><a href="{{route($item['link'])}}"><i class="fa {{$item['ico']}}"></i> {{$item['caption']}}</a></li>
+										<li class="{{$active}}"><a href="{{route($item['link'])}}" target="{{ $target }}"><i class="fa {{$item['ico']}}"></i> {{$item['caption']}}</a></li>
 									@endif
 								@endforeach
 							</ul>

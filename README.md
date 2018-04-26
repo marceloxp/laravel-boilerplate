@@ -198,13 +198,15 @@ echo lang_home_link('en'); // returns root url for language [en]
 
 ```php
 echo str_mask('04045004', '##.###-###'); // Returns '04.045-004
-echo str_mask('04045004', '#####-###'); // Returns '04045-004
+echo str_mask('04045004', '#####-###');  // Returns '04045-004
+echo str_plural_2_singular('corações');  // Returns 'coração';
 ```
 
 ### Custom configs
 
 - colors.php
 - brasil.php (estados)
+- cep.php (faixas por estado)
 - admin.php (menu)
 
 ### Automatic Assets
