@@ -1,31 +1,17 @@
 <?php
 return [
 	'logo' => 'logo.png',
-	// 'dashboard' =>
-	// [
-	// 	[
-	// 		'roles'   => ['Master'],
-	// 		'caption' => 'Concessionárias',
-	// 		'color'   => 'bg-green',
-	// 		'ico'     => 'fa-car',
-	// 		'link'    => 'dealers',
-	// 		'table'   => 'dealers'
-	// 	],
-	// 	[
-	// 		'caption' => 'Cadastros',
-	// 		'color'   => 'bg-red',
-	// 		'ico'     => 'fa-user',
-	// 		'link'    => 'leads',
-	// 		'table'   => 'leads'
-	// 	],
-	// 	[
-	// 		'caption' => 'Sites',
-	// 		'color'   => 'bg-orange',
-	// 		'ico'     => 'fa-globe',
-	// 		'link'    => 'sites',
-	// 		'table'   => 'sites'
-	// 	]
-	// ],
+	'dashboard' =>
+	[
+		[
+			'roles'   => ['Master'],
+			'caption' => 'Vídeos',
+			'color'   => 'bg-green',
+			'ico'     => 'fa-video-camera',
+			'link'    => 'admin_videos',
+			'table'   => 'videos'
+		]
+	],
 	'menu' =>
 	[
 		'paginas' =>
