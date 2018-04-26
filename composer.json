@@ -27,7 +27,8 @@
 			"app/Http/Umstudio/Helpers/admin.php",
 			"app/Http/Umstudio/Helpers/cached.php",
 			"app/Http/Umstudio/Helpers/lang.php",
-			"app/Http/Umstudio/Helpers/developer.php"
+			"app/Http/Umstudio/Helpers/developer.php",
+			"app/Http/Umstudio/Helpers/string.php"
 		],
         "classmap": [
             "database/seeds",

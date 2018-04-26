@@ -1,6 +1,6 @@
 /* global CjsBaseClass,CJS_DEBUG_MODE_0,CJS_DEBUG_MODE_1,CJS_DEBUG_MODE_2 */
 var umsadmin = umsadmin || {};
-umsadmin.Tadmin_config_cache = function($, objname, options)
+umsadmin.Tadmin_cache_index = function($, objname, options)
 {
 	'use strict';
 	var self = this;
@@ -61,7 +61,7 @@ umsadmin.Tadmin_config_cache = function($, objname, options)
 					data     :
 					{
 						'use'   : p_value,
-						'_token': datasite._token
+						'_token': datasite.csrf_token
 					}
 				},
 				'done': function(p_response)
@@ -86,10 +86,10 @@ umsadmin.Tadmin_config_cache = function($, objname, options)
 	CjsBaseClass.call(this, $, objname, options);
 };
 
-umsadmin.admin_config_cache = new umsadmin.Tadmin_config_cache
+umsadmin.admin_cache_index = new umsadmin.Tadmin_cache_index
 (
 	window.cjsbaseclass_jquery,
-	'admin_config_cache',
+	'admin_cache_index',
 	{
 		'debug'       : CJS_DEBUG_MODE_1,
 		'highlighted' : 'auto'

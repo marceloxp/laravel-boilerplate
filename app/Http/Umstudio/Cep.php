@@ -6,13 +6,68 @@ use App\Http\Umstudio\Result;
 
 class Cep
 {
+	public static function valid($p_cep)
+	{
+		$cep = self::toNumeric($p_cep);
+		$faixas = config('cep.faixas');
+
+		foreach ($faixas as $uf => $uf_faixas)
+		{
+			if (is_array($uf_faixas[0]))
+			{
+				foreach ($uf_faixas as $faixa)
+				{
+					if ( ($cep >= $faixa[0]) && ($cep <= $faixa[1]) )
+					{
+						return true;
+					}
+				}
+			}
+			else
+			{
+				if ( ($cep >= $uf_faixas[0]) && ($cep <= $uf_faixas[1]) )
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public static function mask($p_cep, $use_dot_separator = false)
+	{
+		$cep = self::toNumeric($p_cep);
+		$cep = sprintf('%08s', $cep);
+		$use_mask = ($use_dot_separator) ? '##.###-###' : '#####-###';
+		return str_mask($cep, $use_mask);
+	}
+
+	public static function toNumeric($p_cep)
+	{
+		$cep = preg_replace( '/[^0-9]/', '', $p_cep);
+		$cep = sprintf('%08s', $cep);
+		$cep = intval($cep);
+		return $cep;
+	}
+
 	public static function get($p_cep)
 	{
 		try
 		{
-			$cep = str_replace('-', '', $p_cep);
-			$cep = str_pad($cep, 8, '0', STR_PAD_LEFT);
+			if (!self::valid($p_cep))
+			{
+				$result = 
+				[
+					'service'     => 'unknow',
+					'located'     => false,
+					'message'     => 'Este CEP não pertence as faixas de CEP do Brasil.'
+				];
 
+				return $result;
+			}
+
+			$cep = self::mask($p_cep);
 			return Cached::get
 			(
 				'App\Http\Umstudio\Cep',
@@ -26,31 +81,15 @@ class Cep
 		}
 		catch (\Exception $e)
 		{
+			report($e);
 			return Result::exception($e);
 		}
     }
 
 	private static function getcep($cep)
 	{
-		$value = rand();
-		if ($value % 2 === 0)
-		{
-			$result = self::viacep($cep);
-			if (!$result)
-			{
-				$result = self::postmon($cep);
-			}
-		}
-		else
-		{
-			$result = self::postmon($cep);
-			if (!$result)
-			{
-				$result = self::viacep($cep);
-			}
-		}
-
-		return $result;
+		$method = collect(['viacep','postmon'])->random();
+		return self::$method($cep);
 	}
 
 	public static function viacep($p_cep)
@@ -62,6 +101,8 @@ class Cep
 		$result = 
 		[
 			'service'     => 'viacep',
+			'located'     => true,
+			'message'     => '',
 			'cep'         => $json_cep['cep'],
 			'logradouro'  => $json_cep['logradouro'],
 			'complemento' => $json_cep['complemento'],
@@ -83,6 +124,8 @@ class Cep
 		$result = 
 		[
 			'service'     => 'postmon',
+			'located'     => true,
+			'message'     => '',
 			'cep'         => $json_cep['cep'],
 			'logradouro'  => $json_cep['logradouro'],
 			'complemento' => '',
