@@ -208,6 +208,7 @@ echo str_plural_2_singular('corações');  // Returns 'coração';
 - brasil.php (estados)
 - cep.php (faixas por estado)
 - admin.php (menu)
+- social.php (facebook, twitter, etc)
 
 ### Automatic Assets
 
