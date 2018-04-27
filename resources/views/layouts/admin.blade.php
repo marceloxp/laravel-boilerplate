@@ -104,8 +104,8 @@
 		<!-- AdminLTE App -->
 		<script src="{{vasset('/admin-lte/dist/js/app.min.js')}}"></script>
 		<!-- Scripts -->
-		<script type="text/javascript" src="{{vasset('/js/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
-		{{ script('/js/admin/lib/sweetalert.min.js') }}
+		<script type="text/javascript" src="{{vasset('/lib/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
+		{{ script('/lib/sweetalert.min.js') }}
 		@include('Admin.includes.messages')
 
 		<!-- User Scripts -->

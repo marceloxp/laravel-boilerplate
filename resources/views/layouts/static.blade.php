@@ -131,7 +131,7 @@
 				'_token' : '{{ csrf_token() }}'
 			};
 		</script>
-		<script type="text/javascript" src="/js/cjsbaseclass.min.js" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
+		<script type="text/javascript" src="{{ vasset('/lib/cjsbaseclass.min.js') }}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
 		<!-- User Scripts -->
 		@yield('scripts')
 	</body>

@@ -44,7 +44,7 @@
             <form action="{{route('login')}}" method="post">
                 {{ csrf_field() }}
                 <div class="form-group has-feedback">
-                    <input type="text" name="name" class="form-control" placeholder="Nome de Usuário">
+                    <input type="text" name="name" class="form-control" placeholder="Nome de Usuário" value="{{ old('name') }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('name'))
                         <span class="help-block">

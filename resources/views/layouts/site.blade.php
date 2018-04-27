@@ -57,7 +57,8 @@
 		
 		<!-- Vendor Scripts -->
 		@section('vendor.js')
-			<script type="text/javascript" src="{{vasset('/js/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
+			<script type="text/javascript" src="{{vasset('/lib/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
+			{{ script('/lib/sweetalert.min.js') }}
 		@show
 		
 		<!-- Page Scripts -->
