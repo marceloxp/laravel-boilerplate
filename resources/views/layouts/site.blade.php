@@ -55,13 +55,16 @@
 			@show
 		</footer>
 		
-		<!-- Vendor Scripts -->
+		{{-- Vendor Scripts --}}
 		@section('vendor.js')
 			<script type="text/javascript" src="{{vasset('/lib/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
 			{{ script('/lib/sweetalert.min.js') }}
 		@show
 		
-		<!-- Page Scripts -->
+		{{-- Common Script --}}
+		{{ script('/js/common.js') }}
+		
+		{{-- Page Scripts --}}
 		@section('scripts')
 			{{ AutoAssets::print('js') }}
 		@show
