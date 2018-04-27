@@ -12,12 +12,12 @@ class Video extends MasterModel
     protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
-    public static function validate($request, $id = null)
+    public static function validate($request, $id = '')
     {
 		$rules = 
 		[
-			'name'    => 'required|max:150',
-			'youtube' => 'required|max:150'
+			'name'    => 'required|min:5|max:150',
+			'youtube' => 'required|min:5|max:150'
 		];
 
 		return Role::_validate($request, $rules, $id);

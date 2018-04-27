@@ -42,7 +42,7 @@ class Config extends MasterModel
         });
     }
 
-    public static function validate($request, $id = null)
+    public static function validate($request, $id = '')
     {
 		$rules = 
 		[

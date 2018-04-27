@@ -114,7 +114,7 @@ class RolesController extends AdminController
 		{
 			$table_name = (new Role())->getTable();
 			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
-			return redirect(Route($table_name))->with('messages', [$message]);
+			return redirect(Route('admin_' . $table_name))->with('messages', [$message]);
 		}
 		else
 		{

@@ -415,7 +415,7 @@ umsappadmin.Tindex = function($, objname, options)
 							dataType : 'json',
 							data     :
 							{
-								'_token': datasite._token,
+								'_token': datasite.csrf_token,
 								'ids'   : ids
 							}
 						},

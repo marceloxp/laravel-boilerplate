@@ -49,19 +49,13 @@
 		@show
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
-		<!-- Site wrapper -->
 		<div class="wrapper">
 			<header class="main-header">
-				<!-- Logo -->
 				<a href="{{route('admin_dashboard')}}" class="logo">
-					<!-- mini logo for sidebar mini 50x50 pixels -->
 					<span class="logo-mini">{{env('ADMIN_SLUG', 'ADM')}}</span>
-					<!-- logo for regular state and mobile devices -->
 					<span class="logo-lg">{{env('ADMIN_CAPTION', 'Admin')}}</span>
 				</a>
-				<!-- Header Navbar: style can be found in header.less -->
 				<nav class="navbar navbar-static-top">
-					<!-- Sidebar toggle button-->
 					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
@@ -80,29 +74,19 @@
 
 			@yield('sidebar')
 
-			<!-- =============================================== -->
-			<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
-				@include('Admin.includes.messages')
-
-				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
 						@yield('content-header')
 					</h1>
 				</section>
-				<!-- Main content -->
 				<section class="content">
 					@yield('content')
 				</section>
-				<!-- /.content -->
 			</div>
-			<!-- /.content-wrapper -->
-			<!-- Add the sidebar's background. This div must be placed
-				immediately after the control sidebar -->
 			<div class="control-sidebar-bg"></div>
 		</div>
-		<!-- ./wrapper -->
+
 		<!-- jQuery 2.2.3 -->
 		<script src="{{vasset('/admin-lte/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 		<!-- Bootstrap 3.3.6 -->
@@ -122,6 +106,8 @@
 		<!-- Scripts -->
 		<script type="text/javascript" src="{{vasset('/js/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
 		{{ script('/js/admin/lib/sweetalert.min.js') }}
+		@include('Admin.includes.messages')
+
 		<!-- User Scripts -->
 		@yield('scripts')
 

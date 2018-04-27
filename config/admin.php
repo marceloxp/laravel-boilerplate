@@ -80,14 +80,6 @@ return [
 			'items'   => 
 			[
 				[
-					'type'    => 'link',
-					'target'  => '_blank',
-					'caption' => 'Ir ao Site',
-					'ico'     => 'fa-home',
-					'route'   => 'home',
-					'link'    => 'home'
-				],
-				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Configurações',
@@ -118,6 +110,14 @@ return [
 					'ico'     => 'fa-user',
 					'route'   => 'admin_users',
 					'link'    => 'admin_users'
+				],
+				[
+					'type'    => 'link',
+					'target'  => '_blank',
+					'caption' => 'Ir ao Site',
+					'ico'     => 'fa-home',
+					'route'   => 'home',
+					'link'    => 'home'
 				],
 				[
 					'type'    => 'link',

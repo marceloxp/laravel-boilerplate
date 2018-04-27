@@ -1,33 +1,29 @@
 @if (\Session::has('messages'))
-	<section class="content-header">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="alert alert-success alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<ul>
-						@foreach (\Session::get('messages') as $message)
-							<li>{{ $message }}</li>
-						@endforeach
-					</ul>
-				</div>
-			</div>
+	<div style="display: none">
+		<div id="message-success">
+			<table class="table table-bordered table-condensed table-hover table-striped">
+				@foreach (\Session::get('messages') as $message)
+					<tr><td>{{ $message }}</td></tr>
+				@endforeach
+			</table>
 		</div>
-	</section>
+	</div>
+	<script>
+		swal({'title': 'Atenção!', 'content': document.getElementById('message-success'), 'icon': 'success', 'timer': 10000});
+	</script>
 @endif
 
 @if ($errors->any())
-	<section class="content-header">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-				</div>
-			</div>
+	<div style="display: none">
+		<div id="message-error">
+			<table class="table table-bordered table-condensed table-hover table-striped">
+				@foreach ($errors->all() as $error)
+					<tr><td>{{ $error }}</td></tr>
+				@endforeach
+			</table>
 		</div>
-	</section>
+	</div>
+	<script>
+		swal({'title': 'Atenção!', 'content': document.getElementById('message-error'), 'icon': 'error', 'timer': 10000});
+	</script>
 @endif

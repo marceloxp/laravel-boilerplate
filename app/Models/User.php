@@ -61,17 +61,17 @@ class User extends MasterModel implements AuthenticatableContract, AuthorizableC
 		return $this->hasRole($roles) || abort(500, 'This action is unauthorized.');
 	}
 
-    public static function validate($request, $id = null)
+    public static function validate($request, $id = '')
     {
 		$rules = 
 		[
-			'name'  => 'required|max:150',
-			'email' => 'required|max:255'
+			'name'  => 'required|min:3|max:150',
+			'email' => 'required|min:5|max:255|unique:users,email,' . $id
 		];
 
 		if (!$id)
 		{
-			$rules['password'] = 'required|max:255';
+			$rules['password'] = 'required|min:4|max:255';
 		}
 
 		return User::_validate($request, $rules, $id);

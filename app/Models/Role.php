@@ -12,12 +12,12 @@ class Role extends MasterModel
     protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
-    public static function validate($request, $id = null)
+    public static function validate($request, $id = '')
     {
 		$rules = 
 		[
-			'name'        => 'required|max:150',
-			'description' => 'required|max:255'
+			'name'        => 'required|min:5|max:150|unique:roles,name,' . $id,
+			'description' => 'required|min:5|max:255'
 		];
 
 		return Role::_validate($request, $rules, $id);
