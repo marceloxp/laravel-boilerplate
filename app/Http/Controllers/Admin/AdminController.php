@@ -31,14 +31,16 @@ class AdminController extends Controller
 				$user->authorizeRoles($roles);
 				$this->user = $user;
 
-				$route_array = explode('_', Route::getCurrentRoute()->getName());
-				$route_section = 
+				$route_parts = 
 				[
-					'name'   => $route_array[0],
-					'action' => $route_array[1] ?? ''
+					'name'  => Route::getCurrentRoute()->getName(),
+					'menu'  => Route::getCurrentRoute()->getMenu(),
+					'group' => Route::getCurrentRoute()->getGroup(),
 				];
-				
-				View::share(compact('user','menus','route_name','route_section'));
+				$route_parts['verify'] = $route_parts['group'] ?? $route_parts['menu'] ?? $route_parts['name'];
+				$verify = $route_parts['verify'];
+
+				View::share(compact('user','menus','route_name','route_parts','verify'));
 
 				return $next($request);
 			}

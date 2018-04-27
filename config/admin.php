@@ -25,8 +25,7 @@ return [
 					'type'    => 'link',
 					'caption' => 'Dashboard',
 					'ico'     => 'fa-dashboard',
-					'route'   => 'admin_dashboard',
-					'link'    => 'admin_dashboard'
+					'route'   => 'admin_dashboard'
 				]
 			]
 		],
@@ -41,8 +40,8 @@ return [
 					'type'    => 'link',
 					'caption' => 'Vídeos',
 					'ico'     => 'fa-youtube',
-					'route'   => 'admin_videos',
-					'link'    => 'admin_videos'
+					'group'   => 'admin_videos',
+					'route'   => 'admin_videos'
 				]
 			]
 		],
@@ -60,15 +59,15 @@ return [
 					'caption' => 'Listar',
 					'ico'     => 'fa-list',
 					'route'   => 'admin_cache_list',
-					'link'    => 'admin_cache_list'
+					'menu'    => 'admin_cache_list'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Configurar',
 					'ico'     => 'fa-gears',
-					'route'   => 'admin_cache_index',
-					'link'    => 'admin_cache_index'
+					'route'   => 'admin_cache',
+					'menu'    => 'admin_cache_index'
 				]
 			]
 		],
@@ -84,47 +83,44 @@ return [
 					'type'    => 'link',
 					'caption' => 'Configurações',
 					'ico'     => 'fa-gear',
-					'route'   => 'admin_configs',
-					'link'    => 'admin_configs'
+					'group'   => 'admin_configs',
+					'route'   => 'admin_configs'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Permissões',
 					'ico'     => 'fa-unlock-alt',
-					'route'   => 'admin_roles',
-					'link'    => 'admin_roles'
+					'group'   => 'admin_roles',
+					'route'   => 'admin_roles'
 				],
 				[
 					'roles'   => ['Developer'],
 					'type'    => 'link',
 					'caption' => 'phpinfo',
 					'ico'     => 'fa-info-circle',
-					'route'   => 'admin_phpinfo',
-					'link'    => 'admin_phpinfo'
+					'route'   => 'admin_phpinfo'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Usuários',
 					'ico'     => 'fa-user',
-					'route'   => 'admin_users',
-					'link'    => 'admin_users'
+					'group'   => 'admin_users',
+					'route'   => 'admin_users'
 				],
 				[
 					'type'    => 'link',
 					'target'  => '_blank',
 					'caption' => 'Ir ao Site',
 					'ico'     => 'fa-home',
-					'route'   => 'home',
-					'link'    => 'home'
+					'route'   => 'home'
 				],
 				[
 					'type'    => 'link',
 					'caption' => 'Sair',
 					'ico'     => 'fa-close',
-					'route'   => 'logout',
-					'link'    => 'logout'
+					'route'   => 'logout'
 				]
 			]
 		]
