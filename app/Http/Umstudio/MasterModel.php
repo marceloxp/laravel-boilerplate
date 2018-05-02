@@ -183,6 +183,7 @@ class MasterModel extends Model
 					if (array_key_exists($field_name, $relations))
 					{
 						$value['relation'] = $relations[$field_name];
+						$value['comment']  = $relations[$field_name]['comment'];
 						$value['has_relation'] = true;
 					}
 
