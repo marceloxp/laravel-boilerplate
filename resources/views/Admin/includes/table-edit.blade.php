@@ -1,5 +1,6 @@
 @php
 	$image_fields = $image_fields ?? [];
+	// dump(old());
 @endphp
 
 <div class="box box-primary">
@@ -21,6 +22,7 @@
 					$maxlength    = $fields_schema[$field_name]['max_length'];
 					$relation     = $fields_schema[$field_name]['relation'] ?? [];
 					$items        = $fields_schema[$field_name]['relation']['items'] ?? [];
+					$field_label  = $fields_schema[$field_name]['comment'];
 					
 					if ($items)
 					{
@@ -76,6 +78,41 @@
 							$required
 						);
 					}
+					elseif ($fields_schema[$field_name]['has_relation'])
+					{
+						$ref_model   = $fields_schema[$field_name]['relation']['ref_model'];
+						$field_label = $fields_schema[$field_name]['relation']['comment'];
+						$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $register->$ref_model->name) : '');
+						$field_value = old($field_name) ?? $register->$field_name;
+
+						$input = sprintf
+						(
+							'
+								<div class="input-group">
+									<input type="text" class="form-control dontsend" readonly="readonly" id="%s_text" name="%s_text" value="%s">
+									<span class="input-group-btn">
+										<button data-field="%s" data-model="%s" data-caption="%s" type="button" class="btn btn-primary btn-flat search-modal-field"><i class="fa fa-fw fa-search"></i> Procurar</button>
+									</span>
+								</div>
+								<input type="hidden" readonly="readonly" id="%s" name="%s" value="%s">
+							',
+							// input with formated value "id - name"
+							$field_name,
+							$field_name,
+							$field_text,
+							
+							// data values to modal search
+							$field_name,
+							$ref_model,
+							$field_label,
+
+							// oficial input with value
+							$field_name,
+							$field_name,
+							$field_value
+							// $register->$field_name
+						);
+					}
 					else
 					{
 						switch ($field_type)
@@ -126,7 +163,7 @@
 					$input = Hook::get(sprintf('admin_edit_%s_%s', $table_name, $field_name),[$input, $fields_schema[$field_name], (old($field_name) ?? $register->$field_name)],function($input){ return $input; });
 				@endphp
 				<div class="form-group" style="display: {{$row_visible}}">
-					<label for="{{$field_name}}">{{ $fields_schema[$field_name]['comment'] }}</label>
+					<label for="{{$field_name}}">{{ $field_label }}</label>
 					{!!$input!!}
 				</div>
 			@endforeach

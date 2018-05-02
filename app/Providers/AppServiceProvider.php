@@ -36,13 +36,20 @@ class AppServiceProvider extends ServiceProvider
 	public function register()
 	{
 		// MERGE DB_CONFIG WITH CONFIG FILES
-		$custom_configs = \DB::table('configs')->select('name','value')->where('status', 'Ativo')->get();
-		collect($custom_configs)->each
-		(
-			function($item, $key)
-			{
-				config([$item->name => $item->value]);
-			}
-		);
+		try
+		{
+			$custom_configs = \DB::table('configs')->select('name','value')->where('status', 'Ativo')->get();
+			collect($custom_configs)->each
+			(
+				function($item, $key)
+				{
+					config([$item->name => $item->value]);
+				}
+			);
+		}
+		catch (\Exception $e)
+		{
+			report($e);
+		}
 	}
 }

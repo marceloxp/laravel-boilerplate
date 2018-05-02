@@ -27,7 +27,7 @@ umsappadmin.Tedit = function($, objname, options)
 
 	this.onElementsEvents = function()
 	{
-			
+		
 	};
 
 	this.execute = function()
@@ -75,7 +75,6 @@ umsappadmin.Tedit = function($, objname, options)
 
 $(function()
 {
-	//Initialize Select2 Elements
 	$('.select2').select2();
 });
 
@@ -85,7 +84,6 @@ umsappadmin.edit = new umsappadmin.Tedit
 	'edit',
 	{
 		'debug'       : CJS_DEBUG_MODE_1,
-		'highlighted' : 'auto',
-		'another_opt' : 'custom_value'
+		'highlighted' : 'auto'
 	}
 );

@@ -70,3 +70,11 @@ if (!function_exists('str_plural_2_singular'))
 		return $result;
 	}
 }
+
+if (!function_exists('str2bool'))
+{
+	function str2bool($text)
+	{
+		return (strtolower($text) == 'true');
+	}
+}

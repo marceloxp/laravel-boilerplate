@@ -10,17 +10,25 @@
 	<div class="box-body">
 		<table class="table table-bordered">
 			@foreach($display_fields as $field_name)
+				@php
+					$field_label = $fields_schema[$field_name]['comment'];
+					if ($fields_schema[$field_name]['has_relation'])
+					{
+						$field_label = $fields_schema[$field_name]['relation']['comment'];
+					}
+				@endphp
 				<tr>
 					<td width="100">
-						<label >{{ $fields_schema[$field_name]['comment'] }}</label>
+						<label >{{ $field_label }}</label>
 					</td>
 					<td>
 						@php
-							$field_type = $fields_schema[$field_name]['type'];
+							$field_type  = $fields_schema[$field_name]['type'];
+							
 							
 							if ($fields_schema[$field_name]['has_relation'])
 							{
-								$ref_model = $fields_schema[$field_name]['relation']['ref_model'];
+								$ref_model     = $fields_schema[$field_name]['relation']['ref_model'];
 								$display_value = $register->$ref_model->name;
 							}
 							elseif (in_array($field_name, $image_fields) !== false)
@@ -28,7 +36,10 @@
 								$display_value = $register->$field_name;
 								$display_value = sprintf('<img src="%s" style="max-height:150px; max-width:150px" alt="">', url('uploads/images/' . $display_value));
 							}
-							$display_value = $register->$field_name;
+							else
+							{
+								$display_value = $register->$field_name;
+							}
 
 							switch ($field_type)
 							{

@@ -11,5 +11,7 @@ return [
 	'cep'          => 'CEP',
 	'city'         => 'Cidade',
 	'neighborhood' => 'Bairro',
-	'password'     => 'Senha'
+	'password'     => 'Senha',
+	'category_id'  => 'Categoria',
+	'youtube'      => 'YouTube'
 ];

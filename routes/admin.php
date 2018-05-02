@@ -48,6 +48,9 @@ Route::group
 				Route::get('/'      , 'DashboardController@index'  )->name('admin_dashboard');
 				Route::get('phpinfo', 'DeveloperController@phpinfo')->name('admin_phpinfo');
 
+				// Search Modal
+				Route::get('modal-search', 'SearchmodalController@index');
+
 				// Configs
 				Route::group
 				(

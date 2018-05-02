@@ -35,6 +35,12 @@ composer dump-autoload
 
 > Database routines
 
+### Execute simple migration
+
+```bash
+php artisan migrate
+```
+
 ### Refresh database and seed
 
 ```bash

@@ -30,7 +30,7 @@ class VideosController extends AdminController
 		$fields_schema  = Video::getFieldsMetaData();
 		$perpage        = $this->getPerPage($request);
 		$table_name     = (new Video())->getTable();
-		$display_fields = ['id','name','youtube','created_at'];
+		$display_fields = ['id','category_id','name','youtube','created_at'];
 		$table          = $this->getTableSearch(Video::class, $perpage, $request, $display_fields, $fields_schema);
 		$paginate       = $this->ajustPaginate($request, $table);
 		$has_table      = (!empty($table));
@@ -67,7 +67,7 @@ class VideosController extends AdminController
 		$is_creating    = (empty($id));
 		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
 		$table_name     = (new Video())->getTable();
-		$display_fields = ['id', 'name', 'youtube'];
+		$display_fields = ['id','category_id','name','youtube'];
 		$fields_schema  = Video::getFieldsMetaData();
 
 		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','table_name'));
@@ -129,7 +129,7 @@ class VideosController extends AdminController
 		$table_name     = (new Video())->getTable();
 		$register       = ($id) ? Video::find($id) : new Video;
 		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
-		$display_fields = ['id','name','youtube','created_at','updated_at','deleted_at'];
+		$display_fields = ['id','category_id','name','youtube','created_at','updated_at','deleted_at'];
 		$fields_schema  = Video::getFieldsMetaData();
 
 		View::share(compact('register','panel_title','display_fields','fields_schema','table_name'));

@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.11
+> Version 0.0.12
 
 ## Install
 
@@ -90,11 +90,11 @@ $json_data = HttpCurl::json('https://viacep.com.br/ws/05415030/json/');
 ### Cep `\App\Http\Umstudio\Cep`
 
 ```php
-$address = Cep::get('04045-004');     // Returns Adddress
-$valid = Cep:valid('04045-004');      // Returns true
-$valid = Cep:valid('5');              // Returns false
-$masket = Cep:mask('4045004');        // Returns '04045-004'
-$masket = Cep:toNumeric('04045-004'); // Returns 4045004
+$address = Cep::get('04045-004');      // Returns Adddress
+$valid   = Cep:valid('04045-004');     // Returns true
+$valid   = Cep:valid('5');             // Returns false
+$masket  = Cep:mask('4045004');        // Returns '04045-004'
+$masket  = Cep:toNumeric('04045-004'); // Returns 4045004
 ```
 
 ### Result `\App\Http\Umstudio\Result`
@@ -212,7 +212,12 @@ echo str_plural_2_singular('corações');  // Returns 'coração';
 
 ### Automatic Assets
 
-- Javascripts and Stylesheets with same route name.
+> Javascripts and Stylesheets with same route name.
+
+| URL                              | Javascript            | CSS                    |
+| -------------------------------- | --------------------- | ---------------------- |
+| http://site.com.br/faleconosco   | /js/faleconosco.js    | /css/faleconosco.css   |
+| http://site.com.br/sobre/empresa | /js/sobre_empresa.js  | /css/sobre_empresa.css |
 
 ### Language (pt-br)
 

@@ -87,6 +87,8 @@
 			<div class="control-sidebar-bg"></div>
 		</div>
 
+		@include('Admin.includes.modal_search')
+
 		<!-- jQuery 2.2.3 -->
 		<script src="{{vasset('/admin-lte/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 		<!-- Bootstrap 3.3.6 -->
@@ -112,5 +114,8 @@
 		@yield('scripts')
 
 		{{ AutoAssets::print('js') }}
+
+		{{ script('/js/admin/common.js') }}
+		{{ script('/js/admin/modal-search.js') }}
 	</body>
 </html>
