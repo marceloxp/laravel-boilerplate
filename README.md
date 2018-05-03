@@ -100,12 +100,13 @@ $masket  = Cep:toNumeric('04045-004'); // Returns 4045004
 ### Result `\App\Http\Umstudio\Result`
 
 ```php
-return Result::exception($e);
-return Result::success('Dados cadastrados com sucesso.', { 'id': 396 });
+return Result::success('Dados cadastrados com sucesso.');
+return Result::success('Dados cadastrados com sucesso.', ['id': 396]);
 return Result::error('Ocorreu um erro na gravação do registro');
 return Result::cached('', { 'id': 1, 'uf': 'sp' });
-return Result::undefined();
-return Result::exception($e);
+return Result::undefined();   // Ocorreu um erro na solcitação.
+return Result::invalid();     // Entrada de dados inválida.
+return Result::exception($e); // Ocorreu um erro na solcitação.
 ```
 
 ### RouteLang `\App\Http\Umstudio\RouteLang`

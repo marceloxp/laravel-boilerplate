@@ -57,6 +57,11 @@ class Result
 		return ($boolean_value) ? self::success($success_message) : self::error($error_message);
 	}
 
+	public static function invalid($data = [])
+	{
+		return self::error('Entrada de dados inválida.', $data);
+	}
+
 	public static function undefined($message = '', $data = [], $message_log = '')
 	{
 		$use_message = $message;

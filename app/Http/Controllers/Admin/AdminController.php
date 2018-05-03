@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Http\Umstudio\Result;
 
 class AdminController extends Controller
 {
@@ -277,43 +278,29 @@ class AdminController extends Controller
 	{
 		try
 		{
-            $result =
-			[
-                'result'  => true,
-                'success' => false,
-                'tag'     => 0,
-                'message' => '',
-                'error'   => ''
-            ];
-
 			$ids = $p_request->get('ids');
 			$ids = explode(',', $ids);
 			if (empty($ids))
 			{
-				$result['success'] = false;
-				$result['message'] = 'Entrada de dados inválida.';
-				return $result;
+				return Result::invalid();
 			}
 
 			if ($p_model::destroy($ids))
 			{
 				$message = (count($ids) > 1) ? 'Registros removidos com sucesso.' : 'Registro removido com sucesso.';
-				$result['success'] = true;
-				$result['message'] = $message;
+				return Result::success($message);
 			}
 			else
 			{
-				$result['message'] = 'Ocorreu um erro na remoção dos dados.';
+				return Result::error('Ocorreu um erro na remoção dos dados.');
 			}
 		}
 		catch (\Exception $e)
 		{
-            $result['success'] = false;
-            $result['message'] = 'Ocorreu um erro na remoção dos dados.';
-            $result['error'] = $e->getMessage();
+			return Result::exception($e);
 		}
 
-		return $result;
+		return Result::undefined();
 	}
 
 	public function defaultIndex($p_args)
