@@ -426,6 +426,15 @@ class AdminController extends Controller
 		}
 	}
 
+	public function defaultDestroy($p_args)
+	{
+		$default_params = [];
+		$params = array_merge($default_params, $p_args);
+		extract($params, EXTR_OVERWRITE);
+
+		return $this->destroy_register($model, $request);
+	}
+
 	private function buildMenus()
 	{
 		return config('admin.menu');

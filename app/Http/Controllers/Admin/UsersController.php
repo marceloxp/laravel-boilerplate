@@ -261,6 +261,12 @@ class UsersController extends AdminController
 	 */
 	public function destroy(Request $request)
 	{
-		return $this->destroy_register(User::class, $request);
+		return $this->defaultDestroy
+		(
+			[
+				'request' => $request,
+				'model'   => User::class
+			]
+		);
 	}
 }

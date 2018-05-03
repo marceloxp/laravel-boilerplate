@@ -112,6 +112,12 @@ class CategoriesController extends AdminController
 	 */
 	public function destroy(Request $request)
 	{
-		return $this->destroy_register(Category::class, $request);
+		return $this->defaultDestroy
+		(
+			[
+				'request' => $request,
+				'model'   => Category::class
+			]
+		);
 	}
 }

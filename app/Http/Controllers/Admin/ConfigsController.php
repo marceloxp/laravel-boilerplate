@@ -138,6 +138,12 @@ class ConfigsController extends AdminController
 	 */
 	public function destroy(Request $request)
 	{
-		return $this->destroy_register(Config::class, $request);
+		return $this->defaultDestroy
+		(
+			[
+				'request' => $request,
+				'model'   => Config::class
+			]
+		);
 	}
 }
