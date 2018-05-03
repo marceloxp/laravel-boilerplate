@@ -224,7 +224,6 @@ umsadmin.Tmodal_search = function($, objname, options)
 		}
 
 		self.options = Object.assign(self.default_options, p_options);
-		self.log.print(self.options);
 
 		if (self.options.fields === undefined)
 		{
@@ -234,7 +233,7 @@ umsadmin.Tmodal_search = function($, objname, options)
 		{
 			self.options.caption = 'Buscar em ' + self.options.table;
 		}
-		self.log.print(this.options);
+
 		self.show();
 	}
 

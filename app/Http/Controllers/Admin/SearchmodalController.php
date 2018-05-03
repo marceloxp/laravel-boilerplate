@@ -43,7 +43,7 @@ class SearchmodalController extends AdminController
 						$display_value = $field_value;
 						if ($field_name == 'name')
 						{
-							if(str2bool($options['multiple']))
+							if (str2bool($options['multiple']))
 							{
 								$display_value = sprintf('<div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;"><label><input data-ids="%s" type="checkbox" name="register"> %s </label></div>', $ids, $field_value);
 							}
