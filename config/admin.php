@@ -9,7 +9,7 @@ return [
 			'color'   => 'bg-green',
 			'ico'     => 'fa-video-camera',
 			'link'    => 'admin_videos',
-			'table'   => 'videos'
+			'model'   => 'Video'
 		]
 	],
 	'menu' =>
