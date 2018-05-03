@@ -26,6 +26,8 @@ class AjustUsersTable extends Migration
 				$table->rememberToken();
 				$table->timestamps();
 				$table->softDeletes();
+
+				$table->index(['deleted_at']);
         	}
 		);
     }

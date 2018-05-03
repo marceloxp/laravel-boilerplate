@@ -24,6 +24,8 @@ class CreateCitiesTable extends Migration
 				$table->timestamps();
 				$table->softDeletes();
 
+				$table->index(['deleted_at']);
+
 				$table->foreign('state_id')->references('id')->on('cities');
         	}
 		);

@@ -22,6 +22,8 @@ class CreateCodes extends Migration
 				$table->string('code',8)->unique()->comment('Código');
 				$table->timestamps();
 				$table->softDeletes();
+
+				$table->index(['deleted_at']);
         	}
 		);
     }

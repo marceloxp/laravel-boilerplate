@@ -25,6 +25,8 @@ class CreateVideosTable extends Migration
 				$table->timestamps();
 				$table->softDeletes();
 
+				$table->index(['deleted_at']);
+
 				$table->foreign('category_id')->references('id')->on('categories');
         	}
 		);

@@ -24,6 +24,8 @@ class CreateConfigsTable extends Migration
 				$table->enum('status', ['Ativo', 'Inativo'])->default('Ativo')->comment('Status');
 				$table->timestamps();
 				$table->softDeletes();
+
+				$table->index(['deleted_at']);
         	}
 		);
     }

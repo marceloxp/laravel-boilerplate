@@ -24,6 +24,8 @@ class CreateRolesTable extends Migration
 				$table->enum('color', ['Azul','Azul Escuro','Roxo','Vermelho','Verde','Laranja','Cinza','Preto'])->default('Azul')->comment('Cor');
 				$table->timestamps();
 				$table->softDeletes();
+
+				$table->index(['deleted_at']);
         	}
 		);
     }

@@ -23,6 +23,8 @@ class CreateStatesTable extends Migration
 				$table->string('uf',2)->comment('UF');
 				$table->timestamps();
 				$table->softDeletes();
+
+				$table->index(['deleted_at']);
         	}
 		);
     }
