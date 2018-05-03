@@ -61,17 +61,15 @@ class RolesController extends AdminController
 	 */
 	public function create(Request $request, $id = null)
 	{
-		$table_name     = (new Role())->getTable();
-		$register       = ($id) ? Role::find($id) : new Role;
-		$is_creating    = (empty($id));
-		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
-		$table_name     = (new Role())->getTable();
-		$display_fields = ['id', 'name', 'description','color'];
-		$fields_schema  = Role::getFieldsMetaData();
-
-		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','table_name'));
-
-		return view('Admin.generic_add');
+		return $this->defaultCreate
+		(
+			[
+				'id'             => $id,
+				'request'        => $request,
+				'model'          => Role::class,
+				'display_fields' => ['id', 'name', 'description','color']
+			]
+		);
 	}
 
 	/**

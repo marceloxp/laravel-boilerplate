@@ -55,17 +55,15 @@ class VideosController extends AdminController
 	 */
 	public function create(Request $request, $id = null)
 	{
-		$table_name     = (new Video())->getTable();
-		$register       = ($id) ? Video::find($id) : new Video;
-		$is_creating    = (empty($id));
-		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
-		$table_name     = (new Video())->getTable();
-		$display_fields = ['id','category_id','name','youtube'];
-		$fields_schema  = Video::getFieldsMetaData();
-
-		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','table_name'));
-
-		return view('Admin.generic_add');
+		return $this->defaultCreate
+		(
+			[
+				'id'             => $id,
+				'request'        => $request,
+				'model'          => Video::class,
+				'display_fields' => ['id','category_id','name','youtube']
+			]
+		);
 	}
 
 	/**

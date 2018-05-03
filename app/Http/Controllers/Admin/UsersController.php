@@ -88,19 +88,15 @@ class UsersController extends AdminController
 	 */
 	public function create(Request $request, $id = null)
 	{
-		$table_name     = (new User())->getTable();
-		$register       = ($id) ? User::find($id) : new User;
-		$is_creating    = (empty($id));
-		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
-		$table_name     = (new User())->getTable();
-		$display_fields = ['id','name','email','password','roles'];
-		$fields_schema  = User::getFieldsMetaData($this->appends);
-
-		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','table_name'));
-
-		$this->hooks_edit($table_name);
-
-		return view('Admin.generic_add');
+		return $this->defaultCreate
+		(
+			[
+				'id'             => $id,
+				'request'        => $request,
+				'model'          => User::class,
+				'display_fields' => ['id','name','email','password','roles']
+			]
+		);
 	}
 
 	public function hooks_edit($table_name)

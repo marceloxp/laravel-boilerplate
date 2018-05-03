@@ -366,6 +366,29 @@ class AdminController extends Controller
 		return view('Admin.generic_show');
 	}
 
+	public function defaultCreate($p_args)
+	{
+		$default_params = [];
+		$params = array_merge($default_params, $p_args);
+		extract($params, EXTR_OVERWRITE);
+
+		$table_name     = (new $model())->getTable();
+		$register       = ($id) ? $model::find($id) : new $model;
+		$is_creating    = (empty($id));
+		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
+		$table_name     = (new $model())->getTable();
+		$fields_schema  = $model::getFieldsMetaData();
+
+		if (method_exists($this, 'hooks_edit'))
+		{
+			$this->hooks_edit($table_name);
+		}
+
+		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','table_name'));
+
+		return view('Admin.generic_add');
+	}
+
 	public function defaultStore($request, $model)
 	{
 		$id = $request->get('id');
