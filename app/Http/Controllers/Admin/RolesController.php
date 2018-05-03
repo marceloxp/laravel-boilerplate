@@ -93,17 +93,14 @@ class RolesController extends AdminController
 	 */
 	public function show($id)
 	{
-		$table_name     = (new Role())->getTable();
-		$register       = ($id) ? Role::find($id) : new Role;
-		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
-		$display_fields = ['id','name','description','color','created_at','updated_at','deleted_at'];
-		$fields_schema  = Role::getFieldsMetaData();
-
-		View::share(compact('register','panel_title','display_fields','fields_schema','table_name'));
-
-		$this->hooks_show($table_name);
-
-		return view('Admin.generic_show');
+		return $this->defaultShow
+		(
+			[
+				'id'             => $id,
+				'model'          => Role::class,
+				'display_fields' => ['id','name','description','color','created_at','updated_at','deleted_at']
+			]
+		);
 	}
 
 	public function hooks_show($table_name)

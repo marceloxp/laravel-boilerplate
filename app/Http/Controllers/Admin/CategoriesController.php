@@ -73,15 +73,14 @@ class CategoriesController extends AdminController
 	 */
 	public function show($id)
 	{
-		$table_name     = (new Category())->getTable();
-		$register       = ($id) ? Category::find($id) : new Category;
-		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
-		$display_fields = ['id','name','description','created_at','updated_at','deleted_at'];
-		$fields_schema  = Category::getFieldsMetaData();
-
-		View::share(compact('register','panel_title','display_fields','fields_schema','table_name'));
-
-		return view('Admin.generic_show');
+		return $this->defaultShow
+		(
+			[
+				'id'             => $id,
+				'model'          => Category::class,
+				'display_fields' => ['id','name','description','created_at','updated_at','deleted_at']
+			]
+		);
 	}
 
 	/**

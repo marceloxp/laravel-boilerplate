@@ -212,17 +212,14 @@ class UsersController extends AdminController
 	 */
 	public function show($id)
 	{
-		$table_name     = (new User())->getTable();
-		$register       = ($id) ? User::find($id) : new User;
-		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
-		$display_fields = ['id','name','email','roles','created_at','updated_at','deleted_at'];
-		$fields_schema  = User::getFieldsMetaData($this->appends);
-
-		View::share(compact('register','panel_title','display_fields','fields_schema','table_name','image_fields'));
-
-		$this->hooks_show($table_name);
-
-		return view('Admin.generic_show');
+		return $this->defaultShow
+		(
+			[
+				'id'             => $id,
+				'model'          => User::class,
+				'display_fields' => ['id','name','email','roles','created_at','updated_at','deleted_at']
+			]
+		);
 	}
 
 	public function hooks_show($table_name)

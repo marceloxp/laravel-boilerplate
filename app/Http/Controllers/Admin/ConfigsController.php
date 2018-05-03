@@ -87,17 +87,14 @@ class ConfigsController extends AdminController
 	 */
 	public function show($id)
 	{
-		$table_name     = (new Config())->getTable();
-		$register       = ($id) ? Config::find($id) : new Config;
-		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
-		$display_fields = ['id', 'name', 'value','status','created_at','updated_at','deleted_at'];
-		$fields_schema  = Config::getFieldsMetaData();
-
-		View::share(compact('register','panel_title','display_fields','fields_schema','table_name'));
-
-		$this->hooks_show($table_name);
-
-		return view('Admin.generic_show');
+		return $this->defaultShow
+		(
+			[
+				'id'             => $id,
+				'model'          => Config::class,
+				'display_fields' => ['id', 'name', 'value','status','created_at','updated_at','deleted_at']
+			]
+		);
 	}
 
 	public function hooks_show($table_name)
