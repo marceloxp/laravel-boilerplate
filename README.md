@@ -200,6 +200,10 @@ echo lang_home_link('en'); // returns root url for language [en]
 echo str_mask('04045004', '##.###-###'); // Returns '04.045-004
 echo str_mask('04045004', '#####-###');  // Returns '04045-004
 echo str_plural_2_singular('corações');  // Returns 'coração';
+
+echo str2bool('true');  // Returns true;
+echo str2bool('false'); // Returns false;
+echo str2bool('foo');   // Returns false;
 ```
 
 ### Custom configs
