@@ -16,4 +16,15 @@ class Category extends MasterModel
 	{
 		return $this->hasMany('App\Models\Video');
 	}
+
+    public static function validate($request, $id = '')
+    {
+		$rules = 
+		[
+			'name'        => 'required|min:5|max:150|unique:roles,name,' . $id,
+			'description' => 'required|min:5|max:255'
+		];
+
+		return Role::_validate($request, $rules, $id);
+    }
 }

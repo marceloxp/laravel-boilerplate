@@ -13,5 +13,6 @@ return [
 	'neighborhood' => 'Bairro',
 	'password'     => 'Senha',
 	'category_id'  => 'Categoria',
-	'youtube'      => 'YouTube'
+	'youtube'      => 'YouTube',
+	'description'  => 'Descrição'
 ];

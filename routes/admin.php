@@ -106,6 +106,20 @@ Route::group
 					}
 				);
 
+				// Categorias
+				Route::group
+				(
+					['prefix' => 'categories'],
+					function()
+					{
+						Route::get ('/'         , 'CategoriesController@index'  )->name('admin_categories'       )->group('admin_categories');
+						Route::get ('edit/{id?}', 'CategoriesController@create' )->name('admin_categories_edit'  )->group('admin_categories');
+						Route::post('edit/{id?}', 'CategoriesController@store'  )->name('admin_categories_save'  )->group('admin_categories');
+						Route::get ('show/{id}' , 'CategoriesController@show'   )->name('admin_categories_show'  )->group('admin_categories');
+						Route::post('delete/'   , 'CategoriesController@destroy')->name('admin_categories_delete')->group('admin_categories');
+					}
+				);
+
 				// Vídeos
 				Route::group
 				(

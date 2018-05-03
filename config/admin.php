@@ -38,6 +38,13 @@ return [
 			[
 				[
 					'type'    => 'link',
+					'caption' => 'Categorias',
+					'ico'     => 'fa-folder',
+					'group'   => 'admin_categories',
+					'route'   => 'admin_categories'
+				],
+				[
+					'type'    => 'link',
 					'caption' => 'Vídeos',
 					'ico'     => 'fa-youtube',
 					'group'   => 'admin_videos',
