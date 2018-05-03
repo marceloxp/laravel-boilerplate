@@ -15,6 +15,7 @@
 		"esemve/hook": "^0.0.4"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2@dev",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
