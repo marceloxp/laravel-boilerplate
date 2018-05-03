@@ -203,14 +203,6 @@ class AdminController extends Controller
 				}
 			}
 
-			if ($search_order)
-			{
-				foreach ($search_order as $order)
-				{
-					$table->orderBy($order['field_name'], $order['direction']);
-				}
-			}
-
 			if ($range_field)
 			{
 				$date_ini = $search_range[0];
@@ -218,6 +210,19 @@ class AdminController extends Controller
 				$table->whereBetween(sprintf('%s.%s', $table_name, $range_field), [$date_ini, $date_end]);
 			}
 		}
+
+		if ($search_order)
+		{
+			foreach ($search_order as $order)
+			{
+				$table->orderBy($order['field_name'], $order['direction']);
+			}
+		}
+		else
+		{
+			$table->orderBy('id', 'DESC');
+		}
+
 
 		$table = $table->paginate($p_perpage);
 
