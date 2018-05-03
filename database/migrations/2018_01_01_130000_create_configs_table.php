@@ -25,7 +25,7 @@ class CreateConfigsTable extends Migration
 				$table->timestamps();
 				$table->softDeletes();
 
-				$table->index(['deleted_at']);
+				$table->index(['name','deleted_at']);
         	}
 		);
     }

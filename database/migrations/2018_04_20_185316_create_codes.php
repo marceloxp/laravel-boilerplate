@@ -23,7 +23,7 @@ class CreateCodes extends Migration
 				$table->timestamps();
 				$table->softDeletes();
 
-				$table->index(['deleted_at']);
+				$table->index(['code','deleted_at']);
         	}
 		);
     }
