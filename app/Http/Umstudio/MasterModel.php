@@ -16,7 +16,10 @@ class MasterModel extends Model
 
 	public static function getTableName()
 	{
-		return with(new static)->getTable();
+		$instanced_model = with(new static);
+		$result = $instanced_model->getTable();
+		unset($instanced_model);
+		return $result;
 	}
 
 	public static function translateNameCaptions($p_field_names)

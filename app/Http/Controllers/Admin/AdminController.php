@@ -329,7 +329,7 @@ class AdminController extends Controller
 		$panel_title    = $this->caption;
 		$fields_schema  = $model::getFieldsMetaData($appends);
 		$perpage        = $this->getPerPage($request);
-		$table_name     = (new $model())->getTable();
+		$table_name     = $model::getTableName();
 		$table          = $this->getTableSearch($model, $perpage, $request, $display_fields, $fields_schema);
 		$paginate       = $this->ajustPaginate($request, $table);
 		$has_table      = (!empty($table));
@@ -351,7 +351,7 @@ class AdminController extends Controller
 		$params = array_merge($default_params, $p_args);
 		extract($params, EXTR_OVERWRITE);
 
-		$table_name     = (new $model())->getTable();
+		$table_name     = $model::getTableName();
 		$register       = ($id) ? $model::find($id) : new $model;
 		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
 		$fields_schema  = $model::getFieldsMetaData();
@@ -372,11 +372,10 @@ class AdminController extends Controller
 		$params = array_merge($default_params, $p_args);
 		extract($params, EXTR_OVERWRITE);
 
-		$table_name     = (new $model())->getTable();
+		$table_name     = $model::getTableName();
 		$register       = ($id) ? $model::find($id) : new $model;
 		$is_creating    = (empty($id));
 		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
-		$table_name     = (new $model())->getTable();
 		$fields_schema  = $model::getFieldsMetaData();
 
 		if (method_exists($this, 'hooks_edit'))
@@ -414,7 +413,7 @@ class AdminController extends Controller
 
 		if ($register->save())
 		{
-			$table_name = (new $model())->getTable();
+			$table_name = $model::getTableName();
 			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
 			return redirect(Route('admin_' . $table_name))->with('messages', [$message]);
 		}
