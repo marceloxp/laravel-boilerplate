@@ -316,6 +316,36 @@ class AdminController extends Controller
 		return $result;
 	}
 
+	public function defaultIndex($p_args)
+	{
+		$default_params = 
+		[
+			'appends'    => [],
+			'exportable' => false
+		];
+
+		$params = array_merge($default_params, $p_args);
+		extract($params, EXTR_OVERWRITE);
+
+		$panel_title    = $this->caption;
+		$fields_schema  = $model::getFieldsMetaData($appends);
+		$perpage        = $this->getPerPage($request);
+		$table_name     = (new $model())->getTable();
+		$table          = $this->getTableSearch($model, $perpage, $request, $display_fields, $fields_schema);
+		$paginate       = $this->ajustPaginate($request, $table);
+		$has_table      = (!empty($table));
+		$search_dates   = ['created_at'];
+
+		View::share(compact('panel_title','fields_schema','table_name','display_fields','table','paginate','has_table','search_dates','exportable'));
+
+		if (method_exists($this, 'hooks_index'))
+		{
+			$this->hooks_index($table_name);
+		}
+
+		return view('Admin.generic');
+	}
+
 	public function defaultStore($request, $model)
 	{
 		$id = $request->get('id');

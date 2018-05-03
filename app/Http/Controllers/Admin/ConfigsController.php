@@ -26,22 +26,14 @@ class ConfigsController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = $this->caption;
-		$fields_schema  = Config::getFieldsMetaData();
-		$perpage        = $this->getPerPage($request);
-		$table_name     = (new Config())->getTable();
-		$display_fields = ['id', 'name', 'value', 'status', 'created_at'];
-		$table          = $this->getTableSearch(Config::class, $perpage, $request, $display_fields, $fields_schema);
-		$paginate       = $this->ajustPaginate($request, $table);
-		$has_table      = (!empty($table));
-		$search_dates   = ['created_at'];
-		$exportable     = false;
-
-		View::share(compact('panel_title','fields_schema','table_name','display_fields','table','paginate','has_table','search_dates','exportable'));
-
-		$this->hooks_index($table_name);
-
-		return view('Admin.generic');
+		return $this->defaultIndex
+		(
+			[
+				'request'        => $request,
+				'model'          => Config::class,
+				'display_fields' => ['id', 'name', 'value', 'status', 'created_at']
+			]
+		);
 	}
 
 	public function hooks_index($table_name)

@@ -27,22 +27,15 @@ class UsersController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = $this->caption;
-		$fields_schema  = User::getFieldsMetaData($this->appends);
-		$perpage        = $this->getPerPage($request);
-		$table_name     = (new User())->getTable();
-		$display_fields = ['id','name','email','roles','created_at'];
-		$table          = $this->getTableSearch(User::class, $perpage, $request, $display_fields, $fields_schema);
-		$paginate       = $this->ajustPaginate($request, $table);
-		$has_table      = (!empty($table));
-		$search_dates   = ['created_at'];
-		$exportable     = false;
-
-		View::share(compact('panel_title','fields_schema','table_name','display_fields','table','paginate','has_table','search_dates','exportable'));
-
-		$this->hooks_index($table_name);
-
-		return view('Admin.generic');
+		return $this->defaultIndex
+		(
+			[
+				'appends'        => $this->appends,
+				'request'        => $request,
+				'model'          => User::class,
+				'display_fields' => ['id','name','email','roles','created_at']
+			]
+		);
 	}
 
 	private function getUsersRolesLabel($display_value)

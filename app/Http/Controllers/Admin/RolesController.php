@@ -26,21 +26,14 @@ class RolesController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = $this->caption;
-		$fields_schema  = Role::getFieldsMetaData();
-		$perpage        = $this->getPerPage($request);
-		$table_name     = (new Role())->getTable();
-		$display_fields = ['id','name','description','color','created_at'];
-		$table          = $this->getTableSearch(Role::class, $perpage, $request, $display_fields, $fields_schema);
-		$paginate       = $this->ajustPaginate($request, $table);
-		$has_table      = (!empty($table));
-		$search_dates   = ['created_at'];
-
-		View::share(compact('panel_title','fields_schema','table_name','display_fields','table','paginate','has_table','search_dates'));
-
-		$this->hooks_index($table_name);
-
-		return view('Admin.generic');
+		return $this->defaultIndex
+		(
+			[
+				'request'        => $request,
+				'model'          => Role::class,
+				'display_fields' => ['id','name','description','color','created_at']
+			]
+		);
 	}
 
 	private function formatRoleColor($p_display_value)

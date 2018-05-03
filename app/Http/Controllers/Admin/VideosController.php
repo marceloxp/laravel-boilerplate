@@ -26,21 +26,14 @@ class VideosController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = $this->caption;
-		$fields_schema  = Video::getFieldsMetaData();
-		$perpage        = $this->getPerPage($request);
-		$table_name     = (new Video())->getTable();
-		$display_fields = ['id','category_id','name','youtube','created_at'];
-		$table          = $this->getTableSearch(Video::class, $perpage, $request, $display_fields, $fields_schema);
-		$paginate       = $this->ajustPaginate($request, $table);
-		$has_table      = (!empty($table));
-		$search_dates   = ['created_at'];
-
-		View::share(compact('panel_title','fields_schema','table_name','display_fields','table','paginate','has_table','search_dates'));
-
-		$this->hooks_index($table_name);
-
-		return view('Admin.generic');
+		return $this->defaultIndex
+		(
+			[
+				'request'        => $request,
+				'model'          => Video::class,
+				'display_fields' => ['id','category_id','name','youtube','created_at']
+			]
+		);
 	}
 
 	public function hooks_index($table_name)

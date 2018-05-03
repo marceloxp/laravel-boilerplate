@@ -24,20 +24,14 @@ class CategoriesController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		$panel_title    = $this->caption;
-		$fields_schema  = Category::getFieldsMetaData();
-		$perpage        = $this->getPerPage($request);
-		$table_name     = (new Category())->getTable();
-		$display_fields = ['id','name','description','created_at'];
-		$table          = $this->getTableSearch(Category::class, $perpage, $request, $display_fields, $fields_schema);
-		$paginate       = $this->ajustPaginate($request, $table);
-		$has_table      = (!empty($table));
-		$search_dates   = ['created_at'];
-		$exportable     = false;
-
-		View::share(compact('panel_title','fields_schema','table_name','display_fields','table','paginate','has_table','search_dates','exportable'));
-
-		return view('Admin.generic');
+		return $this->defaultIndex
+		(
+			[
+				'request'        => $request,
+				'model'          => Category::class,
+				'display_fields' => ['id','name','description','created_at']
+			]
+		);
 	}
 
 	/**
