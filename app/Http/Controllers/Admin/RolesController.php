@@ -89,39 +89,7 @@ class RolesController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		$id = $request->get('id');
-
-		$valid = Role::validate($request, $id);
-		if (!$valid['success'])
-		{
-			return back()
-				->withErrors($valid['all'])
-				->withInput()
-			;
-		}
-
-		if (!empty($id))
-		{
-			$register = Role::firstOrNew(['id' => $id]);
-			$register->fill($request->all());
-		}
-		else
-		{
-			$register = Role::create($request->all());
-		}
-
-		if ($register->save())
-		{
-			$table_name = (new Role())->getTable();
-			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
-			return redirect(Route('admin_' . $table_name))->with('messages', [$message]);
-		}
-		else
-		{
-			return back()
-				->withErrors('Ocorreu um erro na gravação do registro.')
-				->withInput();
-		}
+		return $this->defaultStore($request, Role::class);
 	}
 
 	/**

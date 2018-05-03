@@ -316,6 +316,43 @@ class AdminController extends Controller
 		return $result;
 	}
 
+	public function defaultStore($request, $model)
+	{
+		$id = $request->get('id');
+
+		$valid = $model::validate($request, $id);
+		if (!$valid['success'])
+		{
+			return back()
+				->withErrors($valid['all'])
+				->withInput()
+			;
+		}
+
+		if (!empty($id))
+		{
+			$register = $model::firstOrNew(['id' => $id]);
+			$register->fill($request->all());
+		}
+		else
+		{
+			$register = $model::create($request->all());
+		}
+
+		if ($register->save())
+		{
+			$table_name = (new $model())->getTable();
+			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
+			return redirect(Route('admin_' . $table_name))->with('messages', [$message]);
+		}
+		else
+		{
+			return back()
+				->withErrors('Ocorreu um erro na gravação do registro.')
+				->withInput();
+		}
+	}
+
 	private function buildMenus()
 	{
 		return config('admin.menu');
