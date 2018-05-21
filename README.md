@@ -14,7 +14,7 @@ composer clearcache
 Install Site Package
 
 ```bash
-composer create-project marceloxp/laravel:@dev www --no-interaction
+composer create-project marceloxp/laravel www --no-interaction -s dev
 ```
 
 ### File `.env` configuration
@@ -33,6 +33,7 @@ php artisan migrate:refresh --seed
 
 - esemve/Hook: <https://github.com/esemve/Hook>
 - digitalnature/php-ref: <https://github.com/digitalnature/php-ref>
+- barryvdh/laravel-debugbar: <https://github.com/barryvdh/laravel-debugbar>
 
 ## Libraries
 

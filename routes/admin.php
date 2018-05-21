@@ -11,10 +11,6 @@
 |
 */
 
-// Response::macro('caps', function ($value) {
-//   return Response::make(strtoupper($value));
-// });
-
 \Illuminate\Routing\Route::macro('menu'   , function($value)  { $this->menu = $value; return $this;  } );
 \Illuminate\Routing\Route::macro('getMenu', function()        { return $this->menu ?? null;            } );
 

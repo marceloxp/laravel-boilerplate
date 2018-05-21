@@ -21,6 +21,7 @@ class CreateCategoriesTable extends Migration
 				$table->increments('id');
 				$table->string('name',150)->comment('Categoria');
 				$table->string('description',255)->comment('Descrição');
+				$table->string('image',255)->nullable()->comment('Imagem');
 				$table->enum('status', ['Ativo', 'Inativo'])->default('Ativo')->comment('Status');
 				$table->timestamps();
 				$table->softDeletes();

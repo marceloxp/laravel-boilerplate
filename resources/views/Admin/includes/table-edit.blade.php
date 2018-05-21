@@ -55,7 +55,7 @@
 						$url_image = url('images/admin/no-image.png');
 						if ($register->$field_name)
 						{
-							$url_image = url('uploads/images/' . $register->$field_name);
+							$url_image = uploaded_image($register->$field_name);
 						}
 
 						$preview_image = sprintf

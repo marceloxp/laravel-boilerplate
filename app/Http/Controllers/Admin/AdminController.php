@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Http\Umstudio\Result;
@@ -245,33 +246,27 @@ class AdminController extends Controller
 					;
 				}
 
-				$original_name = $file->getClientOriginalName();
-				$original_ext  = $file->getClientOriginalExtension();
-				$content_name  = str_replace('.' . $original_ext, '', $original_name);
+				$disk_name  = 'upload_images';
+				$file_name  = $file->getClientOriginalName();
+				$check_file = disk_new_file_name($disk_name, $file->getClientOriginalName());
+				$saved_file = $request->file($field_name)->storeAs('', $check_file, ['disk' => $disk_name]);
 
-				$move_file = 
-				[
-					'name'      => str_slug($content_name),
-					'extension' => $original_ext,
-					'full_name' => sprintf('%s.%s', str_slug($content_name), $original_ext),
-				];
-
-				$form[$field_name] = $move_file['full_name'];
-				$upload = $file->storeAs('images', $move_file['full_name'], 'uploads');
-
-				if (!$upload)
+				if (!$saved_file)
 				{
 					return back()
 						->withErrors('Ocorreu um erro na gravação da imagem.')
 						->withInput()
 					;
 				}
+
+				$form[$field_name] = $saved_file;
 			}
 
 			return $form;
 		}
 		catch (\Exception $e)
 		{
+			report($e);
 			return back()
 				->withErrors('Ocorreu um erro não esperado no processamento da imagem.')
 				->withInput()
@@ -360,7 +355,10 @@ class AdminController extends Controller
 
 	public function defaultCreate($p_args)
 	{
-		$default_params = [];
+		$default_params = 
+		[
+			'image_fields' => []
+		];
 		$params = array_merge($default_params, $p_args);
 		extract($params, EXTR_OVERWRITE);
 
@@ -375,7 +373,7 @@ class AdminController extends Controller
 			$this->hooks_edit($table_name);
 		}
 
-		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','table_name'));
+		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','image_fields','table_name'));
 
 		return view('Admin.generic_add');
 	}
@@ -393,14 +391,23 @@ class AdminController extends Controller
 			;
 		}
 
+		$form = $request->all();
+
+		$form = $this->processUploadImages($request, $form);
+
+		if (isRedirect($form))
+		{
+			return $form;
+		}
+
 		if (!empty($id))
 		{
 			$register = $model::firstOrNew(['id' => $id]);
-			$register->fill($request->all());
+			$register->fill($form);
 		}
 		else
 		{
-			$register = $model::create($request->all());
+			$register = $model::create($form);
 		}
 
 		if ($register->save())

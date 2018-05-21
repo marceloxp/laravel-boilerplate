@@ -95,9 +95,9 @@ return [
 
 	'default_locale'  => 'pt-br',
 	'fallback_locale' => 'pt-br',
-	'all_langs'       => array ('pt-br', 'en', 'es'),
+	'all_langs'       => array('pt-br', 'en', 'es'),
 	'current_locale'  => '',
-	'multilanguague'  => true,
+	'multilanguague'  => false,
 
 	/*
 	|--------------------------------------------------------------------------

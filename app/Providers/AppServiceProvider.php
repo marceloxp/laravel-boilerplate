@@ -26,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
 		{
 			config(['app.current_locale' => config('app.locale')]);
 		}
+
+		if (!is_dir(public_path('storage')))
+		{
+			App::make('files')->link(storage_path('app/public'), public_path('storage'));
+		}
 	}
 
 	/**

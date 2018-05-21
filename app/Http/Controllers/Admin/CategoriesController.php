@@ -29,8 +29,26 @@ class CategoriesController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => Category::class,
-				'display_fields' => ['id','name','description','created_at']
+				'display_fields' => ['id','name','image','description','created_at']
 			]
+		);
+	}
+
+	public function getUploadedImage($p_file_name, $p_height = 100)
+	{
+		if (empty($p_file_name)) { return $p_file_name; }
+		return sprintf('%s<br/>%s', uploaded_img($p_file_name, 'height="' . $p_height . '"'), $p_file_name);
+	}
+
+	public function hooks_index($table_name)
+	{
+		\Hook::listen
+		(
+			sprintf('admin_index_%s_image', $table_name),
+			function($callback, $output, $display_value, $register)
+			{
+				return $this->getUploadedImage($display_value, 100);
+			}
 		);
 	}
 
@@ -47,7 +65,8 @@ class CategoriesController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => Category::class,
-				'display_fields' => ['id','name','description']
+				'image_fields'   => ['image'],
+				'display_fields' => ['id','name','image','description']
 			]
 		);
 	}
@@ -76,8 +95,20 @@ class CategoriesController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => Category::class,
-				'display_fields' => ['id','name','description','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','name','image','description','created_at','updated_at','deleted_at']
 			]
+		);
+	}
+
+	public function hooks_show($table_name)
+	{
+		\Hook::listen
+		(
+			sprintf('admin_show_%s_image', $table_name),
+			function($callback, $output, $display_value, $register)
+			{
+				return $this->getUploadedImage($display_value, 250);
+			}
 		);
 	}
 

@@ -5,8 +5,8 @@ return [
 		'default' =>
 		[
 			'theme_color'     => 'Gray',
-			'title'           => 'Novo Site',
-			'description'     => 'Descrição do Site',
+			'title'           => env('APP_NAME'),
+			'description'     => env('APP_DESCRIPTION'),
 			'keywords'        => 'keywords, site',
 			'type'            => 'website',
 			'image'           => '/images/share.png',
