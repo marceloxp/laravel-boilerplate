@@ -1,7 +1,7 @@
 @php
 	use App\Http\Umstudio\Datasite;
-	use App\http\Umstudio\AutoAssets;
-	use App\http\Umstudio\Metasocial;
+	use App\Http\Umstudio\AutoAssets;
+	use App\Http\Umstudio\MetaSocial;
 @endphp
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
 			<meta name="app-version" content="{{ app_version() }}">
 			<meta name="robots" content="noindex">
 
-			{{ Metasocial::print() }}
+			{{ MetaSocial::print() }}
 
 			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
