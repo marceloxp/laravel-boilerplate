@@ -25,7 +25,6 @@
 						@php
 							$field_type  = $fields_schema[$field_name]['type'];
 							
-							
 							if ($fields_schema[$field_name]['has_relation'])
 							{
 								$ref_model     = $fields_schema[$field_name]['relation']['ref_model'];

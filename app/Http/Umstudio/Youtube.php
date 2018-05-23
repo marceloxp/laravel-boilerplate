@@ -69,4 +69,18 @@ class Youtube
 	{
 		return Youtube::getImageLinkThumb($p_youtube_id_or_url) . '<br>' . Youtube::getUrlLink($p_youtube_id_or_url);
 	}
+
+	public static function getEmbeddedPlayer($p_youtube_id_or_url, $p_width = 560, $p_height = 315)
+	{
+		$yid = Youtube::getYoutubeId($p_youtube_id_or_url);
+		$result = sprintf
+		(
+			'<iframe width="%s" height="%s" src="https://www.youtube.com/embed/%s" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+			$p_width,
+			$p_height,
+			$yid
+		);
+
+		return $result;
+	}
 }

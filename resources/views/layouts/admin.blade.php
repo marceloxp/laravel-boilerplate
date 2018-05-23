@@ -1,5 +1,5 @@
 @php
-	use App\http\Umstudio\AutoAssets;
+	use App\Http\Umstudio\AutoAssets;
 	use App\Http\Umstudio\Datasite;
 @endphp
 

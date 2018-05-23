@@ -102,7 +102,12 @@ class VideosController extends AdminController
 			sprintf('admin_show_%s_youtube', $table_name),
 			function($callback, $output, $display_value, $register)
 			{
-				return Youtube::getImageUrlLink($display_value);
+				return sprintf
+				(
+					'%s <br/> %s',
+					Youtube::getEmbeddedPlayer($display_value),
+					Youtube::getUrlLink($display_value)
+				);
 			}
 		);
 	}

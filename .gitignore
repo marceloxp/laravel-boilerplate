@@ -11,3 +11,11 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /composer.lock
+
+public/adminer/adminer\.php
+
+public/adminer/login-otp\.php
+
+public/adminer/plugin\.php
+
+public/adminer/struct-comments\.php
