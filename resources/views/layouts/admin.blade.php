@@ -9,8 +9,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,Chrome=1" >
-		<meta name="env" content="{{env('APP_ENV', 'undefined')}}">
-		<meta name="now" content="{{date('Y-m-d H:i:s')}}">
+		<meta name="env" content="{{ env('APP_ENV', 'undefined') }}">
+		<meta name="now" content="{{ date('Y-m-d H:i:s') }}">
 		<meta name="framework-version" content="{{ App::VERSION() }}">
 		<meta name="app-version" content="{{ app_version() }}">
 
@@ -18,20 +18,20 @@
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- Bootstrap 3.3.6 -->
-		<link rel="stylesheet" href="{{vasset('/admin-lte/bootstrap/css/bootstrap.min.css')}}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte/bootstrap/css/bootstrap.min.css') }}">
 		<!-- Font Awesome -->
-		<link rel="stylesheet" href="{{vasset('/admin-lte/fonts/font-awesome.min.css')}}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte/fonts/font-awesome.min.css') }}">
 		<!-- Ionicons -->
-		<link rel="stylesheet" href="{{vasset('/admin-lte/fonts/ionicons.min.css')}}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte/fonts/ionicons.min.css') }}">
 		<!-- Theme style -->
-		<link rel="stylesheet" href="{{vasset('/admin-lte/dist/css/AdminLTE.min.css')}}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte/dist/css/AdminLTE.min.css') }}">
 		<!-- AdminLTE Skins. Choose a skin from the css/skins
 			folder instead of downloading all of them to reduce the load. -->
-		<link rel="stylesheet" href="{{vasset('/admin-lte/dist/css/skins/_all-skins.min.css')}}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte/dist/css/skins/_all-skins.min.css') }}">
 		<!-- Select2 -->
-		<link rel="stylesheet" href="{{vasset('/admin-lte/plugins/select2/select2.min.css')}}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/select2/select2.min.css') }}">
 		<!-- daterange picker -->
-		<link rel="stylesheet" href="{{vasset('/admin-lte/plugins/bootstrap-daterangepicker/daterangepicker.css')}}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/bootstrap-daterangepicker/daterangepicker.css') }}">
 		<!-- <link rel="stylesheet" href="/admin-lte/plugins/daterangepicker/daterangepicker.css"> -->
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,8 +52,8 @@
 		<div class="wrapper">
 			<header class="main-header">
 				<a href="{{route('admin_dashboard')}}" class="logo">
-					<span class="logo-mini">{{env('ADMIN_SLUG', 'ADM')}}</span>
-					<span class="logo-lg">{{env('ADMIN_CAPTION', 'Admin')}}</span>
+					<span class="logo-mini">{{ env('ADMIN_SLUG', 'ADM') }}</span>
+					<span class="logo-lg">{{ env('ADMIN_CAPTION', 'Admin') }}</span>
 				</a>
 				<nav class="navbar navbar-static-top">
 					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">

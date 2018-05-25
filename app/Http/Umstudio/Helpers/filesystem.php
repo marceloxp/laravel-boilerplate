@@ -7,11 +7,55 @@ if (!function_exists('disk_file_exists'))
 	}
 }
 
-if (!function_exists('uploaded_image'))
+if (!function_exists('is_image'))
 {
-	function uploaded_image($p_file_name)
+	function is_image($p_file_name)
 	{
-		return \Illuminate\Support\Facades\Storage::disk('upload_images')->url($p_file_name);
+		$extension = \File::extension($p_file_name);
+
+		switch ($extension)
+		{
+			case 'png':
+			case 'jpg':
+			case 'jpeg':
+			case 'gif':
+				return true;
+			break;
+		}
+
+		return false;
+	}
+}
+
+if (!function_exists('get_disk_name'))
+{
+	function get_disk_name($p_file_name)
+	{
+		$extension = \File::extension($p_file_name);
+
+		switch ($extension)
+		{
+			case 'png':
+			case 'jpg':
+			case 'jpeg':
+			case 'gif':
+				return 'upload_images';
+			break;
+			case 'pdf':
+				return 'upload_pdfs';
+			break;
+		}
+
+		return 'others';
+	}
+}
+
+if (!function_exists('uploaded_file'))
+{
+	function uploaded_file($p_file_name)
+	{
+		$disk_name = get_disk_name($p_file_name);
+		return \Illuminate\Support\Facades\Storage::disk($disk_name)->url($p_file_name);
 	}
 }
 
@@ -45,15 +89,67 @@ if (!function_exists('disk_new_file_name'))
 	}
 }
 
-if (!function_exists('uploaded_img'))
+if (!function_exists('uploaded_file'))
 {
-	function uploaded_img($p_file_name, $p_attr = '')
+	function uploaded_file($p_file_name, $p_attr = '')
 	{
 		if (empty($p_file_name))
 		{
 			return '';
 		}
 
-		return sprintf('<img src="%s" %s >', uploaded_image($p_file_name), $p_attr);
+		$info = pathinfo($p_file_name);
+		$extension = strtolower($info['extension']);
+
+		switch ($extension)
+		{
+			case 'png':
+			case 'jpg':
+			case 'jpeg':
+			case 'gif':
+				return sprintf('<img src="%s" %s >', uploaded_file($p_file_name), $p_attr);
+			break;
+			case 'pdf':
+				return sprintf('<img src="%s" %s >', vasset('/images/admin/fileextensions/pdf.png'), $p_attr);
+			break;
+		}
+	}
+}
+
+if (!function_exists('link_uploaded_img'))
+{
+	function link_uploaded_file($p_file_name, $p_attr = '')
+	{
+		if (empty($p_file_name))
+		{
+			return '';
+		}
+
+		$extension = \File::extension($p_file_name);
+
+		switch ($extension)
+		{
+			case 'png':
+			case 'jpg':
+			case 'jpeg':
+			case 'gif':
+				return sprintf
+				(
+					'<a href="%s" target="_blank"><img src="%s" %s ></a>',
+					uploaded_file($p_file_name),
+					uploaded_file($p_file_name),
+					$p_attr
+				);
+			break;
+			case 'pdf':
+				return sprintf
+				(
+					'<a href="%s" target="_blank"><img src="%s" %s ></a>',
+					uploaded_file($p_file_name),
+					vasset('/images/admin/fileextensions/pdf.png'),
+					$p_attr
+			);
+			break;
+		}
 	}
 }

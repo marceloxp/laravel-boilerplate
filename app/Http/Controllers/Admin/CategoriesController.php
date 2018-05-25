@@ -34,10 +34,10 @@ class CategoriesController extends AdminController
 		);
 	}
 
-	public function getUploadedImage($p_file_name, $p_height = 100)
+	public function getUploadedFile($p_file_name, $p_height = 100)
 	{
 		if (empty($p_file_name)) { return $p_file_name; }
-		return sprintf('%s<br/>%s', uploaded_img($p_file_name, 'height="' . $p_height . '"'), $p_file_name);
+		return sprintf('%s<br/>%s', link_uploaded_file($p_file_name, sprintf('height="%s"', $p_height)), $p_file_name);
 	}
 
 	public function hooks_index($table_name)
@@ -47,7 +47,7 @@ class CategoriesController extends AdminController
 			sprintf('admin_index_%s_image', $table_name),
 			function($callback, $output, $display_value, $register)
 			{
-				return $this->getUploadedImage($display_value, 100);
+				return $this->getUploadedFile($display_value, 100);
 			}
 		);
 	}
