@@ -12,7 +12,20 @@ class SearchmodalController extends AdminController
 		$page = $request->query('page', 1);
 
 		$model = sprintf('\App\Models\%s', ucfirst(strtolower($options['model'])));
-		$table = $model::select($options['fields']);
+		$table = $model::select();
+		if (array_key_exists('find', $options))
+		{
+			foreach ($options['find']['fields'] as $key => $find_value)
+			{
+				$table->orWhere
+				(
+					$find_value,
+					'like',
+					'%' . str_replace(' ', '%', $options['find']['value']) . '%'
+				);
+			}
+		}
+		$table->select($options['fields']);
 		$captions = $model::translateNameCaptions($options['fields']);
 
 		$registers = $table->paginate(10);
@@ -70,7 +83,17 @@ class SearchmodalController extends AdminController
 
 		$result = '
 			<div class="modal-body">
-				' . $table . '
+				<div class="row">
+					<div class="col-md-12">
+						<label for="frSearch">Pesquisar</label>
+						<input class="form-control" type="text" id="frSearch" name="frSearch" value="' . ($options['find']['value'] ?? '') . '" placeholder="Pesquisar">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						' . $table . '
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<div class="row">

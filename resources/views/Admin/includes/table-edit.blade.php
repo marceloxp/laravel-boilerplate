@@ -1,6 +1,5 @@
 @php
 	$image_fields = $image_fields ?? [];
-	// dump(old());
 @endphp
 
 <div class="box box-primary">
@@ -55,7 +54,7 @@
 						$url_image = url('images/admin/no-image.png');
 						if ($register->$field_name)
 						{
-							$url_image = uploaded_image($register->$field_name);
+							$url_image = uploaded_file($register->$field_name);
 						}
 
 						$preview_image = sprintf

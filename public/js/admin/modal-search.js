@@ -79,6 +79,63 @@ umsadmin.Tmodal_search = function($, objname, options)
 				self.openModalByInput($(this));
 			}
 		);
+
+		$(document).on
+		(
+			'keydown',
+			'#frSearch',
+			function(e)
+			{
+				self.lock('autosearch');
+			}
+		);
+
+		$(document).on
+		(
+			'keyup',
+			'#frSearch',
+			function(e)
+			{
+				self.unlock('autosearch');
+				if (self.tm_search !== undefined)
+				{
+					clearTimeout(self.tm_search);
+					delete self.tm_search;
+				}
+
+				self.tm_search = setTimeout
+				(
+					function()
+					{
+						if (!self.islocked('autosearch'))
+						{
+							self.search_str = $('#frSearch').val();
+							if (self.last_search !== undefined)
+							{
+								if (self.last_search == self.search_str)
+								{
+									self.log.print('IS THE SAME SEARCH!!!');
+									return;
+								}
+							}
+							self.autoSearch();
+							self.lock('autosearch');
+						}
+					},
+					750
+				);
+			}
+		);
+	};
+
+	this.autoSearch = function()
+	{
+		self.last_search = self.search_str;
+		if ( (self.search_str != '') && (self.search_str.length >= 3) )
+		{
+			self.options.find.value = self.search_str;
+			self.setOptions(self.options)
+		}
 	};
 
 	this.execute = function()
@@ -104,7 +161,12 @@ umsadmin.Tmodal_search = function($, objname, options)
 				'multiple': false,
 				'caption' : 'Localizar ' + caption,
 				'field'   : field,
-				'value'   : value
+				'value'   : value,
+				'find'    :
+				{
+					'fields': ['name'],
+					'value' : ''
+				}
 			}
 		);
 	};
@@ -171,6 +233,14 @@ umsadmin.Tmodal_search = function($, objname, options)
 	this.enableModal = function()
 	{
 		$('#search-modal .modal-all-body').css('opacity', '1');
+		setTimeout
+		(
+			function()
+			{
+				$('#frSearch').select().focus();
+			},
+			500
+		);
 	};
 
 	this.getPage = function(p_page)
@@ -264,6 +334,13 @@ function admin_modal_search(p_options)
 // 		'fields'  : ['id', 'uf', 'name'],
 // 		'multiple': false,
 // 		'caption' : 'Localizar Estado',
-//		'field'   : 'state_id'
+// 		'field'   : 'state_id',
+// 		'find'    :
+// 		{
+// 			'fields': ['name'],
+// 			'value' : 'Rio Janeiro'
+// 		}
 // 	}
 // );
+
+// admin_modal_search( { 'model': 'State', 'fields': ['id', 'uf', 'name'], 'multiple': false, 'caption': 'Localizar Estado', 'field': 'state_id', 'find': {'fields': ['name'], 'value': ''} } );
