@@ -78,6 +78,31 @@ return [
 				]
 			]
 		],
+		'developer' =>
+		[
+			'roles'   => ['Developer'],
+			'type'    => 'header',
+			'caption' => 'Developer',
+			'ico'     => 'fa-terminal',
+			'items'   => 
+			[
+				[
+					'roles'   => ['Developer'],
+					'type'    => 'link',
+					'caption' => 'phpinfo',
+					'ico'     => 'fa-info-circle',
+					'route'   => 'admin_phpinfo'
+				],
+				[
+					'roles'   => ['Developer'],
+					'type'    => 'internal-link',
+					'caption' => 'Adminer',
+					'ico'     => 'fa-database',
+					'link'    => 'adminer',
+					'target'  => '_blank'
+				]
+			]
+		],
 		'sistema' =>
 		[
 			'type'    => 'header',
@@ -100,13 +125,6 @@ return [
 					'ico'     => 'fa-unlock-alt',
 					'group'   => 'admin_roles',
 					'route'   => 'admin_roles'
-				],
-				[
-					'roles'   => ['Developer'],
-					'type'    => 'link',
-					'caption' => 'phpinfo',
-					'ico'     => 'fa-info-circle',
-					'route'   => 'admin_phpinfo'
 				],
 				[
 					'roles'   => ['Master','Developer'],
