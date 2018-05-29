@@ -24,5 +24,5 @@
 @endsection
 
 @section('scripts')
-	{{ script('/admin-lte-custom/js/prism.js') }}
+	{{ javascript('/admin-lte-custom/js/prism.js') }}
 @endsection

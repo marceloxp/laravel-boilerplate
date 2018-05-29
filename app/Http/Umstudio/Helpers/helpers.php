@@ -15,9 +15,9 @@ if (!function_exists('vasset'))
     }
 }
 
-if (!function_exists('script'))
+if (!function_exists('javascript'))
 {
-    function script($p_source)
+    function javascript($p_source)
 	{
 		return new \Illuminate\Support\HtmlString( sprintf('<script type="text/javascript" src="%s"></script>', vasset($p_source)) );
     }

@@ -152,11 +152,11 @@ RouteLang::getCurrentLocale();        // Returns app current locale config (dyna
 <img src="https://wwww.site.com.br/img/logo.png?v=0.0.2">
 ```
 
-#### script and css
+#### javascript and css
 
 ```php
 // Add host and app version
-script('/js/main.js');
+javascript('/js/main.js');
 <script type="text/javascript" src="https://wwww.site.com.br/js/main.js?v=0.0.1"></script>>
 
 css('/css/style.css');

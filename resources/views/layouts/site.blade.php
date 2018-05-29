@@ -58,11 +58,11 @@
 		{{-- Vendor Scripts --}}
 		@section('vendor.js')
 			<script type="text/javascript" src="{{vasset('/lib/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
-			{{ script('/lib/sweetalert.min.js') }}
+			{{ javascript('/lib/sweetalert.min.js') }}
 		@show
 		
 		{{-- Common Script --}}
-		{{ script('/js/common.js') }}
+		{{ javascript('/js/common.js') }}
 		
 		{{-- Page Scripts --}}
 		@section('scripts')

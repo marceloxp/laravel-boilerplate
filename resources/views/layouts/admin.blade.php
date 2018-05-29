@@ -107,7 +107,7 @@
 		<script src="{{vasset('/admin-lte/dist/js/app.min.js')}}"></script>
 		<!-- Scripts -->
 		<script type="text/javascript" src="{{vasset('/lib/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
-		{{ script('/lib/sweetalert.min.js') }}
+		{{ javascript('/lib/sweetalert.min.js') }}
 		@include('Admin.includes.messages')
 
 		<!-- User Scripts -->
@@ -115,7 +115,7 @@
 
 		{{ AutoAssets::print('js') }}
 
-		{{ script('/js/admin/common.js') }}
-		{{ script('/js/admin/modal-search.js') }}
+		{{ javascript('/js/admin/common.js') }}
+		{{ javascript('/js/admin/modal-search.js') }}
 	</body>
 </html>

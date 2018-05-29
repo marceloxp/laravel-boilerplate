@@ -5,6 +5,6 @@
 @endsection
 
 @section('scripts')
-	{{ script('/js/sobre.js') }}
+	{{ javascript('/js/sobre.js') }}
 	@parent
 @endsection
