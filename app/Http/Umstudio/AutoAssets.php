@@ -34,7 +34,7 @@ class AutoAssets
 
 		foreach ($auto_assets as $asset)
 		{
-			echo ($p_type == 'js') ? script($asset) : css($asset) . PHP_EOL;
+			echo ($p_type == 'js') ? javascript($asset) : css($asset) . PHP_EOL;
 		}
 
 		foreach ($available_assets as $asset)
