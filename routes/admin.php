@@ -116,6 +116,20 @@ Route::group
 					}
 				);
 
+				// Galeria de Imagens
+				Route::group
+				(
+					['prefix' => 'galleries'],
+					function()
+					{
+						Route::get ('/'         , 'GalleriesController@index'  )->name('admin_galleries'       )->group('admin_galleries');
+						Route::get ('edit/{id?}', 'GalleriesController@create' )->name('admin_galleries_edit'  )->group('admin_galleries');
+						Route::post('edit/{id?}', 'GalleriesController@store'  )->name('admin_galleries_save'  )->group('admin_galleries');
+						Route::get ('show/{id}' , 'GalleriesController@show'   )->name('admin_galleries_show'  )->group('admin_galleries');
+						Route::post('delete/'   , 'GalleriesController@destroy')->name('admin_galleries_delete')->group('admin_galleries');
+					}
+				);
+
 				// Vídeos
 				Route::group
 				(

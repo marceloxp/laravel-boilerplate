@@ -113,6 +113,14 @@ return [
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
+					'caption' => 'Galeria',
+					'ico'     => 'fa-picture-o',
+					'group'   => 'admin_galleries',
+					'route'   => 'admin_galleries'
+				],
+				[
+					'roles'   => ['Master','Developer'],
+					'type'    => 'link',
 					'caption' => 'Configurações',
 					'ico'     => 'fa-gear',
 					'group'   => 'admin_configs',
