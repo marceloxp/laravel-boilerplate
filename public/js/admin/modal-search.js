@@ -269,7 +269,7 @@ umsadmin.Tmodal_search = function($, objname, options)
 				},
 				'fail': function()
 				{
-					swal('Atenção', 'Ocorreu um erro na solicitação!', 'error');
+					swal('Atenção!', 'Ocorreu um erro na solicitação!', 'error');
 				},
 				'always': function()
 				{
@@ -277,7 +277,7 @@ umsadmin.Tmodal_search = function($, objname, options)
 				},
 				'exception': function()
 				{
-					swal('Atenção', 'Ocorreu um erro na solicitação!', 'error');
+					swal('Atenção!', 'Ocorreu um erro na solicitação!', 'error');
 				}
 			}
 		);

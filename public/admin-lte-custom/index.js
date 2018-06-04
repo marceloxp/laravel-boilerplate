@@ -427,7 +427,7 @@ umsappadmin.Tindex = function($, objname, options)
 						{
 							if (p_response.success)
 							{
-								swal('Atenção', p_response.message, 'success')
+								swal('Sucesso!', p_response.message, 'success')
 								.then
 								(
 									function()
@@ -438,12 +438,12 @@ umsappadmin.Tindex = function($, objname, options)
 							}
 							else
 							{
-								swal('Atenção', p_response.message, 'warning');
+								swal('Atenção!', p_response.message, 'warning');
 							}
 						},
 						'fail': function()
 						{
-							swal('Atenção', 'Ocorreu um erro na requisição.', 'error');
+							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
 						},
 						'always': function()
 						{
@@ -451,7 +451,7 @@ umsappadmin.Tindex = function($, objname, options)
 						},
 						'exception': function()
 						{
-							swal('Atenção', 'Ocorreu um erro na requisição.', 'error');
+							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
 						}
 					}
 				);

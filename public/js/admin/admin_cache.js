@@ -68,16 +68,16 @@ umsadmin.Tadmin_cache_index = function($, objname, options)
 				{
 					if (p_response.message)
 					{
-						swal('Atenção', p_response.message, 'success');
+						swal('Sucesso!', p_response.message, 'success');
 					}
 				},
 				'fail': function()
 				{
-					swal('Atenção', 'Ocorreu um erro na solicitação.', 'error');
+					swal('Atenção!', 'Ocorreu um erro na solicitação.', 'error');
 				},
 				'exception': function()
 				{
-					swal('Atenção', 'Ocorreu um erro na solicitação.', 'error');
+					swal('Atenção!', 'Ocorreu um erro na solicitação.', 'error');
 				}
 			}
 		);
