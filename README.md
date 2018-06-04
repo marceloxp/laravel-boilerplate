@@ -31,7 +31,7 @@ php artisan migrate:refresh --seed
 
 ## Plugins
 
-- esemve/Hook: <https://github.com/esemve/Hook>
+- shridharkaushik29/laravel-hooks: <https://github.com/shridharkaushik29/laravel-hooks>
 - digitalnature/php-ref: <https://github.com/digitalnature/php-ref>
 - barryvdh/laravel-debugbar: <https://github.com/barryvdh/laravel-debugbar>
 

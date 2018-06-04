@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Hook;
 
 class CheckAdmin extends Command
 {

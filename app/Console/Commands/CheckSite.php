@@ -124,7 +124,7 @@ class CheckSite extends Command
 		$this->info('? Check Package Hook');
 		if (!class_exists(Hook::class))
 		{
-			$this->error('! Please install a package [esemve/hook]');
+			$this->error('! Please install a package [shridharkaushik29/laravel-hooks]');
 			die;
 		}
 		$this->info('> OK');
