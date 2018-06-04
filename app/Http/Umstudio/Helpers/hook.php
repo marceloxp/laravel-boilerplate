@@ -11,7 +11,7 @@ if (!function_exists('hook_name'))
 				{
 					\Debugbar::addCollector(new \DebugBar\DataCollector\MessagesCollector('Hooks'));
 				}
-				Debugbar::getCollector('Hooks')->addMessage('', $name);
+				Debugbar::getCollector('Hooks')->info($name);
 			}
 		}
 
