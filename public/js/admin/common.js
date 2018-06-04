@@ -27,7 +27,40 @@ umsadmin.Tcommon = function($, objname, options)
 
 	this.onElementsEvents = function()
 	{
-	
+		$(document).on
+		(
+			'click',
+			'.btn-select-add',
+			function(e)
+			{
+				e.preventDefault();
+				self.onSelectAddClick($(this));
+			}
+		);
+	};
+
+	this.onSelectAddClick = function($button)
+	{
+		var $select = $button.closest('.row').find('select');
+
+		swal
+		(
+			'Digite o nome do novo Ítem',
+			{
+				content: 'input',
+				buttons: [true, 'OK'],
+			}
+		)
+		.then
+		(
+			function(input_text)
+			{
+				if (input_text !== null)
+				{
+					$select.append( $('<option>', { 'value': input_text, text: input_text } ) ).val(input_text);
+				}
+			}
+		);
 	};
 
 	this.execute = function()

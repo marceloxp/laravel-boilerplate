@@ -117,7 +117,7 @@
 						switch ($field_type)
 						{
 							case 'enum':
-								$input = admin_select2_enum($field_name, $fields_schema[$field_name]['options'], (old($field_name) ?? $register->$field_name), $required);
+								$input = admin_select_simple($field_name, $fields_schema[$field_name]['options'], (old($field_name) ?? $register->$field_name), $required);
 							break;
 							case 'text':
 								$input = sprintf
