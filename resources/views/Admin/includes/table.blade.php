@@ -1,11 +1,12 @@
 @php
 	$search_fields = array_merge($display_fields);
-	$hook_name     = sprintf('admin_index_search_fields_%s', $table_name);
+	$hook_name     = hook_name(sprintf('admin_index_search_fields_%s', $table_name));
 	$search_fields = Hook::apply_filters($hook_name, $search_fields);
 
 	$sort_fields   = array_merge($display_fields);
-	$hook_name     = sprintf('admin_index_sort_fields_%s', $table_name);
+	$hook_name     = hook_name(sprintf('admin_index_sort_fields_%s', $table_name));
 	$sort_fields   = Hook::apply_filters($hook_name, $sort_fields);
+
 
 	$image_fields = $image_fields ?? [];
 @endphp
@@ -174,7 +175,7 @@
 									$display_value = $register->$custom_field;
 								}
 
-								$hook_name     = sprintf('admin_index_%s_%s', $table_name, $field_name);
+								$hook_name     = hook_name(sprintf('admin_index_%s_%s', $table_name, $field_name));
 								$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
 							@endphp
 							<td>{!! $display_value !!}</td>

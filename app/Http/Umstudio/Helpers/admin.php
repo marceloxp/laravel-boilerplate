@@ -1,24 +1,24 @@
 <?php
 if (!function_exists('admin_helpers_exists'))
 {
-    function admin_helpers_exists($value)
+	function admin_helpers_exists($value)
 	{
 		return true;
-    }
+	}
 }
 
 if (!function_exists('admin_label_status'))
 {
-    function admin_label_status($value)
+	function admin_label_status($value)
 	{
 		$color = (in_array(strtolower($value), ['inativo','não','i','n','no','0','excluido'])) ? 'red' : 'green';
 		return sprintf('<small class="label pull-center bg-%s">%s</small>', $color, $value);
-    }
+	}
 }
 
 if (!function_exists('admin_select_simple'))
 {
-    function admin_select_simple($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
+	function admin_select_simple($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
 	{
 		$required = (!empty($p_required)) ? 'required' : '';
 
@@ -37,12 +37,12 @@ if (!function_exists('admin_select_simple'))
 		$result .= '</select>';
 
 		return $result;
-    }
+	}
 }
 
 if (!function_exists('admin_select_simple_with_add_button'))
 {
-    function admin_select_simple_with_add_button($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
+	function admin_select_simple_with_add_button($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
 	{
 		$result = admin_select_simple($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select);
 		
@@ -57,5 +57,5 @@ if (!function_exists('admin_select_simple_with_add_button'))
 			</div>
 		';
 		return $result;
-    }
+	}
 }

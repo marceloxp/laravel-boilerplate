@@ -114,7 +114,7 @@ return [
         'gate'            => true, // Display Laravel Gate checks
         'session'         => true,  // Display session data
         'symfony_request' => true,  // Only one can be enabled..
-        'mail'            => true,  // Catch mail messages
+        'mail'            => false,  // Catch mail messages
         'laravel'         => true, // Laravel version and environment
         'events'          => false, // All events fired
         'default_request' => false, // Regular or special Symfony request logger
@@ -122,6 +122,7 @@ return [
         'files'           => false, // Show the included files
         'config'          => false, // Display config settings
         'cache'           => true, // Display cache events
+        'hooks'           => false, // Display cache events
     ],
 
     /*

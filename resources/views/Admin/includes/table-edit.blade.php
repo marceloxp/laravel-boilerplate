@@ -160,7 +160,7 @@
 					}
 
 					$field_value = (old($field_name) ?? $register->$field_name);
-					$hook_name   = sprintf('admin_edit_%s_%s', $table_name, $field_name);
+					$hook_name   = hook_name(sprintf('admin_edit_%s_%s', $table_name, $field_name));
 					$input       = Hook::apply_filters($hook_name, $input, $field_value, $register, $fields_schema[$field_name]);
 				@endphp
 				<div class="form-group" style="display: {{$row_visible}}">
