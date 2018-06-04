@@ -14,4 +14,5 @@
 
 @section('scripts')
 	@include('Admin.includes.scripts_edit')
+	{{ javascript('/js/admin/admin_' . $table_name . '_form.js') }}
 @endsection
