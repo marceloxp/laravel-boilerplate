@@ -448,11 +448,14 @@ class AdminController extends Controller
 			$register = $model::create($form);
 		}
 
-		if ($register->save())
+		$saved = (empty($id)) ? ($register->save()) : ($register->update()) ;
+
+		if ($saved)
 		{
 			$table_name = $model::getTableName();
 			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
-			return redirect(Route('admin_' . $table_name))->with('messages', [$message]);
+			$request->session()->flash('messages', [$message]);
+			return redirect(Route('admin_' . $table_name));
 		}
 		else
 		{
