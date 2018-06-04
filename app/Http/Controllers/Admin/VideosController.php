@@ -38,13 +38,14 @@ class VideosController extends AdminController
 
 	public function hooks_index($table_name)
 	{
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_index_%s_youtube', $table_name),
-			function($callback, $output, $display_value, $register)
+			function($display_value, $register)
 			{
 				return Youtube::getImageUrlLink($display_value);
-			}
+			},
+			10, 2
 		);
 	}
 
@@ -97,10 +98,10 @@ class VideosController extends AdminController
 
 	public function hooks_show($table_name)
 	{
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_show_%s_youtube', $table_name),
-			function($callback, $output, $display_value, $register)
+			function($display_value, $register)
 			{
 				return sprintf
 				(
@@ -108,7 +109,8 @@ class VideosController extends AdminController
 					Youtube::getEmbeddedPlayer($display_value),
 					Youtube::getUrlLink($display_value)
 				);
-			}
+			},
+			10, 2
 		);
 	}
 

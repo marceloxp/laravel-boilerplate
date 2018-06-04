@@ -31,20 +31,21 @@ class ConfigsController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => Config::class,
-				'display_fields' => ['id', 'name', 'value', 'status', 'created_at']
+				'display_fields' => ['id','name','value','status','created_at']
 			]
 		);
 	}
 
 	public function hooks_index($table_name)
 	{
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_index_%s_name', $table_name),
-			function($callback, $output, $display_value, $register)
+			function($display_value, $register)
 			{
 				return sprintf('<i>%s</i>', $display_value);
-			}
+			},
+			10, 2
 		);
 	}
 
@@ -97,13 +98,14 @@ class ConfigsController extends AdminController
 
 	public function hooks_show($table_name)
 	{
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_show_%s_name', $table_name),
-			function($callback, $output, $display_value, $register)
+			function($display_value, $register)
 			{
 				return sprintf('<i>%s</i>', $display_value);
-			}
+			},
+			10, 2
 		);
 	}
 

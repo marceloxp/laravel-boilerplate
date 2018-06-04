@@ -53,7 +53,8 @@
 								break;
 							}
 
-							$display_value = Hook::get(sprintf('admin_show_%s_%s', $table_name, $field_name),[$display_value, $register->toArray()],function($display_value){ return $display_value; });
+							$hook_name     = sprintf('admin_show_%s_%s', $table_name, $field_name);
+							$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
 						@endphp
 						{!! $display_value !!}
 					</td>

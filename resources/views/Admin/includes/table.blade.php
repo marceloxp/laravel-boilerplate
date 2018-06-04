@@ -1,9 +1,11 @@
 @php
 	$search_fields = array_merge($display_fields);
-	$search_fields = Hook::get(sprintf('admin_index_search_fields_%s', $table_name),[$search_fields],function($search_fields){ return $search_fields; });
+	$hook_name     = sprintf('admin_index_search_fields_%s', $table_name);
+	$search_fields = Hook::apply_filters($hook_name, $search_fields);
 
-	$sort_fields = array_merge($display_fields);
-	$sort_fields = Hook::get(sprintf('admin_index_sort_fields_%s', $table_name),[$sort_fields],function($sort_fields){ return $sort_fields; });
+	$sort_fields   = array_merge($display_fields);
+	$hook_name     = sprintf('admin_index_sort_fields_%s', $table_name);
+	$sort_fields   = Hook::apply_filters($hook_name, $sort_fields);
 
 	$image_fields = $image_fields ?? [];
 @endphp
@@ -168,12 +170,12 @@
 
 								if ($fields_schema[$field_name]['has_relation'])
 								{
-									$custom_field = $fields_schema[$field_name]['relation']['custom_field'];
+									$custom_field  = $fields_schema[$field_name]['relation']['custom_field'];
 									$display_value = $register->$custom_field;
 								}
 
-								$hook_name = sprintf('admin_index_%s_%s', $table_name, $field_name);
-								$display_value = Hook::get($hook_name,[$display_value, $register->toArray()],function($display_value){ return $display_value; });
+								$hook_name     = sprintf('admin_index_%s_%s', $table_name, $field_name);
+								$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
 							@endphp
 							<td>{!! $display_value !!}</td>
 						@endforeach

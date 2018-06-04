@@ -9,12 +9,12 @@
     "require": {
         "php": ">=7.0.0",
         "digitalnature/php-ref": "dev-master",
-        "esemve/hook": "^0.0.4",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "~6.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "miroc/laravel-adminer": "dev-master"
+        "miroc/laravel-adminer": "dev-master",
+        "shridharkaushik29/laravel-hooks": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2@dev",

@@ -53,31 +53,34 @@ class UsersController extends AdminController
 
 	public function hooks_index($table_name)
 	{
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_index_%s_roles', $table_name),
-			function($callback, $output, $display_value, $register)
+			function($display_value, $register)
 			{
 				return $this->getUsersRolesLabel($display_value);
-			}
+			},
+			10, 2
 		);
 
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_index_search_fields_%s', $table_name),
-			function($callback, $output, $search_fields)
+			function($search_fields)
 			{
 				return collect($search_fields)->reject(function($value, $key) { return $value == 'roles'; })->all();
-			}
+			},
+			10, 1
 		);
 
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_index_sort_fields_%s', $table_name),
-			function($callback, $output, $sort_fields)
+			function($sort_fields)
 			{
 				return collect($sort_fields)->reject(function($value, $key) { return $value == 'roles'; })->all();
-			}
+			},
+			10, 1
 		);
 	}
 
@@ -101,10 +104,10 @@ class UsersController extends AdminController
 
 	public function hooks_edit($table_name)
 	{
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_edit_%s_roles', $table_name),
-			function($callback, $output, $input, $field_schema, $register)
+			function($input, $field_value, $register, $field_schema)
 			{
 				$field_name = $field_schema['name'];
 				$required   = (!$field_schema['nullable']) ? 'required' : '';
@@ -123,7 +126,8 @@ class UsersController extends AdminController
 				}
 
 				return $input;
-			}
+			},
+			10, 4
 		);
 	}
 
@@ -220,13 +224,14 @@ class UsersController extends AdminController
 
 	public function hooks_show($table_name)
 	{
-		Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_show_%s_roles', $table_name),
-			function($callback, $output, $display_value, $register)
+			function($display_value, $register)
 			{
 				return $this->getUsersRolesLabel($display_value);
-			}
+			},
+			10, 2
 		);
 	}
 

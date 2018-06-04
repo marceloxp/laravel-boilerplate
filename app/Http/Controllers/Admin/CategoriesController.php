@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
+use Hook;
 
 class CategoriesController extends AdminController
 {
@@ -42,13 +43,14 @@ class CategoriesController extends AdminController
 
 	public function hooks_index($table_name)
 	{
-		\Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_index_%s_image', $table_name),
-			function($callback, $output, $display_value, $register)
+			function($display_value, $register)
 			{
 				return $this->getUploadedFile($display_value, 100);
-			}
+			},
+			10, 2
 		);
 	}
 
@@ -102,13 +104,14 @@ class CategoriesController extends AdminController
 
 	public function hooks_show($table_name)
 	{
-		\Hook::listen
+		Hook::add_filter
 		(
 			sprintf('admin_show_%s_image', $table_name),
-			function($callback, $output, $display_value, $register)
+			function($display_value, $register)
 			{
-				return $this->getUploadedImage($display_value, 250);
-			}
+				return $this->getUploadedFile($display_value, 100);
+			},
+			10, 2
 		);
 	}
 
