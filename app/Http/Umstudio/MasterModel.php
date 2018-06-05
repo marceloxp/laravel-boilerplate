@@ -70,9 +70,67 @@ class MasterModel extends Model
 		return $result['data'];
 	}
 
+	public static function getPivotMetaData()
+	{
+		$table_name = self::getTableName();
+
+		$result = Cached::get
+		(
+			'sys-model',
+			['getPivotMetaData', $table_name],
+			function() use ($table_name)
+			{
+				$result = [];
+
+				$query = sprintf
+				(
+					'
+						SELECT
+							`TABLE_NAME`      AS table_name,
+							`CONSTRAINT_NAME` AS constraint_name
+						FROM
+							`INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE`
+						WHERE
+							`TABLE_SCHEMA` = "%s"
+							AND
+							`REFERENCED_TABLE_SCHEMA` = "%s"
+							AND
+							`REFERENCED_TABLE_NAME` = "%s%s"
+							AND
+							`REFERENCED_COLUMN_NAME` = "id"
+						;
+					',
+					env('DB_DATABASE'),
+					env('DB_DATABASE'),
+					env('DB_PREFIX'),
+					$table_name
+				);
+
+				$relations = DB::select($query);
+				foreach ($relations as $relation)
+				{
+					$table = $relation->table_name;
+					$pivot = $table;
+					$table = ltrim($table, env('DB_PREFIX'));
+					$table = trim($table, $table_name);
+					$table = trim($table, '_');
+					$table = str_plural($table);
+					$prop  = $table;
+					$table = env('DB_PREFIX') . $table;
+					
+					$result[] = compact('pivot','table','prop');
+				}
+
+				return $result;
+			}
+		);
+		
+		return $result['data'];
+	}
+
 	public static function getFieldsMetaData($appends = [])
 	{
-		$table_name = with(new static)->getTable();
+		$table_name = self::getTableName();
 
 		$result = Cached::get
 		(

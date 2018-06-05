@@ -33,7 +33,8 @@
 			"app/Http/Umstudio/Helpers/developer.php",
 			"app/Http/Umstudio/Helpers/string.php",
             "app/Http/Umstudio/Helpers/filesystem.php",
-			"app/Http/Umstudio/Helpers/hook.php"
+            "app/Http/Umstudio/Helpers/hook.php",
+			"app/Http/Umstudio/Helpers/db.php"
 		],
         "classmap": [
             "database/seeds",
