@@ -30,6 +30,7 @@ class CreateVideosTable extends Migration
 				$table->foreign('category_id')->references('id')->on('categories');
         	}
 		);
+        db_comment_table('videos', 'Vídeos');
     }
 
     /**

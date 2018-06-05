@@ -18,6 +18,9 @@ class CreateFunctionGenerateuniquecode extends Migration
 		$querys = 
 		[
 			"
+				DROP FUNCTION IF EXISTS `" . $prefix . "_generateuniquecode`;
+			",
+			"
 				CREATE FUNCTION `" . $prefix . "_generateuniquecode`() RETURNS varchar(8)
 				BEGIN
 					DECLARE unqstr varchar(8);
@@ -48,6 +51,9 @@ class CreateFunctionGenerateuniquecode extends Migration
 					INSERT INTO `unc_codes`(code, created) VALUES (unqstr, now());
 					RETURN unqstr;
 				END;
+			",
+			"
+				DROP FUNCTION IF EXISTS `" . $prefix . "_generaterandom`;
 			",
 			"
 				CREATE FUNCTION `" . $prefix . "_generaterandom`() RETURNS varchar(8)

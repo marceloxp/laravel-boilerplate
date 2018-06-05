@@ -26,6 +26,7 @@ class CreateCodes extends Migration
 				$table->index(['code','deleted_at']);
         	}
 		);
+        db_comment_table('codes', 'Códigos');
     }
 
     /**

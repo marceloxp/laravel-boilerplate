@@ -29,6 +29,7 @@ class CreateCategoriesTable extends Migration
 				$table->index(['deleted_at']);
         	}
 		);
+        db_comment_table('categories', 'Categorias');
     }
 
     /**

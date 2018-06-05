@@ -29,6 +29,7 @@ class CreateCitiesTable extends Migration
 				$table->foreign('state_id')->references('id')->on('cities');
         	}
 		);
+        db_comment_table('cities', 'Cidades');
     }
 
     /**

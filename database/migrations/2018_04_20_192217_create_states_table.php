@@ -27,6 +27,7 @@ class CreateStatesTable extends Migration
 				$table->index(['deleted_at']);
         	}
 		);
+        db_comment_table('states', 'Estados');
     }
 
     /**

@@ -28,6 +28,7 @@ class CreateConfigsTable extends Migration
 				$table->index(['name','deleted_at']);
         	}
 		);
+        db_comment_table('configs', 'Configurações');
     }
 
     /**

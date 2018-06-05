@@ -30,6 +30,7 @@ class CreateGalleries extends Migration
                 $table->index(['deleted_at']);
             }
         );
+        db_comment_table('galleries', 'Galeria de Imagens');
     }
 
     /**
