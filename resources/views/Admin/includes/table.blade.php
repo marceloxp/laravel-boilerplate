@@ -7,7 +7,6 @@
 	$hook_name     = hook_name(sprintf('admin_index_sort_fields_%s', $table_name));
 	$sort_fields   = Hook::apply_filters($hook_name, $sort_fields);
 
-
 	$image_fields = $image_fields ?? [];
 @endphp
 
@@ -111,12 +110,17 @@
 			<div class="btn-group col-xs-10">
 				@php $buttons_edit = isset($editable) ? $editable : true; @endphp
 				@if ($buttons_edit)
-					<button type="button" id="btn-table-add" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> Adicionar</button>
-					<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fa fa-edit"></i> Editar</button>
+					<button type="button" id="btn-table-add" class="btn btn-success {{ $class_pivot }}"><i class="fa fa-fw fa-plus"></i> Adicionar</button>
+					@if (!$is_pivot)
+						<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fa fa-edit"></i> Editar</button>
+					@endif
 				@endif
 				<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fa fa-eye"></i> Visualizar</button>
+				@if (!empty($pivot))
+					<button type="button" id="btn-table-pvt" data-link="{{ $pivot['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $pivot['icon'] }}"></i> {{ $pivot['caption'] }}</button>
+				@endif
 				@if ($buttons_edit)
-					<button type="button" id="btn-table-del" class="btn btn-danger disabled"><i class="fa fa-close"></i> Excluir</button>
+					<button type="button" id="btn-table-del" class="btn btn-danger {{ $class_pivot }} disabled"><i class="fa fa-close"></i> Excluir</button>
 				@endif
 			</div>
 			@php $print_button = isset($exportable) ? $exportable : true; @endphp

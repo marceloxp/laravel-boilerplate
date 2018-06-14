@@ -130,11 +130,19 @@ umsadmin.Tmodal_search = function($, objname, options)
 
 	this.autoSearch = function()
 	{
+		if ( (self.search_str == '') && (self.last_search != self.search_str) )
+		{
+			self.options.find.value = '';
+			self.setOptions(self.options);
+			self.last_search = '';
+			return;
+		}
+
 		self.last_search = self.search_str;
 		if ( (self.search_str != '') && (self.search_str.length >= 3) )
 		{
 			self.options.find.value = self.search_str;
-			self.setOptions(self.options)
+			self.setOptions(self.options);
 		}
 	};
 
@@ -210,7 +218,24 @@ umsadmin.Tmodal_search = function($, objname, options)
 		}
 		else
 		{
-			self.log.danger('Método ainda não implementado.');
+			var ids = [];
+			$('#search-modal input[name=register]:checked').each
+			(
+				function()
+				{
+					ids.push($(this).attr('data-ids'));
+				}
+			);
+			
+			$('#search-modal').modal('hide');
+
+			if (self.options.events !== undefined)
+			{
+				if (self.options.events.onMultipleSelect !== undefined)
+				{
+					self.options.events.onMultipleSelect(ids);
+				}
+			}
 		}
 	};
 
@@ -246,6 +271,8 @@ umsadmin.Tmodal_search = function($, objname, options)
 	this.getPage = function(p_page)
 	{
 		self.disableModal();
+		var options = Object.assign({}, self.options);
+		delete options.events;
 		self.ajax
 		(
 			{
@@ -260,7 +287,7 @@ umsadmin.Tmodal_search = function($, objname, options)
 					data     :
 					{
 						'_token' : datasite.csrf_token,
-						'options': self.options
+						'options': options
 					}
 				},
 				'done': function(p_response)
@@ -338,7 +365,12 @@ function admin_modal_search(p_options)
 // 		'find'    :
 // 		{
 // 			'fields': ['name'],
-// 			'value' : 'Rio Janeiro'
+// 			'value' : ''
+// 		},
+// 		'events':
+// 		{
+// 			'onSelect'         : function(p_id) { console.log('On Select', p_id); },
+// 			'onMultipleSelect' : function(p_ids){ console.log('On Multiple Select', p_ids); },
 // 		}
 // 	}
 // );

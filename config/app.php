@@ -234,6 +234,7 @@ return [
 		'View' => Illuminate\Support\Facades\View::class,
 		'Debugbar' => Barryvdh\Debugbar\Facade::class,
 		'Hook' => Shridhar\Hooks\Hook::class,
+		'Stringy' => Stringy\Stringy::class
 
 	],
 

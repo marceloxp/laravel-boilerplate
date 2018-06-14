@@ -26,6 +26,11 @@ class SearchmodalController extends AdminController
 			}
 		}
 		$table->select($options['fields']);
+		if (array_key_exists('except_ids', $options))
+		{
+			$except_ids = json_decode($options['except_ids'], true);
+			$table->whereNotIn('id', $except_ids);
+		}
 		$captions = $model::translateNameCaptions($options['fields']);
 
 		$registers = $table->paginate(10);

@@ -5,17 +5,16 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
-use App\Http\Umstudio\Youtube;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Video;
+use App\Models\Tag;
 use Hook;
 
-class VideosController extends AdminController
+class TagsController extends AdminController
 {
 	public function __construct()
 	{
-		$this->caption = 'Vídeos';
+		$this->caption = 'Tags';
 		parent::__construct();
 	}
 
@@ -29,24 +28,10 @@ class VideosController extends AdminController
 		return $this->defaultIndex
 		(
 			[
-				'pivot'          => ['name' => 'tag_video', 'caption' => 'Tags', 'icon' => 'fa-tags'],
 				'request'        => $request,
-				'model'          => Video::class,
-				'display_fields' => ['id','category_id','name','youtube','created_at']
+				'model'          => Tag::class,
+				'display_fields' => ['id','name','created_at']
 			]
-		);
-	}
-
-	public function hooks_index($table_name)
-	{
-		Hook::add_filter
-		(
-			sprintf('admin_index_%s_youtube', $table_name),
-			function($display_value, $register)
-			{
-				return Youtube::getImageUrlLink($display_value);
-			},
-			10, 2
 		);
 	}
 
@@ -62,8 +47,8 @@ class VideosController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => Video::class,
-				'display_fields' => ['id','category_id','name','youtube']
+				'model'          => Tag::class,
+				'display_fields' => ['id','name']
 			]
 		);
 	}
@@ -76,7 +61,7 @@ class VideosController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		return $this->defaultStore($request, Video::class);
+		return $this->defaultStore($request, Tag::class);
 	}
 
 	/**
@@ -91,27 +76,21 @@ class VideosController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => Video::class,
-				'display_fields' => ['id','category_id','name','youtube','created_at','updated_at','deleted_at']
+				'model'          => Tag::class,
+				'display_fields' => ['id','name','created_at','updated_at','deleted_at']
 			]
 		);
 	}
 
-	public function hooks_show($table_name)
+	public function pivot_show($video_id, $tag_id)
 	{
-		Hook::add_filter
+		return $this->defaultShow
 		(
-			sprintf('admin_show_%s_youtube', $table_name),
-			function($display_value, $register)
-			{
-				return sprintf
-				(
-					'%s <br/> %s',
-					Youtube::getEmbeddedPlayer($display_value),
-					Youtube::getUrlLink($display_value)
-				);
-			},
-			10, 2
+			[
+				'id'             => $tag_id,
+				'model'          => Tag::class,
+				'display_fields' => ['id','name','created_at','updated_at','deleted_at']
+			]
 		);
 	}
 
@@ -150,7 +129,7 @@ class VideosController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => Video::class
+				'model'   => Tag::class
 			]
 		);
 	}

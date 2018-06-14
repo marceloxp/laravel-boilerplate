@@ -1,7 +1,15 @@
 @extends('layouts.admin')
 
 @section('content-header')
-	{{$panel_title}}
+	{{ $panel_title }}
+@endsection
+
+@section('content-description')
+	@if (!empty($panel_description))
+		<h4>
+			{{ $panel_description }}
+		</h4>
+	@endif
 @endsection
 
 @section('sidebar')

@@ -14,7 +14,8 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "miroc/laravel-adminer": "dev-master",
-        "shridharkaushik29/laravel-hooks": "dev-master"
+        "shridharkaushik29/laravel-hooks": "dev-master",
+        "danielstjules/stringy": "~3.1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2@dev",
@@ -26,15 +27,16 @@
     },
     "autoload": {
 		"files": [
-			"app/Http/Umstudio/Helpers/helpers.php",
 			"app/Http/Umstudio/Helpers/admin.php",
 			"app/Http/Umstudio/Helpers/cached.php",
-			"app/Http/Umstudio/Helpers/lang.php",
-			"app/Http/Umstudio/Helpers/developer.php",
-			"app/Http/Umstudio/Helpers/string.php",
+			"app/Http/Umstudio/Helpers/datasite.php",
+            "app/Http/Umstudio/Helpers/db.php",
+            "app/Http/Umstudio/Helpers/developer.php",
             "app/Http/Umstudio/Helpers/filesystem.php",
+            "app/Http/Umstudio/Helpers/helpers.php",
             "app/Http/Umstudio/Helpers/hook.php",
-			"app/Http/Umstudio/Helpers/db.php"
+            "app/Http/Umstudio/Helpers/lang.php",
+            "app/Http/Umstudio/Helpers/string.php",
 		],
         "classmap": [
             "database/seeds",

@@ -61,6 +61,9 @@ php artisan checkadmin
 ```php
 Datasite::add('csrf_token', csrf_token());
 Datasite::add(compact('url'));
+
+datasite_add('csrf_token', csrf_token());
+datasite_add(compact('url'));
 ```
 
 ### Cached `\App\Http\Umstudio\Cached`
@@ -199,8 +202,8 @@ echo lang_home_link('en'); // returns root url for language [en]
 #### string
 
 ```php
-echo str_mask('04045004', '##.###-###'); // Returns '04.045-004
-echo str_mask('04045004', '#####-###');  // Returns '04045-004
+echo str_mask('04045004', '##.###-###'); // Returns '04.045-004'
+echo str_mask('04045004', '#####-###');  // Returns '04045-004'
 echo str_plural_2_singular('corações');  // Returns 'coração';
 
 echo str2bool('true');  // Returns true;
@@ -208,12 +211,20 @@ echo str2bool('false'); // Returns false;
 echo str2bool('foo');   // Returns false;
 ```
 
+#### DB
+
+```php
+echo db_get_primary_key('table_name'); // Returns id
+echo db_get_name('table_name', 10); // Returns `name` field value
+```
+
 ### Custom configs
 
-- colors.php
+- admin.php (menu)
 - brasil.php (estados)
 - cep.php (faixas por estado)
-- admin.php (menu)
+- colors.php
+- metasocial.php
 - social.php (facebook, twitter, etc)
 
 ### Automatic Assets

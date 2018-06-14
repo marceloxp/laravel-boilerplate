@@ -79,6 +79,7 @@
 					<h1>
 						@yield('content-header')
 					</h1>
+					@yield('content-description')
 				</section>
 				<section class="content">
 					@yield('content')

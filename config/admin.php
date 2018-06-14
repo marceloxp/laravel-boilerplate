@@ -49,6 +49,13 @@ return [
 					'ico'     => 'fa-youtube',
 					'group'   => 'admin_videos',
 					'route'   => 'admin_videos'
+				],
+				[
+					'type'    => 'link',
+					'caption' => 'Tags',
+					'ico'     => 'fa-tags',
+					'group'   => 'admin_tags',
+					'route'   => 'admin_tags'
 				]
 			]
 		],

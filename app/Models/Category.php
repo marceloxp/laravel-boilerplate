@@ -12,11 +12,6 @@ class Category extends MasterModel
     protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
-	public function video()
-	{
-		return $this->hasMany('App\Models\Video');
-	}
-
     public static function validate($request, $id = '')
     {
 		$rules = 
@@ -26,5 +21,10 @@ class Category extends MasterModel
 		];
 
 		return Role::_validate($request, $rules, $id);
+    }
+
+    public function videos()
+    {
+    	return $this->hasMany(\App\Models\Video::class);
     }
 }

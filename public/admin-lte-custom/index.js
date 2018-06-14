@@ -53,7 +53,7 @@ umsappadmin.Tindex = function($, objname, options)
 				e.preventDefault();
 				self.onSearchFormSubmit();
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -62,9 +62,16 @@ umsappadmin.Tindex = function($, objname, options)
 			function(e)
 			{
 				e.preventDefault();
-				self.onCreateButtonClick();
+				if ($(this).hasClass('pivot'))
+				{
+					self.onAddPivotButtonClick();
+				}
+				else
+				{
+					self.onCreateButtonClick();
+				}
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -75,7 +82,7 @@ umsappadmin.Tindex = function($, objname, options)
 				e.preventDefault();
 				self.onEditButtonClick();
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -86,7 +93,18 @@ umsappadmin.Tindex = function($, objname, options)
 				e.preventDefault();
 				self.onViewButtonClick();
 			}
-		);	
+		);
+
+		$(document).on
+		(
+			'click',
+			'#btn-table-pvt',
+			function(e)
+			{
+				e.preventDefault();
+				self.onPivotButtonClick();
+			}
+		);
 
 		$(document).on
 		(
@@ -95,9 +113,17 @@ umsappadmin.Tindex = function($, objname, options)
 			function(e)
 			{
 				e.preventDefault();
-				self.onDeleteButtonClick();
+
+				if ($(this).hasClass('pivot'))
+				{
+					self.onDeletePivotButtonClick();
+				}
+				else
+				{
+					self.onDeleteButtonClick();
+				}
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -108,7 +134,7 @@ umsappadmin.Tindex = function($, objname, options)
 				e.preventDefault();
 				self.onExportButtonClick();
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -119,7 +145,7 @@ umsappadmin.Tindex = function($, objname, options)
 				var checked = $(this).prop('checked');
 				self.onCheckRowAllClick(checked);
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -129,7 +155,7 @@ umsappadmin.Tindex = function($, objname, options)
 			{
 				self.onCheckRowClick();
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -148,7 +174,7 @@ umsappadmin.Tindex = function($, objname, options)
 				}
 				self.onButtonAddOrderClick($(this));
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -159,7 +185,7 @@ umsappadmin.Tindex = function($, objname, options)
 				jQuery('[data-toggle="tooltip"]').tooltip('hide');
 				self.onButtomRemoveOrderClick($(this));
 			}
-		);	
+		);
 
 		$(document).on
 		(
@@ -169,7 +195,7 @@ umsappadmin.Tindex = function($, objname, options)
 			{
 				self.onButtonInvertClick($(this));
 			}
-		);	
+		);
 	};
 
 	this.execute = function()
@@ -206,11 +232,11 @@ umsappadmin.Tindex = function($, objname, options)
 	{
 		if ($('.ck-row:checked').length == 1)
 		{
-			$('#btn-table-edt,#btn-table-viw').removeClass('disabled');
+			$('#btn-table-edt,#btn-table-viw,#btn-table-pvt').removeClass('disabled');
 		}
 		else
 		{
-			$('#btn-table-edt,#btn-table-viw').addClass('disabled');
+			$('#btn-table-edt,#btn-table-viw,#btn-table-pvt').addClass('disabled');
 		}
 
 		if ($('.ck-row:checked').length > 0)
@@ -335,6 +361,173 @@ umsappadmin.Tindex = function($, objname, options)
 		window.location.href = new_url;
 	};
 
+	this.onAddPivotButtonClick = function()
+	{
+		var onMultipleSelect = function(p_ids)
+		{
+			self.log.print('ids selecionados: ', p_ids);
+			self.onPivotMultipleSelect(p_ids);
+		};
+
+		var search_options = 
+		{
+			'model'      : datasite.params.model_name,
+			'fields'     : ['id', 'name'],
+			'multiple'   : true,
+			'except_ids' : datasite.params.ids,
+			'caption'    : 'Localizar ' + datasite.params.panel_title,
+			'find'       :
+			{
+				'fields': ['name'],
+				'value' : ''
+			},
+			'events':
+			{
+				'onMultipleSelect': onMultipleSelect
+			}
+		};
+
+		admin_modal_search(search_options);
+	};
+
+	this.onPivotMultipleSelect = function(p_ids)
+	{
+		var url = datasite.url.admin + '/' + datasite.params.pivot_scope.model + '/' + datasite.params.pivot_scope.param + '/attach';
+
+		self.ajax
+		(
+			{
+				'options':
+				{
+					'slug'     : 'pivot-add',
+					'exclusive': false,
+					'url'      : url,
+					'type'     : 'POST',
+					'dataType' : 'json',
+					'data'     :
+					{
+						'_token' : datasite.csrf_token,
+						'ids'    : p_ids
+					}
+				},
+				'before': function()
+				{
+					
+				},
+				'done': function(p_response)
+				{
+					if (p_response.success)
+					{
+						swal('Sucesso!', p_response.message, 'success')
+						.then
+						(
+							function()
+							{
+								window.location.reload();
+							}
+						);
+					}
+					else
+					{
+						swal('Atenção!', p_response.message, 'warning');
+					}
+				},
+				'fail': function()
+				{
+					swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+				},
+				'always': function()
+				{
+					
+				},
+				'exception': function()
+				{
+					swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+				}
+			}
+		);
+	};
+
+	this.onDeletePivotButtonClick = function()
+	{
+		if ($('.ck-row:checked').length <= 0)
+		{
+			return;
+		}
+
+		this.confirmDelete
+		(
+			function()
+			{
+				var ids = [];
+				$('.ck-row:checked').each
+				(
+					function()
+					{
+						ids.push($(this).attr('data-ids'));
+					}
+				);
+				ids = ids.join(',');
+
+				var url = datasite.url.admin + '/' + datasite.params.pivot_scope.model + '/' + datasite.params.pivot_scope.param + '/detach';
+				self.log.print(url);
+
+				self.ajax
+				(
+					{
+						'options':
+						{
+							'slug'     : 'on-delete',
+							'exclusive': true,
+							'url'      : url,
+							'type'     : 'POST',
+							'dataType' : 'json',
+							'data'     :
+							{
+								'_token': datasite.csrf_token,
+								'ids'   : ids
+							}
+						},
+						'before': function()
+						{
+							
+						},
+						'done': function(p_response)
+						{
+							if (p_response.success)
+							{
+								swal('Sucesso!', p_response.message, 'success')
+								.then
+								(
+									function()
+									{
+										window.location.reload();
+									}
+								);
+							}
+							else
+							{
+								swal('Atenção!', p_response.message, 'warning');
+							}
+						},
+						'fail': function()
+						{
+							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+						},
+						'always': function()
+						{
+							
+						},
+						'exception': function()
+						{
+							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+						}
+					}
+				);
+			}
+		);
+	};
+
 	this.onEditButtonClick = function()
 	{
 		if ($('.ck-row:checked').length !== 1)
@@ -357,6 +550,19 @@ umsappadmin.Tindex = function($, objname, options)
 		if (empty(ids)){ return; }
 		var new_url = datasite.url.current + '/show/' + ids;
 		window.location.href = new_url;
+	};
+
+	this.onPivotButtonClick = function()
+	{
+		if ($('.ck-row:checked').length !== 1)
+		{
+			return;
+		}
+		var ids = $('.ck-row:checked').attr('data-ids');
+		var route = $('#btn-table-pvt').attr('data-link');
+		if (empty(ids)){ return; }
+		var new_url = datasite.url.admin + '/' + route + '/' + ids;
+		window.open(new_url);
 	};
 
 	this.confirmDelete = function(p_callback)
@@ -456,7 +662,7 @@ umsappadmin.Tindex = function($, objname, options)
 					}
 				);
 			}
-		)
+		);
 	};
 
 	this.onExportButtonClick = function()
@@ -558,8 +764,6 @@ umsappadmin.Tindex = function($, objname, options)
 			$('#' + element_prefix + '_end').val(moment(range_end, en_format).format(en_format));
 			$('#select-field-date').val(range_field);
 		}
-
-		// self.log.print(options);
 
 		$element.daterangepicker
 		(

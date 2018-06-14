@@ -4,7 +4,7 @@ namespace App\Http\Umstudio;
 
 class Datasite
 {
-	private static $datasite = [];
+	public static $datasite = [];
 
 	public static function add($name_or_variable, $value_or_null = null)
 	{

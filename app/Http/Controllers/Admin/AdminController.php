@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Http\Umstudio\Result;
+use Stringy as S;
 
 class AdminController extends Controller
 {
 	public $user_logged;
 	private $schemas = [];
+	public $caption = '';
+	public $description = '';
 
     public function __construct()
 	{
@@ -62,6 +65,24 @@ class AdminController extends Controller
 			}
 		}
 		return [];
+	}
+
+	public function setCaption($p_caption, $p_description = '')
+	{
+		$this->caption     = $p_caption;
+		$this->description = $p_description;
+	}
+
+	public function getCaption()
+	{
+		$result = $this->caption;
+		@$description = $this->description;
+		if (!empty($this->description))
+		{
+			$result .= ' - ' . $this->description;
+		}
+
+		return $result;
 	}
 
 	public function getPerPage($p_request)
@@ -149,10 +170,11 @@ class AdminController extends Controller
 		return compact('search_field','search_value','search_order','search_range','range_field');
 	}
 
-	public function getTableSearch($p_model, $p_perpage, $p_request, $display_fields, $fields_schema)
+	public function getTableSearch($p_model, $p_perpage, $p_request, $display_fields, $fields_schema, $p_params = [])
 	{
 		$search_params = $this->getSearchAndOrders($p_request, $fields_schema);
 		extract($search_params, EXTR_OVERWRITE);
+		extract($p_params     , EXTR_OVERWRITE);
 
 		$table_name = $p_model::getTableName();
 
@@ -224,6 +246,17 @@ class AdminController extends Controller
 			$table->orderBy('id', 'DESC');
 		}
 
+		if (!empty($pivot_scope))
+		{
+			$scope_name  = $pivot_scope['name'];
+			$scope_param = $pivot_scope['param'];
+			$table->{$scope_name}($scope_param);
+		}
+
+		if (!empty($p_where))
+		{
+			$table->where($p_where);
+		}
 
 		$table = $table->paginate($p_perpage);
 
@@ -345,27 +378,49 @@ class AdminController extends Controller
 	{
 		$default_params = 
 		[
-			'appends'    => [],
-			'exportable' => false
+			'pívot'        => [],
+			'pivot_scope'  => [],
+			'where'        => [],
+			'appends'      => [],
+			'exportable'   => false
 		];
+
 		$params = array_merge($default_params, $p_args);
+
+		if (!empty($params['pivot_scope']))
+		{
+			$params['pivot_scope']['model'] = (string)S::create($params['pivot_scope']['name'])->underscored();
+		}
+
 		extract($params, EXTR_OVERWRITE);
 
-		$panel_title    = $this->caption;
-		$fields_schema  = $model::getFieldsMetaData($appends);
-		$perpage        = $this->getPerPage($request);
-		$table_name     = $model::getTableName();
-		$table          = $this->getTableSearch($model, $perpage, $request, $display_fields, $fields_schema);
-		$paginate       = $this->ajustPaginate($request, $table);
-		$has_table      = (!empty($table));
-		$search_dates   = ['created_at'];
+		$is_pivot          = (!empty($pivot_scope));
+		$class_pivot       = ($is_pivot) ? 'pivot' : '';
+		$panel_title       = $this->caption;
+		$panel_description = $this->description;
+		$fields_schema     = $model::getFieldsMetaData($appends);
+		$perpage           = $this->getPerPage($request);
+		$table_name        = $model::getTableName();
+		$model_name        = $model::getModelName();
+		$table             = $this->getTableSearch($model, $perpage, $request, $display_fields, $fields_schema, $params);
+		$paginate          = $this->ajustPaginate($request, $table);
+		$ids               = $table->pluck('id')->toJson();
+		$has_table         = (!empty($table));
+		$search_dates      = ['created_at'];
 
-		View::share(compact('panel_title','fields_schema','table_name','display_fields','table','paginate','has_table','search_dates','exportable'));
+		$share_params = compact('panel_title','panel_description','fields_schema','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable');
+		
+		View::share($share_params);
 
 		if (method_exists($this, 'hooks_index'))
 		{
 			$this->hooks_index($table_name);
 		}
+
+		$excepts = ['fields_schema','search_dates','table_name','exportable'];
+		$jsvars = collect($share_params)->except($excepts)->toArray();
+		
+		datasite_add(['params' => $jsvars]);
 
 		return view('Admin.generic');
 	}

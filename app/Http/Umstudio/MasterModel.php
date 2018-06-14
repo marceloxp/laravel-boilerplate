@@ -5,8 +5,8 @@ namespace App\Http\Umstudio;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
 use \App\Http\Umstudio\Cached;
+use Carbon\Carbon;
 
 class MasterModel extends Model
 {
@@ -18,6 +18,14 @@ class MasterModel extends Model
 	{
 		$instanced_model = with(new static);
 		$result = $instanced_model->getTable();
+		unset($instanced_model);
+		return $result;
+	}
+
+	public static function getModelName()
+	{
+		$instanced_model = with(new static);
+		$result = (new \ReflectionClass($instanced_model))->getShortName();
 		unset($instanced_model);
 		return $result;
 	}
@@ -111,14 +119,19 @@ class MasterModel extends Model
 				{
 					$table = $relation->table_name;
 					$pivot = $table;
+					$ligation = ltrim($table, env('DB_PREFIX'));
 					$table = ltrim($table, env('DB_PREFIX'));
 					$table = trim($table, $table_name);
 					$table = trim($table, '_');
+					$model = $table;
 					$table = str_plural($table);
 					$prop  = $table;
 					$table = env('DB_PREFIX') . $table;
+
+					$primary = db_get_primary_key($prop);
+					$relation = sprintf('%s_%s', $model, $primary);
 					
-					$result[] = compact('pivot','table','prop');
+					$result[] = compact('pivot','table','ligation','prop','model','primary','relation');
 				}
 
 				return $result;

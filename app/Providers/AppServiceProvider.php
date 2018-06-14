@@ -29,7 +29,9 @@ class AppServiceProvider extends ServiceProvider
 
 		if (!is_dir(public_path('storage')))
 		{
-			App::make('files')->link(storage_path('app/public'), public_path('storage'));
+			// App::make('files')->link(storage_path('app/public'), public_path('storage'));
+			// $fs = new Symfony\Component\Filesystem\Filesystem();
+			// $fs->symlink(storage_path('app/public'), public_path('storage'));
 		}
 	}
 

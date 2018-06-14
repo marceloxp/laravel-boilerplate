@@ -26,6 +26,14 @@ class Video extends MasterModel
 
 	public function category()
 	{
-		return $this->belongsTo('App\Models\Category');
+		return $this->belongsTo(\App\Models\Category::class);
+	}
+
+	/**
+	* Retrieve Tags pivot Table
+	*/
+	public function tags()
+	{
+		return $this->belongsToMany(\App\Models\Tag::class);
 	}
 }
