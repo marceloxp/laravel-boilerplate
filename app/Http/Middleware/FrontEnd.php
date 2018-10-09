@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use App\Http\Umstudio\Datasite;
+use App\Http\Utilities\Datasite;
 use Closure;
 
 class FrontEnd

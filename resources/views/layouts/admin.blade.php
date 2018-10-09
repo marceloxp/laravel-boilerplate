@@ -1,6 +1,6 @@
 @php
-	use App\Http\Umstudio\AutoAssets;
-	use App\Http\Umstudio\Datasite;
+	use App\Http\Utilities\AutoAssets;
+	use App\Http\Utilities\Datasite;
 @endphp
 
 <!DOCTYPE html>

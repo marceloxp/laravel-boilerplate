@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Umstudio;
+namespace App\Http\Utilities;
 
 define('YT_DEFAULT'           , 'default.jpg');
 define('YT_HIGH_QUALITY'      , 'hqdefault.jpg');

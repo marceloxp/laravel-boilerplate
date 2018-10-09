@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Umstudio\MasterModel;
-use App\Http\Umstudio\Cached;
-use App\Http\Umstudio\Result;
+use App\Http\Utilities\MasterModel;
+use App\Http\Utilities\Cached;
+use App\Http\Utilities\Result;
 
 class City extends MasterModel
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Umstudio;
+namespace App\Http\Utilities;
 
-use App\Http\Umstudio\Result;
+use App\Http\Utilities\Result;
 
 class Brasil
 {

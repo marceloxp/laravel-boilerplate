@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Umstudio;
+namespace App\Http\Utilities;
 
 use Illuminate\Support\Facades\Cache;
-use App\Http\Umstudio\Result;
+use App\Http\Utilities\Result;
 
 class Cached
 {

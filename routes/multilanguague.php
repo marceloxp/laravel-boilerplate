@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Umstudio\RouteLang;
+use App\Http\Utilities\RouteLang;
 
 /*
 |--------------------------------------------------------------------------

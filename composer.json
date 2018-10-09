@@ -4,7 +4,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
-	"version" : "0.0.14",
+	"version" : "0.0.16",
 	"minimum-stability": "dev",
     "require": {
         "php": ">=7.0.0",
@@ -28,16 +28,16 @@
     },
     "autoload": {
 		"files": [
-			"app/Http/Umstudio/Helpers/admin.php",
-			"app/Http/Umstudio/Helpers/cached.php",
-			"app/Http/Umstudio/Helpers/datasite.php",
-            "app/Http/Umstudio/Helpers/db.php",
-            "app/Http/Umstudio/Helpers/developer.php",
-            "app/Http/Umstudio/Helpers/filesystem.php",
-            "app/Http/Umstudio/Helpers/helpers.php",
-            "app/Http/Umstudio/Helpers/hook.php",
-            "app/Http/Umstudio/Helpers/lang.php",
-            "app/Http/Umstudio/Helpers/string.php"
+			"app/Http/Utilities/Helpers/admin.php",
+			"app/Http/Utilities/Helpers/cached.php",
+			"app/Http/Utilities/Helpers/datasite.php",
+            "app/Http/Utilities/Helpers/db.php",
+            "app/Http/Utilities/Helpers/developer.php",
+            "app/Http/Utilities/Helpers/filesystem.php",
+            "app/Http/Utilities/Helpers/helpers.php",
+            "app/Http/Utilities/Helpers/hook.php",
+            "app/Http/Utilities/Helpers/lang.php",
+            "app/Http/Utilities/Helpers/string.php"
 		],
         "classmap": [
             "database/seeds",

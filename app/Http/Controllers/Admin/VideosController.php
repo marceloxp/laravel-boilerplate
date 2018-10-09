@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
-use App\Http\Umstudio\Youtube;
+use App\Http\Utilities\Youtube;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use App\Models\Video;

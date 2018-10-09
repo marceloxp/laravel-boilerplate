@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Http\Umstudio\Result;
+use App\Http\Utilities\Result;
 use Stringy as S;
 
 class AdminController extends Controller

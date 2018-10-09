@@ -1,5 +1,5 @@
 <?php
-use \App\Http\Umstudio\Datasite;
+use \App\Http\Utilities\Datasite;
 
 if (!function_exists('datasite_add'))
 {

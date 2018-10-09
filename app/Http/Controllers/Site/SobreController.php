@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Http\Umstudio\MetaSocial;
+use App\Http\Utilities\MetaSocial;
 
 class SobreController extends Controller
 {

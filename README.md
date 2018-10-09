@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.15
+> Version 0.0.16
 
 ## Install
 
@@ -56,7 +56,7 @@ php artisan checkadmin
 
 ## Custom Classes
 
-### Datasite `\App\Http\Umstudio\Datasite`
+### Datasite `\App\Http\Utilities\Datasite`
 
 ```php
 Datasite::add('csrf_token', csrf_token());
@@ -66,7 +66,7 @@ datasite_add('csrf_token', csrf_token());
 datasite_add(compact('url'));
 ```
 
-### Cached `\App\Http\Umstudio\Cached`
+### Cached `\App\Http\Utilities\Cached`
 
 ```php
 Cached::get('brasil', 'states', $states, 10); // Minutes
@@ -76,7 +76,7 @@ Cached::forget('admin'); // Clear all files on admin prefix
 Cached::flush(); // Clear all cache
 ```
 
-### MetaSocial `\App\Http\Umstudio\MetaSocial`
+### MetaSocial `\App\Http\Utilities\MetaSocial`
 
 ```php
 MetaSocial::use('sobre');
@@ -85,13 +85,13 @@ MetaSocial::set('description', 'Entre em contato conosco.');
 Metasocial::print();
 ```
 
-### HttpCurl `\App\Http\Umstudio\HttpCurl`
+### HttpCurl `\App\Http\Utilities\HttpCurl`
 
 ```php
 $json_data = HttpCurl::json('https://viacep.com.br/ws/05415030/json/');
 ```
 
-### Cep `\App\Http\Umstudio\Cep`
+### Cep `\App\Http\Utilities\Cep`
 
 ```php
 $address = Cep::get('04045-004');      // Returns Adddress
@@ -101,7 +101,7 @@ $masket  = Cep:mask('4045004');        // Returns '04045-004'
 $masket  = Cep:toNumeric('04045-004'); // Returns 4045004
 ```
 
-### Result `\App\Http\Umstudio\Result`
+### Result `\App\Http\Utilities\Result`
 
 ```php
 return Result::success('Dados cadastrados com sucesso.');
@@ -113,7 +113,7 @@ return Result::invalid();     // Entrada de dados inválida.
 return Result::exception($e); // Ocorreu um erro na solcitação.
 ```
 
-### RouteLang `\App\Http\Umstudio\RouteLang`
+### RouteLang `\App\Http\Utilities\RouteLang`
 
 > Used in `/routes/multilanguague.php`
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Umstudio;
+namespace App\Http\Utilities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use \App\Http\Umstudio\Cached;
+use \App\Http\Utilities\Cached;
 use Carbon\Carbon;
 
 class MasterModel extends Model

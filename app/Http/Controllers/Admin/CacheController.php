@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Http\Umstudio\Cached;
-use App\Http\Umstudio\Result;
-use App\Http\Umstudio\DBConfig;
+use App\Http\Utilities\Cached;
+use App\Http\Utilities\Result;
+use App\Http\Utilities\DBConfig;
 
 class CacheController extends AdminController
 {

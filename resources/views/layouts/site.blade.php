@@ -1,7 +1,7 @@
 @php
-	use App\Http\Umstudio\Datasite;
-	use App\Http\Umstudio\AutoAssets;
-	use App\Http\Umstudio\MetaSocial;
+	use App\Http\Utilities\Datasite;
+	use App\Http\Utilities\AutoAssets;
+	use App\Http\Utilities\MetaSocial;
 @endphp
 
 <!DOCTYPE html>

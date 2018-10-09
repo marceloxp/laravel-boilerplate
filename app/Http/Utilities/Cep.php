@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Umstudio;
-use App\Http\Umstudio\HttpCurl;
-use App\Http\Umstudio\Result;
+namespace App\Http\Utilities;
+use App\Http\Utilities\HttpCurl;
+use App\Http\Utilities\Result;
 
 class Cep
 {
@@ -70,7 +70,7 @@ class Cep
 			$cep = self::mask($p_cep);
 			return Cached::get
 			(
-				'App\Http\Umstudio\Cep',
+				'App\Http\Utilities\Cep',
 				['get', $p_cep],
 				function() use ($cep)
 				{

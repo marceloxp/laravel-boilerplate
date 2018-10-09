@@ -10,7 +10,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Umstudio\MasterModel;
+use App\Http\Utilities\MasterModel;
 
 class User extends MasterModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {

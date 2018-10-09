@@ -34,7 +34,7 @@ Route::prefix('brasil')->group
 			'states',
 			function()
 			{
-				$result = \App\Http\Umstudio\Brasil::getStates();
+				$result = \App\Http\Utilities\Brasil::getStates();
 				return response($result)->withHeaders(cached_headers($result));
 			}
 		);
@@ -44,7 +44,7 @@ Route::prefix('brasil')->group
 			'cities/{uf}',
 			function($uf)
 			{
-				$result = \App\Http\Umstudio\Brasil::getCitiesByUf($uf);
+				$result = \App\Http\Utilities\Brasil::getCitiesByUf($uf);
 				return response($result)->withHeaders(cached_headers($result));
 			}
 		);
@@ -54,7 +54,7 @@ Route::prefix('brasil')->group
 			'cep/{cep}',
 			function($cep)
 			{
-				$result = \App\Http\Umstudio\Cep::get($cep);
+				$result = \App\Http\Utilities\Cep::get($cep);
 				return response($result)->withHeaders(cached_headers($result));
 			}
 		);

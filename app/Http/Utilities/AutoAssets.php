@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Umstudio;
+namespace App\Http\Utilities;
 
 use Illuminate\Support\Facades\Route;
 

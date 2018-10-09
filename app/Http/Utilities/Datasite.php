@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Umstudio;
+namespace App\Http\Utilities;
 
-class Disk
+class Datasite
 {
-	private static $disk = [];
+	public static $datasite = [];
 
-	public static function disk($name_or_variable, $value_or_null = null)
+	public static function add($name_or_variable, $value_or_null = null)
 	{
 		if (is_array($name_or_variable))
 		{

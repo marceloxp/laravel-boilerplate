@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Umstudio\Datasite;
+use App\Http\Utilities\Datasite;
 use Closure;
 use Auth;
 

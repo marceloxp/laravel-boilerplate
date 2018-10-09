@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Config;
-use App\Http\Umstudio\Cached;
+use App\Http\Utilities\Cached;
 
 class ConfigsController extends Controller
 {
