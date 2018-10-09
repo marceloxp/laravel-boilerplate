@@ -9,7 +9,7 @@ return [
 			'description'     => env('APP_DESCRIPTION'),
 			'keywords'        => 'keywords, site',
 			'type'            => 'website',
-			'image'           => '/images/share.png',
+			'image'           => '/images/laravel-logo.png',
 			'facebook_id'     => '',
 			'twitter_card'    => 'summary_large_image',
 			'twitter_creator' => ''
