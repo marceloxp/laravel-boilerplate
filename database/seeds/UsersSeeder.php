@@ -28,7 +28,7 @@ class UsersSeeder extends Seeder
         $master_user = 
         [
             'name'       => 'Master',
-            'email'      => 'projetos@umstudio.com',
+            'email'      => 'projetos@host.com',
             'password'   => Hash::make( sprintf('%s%s%s', $prefix, $year, 'master') ),
             'created_at' => $now
         ];
@@ -36,7 +36,7 @@ class UsersSeeder extends Seeder
         $developer_user = 
         [
             'name'       => 'Developer',
-            'email'      => 'projetos.developer@umstudio.com',
+            'email'      => 'projetos.developer@host.com',
             'password'   => Hash::make( sprintf('%s%s%s', $prefix, $year, 'developer') ),
             'created_at' => $now
         ];
