@@ -8,14 +8,15 @@
 	"minimum-stability": "dev",
     "require": {
         "php": ">=7.0.0",
+        "danielstjules/stringy": "~3.1.0",
         "digitalnature/php-ref": "dev-master",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "~6.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "marceloxp/laravel_commands": "dev-master",
         "miroc/laravel-adminer": "dev-master",
-        "shridharkaushik29/laravel-hooks": "dev-master",
-        "danielstjules/stringy": "~3.1.0"
+        "shridharkaushik29/laravel-hooks": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2@dev",
@@ -36,7 +37,7 @@
             "app/Http/Umstudio/Helpers/helpers.php",
             "app/Http/Umstudio/Helpers/hook.php",
             "app/Http/Umstudio/Helpers/lang.php",
-            "app/Http/Umstudio/Helpers/string.php",
+            "app/Http/Umstudio/Helpers/string.php"
 		],
         "classmap": [
             "database/seeds",
