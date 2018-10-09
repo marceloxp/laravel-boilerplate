@@ -30,6 +30,12 @@ class AdminController extends Controller
 				$user = Auth::user();
 				$this->user_logged = $user;
 				
+				$is_ajax = $request->ajax();
+				if ($is_ajax)
+				{
+					return $next($request);
+				}
+
 				$menus      = $this->buildMenus();
 				$route_name = Route::currentRouteName();
 				$roles      = $this->getPagePermission($route_name, $menus);

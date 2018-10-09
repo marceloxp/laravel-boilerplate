@@ -281,7 +281,7 @@ umsadmin.Tmodal_search = function($, objname, options)
 					slug     : 'modal-search',
 					exclusive: true,
 					autowait : 'auto',
-					url      : datasite.url.admin + '/modal-search/?page=' + p_page,
+					url      : datasite.url.admin + '/modal-search?page=' + p_page,
 					type     : 'GET',
 					dataType : 'html',
 					data     :
