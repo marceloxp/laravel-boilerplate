@@ -388,7 +388,7 @@ class AdminController extends Controller
 			'pivot_scope'  => [],
 			'where'        => [],
 			'appends'      => [],
-			'editable'     => false,
+			'editable'     => true,
 			'exportable'   => false
 		];
 
