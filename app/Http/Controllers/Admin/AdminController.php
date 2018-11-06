@@ -388,6 +388,7 @@ class AdminController extends Controller
 			'pivot_scope'  => [],
 			'where'        => [],
 			'appends'      => [],
+			'editable'     => true,
 			'exportable'   => false
 		];
 
@@ -414,7 +415,7 @@ class AdminController extends Controller
 		$has_table         = (!empty($table));
 		$search_dates      = ['created_at'];
 
-		$share_params = compact('panel_title','panel_description','fields_schema','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable');
+		$share_params = compact('panel_title','panel_description','fields_schema','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');
 		
 		View::share($share_params);
 

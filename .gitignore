@@ -19,3 +19,5 @@ public/adminer/login-otp\.php
 public/adminer/plugin\.php
 
 public/adminer/struct-comments\.php
+
+_temp/

@@ -56,6 +56,13 @@ return [
 					'ico'     => 'fa-tags',
 					'group'   => 'admin_tags',
 					'route'   => 'admin_tags'
+				],
+				[
+					'type'    => 'link',
+					'caption' => 'Clientes',
+					'ico'     => 'fa-users',
+					'group'   => 'admin_customers',
+					'route'   => 'admin_customers'
 				]
 			]
 		],
