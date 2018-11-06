@@ -10,6 +10,14 @@ return [
 			'ico'     => 'fa-video-camera',
 			'link'    => 'admin_videos',
 			'model'   => 'Video'
+		],
+		[
+			'roles'   => ['Master'],
+			'caption' => 'Clientes',
+			'color'   => 'bg-purple',
+			'ico'     => 'fa-users',
+			'link'    => 'admin_customers',
+			'model'   => 'Customer'
 		]
 	],
 	'menu' =>
