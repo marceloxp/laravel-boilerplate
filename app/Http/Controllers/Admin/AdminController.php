@@ -458,7 +458,8 @@ class AdminController extends Controller
 	{
 		$default_params = 
 		[
-			'image_fields' => []
+			'image_fields' => [],
+			'disabled'     => [],
 		];
 		$params = array_merge($default_params, $p_args);
 		extract($params, EXTR_OVERWRITE);
@@ -475,7 +476,7 @@ class AdminController extends Controller
 			$this->hooks_edit($table_name);
 		}
 
-		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name'));
+		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled'));
 
 		return view('Admin.generic_add');
 	}

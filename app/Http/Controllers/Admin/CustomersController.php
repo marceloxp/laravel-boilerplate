@@ -57,6 +57,7 @@ class CustomersController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => Customer::class,
+				'disabled'       => ['created_at'],
 				'display_fields' => 
 				[
 					'id'             => 0,
@@ -121,7 +122,7 @@ class CustomersController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => Customer::class,
-				'display_fields' => ['id','name','username','born','cpf','email','phone_prefix','phone','cep','state','city','address','address_number','complement','neighborhood','newsletter','rules','status','ip','flags','deleted_at','created_at','updated_at']
+				'display_fields' => ['id','name','username','born','cpf','email','phone_prefix','phone','cep','state','city','address','address_number','complement','neighborhood','newsletter','rules','status','ip','created_at','updated_at']
 			]
 		);
 	}

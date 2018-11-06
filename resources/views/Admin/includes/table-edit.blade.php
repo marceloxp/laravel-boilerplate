@@ -152,16 +152,18 @@
 								break;
 								default:
 									$value = (old($field_name) ?? $register->$field_name);
+									$is_disabled = in_array($field_name, $disabled) ? ' disabled="disabled" ' : '';
 									if (!is_array($value))
 									{
 										$input = sprintf
 										(
-											'<input type="text" class="form-control" name="%s" id="%s" maxlength="%s" autocomplete="no" placeholder="" value="%s" %s>',
+											'<input type="text" class="form-control" name="%s" id="%s" maxlength="%s" autocomplete="no" placeholder="" value="%s" %s %s>',
 											$field_name,
 											$field_name,
 											$maxlength,
 											(old($field_name) ?? $register->$field_name),
-											$required
+											$required,
+											$is_disabled
 										);
 									}
 								break;
