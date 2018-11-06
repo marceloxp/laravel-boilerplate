@@ -406,6 +406,7 @@ class AdminController extends Controller
 		$panel_title       = $this->caption;
 		$panel_description = $this->description;
 		$fields_schema     = $model::getFieldsMetaData($appends);
+		$field_names       = array_keys($fields_schema);
 		$perpage           = $this->getPerPage($request);
 		$table_name        = $model::getTableName();
 		$model_name        = $model::getModelName();
@@ -415,7 +416,7 @@ class AdminController extends Controller
 		$has_table         = (!empty($table));
 		$search_dates      = ['created_at'];
 
-		$share_params = compact('panel_title','panel_description','fields_schema','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');
+		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');
 		
 		View::share($share_params);
 
@@ -424,7 +425,7 @@ class AdminController extends Controller
 			$this->hooks_index($table_name);
 		}
 
-		$excepts = ['fields_schema','search_dates','table_name','exportable'];
+		$excepts = ['fields_schema','field_names','search_dates','table_name','exportable'];
 		$jsvars = collect($share_params)->except($excepts)->toArray();
 		
 		datasite_add(['params' => $jsvars]);
@@ -467,13 +468,14 @@ class AdminController extends Controller
 		$is_creating    = (empty($id));
 		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
 		$fields_schema  = $model::getFieldsMetaData();
+		$field_names    = array_keys($fields_schema);
 
 		if (method_exists($this, 'hooks_edit'))
 		{
 			$this->hooks_edit($table_name);
 		}
 
-		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','image_fields','table_name'));
+		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name'));
 
 		return view('Admin.generic_add');
 	}
