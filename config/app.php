@@ -93,6 +93,7 @@ return [
 	|
 	*/
 
+	'faker_locale'    => 'pt_BR',
 	'default_locale'  => 'pt-br',
 	'fallback_locale' => 'pt-br',
 	'all_langs'       => array('pt-br', 'en', 'es'),
@@ -183,6 +184,7 @@ return [
 		// App\Providers\BroadcastServiceProvider::class,
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
+		App\Providers\BrFakerServiceProvider::class,
 
 	],
 

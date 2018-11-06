@@ -171,6 +171,20 @@ Route::group
 						Route::post('{video_id}/detach'       , 'TagVideoController@detach' )->name('admin_tag_video_detach')->group('admin_tags');
 					}
 				);
+
+				// Customers
+				Route::group
+				(
+					['prefix' => 'customers'],
+					function()
+					{
+						Route::get ('/'                       , 'CustomersController@index'  )->name('admin_customers'       )->group('admin_customers');
+						Route::get ('edit/{id?}'              , 'CustomersController@create' )->name('admin_customers_edit'  )->group('admin_customers');
+						Route::post('edit/{id?}'              , 'CustomersController@store'  )->name('admin_customers_save'  )->group('admin_customers');
+						Route::get ('show/{id}'               , 'CustomersController@show'   )->name('admin_customers_show'  )->group('admin_customers');
+						Route::post('delete/'                 , 'CustomersController@destroy')->name('admin_customers_delete')->group('admin_customers');
+					}
+				);
 			}
 		);
 	}
