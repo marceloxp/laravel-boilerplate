@@ -1,8 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.0.16
-> http://www.local.laravel-boilerplate.com.br
+> Version 0.1.0
 
 ## Install
 
@@ -28,13 +27,29 @@ php artisan migrate:refresh --seed
 
 ## Framework
 
-- Laravel 5.5.x: <https://laravel.com/>
+- Laravel 5.7.x: <https://laravel.com/>
+
+### Server Requirements
+
+- PHP >= 7.1.3
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Mbstring PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
+- Ctype PHP Extension
+- JSON PHP Extension
+
+### Dev URL
+
+> http://www.local.laravel-boilerplate.com.br
 
 ## Plugins
 
 - shridharkaushik29/laravel-hooks: <https://github.com/shridharkaushik29/laravel-hooks>
 - digitalnature/php-ref: <https://github.com/digitalnature/php-ref>
 - barryvdh/laravel-debugbar: <https://github.com/barryvdh/laravel-debugbar>
+- miroc/laravel-adminer: <https://github.com/miroc/Laravel-Adminer>
 
 ## Libraries
 
@@ -152,7 +167,7 @@ RouteLang::getCurrentLocale();        // Returns app current locale config (dyna
 
 ```html
 <!-- Add host and app version -->
-<img src="{{vasset('/img/logo.png')}}">
+<img src="{{ vasset('/img/logo.png') }}">
 <img src="https://wwww.site.com.br/img/logo.png?v=0.0.2">
 ```
 
