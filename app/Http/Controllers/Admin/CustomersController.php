@@ -30,7 +30,7 @@ class CustomersController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => Customer::class,
-				'editable'       => false,
+				'editable'       => true,
 				'display_fields' => ['id','name','email','state','status']
 			]
 		);
@@ -42,6 +42,59 @@ class CustomersController extends AdminController
 		Hook::add_filter(sprintf('admin_index_title_align_%s_%s', $table_name, 'status'), function($display_value           ) { return 'center'; }, 10, 2 );
 		Hook::add_filter(sprintf('admin_index_field_align_%s_%s', $table_name, 'state' ), function($display_value, $register) { return 'center'; }, 10, 2 );
 		Hook::add_filter(sprintf('admin_index_title_align_%s_%s', $table_name, 'state' ), function($display_value           ) { return 'center'; }, 10, 2 );
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create(Request $request, $id = null)
+	{
+		return $this->defaultCreate
+		(
+			[
+				'id'             => $id,
+				'request'        => $request,
+				'model'          => Customer::class,
+				'display_fields' => 
+				[
+					'id'             => 0,
+
+					'name'           => 6,
+					'username'       => 6,
+
+					'born'           => 4,
+					'cpf'            => 4,
+					'email'          => 4,
+
+					'phone_prefix'   => 4,
+					'phone'          => 8,
+
+					'address'        => 8,
+					'address_number' => 2,
+					'complement'     => 2,
+
+					'neighborhood'   => 3,
+					'cep'            => 3,
+					'state'          => 3,
+					'city'           => 3,
+
+					'password'       => 4,
+					'newsletter'     => 4,
+					'rules'          => 4,
+					
+					'status'         => 4,
+					'ip'             => 4,
+					'created_at'     => 4,
+				]
+			]
+		);
+	}
+
+	public function hooks_edit($table_name)
+	{
+		//
 	}
 
 	/**
