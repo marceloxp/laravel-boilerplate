@@ -138,7 +138,12 @@
 					<tr>
 						<th style="width:20px"><input id="ch-rows-all" type="checkbox"></th>
 						@foreach($display_fields as $field_name)
-							<th>{{ $fields_schema[$field_name]['comment'] }}</i></th>
+							@php
+								$title_align = 'left';
+								$hook_name   = hook_name(sprintf('admin_index_title_align_%s_%s', $table_name, $field_name));
+								$title_align = Hook::apply_filters($hook_name, $title_align);
+							@endphp
+							<th style="text-align: {{ $title_align }};" data-field="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</i></th>
 						@endforeach
 					</tr>
 					@foreach($table as $register)
@@ -181,8 +186,12 @@
 
 								$hook_name     = hook_name(sprintf('admin_index_%s_%s', $table_name, $field_name));
 								$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
+
+								$field_align = 'left';
+								$hook_name   = hook_name(sprintf('admin_index_field_align_%s_%s', $table_name, $field_name));
+								$field_align = Hook::apply_filters($hook_name, $display_value, $register->toArray());
 							@endphp
-							<td>{!! $display_value !!}</td>
+							<td align="{{ $field_align }}">{!! $display_value !!}</td>
 						@endforeach
 					</tr>
 					@endforeach

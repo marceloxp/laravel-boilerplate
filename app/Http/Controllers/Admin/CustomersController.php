@@ -36,18 +36,13 @@ class CustomersController extends AdminController
 		);
 	}
 
-	// public function hooks_index($table_name)
-	// {
-	// 	Hook::add_filter
-	// 	(
-	// 		sprintf('admin_index_%s_name', $table_name),
-	// 		function($display_value, $register)
-	// 		{
-	// 			return sprintf('<i>%s</i>', $display_value);
-	// 		},
-	// 		10, 2
-	// 	);
-	// }
+	public function hooks_index($table_name)
+	{
+		Hook::add_filter(sprintf('admin_index_field_align_%s_%s', $table_name, 'status'), function($display_value, $register) { return 'center'; }, 10, 2 );
+		Hook::add_filter(sprintf('admin_index_title_align_%s_%s', $table_name, 'status'), function($display_value           ) { return 'center'; }, 10, 2 );
+		Hook::add_filter(sprintf('admin_index_field_align_%s_%s', $table_name, 'state' ), function($display_value, $register) { return 'center'; }, 10, 2 );
+		Hook::add_filter(sprintf('admin_index_title_align_%s_%s', $table_name, 'state' ), function($display_value           ) { return 'center'; }, 10, 2 );
+	}
 
 	/**
 	 * Store a newly created resource in storage.
