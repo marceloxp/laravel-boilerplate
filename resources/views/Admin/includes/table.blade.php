@@ -189,7 +189,7 @@
 
 								$field_align = 'left';
 								$hook_name   = hook_name(sprintf('admin_index_field_align_%s_%s', $table_name, $field_name));
-								$field_align = Hook::apply_filters($hook_name, $display_value, $register->toArray());
+								$field_align = Hook::apply_filters($hook_name, $field_align, $register->toArray());
 							@endphp
 							<td align="{{ $field_align }}">{!! $display_value !!}</td>
 						@endforeach
