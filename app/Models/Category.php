@@ -9,11 +9,11 @@ use App\Http\Utilities\MasterModel;
 class Category extends MasterModel
 {
 	use SoftDeletes;
-    protected $dates   = ['created_at','updated_at','deleted_at'];
+	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
-    public static function validate($request, $id = '')
-    {
+	public static function validate($request, $id = '')
+	{
 		$rules = 
 		[
 			'name'        => 'required|min:5|max:150|unique:roles,name,' . $id,
@@ -21,10 +21,10 @@ class Category extends MasterModel
 		];
 
 		return Role::_validate($request, $rules, $id);
-    }
+	}
 
-    public function videos()
-    {
-    	return $this->hasMany(\App\Models\Video::class);
-    }
+	public function videos()
+	{
+		return $this->hasMany(\App\Models\Video::class);
+	}
 }
