@@ -99,8 +99,10 @@
 						}
 						elseif ($fields_schema[$field_name]['has_relation'])
 						{
+							// r($fields_schema);
 							$ref_model   = $fields_schema[$field_name]['relation']['ref_model'];
 							$field_label = $fields_schema[$field_name]['relation']['comment'];
+
 							$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $register->$ref_model->name) : '');
 							$field_value = old($field_name) ?? $register->$field_name;
 
@@ -108,7 +110,7 @@
 							(
 								'
 									<div class="input-group">
-										<input type="text" class="form-control dontsend" readonly="readonly" id="%s_text" name="%s_text" value="%s">
+										<input type="text" class="form-control dontsend" readonly="readonly" disabled id="%s_text" name="%s_text" value="%s">
 										<span class="input-group-btn">
 											<button data-field="%s" data-model="%s" data-caption="%s" type="button" class="btn btn-primary btn-flat search-modal-field"><i class="fa fa-fw fa-search"></i> Procurar</button>
 										</span>

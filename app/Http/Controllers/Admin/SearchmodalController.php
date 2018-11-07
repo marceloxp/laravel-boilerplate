@@ -11,7 +11,7 @@ class SearchmodalController extends AdminController
 		$options = $request->get('options');
 		$page = $request->query('page', 1);
 
-		$model = sprintf('\App\Models\%s', ucfirst(strtolower($options['model'])));
+		$model = sprintf('\App\Models\%s', ucfirst(camel_case(strtolower($options['model']))));
 		$table = $model::select();
 		if (array_key_exists('find', $options))
 		{

@@ -498,6 +498,14 @@ class AdminController extends Controller
 
 		$form = $this->processUploads($request, $form);
 
+		if (array_key_exists('password', $form))
+		{
+			if (empty($form['password']))
+			{
+				unset($form['password']);
+			}
+		}
+
 		if (isRedirect($form))
 		{
 			return $form;
