@@ -185,6 +185,20 @@ Route::group
 						Route::post('delete/'                 , 'CustomersController@destroy')->name('admin_customers_delete')->group('admin_customers');
 					}
 				);
+
+				// Address Types
+				Route::group
+				(
+					['prefix' => 'address_types'],
+					function()
+					{
+						Route::get ('/'                       , 'AddressTypesController@index'  )->name('admin_address_types'       )->group('admin_address_types');
+						Route::get ('edit/{id?}'              , 'AddressTypesController@create' )->name('admin_address_types_edit'  )->group('admin_address_types');
+						Route::post('edit/{id?}'              , 'AddressTypesController@store'  )->name('admin_address_types_save'  )->group('admin_address_types');
+						Route::get ('show/{id}'               , 'AddressTypesController@show'   )->name('admin_address_types_show'  )->group('admin_address_types');
+						Route::post('delete/'                 , 'AddressTypesController@destroy')->name('admin_address_types_delete')->group('admin_address_types');
+					}
+				);
 			}
 		);
 	}

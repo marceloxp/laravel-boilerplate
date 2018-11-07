@@ -34,7 +34,7 @@ class CreateCustomersTable extends Migration
             $table->boolean('rules')->default(false)->comment('Regras');
             $table->enum('status', ['Ativo','Inativo'])->default('Ativo')->comment('Status');
             $table->string('ip', 64)->nullable()->comment('IP');
-            $table->integer('flags')->default(0)->comment('Flags');
+            $table->integer('flags')->nullable()->default(0)->comment('Flags');
             $table->softDeletes();
             $table->timestamps();
 

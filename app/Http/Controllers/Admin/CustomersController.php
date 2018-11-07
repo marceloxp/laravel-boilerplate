@@ -31,7 +31,7 @@ class CustomersController extends AdminController
 				'request'        => $request,
 				'model'          => Customer::class,
 				'editable'       => true,
-				'display_fields' => ['id','name','email','state','status']
+				'display_fields' => ['id','name','address_type_id','email','state','status']
 			]
 		);
 	}
@@ -60,34 +60,35 @@ class CustomersController extends AdminController
 				'disabled'       => ['created_at'],
 				'display_fields' => 
 				[
-					'id'             => 0,
-
-					'name'           => 6,
-					'username'       => 6,
-
-					'born'           => 4,
-					'cpf'            => 4,
-					'email'          => 4,
-
-					'phone_prefix'   => 4,
-					'phone'          => 8,
-
-					'address'        => 8,
-					'address_number' => 2,
-					'complement'     => 2,
-
-					'neighborhood'   => 3,
-					'cep'            => 3,
-					'state'          => 3,
-					'city'           => 3,
-
-					'password'       => 4,
-					'newsletter'     => 4,
-					'rules'          => 4,
+					'id'              => 0,
 					
-					'status'         => 4,
-					'ip'             => 4,
-					'created_at'     => 4,
+					'name'            => 6,
+					'username'        => 6,
+					
+					'born'            => 4,
+					'cpf'             => 4,
+					'email'           => 4,
+					
+					'phone_prefix'    => 4,
+					'phone'           => 4,
+					'address_type_id' => 4,
+					
+					'address'         => 8,
+					'address_number'  => 2,
+					'complement'      => 2,
+					
+					'neighborhood'    => 3,
+					'cep'             => 3,
+					'state'           => 3,
+					'city'            => 3,
+					
+					'password'        => 4,
+					'newsletter'      => 4,
+					'rules'           => 4,
+					
+					'status'          => 4,
+					'ip'              => 4,
+					'created_at'      => 4,
 				]
 			]
 		);

@@ -67,6 +67,13 @@ return [
 				],
 				[
 					'type'    => 'link',
+					'caption' => 'Tipos de Endereços',
+					'ico'     => 'fa-users',
+					'group'   => 'admin_address_types',
+					'route'   => 'admin_address_types'
+				],
+				[
+					'type'    => 'link',
 					'caption' => 'Clientes',
 					'ico'     => 'fa-users',
 					'group'   => 'admin_customers',
