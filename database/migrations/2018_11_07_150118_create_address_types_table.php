@@ -16,7 +16,7 @@ class CreateAddressTypesTable extends Migration
 		Schema::dropIfExists('address_types');
 		Schema::create('address_types', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('name', 124)->unique()->comment('Nome');
+			$table->string('name', 124)->unique()->comment('Tipo de Endereço');
 			$table->enum('status', ['Ativo','Inativo'])->default('Ativo')->comment('Status');
 			$table->softDeletes();
 			$table->timestamps();

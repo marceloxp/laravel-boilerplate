@@ -123,7 +123,7 @@ class CustomersController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => Customer::class,
-				'display_fields' => ['id','name','username','born','cpf','email','phone_prefix','phone','cep','state','city','address','address_number','complement','neighborhood','newsletter','rules','status','ip','created_at','updated_at']
+				'display_fields' => ['id','name','address_type_id','username','born','cpf','email','phone_prefix','phone','cep','state','city','address','address_number','complement','neighborhood','newsletter','rules','status','ip','created_at','updated_at']
 			]
 		);
 	}
