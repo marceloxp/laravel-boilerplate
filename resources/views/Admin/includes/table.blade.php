@@ -202,6 +202,11 @@
 		@endif
 	</div>
 	<div class="box-footer clearfix">
-		{!! $paginate !!}
+		<span class="pull-left">{!! $paginate !!}</span>
+		<span class="pull-right">
+			<ul class="pagination">
+				<li class="page-item">{{ $table->total() }} registros, página {{ $table->currentPage() }} de um total de {{ $table->lastPage() }}</li>
+			</ul>
+		</span>
 	</div>
 </div>
