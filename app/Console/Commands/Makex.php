@@ -106,6 +106,7 @@ class Makex extends \App\Console\MakexCommand
 		$body = str_replace('ModelName'                , $model, $body);
 		$body = str_replace('[display_fields]'         , '[' . $field_names . ']', $body);
 		$body = str_replace('[columned_display_fields]', $colunmed_str, $body);
+		$body = str_replace('UserCustomInput'          , $controller_name, $body);
 
 		file_put_contents($dest_file, $body);
 
