@@ -64,7 +64,7 @@ class MasterModel extends Model
 				(
 					'SELECT "caption", COLUMN_COMMENT AS `caption` FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "%s%s" AND COLUMN_NAME = "%s" LIMIT 1;',
 					env('DB_DATABASE'),
-					env('DB_PREFIX'),
+					env('DB_TABLE_PREFIX'),
 					$p_table_name,
 					$p_field_name
 				);
@@ -110,7 +110,7 @@ class MasterModel extends Model
 					',
 					env('DB_DATABASE'),
 					env('DB_DATABASE'),
-					env('DB_PREFIX'),
+					env('DB_TABLE_PREFIX'),
 					$table_name
 				);
 
@@ -119,14 +119,14 @@ class MasterModel extends Model
 				{
 					$table = $relation->table_name;
 					$pivot = $table;
-					$ligation = ltrim($table, env('DB_PREFIX'));
-					$table = ltrim($table, env('DB_PREFIX'));
+					$ligation = ltrim($table, env('DB_TABLE_PREFIX'));
+					$table = ltrim($table, env('DB_TABLE_PREFIX'));
 					$table = trim($table, $table_name);
 					$table = trim($table, '_');
 					$model = $table;
 					$table = str_plural($table);
 					$prop  = $table;
-					$table = env('DB_PREFIX') . $table;
+					$table = env('DB_TABLE_PREFIX') . $table;
 
 					$primary = db_get_primary_key($prop);
 					$relation = sprintf('%s_%s', $model, $primary);
@@ -169,7 +169,7 @@ class MasterModel extends Model
 							`TABLE_NAME` = "%s%s"
 					',
 					env('DB_DATABASE'),
-					env('DB_PREFIX'),
+					env('DB_TABLE_PREFIX'),
 					$table_name
 				);
 
@@ -181,13 +181,13 @@ class MasterModel extends Model
 
 					$value = 
 					[
-						'table_name'   => trim($value['table_name'], env('DB_PREFIX')),
-						'table_model'  => str_singular(trim($value['table_name'], env('DB_PREFIX'))),
+						'table_name'   => trim($value['table_name'], env('DB_TABLE_PREFIX')),
+						'table_model'  => str_singular(trim($value['table_name'], env('DB_TABLE_PREFIX'))),
 						'field_name'   => $value['field_name'],
-						'ref_table'    => trim($value['ref_table'], env('DB_PREFIX')),
-						'ref_model'    => str_singular(trim($value['ref_table'], env('DB_PREFIX'))),
+						'ref_table'    => trim($value['ref_table'], env('DB_TABLE_PREFIX')),
+						'ref_model'    => str_singular(trim($value['ref_table'], env('DB_TABLE_PREFIX'))),
 						'field_index'  => $value['field_index'],
-						'custom_field' => str_singular(trim($value['ref_table'], env('DB_PREFIX'))),
+						'custom_field' => str_singular(trim($value['ref_table'], env('DB_TABLE_PREFIX'))),
 						'comment'      => ''
 					];
 					$value['comment'] = self::getTableFieldCaption($value['ref_table'], 'name');
@@ -215,7 +215,7 @@ class MasterModel extends Model
 							ORDINAL_POSITION
 					',
 					env('DB_DATABASE'),
-					env('DB_PREFIX'),
+					env('DB_TABLE_PREFIX'),
 					$table_name
 				);
 
