@@ -85,11 +85,11 @@ datasite_add(compact('url'));
 ### Cached `\App\Http\Utilities\Cached`
 
 ```php
-Cached::get('brasil', 'states', $states, 10); // Minutes
+Cached::get('brasil', 'states', $states, 10);   // Minutes
 Cached::get('brasil', 'regions', $regions, 10);
 Cached::forget('admin', 'states');
-Cached::forget('admin'); // Clear all files on admin prefix
-Cached::flush(); // Clear all cache
+Cached::forget('admin');                        // Clear all files on admin prefix
+Cached::flush();                                // Clear all cache
 ```
 
 ### MetaSocial `\App\Http\Utilities\MetaSocial`
@@ -153,19 +153,22 @@ RouteLang::getCurrentLocale();        // Returns app current locale config (dyna
 
 ### Hooks
 
-| Hook                                   | Location      | Description  |
-| -----------                            | ------------- | -------------|
-| admin_index_search_fields_{table_name} | Index         | Fields in search Combobox |
-| admin_index_sort_fields_{table_name}   | Index         | Fields in sort Combobox |
-| admin_index_{table_name}_{field_name}  | Index         | Before print field on index table |
-| admin_show_{table_name}_{field_name}   | Show          | Before print field on show register |
-| admin_edit_{table_name}_{field_name}   | Add/Edit      | Before print field on add/edit register |
+| Hook                                              | Location      | Description                             |
+| ------------------------------------------------- | ------------- | --------------------------------------- |
+| admin_index_search_fields_{table_name}            | Index         | Fields in search Combobox               |
+| admin_index_sort_fields_{table_name}              | Index         | Fields in sort Combobox                 |
+| admin_index_{table_name}_{field_name}             | Index         | Before print field on index table       |
+| admin_index_title_align_{table_name}_{field_name} | Index         | Define grid title alignment             |
+| admin_index_field_align_{table_name}_{field_name} | Index         | Define grid field record alignment      |
+| admin_show_{table_name}_{field_name}              | Show          | Before print field on show register     |
+| admin_edit_{table_name}_{field_name}              | Add/Edit      | Before print field on add/edit register |
 
 ### Helpers
 
 #### vasset
 
 ```html
+<!-- Versioned Asset -->
 <!-- Add host and app version -->
 <img src="{{ vasset('/img/logo.png') }}">
 <img src="https://wwww.site.com.br/img/logo.png?v=0.0.2">
@@ -211,7 +214,7 @@ ddd($var);
 echo dic('Página Inicial');
 {{ dic('Página Inicial') }}
 
-echo lang_home_link(); // returns current language root url
+echo lang_home_link();     // returns current language root url
 echo lang_home_link('en'); // returns root url for language [en]
 ```
 
@@ -230,18 +233,21 @@ echo str2bool('foo');   // Returns false;
 #### DB
 
 ```php
-echo db_get_primary_key('table_name'); // Returns id
-echo db_get_name('table_name', 10); // Returns `name` field value
+echo db_comment_table('table_name', 'comment_table'); // Define table comment
+echo db_get_primary_key('table_name');                // Returns id
+echo db_get_name('table_name', 10);                   // Returns `name` field value
 ```
 
 ### Custom configs
 
-- admin.php (menu)
-- brasil.php (estados)
-- cep.php (faixas por estado)
-- colors.php
-- metasocial.php
-- social.php (facebook, twitter, etc)
+| Config          | Description              |
+| --------------- | ------------------------ |
+| admin.php       | Menu                     |
+| brasil.php      | Estados                  |
+| cep.php         | Faixas de cep por estado |
+| colors.php      | Bootstrap colors         |
+| metasocial.php  | Headers metatags         |
+| social.php      | Facebook, Twitter, etc   |
 
 ### Automatic Assets
 
