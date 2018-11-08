@@ -142,6 +142,10 @@
 								case 'enum':
 									$input = admin_select_simple($field_name, $fields_schema[$field_name]['options'], (old($field_name) ?? $register->$field_name), $required);
 								break;
+								case 'tinyint':
+									$options = ['Não', 'Sim'];
+									$input = admin_select($field_name, $options, (old($field_name) ?? $register->$field_name), $required);
+								break;
 								case 'text':
 									$input = sprintf
 									(

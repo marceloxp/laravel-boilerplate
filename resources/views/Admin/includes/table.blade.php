@@ -8,8 +8,6 @@
 	$sort_fields   = Hook::apply_filters($hook_name, $sort_fields);
 
 	$image_fields = $image_fields ?? [];
-
-	dump($has_table);
 @endphp
 
 @if ($has_table)
@@ -44,7 +42,7 @@
 					<div class="row">
 						<div class="col-xs-6 col-md-3">
 							<div class="form-group">
-								<label>Filtrar por data:</label>
+								<label>Filtrar por data</label>
 								<select id="select-field-date" class="form-control">
 									@foreach($search_dates as $field_name)
 										<option class="option_search_date" value="{{$field_name}}">{{ $fields_schema[$field_name]['comment'] }}</option>
@@ -53,7 +51,7 @@
 							</div>
 						</div>
 						<div class="col-xs-6 col-md-3">
-							<label>Período:</label><br>
+							<label>Período</label><br>
 							<div class="input-group">
 								<div class="input-group-addon">
 									<i class="fa fa-calendar"></i>
@@ -68,7 +66,7 @@
 				<div class="row">
 					<div class="col-xs-6 col-md-6">
 						<div class="form-group">
-							<label>Ordernar por:</label>
+							<label>Ordernar por</label>
 							<select id="select-field-order" class="form-control">
 								<option class="option_search_field" value="0">Selecione</option>
 								@foreach($sort_fields as $field_name)
@@ -78,7 +76,7 @@
 						</div>
 					</div>
 					<div class="col-xs-4 col-md-4">
-						<label>Adicionar:</label><br>
+						<label>Adicionar</label><br>
 						<div class="btn-group">
 							<button type="button" data-dir="down" class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do menor para o maior (ASC)"  data-placement="bottom"><i class="fa fa-fw fa-arrow-down"></i></button>
 							<button type="button" data-dir="up"   class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do maior para o menor (DESC)" data-placement="bottom"><i class="fa fa-fw fa-arrow-up"></i></button>

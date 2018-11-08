@@ -16,6 +16,30 @@ if (!function_exists('admin_label_status'))
 	}
 }
 
+if (!function_exists('admin_select'))
+{
+	function admin_select($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
+	{
+		$required = (!empty($p_required)) ? 'required' : '';
+
+		$result  = sprintf('<select name="%s" id="%s" class="form-control" %s>', $p_field_name, $p_field_name, $required);
+		if ($p_add_text_select)
+		{
+			$selected = (empty($p_field_value)) ? 'selected' : '';
+			$result .= sprintf('<option value="" %s>%s</option>', $selected, 'Selecione');
+		}
+
+		foreach($p_options as $value => $text)
+		{
+			$selected = ($p_field_value == $value) ? 'selected' : '';
+			$result .= sprintf('<option value="%s" %s>%s</option>', $value, $selected, $text);
+		}
+		$result .= '</select>';
+
+		return $result;
+	}
+}
+
 if (!function_exists('admin_select_simple'))
 {
 	function admin_select_simple($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)

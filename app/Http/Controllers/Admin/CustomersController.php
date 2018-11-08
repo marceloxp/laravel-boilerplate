@@ -82,13 +82,13 @@ class CustomersController extends AdminController
 					'state'           => 3,
 					'city'            => 3,
 					
-					'password'        => 4,
-					'newsletter'      => 4,
-					'rules'           => 4,
-					
-					'status'          => 4,
-					'ip'              => 4,
-					'created_at'      => 4,
+					'password'        => 3,
+					'newsletter'      => 3,
+					'rules'           => 3,
+					'status'          => 3,
+
+					'ip'              => 3,
+					'created_at'      => 3,
 				]
 			]
 		);
