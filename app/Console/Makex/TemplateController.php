@@ -16,7 +16,6 @@ class CustomersController extends AdminController
 	{
 		$this->caption = '[[caption]]';
 		$this->model   = ModelName::class;
-		
 		parent::__construct();
 	}
 
