@@ -206,6 +206,11 @@ return response($result)->withHeaders(cached_headers($result));
 ddd($var);
 ```
 
+> Create Admin Controller
+```sh
+php artisan makex:admin_controller
+```
+
 #### lang
 
 > Prints variable in current language, defaults to parameter.

@@ -108,5 +108,37 @@ class Makex extends \App\Console\MakexCommand
 		$body = str_replace('[columned_display_fields]', $colunmed_str, $body);
 
 		file_put_contents($dest_file, $body);
+
+		if (!$this->confirm('Create Route?'))
+		{
+			exit;
+		}
+
+		$route_prefix = $this->ask('Route Prefix');
+		if (empty($route_prefix))
+		{
+			exit;
+		}
+
+		$template = "
+	// " . $caption . "
+	Route::group
+	(
+		['prefix' => '" . $route_prefix . "'],
+		function()
+		{
+			Route::get ('/'         , '" . $controller_name . "Controller@index'  )->name('admin_" . $route_prefix . "'       )->group('admin_" . $route_prefix . "');
+			Route::get ('edit/{id?}', '" . $controller_name . "Controller@create' )->name('admin_" . $route_prefix . "_edit'  )->group('admin_" . $route_prefix . "');
+			Route::post('edit/{id?}', '" . $controller_name . "Controller@store'  )->name('admin_" . $route_prefix . "_save'  )->group('admin_" . $route_prefix . "');
+			Route::get ('show/{id}' , '" . $controller_name . "Controller@show'   )->name('admin_" . $route_prefix . "_show'  )->group('admin_" . $route_prefix . "');
+			Route::post('delete/'   , '" . $controller_name . "Controller@destroy')->name('admin_" . $route_prefix . "_delete')->group('admin_" . $route_prefix . "');
+		}
+	);";
+
+		$file_name = base_path('routes/custom_admin.php');
+
+		$body = file_get_contents($file_name);
+		$body .= PHP_EOL . $template;
+		file_put_contents($file_name, $body);
 	}
 }
