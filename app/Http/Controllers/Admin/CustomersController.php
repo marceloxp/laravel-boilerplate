@@ -15,6 +15,7 @@ class CustomersController extends AdminController
 	public function __construct()
 	{
 		$this->caption = 'Clientes';
+		$this->model   = Customer::class;
 		parent::__construct();
 	}
 
@@ -29,7 +30,7 @@ class CustomersController extends AdminController
 		(
 			[
 				'request'        => $request,
-				'model'          => Customer::class,
+				'model'          => $this->model,
 				'editable'       => true,
 				'display_fields' => ['id','name','address_type_id','email','state','status']
 			]
@@ -56,7 +57,7 @@ class CustomersController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => Customer::class,
+				'model'          => $this->model,
 				'disabled'       => ['created_at'],
 				'display_fields' => 
 				[
@@ -107,7 +108,7 @@ class CustomersController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		return $this->defaultStore($request, Customer::class);
+		return $this->defaultStore($request, $this->model);
 	}
 
 	/**
@@ -122,46 +123,15 @@ class CustomersController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => Customer::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','address_type_id','username','born','cpf','email','phone_prefix','phone','cep','state','city','address','address_number','complement','neighborhood','newsletter','rules','status','ip','created_at','updated_at']
 			]
 		);
 	}
 
-	// public function hooks_show($table_name)
-	// {
-	// 	Hook::add_filter
-	// 	(
-	// 		sprintf('admin_show_%s_name', $table_name),
-	// 		function($display_value, $register)
-	// 		{
-	// 			return sprintf('<i>%s</i>', $display_value);
-	// 		},
-	// 		10, 2
-	// 	);
-	// }
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
+	public function hooks_show($table_name)
 	{
-		//
-	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
 	}
 
 	/**
@@ -176,7 +146,7 @@ class CustomersController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => Customer::class
+				'model'   => $this->model
 			]
 		);
 	}

@@ -15,6 +15,7 @@ class CategoriesController extends AdminController
 	public function __construct()
 	{
 		$this->caption = 'Categorias';
+		$this->model   = Category::class;
 		parent::__construct();
 	}
 
@@ -29,7 +30,7 @@ class CategoriesController extends AdminController
 		(
 			[
 				'request'        => $request,
-				'model'          => Category::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','image','description','created_at']
 			]
 		);
@@ -66,7 +67,7 @@ class CategoriesController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => Category::class,
+				'model'          => $this->model,
 				'image_fields'   => ['image'],
 				'display_fields' => ['id','name','image','description']
 			]
@@ -81,7 +82,7 @@ class CategoriesController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		return $this->defaultStore($request, Category::class);
+		return $this->defaultStore($request, $this->model);
 	}
 
 	/**
@@ -96,7 +97,7 @@ class CategoriesController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => Category::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','image','description','created_at','updated_at','deleted_at']
 			]
 		);
@@ -116,29 +117,6 @@ class CategoriesController extends AdminController
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
-	}
-
-	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
@@ -150,7 +128,7 @@ class CategoriesController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => Category::class
+				'model'   => $this->model
 			]
 		);
 	}

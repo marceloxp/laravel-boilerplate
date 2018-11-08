@@ -16,6 +16,7 @@ class ConfigsController extends AdminController
     public function __construct()
 	{
 		$this->caption = 'Configurações';
+		$this->model   = Config::class;
 		parent::__construct();
 	}
 
@@ -30,7 +31,7 @@ class ConfigsController extends AdminController
 		(
 			[
 				'request'        => $request,
-				'model'          => Config::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','value','status','created_at']
 			]
 		);
@@ -61,7 +62,7 @@ class ConfigsController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => Config::class,
+				'model'          => $this->model,
 				'display_fields' => ['id', 'name', 'value', 'status']
 			]
 		);
@@ -75,7 +76,7 @@ class ConfigsController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		return $this->defaultStore($request, Config::class);
+		return $this->defaultStore($request, $this->model);
 	}
 
 	/**
@@ -90,7 +91,7 @@ class ConfigsController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => Config::class,
+				'model'          => $this->model,
 				'display_fields' => ['id', 'name', 'value','status','created_at','updated_at','deleted_at']
 			]
 		);
@@ -110,29 +111,6 @@ class ConfigsController extends AdminController
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
-	}
-
-	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
@@ -144,7 +122,7 @@ class ConfigsController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => Config::class
+				'model'   => $this->model
 			]
 		);
 	}

@@ -16,6 +16,7 @@ class UsersController extends AdminController
     public function __construct()
 	{
 		$this->caption = 'Usuários';
+		$this->model   = User::class;
 		$this->appends = ['roles' => 'Permissões'];
 		parent::__construct();
 	}
@@ -32,7 +33,7 @@ class UsersController extends AdminController
 			[
 				'appends'        => $this->appends,
 				'request'        => $request,
-				'model'          => User::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','email','roles','created_at']
 			]
 		);
@@ -96,7 +97,7 @@ class UsersController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => User::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','email','password','roles']
 			]
 		);
@@ -216,7 +217,7 @@ class UsersController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => User::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','email','roles','created_at','updated_at','deleted_at']
 			]
 		);
@@ -236,29 +237,6 @@ class UsersController extends AdminController
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
-	}
-
-	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
@@ -270,7 +248,7 @@ class UsersController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => User::class
+				'model'   => $this->model
 			]
 		);
 	}

@@ -15,6 +15,7 @@ class GalleriesController extends AdminController
 	public function __construct()
 	{
 		$this->caption = 'Galeria';
+		$this->model   = Gallery::class;
 		parent::__construct();
 	}
 
@@ -29,7 +30,7 @@ class GalleriesController extends AdminController
 		(
 			[
 				'request'        => $request,
-				'model'          => Gallery::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','category','description','image','status','created_at']
 			]
 		);
@@ -66,7 +67,7 @@ class GalleriesController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => Gallery::class,
+				'model'          => $this->model,
 				'image_fields'   => ['image'],
 				'display_fields' => ['id','name','category','description','image','status']
 			]
@@ -100,7 +101,7 @@ class GalleriesController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		return $this->defaultStore($request, Gallery::class);
+		return $this->defaultStore($request, $this->model);
 	}
 
 	/**
@@ -115,7 +116,7 @@ class GalleriesController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => Gallery::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','category','description','image','created_at','updated_at','deleted_at']
 			]
 		);
@@ -135,29 +136,6 @@ class GalleriesController extends AdminController
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
-	}
-
-	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
@@ -169,7 +147,7 @@ class GalleriesController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => Gallery::class
+				'model'   => $this->model
 			]
 		);
 	}

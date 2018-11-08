@@ -16,6 +16,7 @@ class AddressTypesController extends AdminController
     public function __construct()
 	{
 		$this->caption = 'Configurações';
+		$this->model   = AddressType::class;
 		parent::__construct();
 	}
 
@@ -30,24 +31,16 @@ class AddressTypesController extends AdminController
 		(
 			[
 				'request'        => $request,
-				'model'          => AddressType::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','status','created_at']
 			]
 		);
 	}
 
-	// public function hooks_index($table_name)
-	// {
-	// 	Hook::add_filter
-	// 	(
-	// 		sprintf('admin_index_%s_name', $table_name),
-	// 		function($display_value, $register)
-	// 		{
-	// 			return sprintf('<i>%s</i>', $display_value);
-	// 		},
-	// 		10, 2
-	// 	);
-	// }
+	public function hooks_index($table_name)
+	{
+		//
+	}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -61,7 +54,7 @@ class AddressTypesController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => AddressType::class,
+				'model'          => $this->model,
 				'display_fields' => ['id', 'name', 'status']
 			]
 		);
@@ -75,7 +68,7 @@ class AddressTypesController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		return $this->defaultStore($request, AddressType::class);
+		return $this->defaultStore($request, $this->model);
 	}
 
 	/**
@@ -90,44 +83,13 @@ class AddressTypesController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => AddressType::class,
+				'model'          => $this->model,
 				'display_fields' => ['id', 'name', 'status','created_at','updated_at']
 			]
 		);
 	}
 
-	// public function hooks_show($table_name)
-	// {
-	// 	Hook::add_filter
-	// 	(
-	// 		sprintf('admin_show_%s_name', $table_name),
-	// 		function($display_value, $register)
-	// 		{
-	// 			return sprintf('<i>%s</i>', $display_value);
-	// 		},
-	// 		10, 2
-	// 	);
-	// }
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
+	public function hooks_show($table_name)
 	{
 		//
 	}
@@ -144,7 +106,7 @@ class AddressTypesController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => AddressType::class
+				'model'   => $this->model
 			]
 		);
 	}

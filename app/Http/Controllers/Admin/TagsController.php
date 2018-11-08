@@ -15,6 +15,7 @@ class TagsController extends AdminController
 	public function __construct()
 	{
 		$this->caption = 'Tags';
+		$this->model   = Tag::class;
 		parent::__construct();
 	}
 
@@ -29,7 +30,7 @@ class TagsController extends AdminController
 		(
 			[
 				'request'        => $request,
-				'model'          => Tag::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','created_at']
 			]
 		);
@@ -47,7 +48,7 @@ class TagsController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => Tag::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name']
 			]
 		);
@@ -61,7 +62,7 @@ class TagsController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		return $this->defaultStore($request, Tag::class);
+		return $this->defaultStore($request, $this->model);
 	}
 
 	/**
@@ -76,7 +77,7 @@ class TagsController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => Tag::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','created_at','updated_at','deleted_at']
 			]
 		);
@@ -88,33 +89,10 @@ class TagsController extends AdminController
 		(
 			[
 				'id'             => $tag_id,
-				'model'          => Tag::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','created_at','updated_at','deleted_at']
 			]
 		);
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
 	}
 
 	/**
@@ -129,7 +107,7 @@ class TagsController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => Tag::class
+				'model'   => $this->model
 			]
 		);
 	}

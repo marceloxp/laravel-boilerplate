@@ -16,6 +16,7 @@ class VideosController extends AdminController
 	public function __construct()
 	{
 		$this->caption = 'Vídeos';
+		$this->model   = Video::class;
 		parent::__construct();
 	}
 
@@ -31,7 +32,7 @@ class VideosController extends AdminController
 			[
 				'pivot'          => ['name' => 'tag_video', 'caption' => 'Tags', 'icon' => 'fa-tags'],
 				'request'        => $request,
-				'model'          => Video::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','category_id','name','youtube','created_at']
 			]
 		);
@@ -62,7 +63,7 @@ class VideosController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
-				'model'          => Video::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','category_id','name','youtube']
 			]
 		);
@@ -76,7 +77,7 @@ class VideosController extends AdminController
 	 */
 	public function store(Request $request)
 	{
-		return $this->defaultStore($request, Video::class);
+		return $this->defaultStore($request, $this->model);
 	}
 
 	/**
@@ -91,7 +92,7 @@ class VideosController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'model'          => Video::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','category_id','name','youtube','created_at','updated_at','deleted_at']
 			]
 		);
@@ -116,29 +117,6 @@ class VideosController extends AdminController
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
-	}
-
-	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
@@ -150,7 +128,7 @@ class VideosController extends AdminController
 		(
 			[
 				'request' => $request,
-				'model'   => Video::class
+				'model'   => $this->model
 			]
 		);
 	}
