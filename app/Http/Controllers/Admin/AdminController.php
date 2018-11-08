@@ -413,7 +413,7 @@ class AdminController extends Controller
 		$table             = $this->getTableSearch($model, $perpage, $request, $display_fields, $fields_schema, $params);
 		$paginate          = $this->ajustPaginate($request, $table);
 		$ids               = $table->pluck('id')->toJson();
-		$has_table         = (!empty($table));
+		$has_table         = ($table->total() > 0);
 		$search_dates      = ['created_at'];
 
 		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');

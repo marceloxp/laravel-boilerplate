@@ -38,6 +38,7 @@
 						$input_type  = 'text';
 						$input       = '<input type="text" class="form-control" placeholder="render error!!!">';
 						$required    = (!$fields_schema[$field_name]['nullable']) ? 'required' : '';
+						$asterisk    = ($required) ? '&nbsp;*' : '';
 						$maxlength   = $fields_schema[$field_name]['max_length'];
 						$relation    = $fields_schema[$field_name]['relation'] ?? [];
 						$items       = $fields_schema[$field_name]['relation']['items'] ?? [];
@@ -189,12 +190,10 @@
 					@endphp
 
 					<div class="col-xs-{{ $field_width }}">
-
 						<div class="form-group" style="display: {{$row_visible}}">
-							<label for="{{$field_name}}">{{ $field_label }}</label>
+							<label for="{{$field_name}}">{{ $field_label }}{!! $asterisk !!}</label>
 							{!!$input!!}
 						</div>
-
 					</div>
 
 					@php

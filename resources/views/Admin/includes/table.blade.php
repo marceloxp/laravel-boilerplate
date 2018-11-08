@@ -8,101 +8,105 @@
 	$sort_fields   = Hook::apply_filters($hook_name, $sort_fields);
 
 	$image_fields = $image_fields ?? [];
+
+	dump($has_table);
 @endphp
 
-<form name="frmTable" method="get" id="frmTable" action="{{url()->current()}}">
-	<div class="box box-info">
-		<div class="box-header with-border">
-			<h3 class="box-title">Ordenação e Busca</h3>
-		</div>
-		<div class="box-body">
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label>Busca</label>
-						<div class="input-group">
-							<div class="input-group-btn">
-								<button id="btn-search-field" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-fw fa-search"></i> <span>Buscar por</span>&nbsp;
-								<span class="fa fa-caret-down"></span></button>
-								<ul class="dropdown-menu" id="search-fields-items">
-									@foreach($search_fields as $field_name)
-										<li><a class="search_field" data-field="{{$field_name}}" data-caption="{{ $fields_schema[$field_name]['comment'] }}" href="#">{{ $fields_schema[$field_name]['comment'] }}</a></li>
-									@endforeach
-									<li class="divider"></li>
-									<li><a class="search_field" data-field="___clear" href="#">Limpar Busca</a></li>
-								</ul>
+@if ($has_table)
+	<form name="frmTable" method="get" id="frmTable" action="{{url()->current()}}">
+		<div class="box box-info">
+			<div class="box-header with-border">
+				<h3 class="box-title">Ordenação e Busca</h3>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label>Busca</label>
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button id="btn-search-field" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-fw fa-search"></i> <span>Buscar por</span>&nbsp;
+									<span class="fa fa-caret-down"></span></button>
+									<ul class="dropdown-menu" id="search-fields-items">
+										@foreach($search_fields as $field_name)
+											<li><a class="search_field" data-field="{{$field_name}}" data-caption="{{ $fields_schema[$field_name]['comment'] }}" href="#">{{ $fields_schema[$field_name]['comment'] }}</a></li>
+										@endforeach
+										<li class="divider"></li>
+										<li><a class="search_field" data-field="___clear" href="#">Limpar Busca</a></li>
+									</ul>
+								</div>
+								<input type="text" name="table_search" id="table_search" class="form-control" placeholder="Busca">
 							</div>
-							<input type="text" name="table_search" id="table_search" class="form-control" placeholder="Busca">
 						</div>
 					</div>
 				</div>
-			</div>
-			@if (!empty($search_dates))
+				@if (!empty($search_dates))
+					<div class="row">
+						<div class="col-xs-6 col-md-3">
+							<div class="form-group">
+								<label>Filtrar por data:</label>
+								<select id="select-field-date" class="form-control">
+									@foreach($search_dates as $field_name)
+										<option class="option_search_date" value="{{$field_name}}">{{ $fields_schema[$field_name]['comment'] }}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+						<div class="col-xs-6 col-md-3">
+							<label>Período:</label><br>
+							<div class="input-group">
+								<div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								</div>
+								<input type="text" class="form-control daterangepicker" id="search-date" data-prefix="range">
+								<input type="hidden" name="range_ini" id="range_ini" value="">
+								<input type="hidden" name="range_end" id="range_end" value="">
+							</div>
+						</div>
+					</div>
+				@endif
 				<div class="row">
-					<div class="col-xs-6 col-md-3">
+					<div class="col-xs-6 col-md-6">
 						<div class="form-group">
-							<label>Filtrar por data:</label>
-							<select id="select-field-date" class="form-control">
-								@foreach($search_dates as $field_name)
-									<option class="option_search_date" value="{{$field_name}}">{{ $fields_schema[$field_name]['comment'] }}</option>
+							<label>Ordernar por:</label>
+							<select id="select-field-order" class="form-control">
+								<option class="option_search_field" value="0">Selecione</option>
+								@foreach($sort_fields as $field_name)
+									<option class="option_search_field" value="{{$field_name}}">{{ $fields_schema[$field_name]['comment'] }}</option>
 								@endforeach
 							</select>
 						</div>
 					</div>
-					<div class="col-xs-6 col-md-3">
-						<label>Período:</label><br>
-						<div class="input-group">
-							<div class="input-group-addon">
-								<i class="fa fa-calendar"></i>
-							</div>
-							<input type="text" class="form-control daterangepicker" id="search-date" data-prefix="range">
-							<input type="hidden" name="range_ini" id="range_ini" value="">
-							<input type="hidden" name="range_end" id="range_end" value="">
+					<div class="col-xs-4 col-md-4">
+						<label>Adicionar:</label><br>
+						<div class="btn-group">
+							<button type="button" data-dir="down" class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do menor para o maior (ASC)"  data-placement="bottom"><i class="fa fa-fw fa-arrow-down"></i></button>
+							<button type="button" data-dir="up"   class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do maior para o menor (DESC)" data-placement="bottom"><i class="fa fa-fw fa-arrow-up"></i></button>
 						</div>
 					</div>
 				</div>
-			@endif
-			<div class="row">
-				<div class="col-xs-6 col-md-6">
-					<div class="form-group">
-						<label>Ordernar por:</label>
-						<select id="select-field-order" class="form-control">
-							<option class="option_search_field" value="0">Selecione</option>
-							@foreach($sort_fields as $field_name)
-								<option class="option_search_field" value="{{$field_name}}">{{ $fields_schema[$field_name]['comment'] }}</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-				<div class="col-xs-4 col-md-4">
-					<label>Adicionar:</label><br>
-					<div class="btn-group">
-						<button type="button" data-dir="down" class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do menor para o maior (ASC)"  data-placement="bottom"><i class="fa fa-fw fa-arrow-down"></i></button>
-						<button type="button" data-dir="up"   class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do maior para o menor (DESC)" data-placement="bottom"><i class="fa fa-fw fa-arrow-up"></i></button>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<div class="btn-group" id="div-orders">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<div class="btn-group" id="div-orders">
 
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-8">
+						<div class="form-group">
+							<label>&nbsp;</label><br>
+							<button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-filter"></i> Filtrar</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-8">
-					<div class="form-group">
-						<label>&nbsp;</label><br>
-						<button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-filter"></i> Filtrar</button>
-					</div>
-				</div>
-			</div>
+			<!-- /.box-body -->
 		</div>
-		<!-- /.box-body -->
-	</div>
-</form>
+	</form>
+@endif
 
 <div class="box box-success">
 	<div class="box-header with-border">
@@ -111,23 +115,29 @@
 				@php $buttons_edit = isset($editable) ? $editable : true; @endphp
 				@if ($buttons_edit)
 					<button type="button" id="btn-table-add" class="btn btn-success {{ $class_pivot }}"><i class="fa fa-fw fa-plus"></i> Adicionar</button>
-					@if (!$is_pivot)
-						<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fa fa-edit"></i> Editar</button>
+					@if ($has_table)
+						@if (!$is_pivot)
+							<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fa fa-edit"></i> Editar</button>
+						@endif
 					@endif
 				@endif
-				<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fa fa-eye"></i> Visualizar</button>
-				@if (!empty($pivot))
-					<button type="button" id="btn-table-pvt" data-link="{{ $pivot['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $pivot['icon'] }}"></i> {{ $pivot['caption'] }}</button>
-				@endif
-				@if ($buttons_edit)
-					<button type="button" id="btn-table-del" class="btn btn-danger {{ $class_pivot }} disabled"><i class="fa fa-close"></i> Excluir</button>
+				@if ($has_table)
+					<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fa fa-eye"></i> Visualizar</button>
+					@if (!empty($pivot))
+						<button type="button" id="btn-table-pvt" data-link="{{ $pivot['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $pivot['icon'] }}"></i> {{ $pivot['caption'] }}</button>
+					@endif
+					@if ($buttons_edit)
+						<button type="button" id="btn-table-del" class="btn btn-danger {{ $class_pivot }} disabled"><i class="fa fa-close"></i> Excluir</button>
+					@endif
 				@endif
 			</div>
-			@php $print_button = isset($exportable) ? $exportable : true; @endphp
-			@if ($print_button)
-				<div class="btn-group col-xs-2">
-					<button type="button" id="btn-table-exp" class="btn btn-success pull-right"><i class="fa fa-fw fa-file-excel-o"></i> Exportar</button>
-				</div>
+			@if ($has_table)
+				@php $print_button = isset($exportable) ? $exportable : true; @endphp
+				@if ($print_button)
+					<div class="btn-group col-xs-2">
+						<button type="button" id="btn-table-exp" class="btn btn-success pull-right"><i class="fa fa-fw fa-file-excel-o"></i> Exportar</button>
+					</div>
+				@endif
 			@endif
 		</div>
 	</div>
@@ -201,12 +211,14 @@
 			<p>Não há resultados para esta consulta.</p>
 		@endif
 	</div>
-	<div class="box-footer clearfix">
-		<span class="pull-left">{!! $paginate !!}</span>
-		<span class="pull-right">
-			<ul class="pagination">
-				<li class="page-item">{{ $table->total() }} registro{{ $table->total() > 1 ? 's' : '' }}, página {{ $table->currentPage() }} de um total de {{ $table->lastPage() }}</li>
-			</ul>
-		</span>
-	</div>
+	@if ($has_table)
+		<div class="box-footer clearfix">
+			<span class="pull-left">{!! $paginate !!}</span>
+			<span class="pull-right">
+				<ul class="pagination">
+					<li class="page-item">{{ $table->total() }} registro{{ $table->total() > 1 ? 's' : '' }}, página {{ $table->currentPage() }} de um total de {{ $table->lastPage() }}</li>
+				</ul>
+			</span>
+		</div>
+	@endif
 </div>
