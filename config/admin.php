@@ -37,6 +37,22 @@ return [
 				]
 			]
 		],
+		'menu' =>
+		[
+			'type'    => 'header',
+			'caption' => 'Menu',
+			'ico'     => 'fa-table',
+			'items'   => 
+			[
+				[
+					'type'    => 'link',
+					'caption' => 'Seções',
+					'ico'     => 'fa-folder',
+					'group'   => 'admin_menusections',
+					'route'   => 'admin_menusections'
+				],
+			]
+		],
 		'tables' =>
 		[
 			'type'    => 'header',
