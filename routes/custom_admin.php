@@ -68,3 +68,17 @@
 			Route::post('delete/'   , 'AddressTypesController@destroy')->name('admin_address_types_delete')->group('admin_address_types');
 		}
 	);
+
+	// Seções
+	Route::group
+	(
+		['prefix' => 'sections'],
+		function()
+		{
+			Route::get ('/'         , 'SectionsController@index'  )->name('admin_menusections'       )->group('admin_menusections');
+			Route::get ('edit/{id?}', 'SectionsController@create' )->name('admin_menusections_edit'  )->group('admin_menusections');
+			Route::post('edit/{id?}', 'SectionsController@store'  )->name('admin_menusections_save'  )->group('admin_menusections');
+			Route::get ('show/{id}' , 'SectionsController@show'   )->name('admin_menusections_show'  )->group('admin_menusections');
+			Route::post('delete/'   , 'SectionsController@destroy')->name('admin_menusections_delete')->group('admin_menusections');
+		}
+	);
