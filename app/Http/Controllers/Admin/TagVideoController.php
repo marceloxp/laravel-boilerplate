@@ -76,7 +76,7 @@ class TagVideoController extends AdminController
 	 */
 	public function store(Request $request, $video_id)
 	{
-		$ids = $request->all('ids');
+		$ids = $request->input('ids');
 		foreach ($ids as $tag_id)
 		{
 			$video = Video::findOrFail($video_id);
@@ -106,7 +106,7 @@ class TagVideoController extends AdminController
 
 	public function detach(Request $request, $video_id)
 	{
-		$ids = $request->all('ids');
+		$ids = $request->input('ids');
 		$ids = explode(',', $ids['ids']);
 		foreach ($ids as $tag_id)
 		{
