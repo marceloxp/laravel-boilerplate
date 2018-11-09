@@ -194,9 +194,9 @@
 					@endphp
 
 					<div class="col-xs-{{ $field_width }}">
-						<div class="form-group" style="display: {{$row_visible}}">
-							<label for="{{$field_name}}">{{ $field_label }}{!! $asterisk !!}</label>
-							{!!$input!!}
+						<div class="form-group" style="display: {{ $row_visible }}">
+							<label for="{{ $field_name }}">{{ $field_label }}{!! $asterisk !!}</label>
+							{!! $input !!}
 						</div>
 					</div>
 
