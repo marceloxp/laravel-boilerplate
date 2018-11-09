@@ -337,4 +337,31 @@ class MasterModel extends Model
 
 		return $result;
 	}
+
+	public function scopeMasterMany($query, $p_master_model, $p_many_model, $p_many_id)
+	{
+		$MasterModel  = $p_master_model;
+		$ManyModel    = $p_many_model;
+		$master_name  = class_basename($MasterModel);
+		$many_name    = class_basename($ManyModel);
+		$order_name   = [$master_name, $many_name];
+		$pivot_table  = sprintf('%s_%s', strtolower($order_name[0]), strtolower($order_name[1]));
+		$master_model = new $MasterModel;
+		$master_table = $master_model->getTable();
+		$many_model   = new $ManyModel;
+		$many_table   = $many_model->getTable();
+
+		return $query->join
+		(
+			$pivot_table,
+			sprintf('%s.id', $many_table),
+			'=',
+			sprintf('%s.%s_id', $pivot_table, strtolower($many_name))
+		)
+		->where
+		(
+			sprintf('%s.%s_id', $pivot_table, strtolower($master_name)),
+			$p_many_id
+		);
+	}
 }
