@@ -51,4 +51,9 @@ class Role extends MasterModel
 	{
 		return $this->belongsToMany(\App\Models\User::class);
 	}
+
+	public function scopeMenusectionRole($query, $p_role_id)
+	{
+		return $query->join('menusection_role', 'roles.id', '=', 'menusection_role.role_id')->where('menusection_role.menusection_id', $p_role_id);
+	}
 }
