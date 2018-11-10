@@ -47,7 +47,7 @@ class MakexCommand extends Command
 	{
 		$tables_in_db = \DB::select('SHOW TABLES');
 		$db = sprintf('Tables_in_%s', env('DB_DATABASE'));
-		$table_prefix = env('DB_PREFIX');
+		$table_prefix = env('DB_TABLE_PREFIX');
 		$tables = [];
 		foreach($tables_in_db as $table)
 		{
@@ -64,7 +64,7 @@ class MakexCommand extends Command
 		(
 			'SELECT * FROM `information_schema`.`COLUMNS` WHERE `table_schema` = "%s" AND table_name = "%s%s"',
 			env('DB_DATABASE'),
-			env('DB_PREFIX'),
+			env('DB_TABLE_PREFIX'),
 			$p_table
 		);
 		$result = \DB::select($query);

@@ -20,11 +20,11 @@
 		['prefix' => 'tags'],
 		function()
 		{
-			Route::get ('/'         , 'TagsController@index'     )->name('admin_tags'       )->group('admin_tags');
-			Route::get ('edit/{id?}', 'TagsController@create'    )->name('admin_tags_edit'  )->group('admin_tags');
-			Route::post('edit/{id?}', 'TagsController@store'     )->name('admin_tags_save'  )->group('admin_tags');
-			Route::get ('show/{id}' , 'TagsController@show'      )->name('admin_tags_show'  )->group('admin_tags');
-			Route::post('delete/'   , 'TagsController@destroy'   )->name('admin_tags_delete')->group('admin_tags');
+			Route::get ('/'         , 'TagsController@index'  )->name('admin_tags'       )->group('admin_tags');
+			Route::get ('edit/{id?}', 'TagsController@create' )->name('admin_tags_edit'  )->group('admin_tags');
+			Route::post('edit/{id?}', 'TagsController@store'  )->name('admin_tags_save'  )->group('admin_tags');
+			Route::get ('show/{id}' , 'TagsController@show'   )->name('admin_tags_show'  )->group('admin_tags');
+			Route::post('delete/'   , 'TagsController@destroy')->name('admin_tags_delete')->group('admin_tags');
 		}
 	);
 
@@ -34,10 +34,10 @@
 		['prefix' => 'tag_video'],
 		function()
 		{
-			Route::get ('{video_id}'              , 'TagVideoController@index'  )->name('admin_tag_video'       )->group('admin_tag_video');
-			Route::post('{video_id}/attach'       , 'TagVideoController@store'  )->name('admin_tag_video_attach')->group('admin_tag_video');
-			Route::get ('{video_id}/show/{tag_id}', 'TagsController@pivot_show' )->name('admin_videos_show'     )->group('admin_tags');
-			Route::post('{video_id}/detach'       , 'TagVideoController@detach' )->name('admin_tag_video_detach')->group('admin_tags');
+			Route::get ('{video_id}'              , 'TagVideoController@index' )->name('admin_tag_video'       )->group('admin_tag_video');
+			Route::post('{video_id}/attach'       , 'TagVideoController@store' )->name('admin_tag_video_attach')->group('admin_tag_video');
+			Route::get ('{video_id}/show/{tag_id}', 'TagsController@pivot_show')->name('admin_videos_show'     )->group('admin_tags');
+			Route::post('{video_id}/detach'       , 'TagVideoController@detach')->name('admin_tag_video_detach')->group('admin_tags');
 		}
 	);
 
@@ -66,5 +66,32 @@
 			Route::post('edit/{id?}', 'AddressTypesController@store'  )->name('admin_address_types_save'  )->group('admin_address_types');
 			Route::get ('show/{id}' , 'AddressTypesController@show'   )->name('admin_address_types_show'  )->group('admin_address_types');
 			Route::post('delete/'   , 'AddressTypesController@destroy')->name('admin_address_types_delete')->group('admin_address_types');
+		}
+	);
+
+	// Seções
+	Route::group
+	(
+		['prefix' => 'sections'],
+		function()
+		{
+			Route::get ('/'         , 'SectionsController@index'  )->name('admin_menusections'       )->group('admin_menusections');
+			Route::get ('edit/{id?}', 'SectionsController@create' )->name('admin_menusections_edit'  )->group('admin_menusections');
+			Route::post('edit/{id?}', 'SectionsController@store'  )->name('admin_menusections_save'  )->group('admin_menusections');
+			Route::get ('show/{id}' , 'SectionsController@show'   )->name('admin_menusections_show'  )->group('admin_menusections');
+			Route::post('delete/'   , 'SectionsController@destroy')->name('admin_menusections_delete')->group('admin_menusections');
+		}
+	);
+
+	// Permissões das Seções
+	Route::group
+	(
+		['prefix' => 'menusection_role'],
+		function()
+		{
+			Route::get ('{menusection_id}'               , 'MenusectionRoleController@index' )->name('admin_menusection_role'       )->group('admin_menusection_role');
+			Route::post('{menusection_id}/attach'        , 'MenusectionRoleController@store' )->name('admin_menusection_role_attach')->group('admin_menusection_role');
+			Route::get ('{menusection_id}/show/{role_id}', 'SectionsController@pivot_show')->name('admin_sections_show'     )->group('admin_roles');
+			Route::post('{menusection_id}/detach'        , 'MenusectionRoleController@detach')->name('admin_menusection_role_detach')->group('admin_roles');
 		}
 	);
