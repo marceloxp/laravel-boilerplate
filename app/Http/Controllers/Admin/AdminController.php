@@ -384,7 +384,7 @@ class AdminController extends Controller
 	{
 		$default_params = 
 		[
-			'pívot'        => [],
+			'pivot'        => [],
 			'pivot_scope'  => [],
 			'where'        => [],
 			'appends'      => [],
