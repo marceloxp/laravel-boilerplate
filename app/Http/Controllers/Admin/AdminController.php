@@ -16,10 +16,11 @@ use Stringy as S;
 
 class AdminController extends Controller
 {
-	public $user_logged;
-	private $schemas = [];
-	public $caption = '';
-	public $description = '';
+	public  $user_logged;
+	private $schemas     = [];
+	public  $caption     = '';
+	public  $description = '';
+	public  $parent      = [];
 
     public function __construct()
 	{
@@ -84,6 +85,12 @@ class AdminController extends Controller
 		$this->model = $p_model;
 	}
 
+	public function defineCaption($p_model, $p_id)
+	{
+		$parent = $p_model::select('id','name')->where('id',$p_id)->first();
+		$this->setCaption(sprintf('%s - %s', $parent->name, $this->caption));
+	}
+
 	public function getCaption()
 	{
 		$result = $this->caption;
@@ -94,6 +101,13 @@ class AdminController extends Controller
 		}
 
 		return $result;
+	}
+
+	public function setParent($p_model)
+	{
+		$field_name = sprintf('%s_id', str_singular($p_model::getTableName()));
+		$this->parent['model'] = $p_model;
+		$this->parent['field'] = $field_name;
 	}
 
 	public function getPerPage($p_request)

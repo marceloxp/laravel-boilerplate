@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Subcategory;
 use Hook;
 
 class SubcategoryController extends AdminController
@@ -15,14 +14,9 @@ class SubcategoryController extends AdminController
 	public function __construct(Request $request)
 	{
 		$this->setCaption('Sub Categorias');
-		$this->setModel(Subcategory::class);
+		$this->setModel(\App\Models\Subcategory::class);
+		$this->setParent(\App\Models\Category::class);
 		parent::__construct();
-	}
-
-	private function defineCaption($category_id)
-	{
-		$parent = \App\Models\Category::select('id','name')->where('id',$category_id)->first();
-		$this->setCaption(sprintf('%s - %s', $parent->name, $this->caption));
 	}
 
 	/**
@@ -30,13 +24,13 @@ class SubcategoryController extends AdminController
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(Request $request, $category_id)
+	public function index(Request $request, $parent_id)
 	{
-		$this->defineCaption($category_id);
+		$this->defineCaption($this->parent['model'], $parent_id);
 		return $this->defaultIndex
 		(
 			[
-				'where'          => ['category_id' => $category_id],
+				'where'          => [$this->parent['field'] => $parent_id],
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
@@ -55,10 +49,10 @@ class SubcategoryController extends AdminController
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create(Request $request, $category_id = null, $id = null)
+	public function create(Request $request, $parent_id = null, $id = null)
 	{
-		$this->defineCaption($category_id);
-		View::share(compact('category_id'));
+		$this->defineCaption($this->parent['model'], $parent_id);
+		View::share([$this->parent['field'] => $parent_id]);
 		return $this->defaultCreate
 		(
 			[
@@ -100,7 +94,7 @@ class SubcategoryController extends AdminController
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
+	public function show($parent_id, $id)
 	{
 		return $this->defaultShow
 		(
