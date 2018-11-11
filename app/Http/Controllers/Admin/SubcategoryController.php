@@ -7,16 +7,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Category;
+use App\Models\Subcategory;
 use Hook;
 
-class CategoriesController extends AdminController
+class SubcategoryController extends AdminController
 {
-	public function __construct()
+	public function __construct(Request $request)
 	{
-		$this->setCaption('Categorias');
-		$this->setModel(Category::class);
+		$this->setCaption('Sub Categorias');
+		$this->setModel(Subcategory::class);
 		parent::__construct();
+	}
+
+	private function defineCaption($category_id)
+	{
+		$parent = \App\Models\Category::select('id','name')->where('id',$category_id)->first();
+		$this->setCaption(sprintf('%s - %s', $parent->name, $this->caption));
 	}
 
 	/**
@@ -24,36 +30,24 @@ class CategoriesController extends AdminController
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(Request $request)
+	public function index(Request $request, $category_id)
 	{
+		$this->defineCaption($category_id);
 		return $this->defaultIndex
 		(
 			[
+				'where'          => ['category_id' => $category_id],
 				'request'        => $request,
 				'model'          => $this->model,
-				'table_many'     => ['name' => 'subcategory', 'caption' => 'Sub Categorias', 'icon' => 'fa-folder-open'],
-				'display_fields' => ['id','name','image','description','created_at']
+				'editable'       => true,
+				'display_fields' => ['id','name','status','created_at']
 			]
 		);
 	}
 
-	public function getUploadedFile($p_file_name, $p_height = 100)
-	{
-		if (empty($p_file_name)) { return $p_file_name; }
-		return sprintf('%s<br/>%s', link_uploaded_file($p_file_name, sprintf('height="%s"', $p_height)), $p_file_name);
-	}
-
 	public function hooks_index($table_name)
 	{
-		Hook::add_filter
-		(
-			sprintf('admin_index_%s_image', $table_name),
-			function($display_value, $register)
-			{
-				return $this->getUploadedFile($display_value, 100);
-			},
-			10, 2
-		);
+		//
 	}
 
 	/**
@@ -61,18 +55,32 @@ class CategoriesController extends AdminController
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create(Request $request, $id = null)
+	public function create(Request $request, $category_id = null, $id = null)
 	{
+		$this->defineCaption($category_id);
+		View::share(compact('category_id'));
 		return $this->defaultCreate
 		(
 			[
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => $this->model,
-				'image_fields'   => ['image'],
-				'display_fields' => ['id','name','image','description']
+				'disabled'       => ['created_at'],
+				'display_fields' => 
+				[
+					'id'          => 0,
+					'category_id' => 0,
+					'name'        => 4,
+					'status'      => 4,
+					'created_at'  => 4,
+				]
 			]
 		);
+	}
+
+	public function hooks_edit($table_name)
+	{
+		//
 	}
 
 	/**
@@ -99,22 +107,14 @@ class CategoriesController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','image','description','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','category_id','name','status','created_at','updated_at','deleted_at']
 			]
 		);
 	}
 
 	public function hooks_show($table_name)
 	{
-		Hook::add_filter
-		(
-			sprintf('admin_show_%s_image', $table_name),
-			function($display_value, $register)
-			{
-				return $this->getUploadedFile($display_value, 100);
-			},
-			10, 2
-		);
+		//
 	}
 
 	/**

@@ -79,6 +79,11 @@ class AdminController extends Controller
 		$this->description = $p_description;
 	}
 
+	public function setModel($p_model)
+	{
+		$this->model = $p_model;
+	}
+
 	public function getCaption()
 	{
 		$result = $this->caption;
@@ -218,17 +223,17 @@ class AdminController extends Controller
 		{
 			if ($search_field && $search_value)
 			{
-				$where = ($search_value) ? ['%' . str_replace(' ', '%', $search_value) . '%'] : [];
+				$search_where = ($search_value) ? ['%' . str_replace(' ', '%', $search_value) . '%'] : [];
 
 				$relation = $fields_schema[$search_field];
 				if ($relation['has_relation'])
 				{
 					$relation = $relation['relation'];
-					$table->where(sprintf('%s.name', $relation['ref_table']), 'like', $where);
+					$table->where(sprintf('%s.name', $relation['ref_table']), 'like', $search_where);
 				}
 				else
 				{
-					$table->where(sprintf('%s.%s', $table_name, $search_field), 'like', $where);
+					$table->where(sprintf('%s.%s', $table_name, $search_field), 'like', $search_where);
 				}
 			}
 
@@ -238,6 +243,11 @@ class AdminController extends Controller
 				$date_end = Carbon::createFromFormat('Y-m-d H:i:s', $search_range[1] . '00:00:00')->addDay()->format('Y-m-d');
 				$table->whereBetween(sprintf('%s.%s', $table_name, $range_field), [$date_ini, $date_end]);
 			}
+		}
+
+		if (!empty($where))
+		{
+			$table->where($where);
 		}
 
 		if ($search_order)
@@ -257,11 +267,6 @@ class AdminController extends Controller
 			$scope_name  = $pivot_scope['name'];
 			$scope_param = $pivot_scope['param'];
 			$table->{$scope_name}($scope_param);
-		}
-
-		if (!empty($p_where))
-		{
-			$table->where($p_where);
 		}
 
 		$table = $table->paginate($p_perpage);
@@ -386,6 +391,7 @@ class AdminController extends Controller
 		[
 			'pivot'        => [],
 			'pivot_scope'  => [],
+			'table_many'   => [],
 			'where'        => [],
 			'appends'      => [],
 			'editable'     => true,
@@ -416,7 +422,7 @@ class AdminController extends Controller
 		$has_table         = ($table->total() > 0);
 		$search_dates      = ['created_at'];
 
-		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');
+		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many');
 		
 		View::share($share_params);
 
@@ -425,7 +431,9 @@ class AdminController extends Controller
 			$this->hooks_index($table_name);
 		}
 
-		$excepts = ['fields_schema','field_names','search_dates','table_name','exportable'];
+		$request->session()->put('url_back', url()->current());
+
+		$excepts = ['fields_schema','field_names','search_dates','exportable'];
 		$jsvars = collect($share_params)->except($excepts)->toArray();
 		
 		datasite_add(['params' => $jsvars]);
@@ -528,7 +536,13 @@ class AdminController extends Controller
 			$table_name = $model::getTableName();
 			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
 			$request->session()->flash('messages', [$message]);
-			return redirect(Route('admin_' . $table_name));
+
+			$url_back = $request->session()->pull('url_back');
+			if (!empty($url_back))
+			{
+				return redirect($url_back);
+			}
+			return redirect(request()->headers->get('referer'));
 		}
 		else
 		{

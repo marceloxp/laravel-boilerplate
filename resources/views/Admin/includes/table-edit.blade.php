@@ -20,11 +20,11 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title"><i class="fa {{$panel_title[2]}}"></i> {{$panel_title[1]}}</h3>
+		<h3 class="box-title"><i class="fa {{$panel_title[2]}}"></i> {{ $panel_title[1] }}</h3>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
-	<form name="frmTable" id="frmTable" method="post" enctype="multipart/form-data" action="{{url()->current()}}">
+	<form name="frmTable" id="frmTable" method="post" enctype="multipart/form-data" action="{{ url()->current() }}">
 		{{ csrf_field() }}
 		<div class="box-body">
 
@@ -104,6 +104,8 @@
 							$ref_model   = $fields_schema[$field_name]['relation']['ref_model'];
 							$field_label = $fields_schema[$field_name]['relation']['comment'];
 
+							$refteste = @$register->$ref_model->name;
+
 							$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $register->$ref_model->name) : '');
 							$field_value = old($field_name) ?? $register->$field_name;
 
@@ -181,6 +183,16 @@
 						{
 							$input_type = 'hidden';
 							$input = sprintf('<input type="hidden" name="%s" id="%s" value="%s" %s>', $field_name, $field_name, (old($field_name) ?? $register->$field_name), $required);
+						}
+
+						if (substr($field_name, -3) == '_id')
+						{
+							if (isset($$field_name))
+							{
+								$_field_value = $$field_name;
+								$input_type = 'hidden';
+								$input = sprintf('<input type="hidden" name="%s" id="%s" value="%s" %s>', $field_name, $field_name, (old($field_name) ?? $register->$field_name ?? $_field_value), $required);
+							}
 						}
 
 						if ($input_type == 'hidden')

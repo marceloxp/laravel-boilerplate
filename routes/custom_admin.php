@@ -95,3 +95,17 @@
 			Route::post('{menusection_id}/detach'        , 'MenusectionRoleController@detach')->name('admin_menusection_role_detach')->group('admin_roles');
 		}
 	);
+
+	// Sub Categorias
+	Route::group
+	(
+		['prefix' => 'categories/{category_id}/subcategory'],
+		function()
+		{
+			Route::get ('/'         , 'SubcategoryController@index'  )->name('admin_subcategories'       )->group('admin_subcategories');
+			Route::get ('edit/{id?}', 'SubcategoryController@create' )->name('admin_subcategories_edit'  )->group('admin_subcategories');
+			Route::post('edit/{id?}', 'SubcategoryController@store'  )->name('admin_subcategories_save'  )->group('admin_subcategories');
+			Route::get ('show/{id}' , 'SubcategoryController@show'   )->name('admin_subcategories_show'  )->group('admin_subcategories');
+			Route::post('delete/'   , 'SubcategoryController@destroy')->name('admin_subcategories_delete')->group('admin_subcategories');
+		}
+	);

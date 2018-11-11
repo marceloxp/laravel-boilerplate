@@ -113,6 +113,19 @@ Route::group
 						Route::post('edit/{id?}', 'CategoriesController@store'  )->name('admin_categories_save'  )->group('admin_categories');
 						Route::get ('show/{id}' , 'CategoriesController@show'   )->name('admin_categories_show'  )->group('admin_categories');
 						Route::post('delete/'   , 'CategoriesController@destroy')->name('admin_categories_delete')->group('admin_categories');
+
+						// Route::group
+						// (
+						// 	['prefix' => '{category_id}/subcategory'],
+						// 	function()
+						// 	{
+						// 		Route::get ('/'         , 'SubcategoriesController@index'  )->name('admin_subcategories'       )->group('admin_subcategories');
+						// 		Route::get ('edit/{id?}', 'SubcategoriesController@create' )->name('admin_subcategories_edit'  )->group('admin_subcategories');
+						// 		Route::post('edit/{id?}', 'SubcategoriesController@store'  )->name('admin_subcategories_save'  )->group('admin_subcategories');
+						// 		Route::get ('show/{id}' , 'SubcategoriesController@show'   )->name('admin_subcategories_show'  )->group('admin_subcategories');
+						// 		Route::post('delete/'   , 'SubcategoriesController@destroy')->name('admin_subcategories_delete')->group('admin_subcategories');
+						// 	}
+						// );
 					}
 				);
 

@@ -121,6 +121,9 @@
 				@endif
 				@if ($has_table)
 					<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fa fa-eye"></i> Visualizar</button>
+					@if (!empty($table_many))
+						<button type="button" id="btn-table-many" data-parent="{{ $table_name }}" data-link="{{ $table_many['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $table_many['icon'] }}"></i> {{ $table_many['caption'] }}</button>
+					@endif
 					@if (!empty($pivot))
 						<button type="button" id="btn-table-pvt" data-link="{{ $pivot['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $pivot['icon'] }}"></i> {{ $pivot['caption'] }}</button>
 					@endif

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Utilities\MasterModel;
 
-class Category extends MasterModel
+class Subcategory extends MasterModel
 {
 	use SoftDeletes;
 	protected $dates   = ['created_at','updated_at','deleted_at'];
@@ -14,21 +14,17 @@ class Category extends MasterModel
 
 	public static function validate($request, $id = '')
 	{
-		$rules = 
+		$rules =
 		[
-			'name'        => 'required|min:5|max:150|unique:roles,name,' . $id,
-			'description' => 'required|min:5|max:255'
+			'category_id' => 'required',
+			'name'        => 'max:124',
+			'status'      => 'in:Ativo,Inativo|required|max:7',
 		];
 		return Role::_validate($request, $rules, $id);
 	}
 
-	public function videos()
+	public function category()
 	{
-		return $this->hasMany(\App\Models\Video::class);
-	}
-
-	public function subcategories()
-	{
-		return $this->hasMany(\App\Models\Subcategory::class);
+		return $this->belongsTo(\App\Models\Category::class);
 	}
 }
