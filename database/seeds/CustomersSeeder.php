@@ -16,7 +16,7 @@ class CustomersSeeder extends Seeder
 	{
 		$now   = \Carbon\Carbon::now();
 		$faker = app('Faker');
-		$quant = 250;
+		$quant = 50;
 		$bar   = $this->command->getOutput()->createProgressBar($quant);
 		
 		for ($k=0; $k < $quant; $k++)
@@ -50,5 +50,7 @@ class CustomersSeeder extends Seeder
 			$bar->advance();
 		}
 		$bar->finish();
+		echo PHP_EOL;
+		echo PHP_EOL;
 	}
 }

@@ -30,10 +30,11 @@ class SectionsController extends AdminController
 		(
 			[
 				'pivot'          => ['name' => 'menusection_role', 'caption' => 'Permissões', 'icon' => 'fa-key'],
+				'table_many'     => ['name' => 'menulinks'       , 'caption' => 'Links'     , 'icon' => 'fa-globe'],
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
-				'display_fields' => ['id','icon','name','order','status','created_at']
+				'display_fields' => ['id','icon','name','status','created_at']
 			]
 		);
 	}
@@ -70,7 +71,6 @@ class SectionsController extends AdminController
 					'id'         => 12,
 					'icon'       => 6,
 					'name'       => 6,
-					'order'      => 6,
 					'status'     => 6,
 					'created_at' => 6,
 				]

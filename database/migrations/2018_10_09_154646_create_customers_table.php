@@ -15,6 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('address_type_id')->unsigned()->default(1)->comment('Tipo de Endereço');
             $table->string('name', 128)->comment('Nome');
             $table->string('username', 128)->comment('Usuário');
             $table->string('born', 10)->comment('Nascimento');
@@ -46,6 +47,8 @@ class CreateCustomersTable extends Migration
             $table->index(['deleted_at']);
             $table->unique(['cpf']);
             $table->unique(['email']);
+
+            $table->foreign('address_type_id')->references('id')->on('address_types');
         });
     }
 

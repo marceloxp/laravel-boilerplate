@@ -83,6 +83,20 @@
 		}
 	);
 
+	// Menu Links
+	Route::group
+	(
+		['prefix' => 'menusections/{section_id}/menulinks'],
+		function()
+		{
+			Route::get ('/'         , 'MenulinkController@index'  )->name('admin_menulinks'       )->group('admin_menulinks');
+			Route::get ('edit/{id?}', 'MenulinkController@create' )->name('admin_menulinks_edit'  )->group('admin_menulinks');
+			Route::post('edit/{id?}', 'MenulinkController@store'  )->name('admin_menulinks_save'  )->group('admin_menulinks');
+			Route::get ('show/{id}' , 'MenulinkController@show'   )->name('admin_menulinks_show'  )->group('admin_menulinks');
+			Route::post('delete/'   , 'MenulinkController@destroy')->name('admin_menulinks_delete')->group('admin_menulinks');
+		}
+	);
+
 	// Permissões das Seções
 	Route::group
 	(
@@ -91,7 +105,7 @@
 		{
 			Route::get ('{menusection_id}'               , 'MenusectionRoleController@index' )->name('admin_menusection_role'       )->group('admin_menusection_role');
 			Route::post('{menusection_id}/attach'        , 'MenusectionRoleController@store' )->name('admin_menusection_role_attach')->group('admin_menusection_role');
-			Route::get ('{menusection_id}/show/{role_id}', 'SectionsController@pivot_show')->name('admin_sections_show'     )->group('admin_roles');
+			Route::get ('{menusection_id}/show/{role_id}', 'SectionsController@pivot_show'   )->name('admin_sections_show'          )->group('admin_roles');
 			Route::post('{menusection_id}/detach'        , 'MenusectionRoleController@detach')->name('admin_menusection_role_detach')->group('admin_roles');
 		}
 	);

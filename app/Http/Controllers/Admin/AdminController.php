@@ -486,12 +486,12 @@ class AdminController extends Controller
 		$params = array_merge($default_params, $p_args);
 		extract($params, EXTR_OVERWRITE);
 
-		$table_name     = $model::getTableName();
-		$register       = ($id) ? $model::find($id) : new $model;
-		$is_creating    = (empty($id));
-		$panel_title    = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
-		$fields_schema  = $model::getFieldsMetaData();
-		$field_names    = array_keys($fields_schema);
+		$table_name    = $model::getTableName();
+		$register      = ($id) ? $model::find($id) : new $model;
+		$is_creating   = (empty($id));
+		$panel_title   = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
+		$fields_schema = $model::getFieldsMetaData();
+		$field_names   = array_keys($fields_schema);
 
 		if (method_exists($this, 'hooks_edit'))
 		{

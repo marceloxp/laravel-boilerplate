@@ -12,6 +12,17 @@ class Menusection extends MasterModel
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
+	public static function validate($request, $id = '')
+	{
+		$rules = 
+		[
+			'name'   => 'required|max:124',
+			'icon'   => 'required|max:24',
+			'status' => 'in:Ativo,Inativo|required|max:7',
+		];
+		return Role::_validate($request, $rules, $id);
+	}
+
 	/**
 	* Retrieve Tags pivot Table
 	*/
@@ -20,15 +31,8 @@ class Menusection extends MasterModel
 		return $this->belongsToMany(\App\Models\Role::class);
 	}
 
-	public static function validate($request, $id = '')
+	public function menulinks()
 	{
-		$rules = 
-		[
-			'name'   => 'required|max:124',
-			'icon'   => 'required|max:24',
-			'order'  => 'required',
-			'status' => 'in:Ativo,Inativo|required|max:7',
-		];
-		return Role::_validate($request, $rules, $id);
+		return $this->hasMany(\App\Models\Menulink::class);
 	}
 }

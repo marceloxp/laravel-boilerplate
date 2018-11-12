@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "038266ff1e892b8362efcd361ad81a93",
@@ -1023,12 +1023,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marceloxp/laravel_commands.git",
-                "reference": "7be4f010d2aba6d443285ba48c7695846cdd6db4"
+                "reference": "2bf4660afafa839711155c15c5327f018fed4edc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/7be4f010d2aba6d443285ba48c7695846cdd6db4",
-                "reference": "7be4f010d2aba6d443285ba48c7695846cdd6db4",
+                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/2bf4660afafa839711155c15c5327f018fed4edc",
+                "reference": "2bf4660afafa839711155c15c5327f018fed4edc",
                 "shasum": ""
             },
             "require-dev": {
@@ -1058,7 +1058,7 @@
                 }
             ],
             "description": "Laravel Artisan Commands Utilities",
-            "time": "2018-11-09T17:29:27+00:00"
+            "time": "2018-11-12T17:30:20+00:00"
         },
         {
             "name": "miroc/laravel-adminer",
@@ -1763,7 +1763,6 @@
                     "Shridhar\\Hooks\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1774,6 +1773,9 @@
                 }
             ],
             "description": "Wordpress like actions and filters for laravel",
+            "support": {
+                "source": "https://github.com/marceloxp/laravel-hooks/tree/master"
+            },
             "time": "2018-04-29T14:26:08+00:00"
         },
         {

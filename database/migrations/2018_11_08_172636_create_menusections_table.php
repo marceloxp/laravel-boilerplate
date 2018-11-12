@@ -17,7 +17,7 @@ class CreateMenusectionsTable extends Migration
 			$table->increments('id');
 			$table->string('name', 124)->unique()->comment('Seção');
 			$table->string('icon', 24)->comment('Ícone');
-			$table->integer('order')->default(0)->comment('Ordem');
+			$table->integer('order')->nullable()->default(0)->comment('Ordem');
 			$table->enum('status', ['Ativo','Inativo'])->default('Ativo')->comment('Status');
 			$table->timestamps();
 			$table->softDeletes();

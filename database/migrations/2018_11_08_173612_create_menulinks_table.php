@@ -16,12 +16,11 @@ class CreateMenuLinksTable extends Migration
 		Schema::create('menulinks', function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('menusection_id')->unsigned()->comment('Seção');
-			$table->string('roles', 255)->comment('Permissões');
-			$table->string('name', 124)->unique()->comment('Seção');
+			$table->string('name', 124)->unique()->comment('Caption');
 			$table->string('icon', 24)->comment('Ícone');
 			$table->string('group', 124)->comment('Grupo');
 			$table->string('route', 124)->comment('Rota');
-			$table->integer('order')->default(0)->comment('Ordem');
+			$table->integer('order')->nullable()->default(0)->comment('Ordem');
 			$table->enum('status', ['Ativo','Inativo'])->default('Ativo')->comment('Status');
 			$table->timestamps();
 			$table->softDeletes();
