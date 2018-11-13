@@ -364,4 +364,9 @@ class MasterModel extends Model
 			$p_many_id
 		);
 	}
+
+	public function money($p_value)
+	{
+		return number_format($p_value, 2, ',', '.');
+	}
 }
