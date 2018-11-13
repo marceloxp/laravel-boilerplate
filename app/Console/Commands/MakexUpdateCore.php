@@ -55,22 +55,22 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 		
 		$core_files = 
 		[
-			'laravel-boilerplate-master/README.md',
-			'laravel-boilerplate-master/app/Http/Controllers/Admin/AdminController.php',
-			'laravel-boilerplate-master/app/Http/Controllers/Admin/CacheController.php',
-			'laravel-boilerplate-master/app/Http/Controllers/Admin/ConfigsController.php',
-			'laravel-boilerplate-master/app/Http/Controllers/Admin/MasterManyController.php',
-			'laravel-boilerplate-master/app/Http/Controllers/Admin/SearchmodalController.php',
-			'laravel-boilerplate-master/app/Http/Utilities',
-			'laravel-boilerplate-master/app/Providers/BrFakerServiceProvider',
-			'laravel-boilerplate-master/app/config/brasil.php',
-			'laravel-boilerplate-master/app/config/cep.php',
-			'laravel-boilerplate-master/app/routes/admin.php',
-			'laravel-boilerplate-master/app/Console/Commands/Makex',
-			'laravel-boilerplate-master/app/Console/Commands/Makex.php',
-			'laravel-boilerplate-master/app/Console/Commands/MakexUpdateCore.php',
-			'laravel-boilerplate-master/resources/views/Admin/',
-			'laravel-boilerplate-master/resources/views/layouts/admin.blade.php',
+			'laravel-boilerplate-stable/README.md',
+			'laravel-boilerplate-stable/app/Http/Controllers/Admin/AdminController.php',
+			'laravel-boilerplate-stable/app/Http/Controllers/Admin/CacheController.php',
+			'laravel-boilerplate-stable/app/Http/Controllers/Admin/ConfigsController.php',
+			'laravel-boilerplate-stable/app/Http/Controllers/Admin/MasterManyController.php',
+			'laravel-boilerplate-stable/app/Http/Controllers/Admin/SearchmodalController.php',
+			'laravel-boilerplate-stable/app/Http/Utilities',
+			'laravel-boilerplate-stable/app/Providers/BrFakerServiceProvider',
+			'laravel-boilerplate-stable/app/config/brasil.php',
+			'laravel-boilerplate-stable/app/config/cep.php',
+			'laravel-boilerplate-stable/app/routes/admin.php',
+			'laravel-boilerplate-stable/app/Console/Commands/Makex',
+			'laravel-boilerplate-stable/app/Console/Commands/Makex.php',
+			'laravel-boilerplate-stable/app/Console/Commands/MakexUpdateCore.php',
+			'laravel-boilerplate-stable/resources/views/Admin/',
+			'laravel-boilerplate-stable/resources/views/layouts/admin.blade.php',
 		];
 
 		$this->info('Extracting zip...');
@@ -85,7 +85,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 		$this->info('Done.');
 
 		$this->info('Coping files...');
-		\File::copyDirectory(base_path('app/Console/Commands/Extracted/laravel-boilerplate-master/'), base_path(''));
+		\File::copyDirectory(base_path('app/Console/Commands/Extracted/laravel-boilerplate-stable/'), base_path(''));
 		$this->info('Done.');
 
 		$this->info('Remove extracted folder...');
