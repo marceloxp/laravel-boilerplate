@@ -46,10 +46,15 @@ php artisan migrate:refresh --seed
 
 ## Plugins
 
-- shridharkaushik29/laravel-hooks: <https://github.com/shridharkaushik29/laravel-hooks>
-- digitalnature/php-ref: <https://github.com/digitalnature/php-ref>
-- barryvdh/laravel-debugbar: <https://github.com/barryvdh/laravel-debugbar>
-- miroc/laravel-adminer: <https://github.com/miroc/Laravel-Adminer>
+| Plugin                           | Address                                                  |
+| -------------------------------- | -------------------------------------------------------- |
+| shridharkaushik29/laravel-hooks  | <https://github.com/shridharkaushik29/laravel-hooks>     |
+| digitalnature/php-ref            | <https://github.com/digitalnature/php-ref>               |
+| barryvdh/laravel-debugbar        | <https://github.com/barryvdh/laravel-debugbar>           |
+| miroc/laravel-adminer            | <https://github.com/miroc/Laravel-Adminer>               |
+| chumper/zipper                   | <https://github.com/Chumper/Zipper>                      |
+| marceloxp/laravel_commands       | <https://github.com/marceloxp/laravel_commands>          |
+| danielstjules/stringy            | <https://github.com/danielstjules/Stringy>               |
 
 ## Libraries
 
