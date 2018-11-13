@@ -69,7 +69,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-master/app/routes/admin.php',
 			'laravel-boilerplate-master/app/Console/Commands/Makex',
 			'laravel-boilerplate-master/app/Console/Commands/Makex.php',
-			'laravel-boilerplate-master/app/Console/Commands/MakexUpdateCore.php'
+			'laravel-boilerplate-master/app/Console/Commands/MakexUpdateCore.php',
 		];
 
 		$this->info('Extracting zip...');
@@ -80,9 +80,20 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			$core_files,
 			Zipper::WHITELIST
 		);
+		$zipper->close();
 		$this->info('Done.');
 
-		$this->info(PHP_EOL);
-		$this->info(PHP_EOL);
+		$this->info('Coping files...');
+		print_r([base_path('app/Console/Commands/Extracted/laravel-boilerplate-master/'), base_path('/')]);
+		\File::copyDirectory(base_path('app/Console/Commands/Extracted/laravel-boilerplate-master/'), base_path(''));
+		$this->info('Done.');
+
+		$this->info('Remove extracted folder...');
+		\File::deleteDirectory(base_path('app/Console/Commands/Extracted/'));
+		$this->info('Done.');
+
+		$this->info('Remove zip file...');
+		\File::delete($zip_path);
+		$this->info('Done.');
 	}
 }
