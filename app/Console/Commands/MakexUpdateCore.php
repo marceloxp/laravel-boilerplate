@@ -40,9 +40,9 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 	{
 		$this->clear();
 
-		// if (!$this->confirm('Update Core?')) { exit; }
+		if (!$this->confirm('Update Core?')) { exit; }
 
-		$zip_path = base_path('app/Console/Commands/master.zip');
+		$zip_path = base_path('app/Console/Commands/stable.zip');
 
 		if (!file_exists($zip_path))
 		{
@@ -84,7 +84,6 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 		$this->info('Done.');
 
 		$this->info('Coping files...');
-		print_r([base_path('app/Console/Commands/Extracted/laravel-boilerplate-master/'), base_path('/')]);
 		\File::copyDirectory(base_path('app/Console/Commands/Extracted/laravel-boilerplate-master/'), base_path(''));
 		$this->info('Done.');
 
