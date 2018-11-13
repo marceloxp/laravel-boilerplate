@@ -47,7 +47,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 		if (!file_exists($zip_path))
 		{
 			$this->info('Downloading file...');
-			$zip_url  = 'https://github.com/marceloxp/laravel-boilerplate/archive/master.zip';
+			$zip_url  = 'https://github.com/marceloxp/laravel-boilerplate/archive/stable.zip';
 			$client   = new \GuzzleHttp\Client();
 			$result   = $client->request('GET', $zip_url, ['save_to' => $zip_path]);
 			$this->info('Done.');
