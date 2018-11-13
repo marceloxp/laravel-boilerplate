@@ -19,7 +19,7 @@ class Makex extends \App\Console\MakexCommand
 	 *
 	 * @var string
 	 */
-	protected $description = 'Create new Admin Controller';
+	protected $description = 'Create a new Admin Controller';
 
 	/**
 	 * Create a new command instance.
