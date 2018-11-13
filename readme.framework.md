@@ -70,9 +70,16 @@ php artisan migrate:refresh --seed
 
 ## Artisan commands
 
+> Create a new Admin Controller
+
 ```bash
-php artisan check
-php artisan checkadmin
+php artisan makex:admin_controller
+```
+
+> Create a new Single Master Model
+
+```bash
+php artisan makex:mastermodel
 ```
 
 ## Custom Classes
@@ -209,11 +216,6 @@ return response($result)->withHeaders(cached_headers($result));
 
 ```php
 ddd($var);
-```
-
-> Create Admin Controller
-```sh
-php artisan makex:admin_controller
 ```
 
 #### lang

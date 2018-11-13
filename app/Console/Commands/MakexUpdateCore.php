@@ -55,6 +55,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 		
 		$core_files = 
 		[
+			'laravel-boilerplate-master/README.md',
 			'laravel-boilerplate-master/app/Http/Controllers/Admin/AdminController.php',
 			'laravel-boilerplate-master/app/Http/Controllers/Admin/CacheController.php',
 			'laravel-boilerplate-master/app/Http/Controllers/Admin/ConfigsController.php',
@@ -64,12 +65,12 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-master/app/Providers/BrFakerServiceProvider',
 			'laravel-boilerplate-master/app/config/brasil.php',
 			'laravel-boilerplate-master/app/config/cep.php',
-			'laravel-boilerplate-master/resources/views/Admin/',
-			'laravel-boilerplate-master/resources/views/layouts/admin.blade.php',
 			'laravel-boilerplate-master/app/routes/admin.php',
 			'laravel-boilerplate-master/app/Console/Commands/Makex',
 			'laravel-boilerplate-master/app/Console/Commands/Makex.php',
 			'laravel-boilerplate-master/app/Console/Commands/MakexUpdateCore.php',
+			'laravel-boilerplate-master/resources/views/Admin/',
+			'laravel-boilerplate-master/resources/views/layouts/admin.blade.php',
 		];
 
 		$this->info('Extracting zip...');
