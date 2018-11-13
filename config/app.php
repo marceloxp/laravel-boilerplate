@@ -175,6 +175,7 @@ return [
 		 * Package Service Providers...
 		 */
 		Barryvdh\Debugbar\ServiceProvider::class,
+		Chumper\Zipper\ZipperServiceProvider::class,
 
 		/*
 		 * Application Service Providers...
@@ -236,7 +237,8 @@ return [
 		'View' => Illuminate\Support\Facades\View::class,
 		'Debugbar' => Barryvdh\Debugbar\Facade::class,
 		'Hook' => Shridhar\Hooks\Hook::class,
-		'Stringy' => Stringy\Stringy::class
+		'Stringy' => Stringy\Stringy::class,
+		'Zipper' => Chumper\Zipper\Zipper::class,
 
 	],
 

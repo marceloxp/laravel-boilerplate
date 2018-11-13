@@ -17,7 +17,8 @@
         "laravel/tinker": "~1.0",
         "marceloxp/laravel_commands": "dev-master",
         "miroc/laravel-adminer": "dev-master",
-        "shridharkaushik29/laravel-hooks": "dev-master"
+        "shridharkaushik29/laravel-hooks": "dev-master",
+        "chumper/zipper": "1.0.x"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2@dev",

@@ -20,3 +20,7 @@ public/adminer/plugin\.php
 public/adminer/struct-comments\.php
 
 _temp/
+
+app/Console/Commands/master/laravel-boilerplate-master/
+
+app/Console/Commands/master\.zip
