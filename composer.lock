@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "588029e4eebee0c110f1d8024ea5e648",
+    "content-hash": "8dbdb8e84a050d5e1d29941472358b2a",
     "packages": [
         {
             "name": "ajthinking/tinx",
@@ -1170,6 +1170,35 @@
             ],
             "description": "Laravel Artisan Commands Utilities",
             "time": "2018-11-12T17:30:20+00:00"
+        },
+        {
+            "name": "maxazan/jquery-treegrid",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maxazan/jquery-treegrid.git",
+                "reference": "c8ba9e9604620002155d01a947cceffe18d4428c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maxazan/jquery-treegrid/zipball/c8ba9e9604620002155d01a947cceffe18d4428c",
+                "reference": "c8ba9e9604620002155d01a947cceffe18d4428c",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "jquery treegrid plugin",
+            "homepage": "http://maxazan.github.io/jquery-treegrid",
+            "keywords": [
+                "grid",
+                "jquery",
+                "tree",
+                "treegrid"
+            ],
+            "time": "2015-02-03T14:17:28+00:00"
         },
         {
             "name": "miroc/laravel-adminer",
