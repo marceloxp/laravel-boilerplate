@@ -9,6 +9,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7.0.0",
+        "ajthinking/tinx": "^2.1",
+        "chumper/zipper": "1.0.x",
         "danielstjules/stringy": "~3.1.0",
         "digitalnature/php-ref": "dev-master",
         "fideloper/proxy": "~4.0",
@@ -17,8 +19,7 @@
         "laravel/tinker": "~1.0",
         "marceloxp/laravel_commands": "dev-master",
         "miroc/laravel-adminer": "dev-master",
-        "shridharkaushik29/laravel-hooks": "dev-master",
-        "chumper/zipper": "1.0.x"
+        "shridharkaushik29/laravel-hooks": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2@dev",
