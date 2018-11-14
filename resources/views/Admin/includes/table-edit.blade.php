@@ -104,8 +104,6 @@
 							$ref_model   = $fields_schema[$field_name]['relation']['ref_model'];
 							$field_label = $fields_schema[$field_name]['relation']['comment'];
 
-							$refteste = @$register->$ref_model->name;
-
 							$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $register->$ref_model->name) : '');
 							$field_value = old($field_name) ?? $register->$field_name;
 
