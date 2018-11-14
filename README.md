@@ -19,7 +19,7 @@ composer create-project marceloxp/laravel www --no-interaction -s dev
 
 ### File `.env` configuration
 
-> Configure .env database config and run migration:
+> Configure .env database config and run migration
 
 ```bash
 php artisan migrate:refresh --seed
@@ -80,6 +80,12 @@ php artisan makex:admin_controller
 
 ```bash
 php artisan makex:mastermodel
+```
+
+> Update framework core files
+
+```bash
+php artisan makex:updatecore
 ```
 
 ## Custom Classes
