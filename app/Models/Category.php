@@ -27,8 +27,8 @@ class Category extends MasterModel
 		return $this->hasMany(\App\Models\Video::class);
 	}
 
-	public function subcategories()
+	public function categories()
 	{
-		return $this->hasMany(\App\Models\Subcategory::class);
+		return $this->hasMany(\App\Models\Category::class);
 	}
 }

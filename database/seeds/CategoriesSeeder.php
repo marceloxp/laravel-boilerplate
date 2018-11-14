@@ -38,7 +38,7 @@ class CategoriesSeeder extends Seeder
 
 				foreach ($subs as $sub)
 				{
-					\App\Models\Subcategory::create(['category_id' => $category_id, 'name' => $sub, 'created_at' => $now]);
+					\App\Models\Category::create(['parent_id' => $category_id, 'name' => $sub, 'created_at' => $now]);
 				}
 			}
 		}
