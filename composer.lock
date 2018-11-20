@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "588029e4eebee0c110f1d8024ea5e648",
@@ -1134,12 +1134,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marceloxp/laravel_commands.git",
-                "reference": "2bf4660afafa839711155c15c5327f018fed4edc"
+                "reference": "31712ced61f4032c7d44c104cb716414136d0e46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/2bf4660afafa839711155c15c5327f018fed4edc",
-                "reference": "2bf4660afafa839711155c15c5327f018fed4edc",
+                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/31712ced61f4032c7d44c104cb716414136d0e46",
+                "reference": "31712ced61f4032c7d44c104cb716414136d0e46",
                 "shasum": ""
             },
             "require-dev": {
@@ -1169,7 +1169,7 @@
                 }
             ],
             "description": "Laravel Artisan Commands Utilities",
-            "time": "2018-11-12T17:30:20+00:00"
+            "time": "2018-11-13T20:42:27+00:00"
         },
         {
             "name": "miroc/laravel-adminer",
@@ -1294,16 +1294,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.34.4",
+            "version": "1.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "b9a444d829c9a16735aceca1b173e765745bcc0c"
+                "reference": "5c05a2be472b22f63291d192410df9f0e0de3b19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b9a444d829c9a16735aceca1b173e765745bcc0c",
-                "reference": "b9a444d829c9a16735aceca1b173e765745bcc0c",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/5c05a2be472b22f63291d192410df9f0e0de3b19",
+                "reference": "5c05a2be472b22f63291d192410df9f0e0de3b19",
                 "shasum": ""
             },
             "require": {
@@ -1348,7 +1348,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-11-13T08:26:10+00:00"
+            "time": "2018-11-14T21:55:58+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -1877,6 +1877,7 @@
                     "Shridhar\\Hooks\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1887,9 +1888,6 @@
                 }
             ],
             "description": "Wordpress like actions and filters for laravel",
-            "support": {
-                "source": "https://github.com/marceloxp/laravel-hooks/tree/master"
-            },
             "time": "2018-04-29T14:26:08+00:00"
         },
         {
@@ -2924,16 +2922,16 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "5b68f3972083a7eeec0d6f161962fcda71a127c0"
+                "reference": "9d5caf43c5f3a3aea2178942f281054805872e7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/5b68f3972083a7eeec0d6f161962fcda71a127c0",
-                "reference": "5b68f3972083a7eeec0d6f161962fcda71a127c0",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/9d5caf43c5f3a3aea2178942f281054805872e7c",
+                "reference": "9d5caf43c5f3a3aea2178942f281054805872e7c",
                 "shasum": ""
             },
             "require": {
@@ -2988,7 +2986,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2018-08-22T11:06:19+00:00"
+            "time": "2018-11-09T08:37:55+00:00"
         },
         {
             "name": "doctrine/instantiator",

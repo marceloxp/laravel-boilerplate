@@ -14,10 +14,15 @@ class Cart
 		return starts_with($p_id, self::prefix) ? $p_id : sprintf(self::prefix . $p_id);
 	}
 
+	public static function all()
+	{
+		return \Session::get(self::name);
+	}
+
 	public static function get($p_id)
 	{
 		$name = self::getName($p_id);
-		return \Session::get($name) ? 1;
+		return \Session::get($name) ?? 1;
 	}
 
 	public static function add($p_id, $p_quant = 1)
@@ -26,7 +31,7 @@ class Cart
 		$quant = self::get($name);
 		$quant += $p_quant;
 		\Session::put($name, $quant);
-		return $value;
+		return self::all();
 	}
 
 	public static function inc($p_id, $p_quant = 1)
