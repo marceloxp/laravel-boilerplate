@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Utilities\RouteLang;
+use App\Http\Middleware\Shopping;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Utilities\RouteLang;
 Route::group
 (
 	[
-		'middleware' => 'frontend',
+		'middleware' => ['frontend'],
 		'namespace'  => 'Site'
 	],
 	function()
