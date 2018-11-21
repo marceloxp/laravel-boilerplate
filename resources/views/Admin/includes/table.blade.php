@@ -169,6 +169,9 @@
 									case 'enum':
 										$title_align = 'center';
 									break;
+									case 'timestamp':
+										$title_align = 'center';
+									break;
 								}
 								$hook_name   = hook_name(sprintf('admin_index_title_align_%s_%s', $table_name, $field_name));
 								$title_align = Hook::apply_filters($hook_name, $title_align);
@@ -203,6 +206,9 @@
 												$display_value = $display_value->formated->value;
 												$field_align = 'right';
 											}
+										break;
+										case 'timestamp':
+											$field_align = 'right';
 										break;
 										case 'int':
 											if ($fields_schema[$field_name]['pri'])

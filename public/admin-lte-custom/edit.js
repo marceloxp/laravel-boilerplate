@@ -34,6 +34,7 @@ umsappadmin.Tedit = function($, objname, options)
 	{
 		self.addInputMasks();
 		self.onChangeImages();
+		self.setFirstFocus();
 	};
 
 	this.addInputMasks = function()
@@ -41,6 +42,11 @@ umsappadmin.Tedit = function($, objname, options)
 		jQuery('#cep').simpleMask({ 'mask': 'cep', 'nextInput': false });
 		jQuery('#cpf').simpleMask({ 'mask': 'cpf', 'nextInput': false });
 		jQuery('#phone,#celular,#telefone').simpleMask({ 'mask': 'ddd-tel9', 'nextInput': false });
+	};
+
+	this.setFirstFocus = function()
+	{
+		$('#frmTable input, #frmTable select, #frmTable textarea').not(':hidden').eq(0).select().focus();
 	};
 
 	this.onChangeImages = function()

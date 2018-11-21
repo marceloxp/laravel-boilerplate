@@ -67,7 +67,9 @@
 							$hook_name     = hook_name(sprintf('admin_show_%s_%s', $table_name, $field_name));
 							$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
 						@endphp
-						{!! $display_value !!}
+						<div data-field="{{ $field_name }}" data-type="{{ $field_type }}">
+							{!! $display_value !!}
+						</div>
 					</td>
 				</tr>
 			@endforeach
