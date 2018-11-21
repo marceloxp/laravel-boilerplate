@@ -33,6 +33,13 @@ class ProductValue
 		}
 	}
 
+	public function setQuant($p_quant = 1)
+	{
+		$this->quant = $p_quant;
+		$this->totalize();
+		$this->formatValues();
+	}
+
 	public function set($p_price, $p_quant, $p_discount = 0.00)
 	{
 		$this->price    = $p_price;
