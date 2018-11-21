@@ -32,14 +32,23 @@ class ProductController extends AdminController
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
-				'display_fields' => ['id','name','price','discount','status','created_at']
+				'appends'        => ['cash' => 'Cash'],
+				'display_fields' => ['id','name','price','discount','cash','status','created_at']
 			]
 		);
 	}
 
 	public function hooks_index($table_name)
 	{
-		//
+		Hook::add_filter
+		(
+			sprintf('master_model_field_type_%s_%s', $table_name, 'cash'),
+			function($field_type)
+			{
+				return 'decimal';
+			},
+			10, 1
+		);
 	}
 
 	/**

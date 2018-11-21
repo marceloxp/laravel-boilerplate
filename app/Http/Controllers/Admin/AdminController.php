@@ -210,7 +210,7 @@ class AdminController extends Controller
 		{
 			if (array_key_exists($field_name, $fields_schema))
 			{
-				if ($fields_schema[$field_name]['type'] !== 'appends')
+				if ($fields_schema[$field_name]['is_appends'] == false)
 				{
 					$query_fields[] = sprintf('%s.%s', $table_name, $field_name);
 
@@ -425,25 +425,26 @@ class AdminController extends Controller
 		$class_pivot       = ($is_pivot) ? 'pivot' : '';
 		$panel_title       = $this->caption;
 		$panel_description = $this->description;
-		$fields_schema     = $model::getFieldsMetaData($appends);
-		$field_names       = array_keys($fields_schema);
-		$perpage           = $this->getPerPage($request);
 		$table_name        = $model::getTableName();
 		$model_name        = $model::getModelName();
-		$table             = $this->getTableSearch($model, $perpage, $request, $display_fields, $fields_schema, $params);
-		$paginate          = $this->ajustPaginate($request, $table);
-		$ids               = $table->pluck('id')->toJson();
-		$has_table         = ($table->total() > 0);
-		$search_dates      = ['created_at'];
-
-		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many');
-		
-		View::share($share_params);
 
 		if (method_exists($this, 'hooks_index'))
 		{
 			$this->hooks_index($table_name);
 		}
+
+		$fields_schema = $model::getFieldsMetaData($appends);
+		$field_names   = array_keys($fields_schema);
+		$perpage       = $this->getPerPage($request);
+		$table         = $this->getTableSearch($model, $perpage, $request, $display_fields, $fields_schema, $params);
+		$paginate      = $this->ajustPaginate($request, $table);
+		$ids           = $table->pluck('id')->toJson();
+		$has_table     = ($table->total() > 0);
+		$search_dates  = ['created_at'];
+
+		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many');
+		
+		View::share($share_params);
 
 		$request->session()->put('url_back', url()->current());
 

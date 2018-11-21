@@ -226,6 +226,7 @@ class MasterModel extends Model
 					$field_name = $value->name;
 					$value = (array)$value;
 					$value['pri'] = (boolean)$value['pri'];
+					$value['is_appends'] = false;
 					$value['nullable'] = (boolean)$value['nullable'];
 					switch ($field_name)
 					{
@@ -266,10 +267,15 @@ class MasterModel extends Model
 
 				foreach ($appends as $field_name => $field_caption)
 				{
+					$field_type = 'appends';
+					$hook_name  = hook_name(sprintf('master_model_field_type_%s_%s', $table_name, $field_name));
+					$field_type = \Hook::apply_filters($hook_name, $field_type);
+
 					$result[$field_name] = 
 					[
 						'name'         => $field_name,
-						'type'         => 'appends',
+						'is_appends'   => true,
+						'type'         => $field_type,
 						'pri'          => false,
 						'comment'      => $field_caption,
 						'max_length'   => null,

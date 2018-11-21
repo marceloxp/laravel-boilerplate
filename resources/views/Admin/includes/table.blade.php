@@ -197,6 +197,13 @@
 								{
 									switch ($field_type)
 									{
+										case 'appends':
+											if (is_a($display_value, App\Http\Utilities\Money::class))
+											{
+												$display_value = $display_value->formated->value;
+												$field_align = 'right';
+											}
+										break;
 										case 'int':
 											if ($fields_schema[$field_name]['pri'])
 											{

@@ -7,6 +7,8 @@ use App\Http\Utilities\MasterModel;
 
 class Product extends MasterModel
 {
+	protected $appends = ['cash'];
+
 	use SoftDeletes;
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
@@ -31,5 +33,10 @@ class Product extends MasterModel
 			'status'   => 'in:Ativo,Inativo|required|max:7',
 		];
 		return Role::_validate($request, $rules, $id);
+	}
+
+	public function getCashAttribute()
+	{
+		return discount(floatval($this->price), floatval($this->discount));
 	}
 }

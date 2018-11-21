@@ -40,7 +40,8 @@
             "app/Http/Utilities/Helpers/helpers.php",
             "app/Http/Utilities/Helpers/hook.php",
             "app/Http/Utilities/Helpers/lang.php",
-            "app/Http/Utilities/Helpers/string.php"
+            "app/Http/Utilities/Helpers/string.php",
+            "app/Http/Utilities/Helpers/money.php"
 		],
         "classmap": [
             "database/seeds",
