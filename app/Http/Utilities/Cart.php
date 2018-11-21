@@ -14,9 +14,21 @@ class Cart
 		return starts_with($p_id, self::prefix) ? $p_id : sprintf('%s%s', self::prefix, $p_id);
 	}
 
+	public static function quant($p_id)
+	{
+		$cart = self::all();
+		return (array_key_exists($p_id, $cart)) ? $cart[$p_id] : 1;
+	}
+
+	public static function has($p_id)
+	{
+		$cart = self::all();
+		return (array_key_exists($p_id, $cart));
+	}
+
 	public static function all()
 	{
-		return \Session::get(self::name);
+		return \Session::get(self::name) ?? [];
 	}
 
 	public static function get($p_id)
