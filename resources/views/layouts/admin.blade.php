@@ -14,7 +14,7 @@
 		<meta name="framework-version" content="{{ App::VERSION() }}">
 		<meta name="app-version" content="{{ app_version() }}">
 
-		<title>{{env('ADMIN_TITLE', 'Admin')}}</title>
+		<title>{{ env('ADMIN_TITLE', 'Admin') }}</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- Bootstrap 3.3.6 -->
@@ -51,7 +51,7 @@
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 			<header class="main-header">
-				<a href="{{route('admin_dashboard')}}" class="logo">
+				<a href="{{ route('admin_dashboard') }}" class="logo">
 					<span class="logo-mini">{{ env('ADMIN_SLUG', 'ADM') }}</span>
 					<span class="logo-lg">{{ env('ADMIN_CAPTION', 'Admin') }}</span>
 				</a>

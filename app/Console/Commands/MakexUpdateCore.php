@@ -61,6 +61,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/ConfigsController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/MasterManyController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/SearchmodalController.php',
+			'laravel-boilerplate-stable/app/Http/Controllers/Admin/ProductController.php',
 			'laravel-boilerplate-stable/app/Http/Utilities',
 			'laravel-boilerplate-stable/app/Http/Middleware/Shopping.php',
 			'laravel-boilerplate-stable/app/Providers/BrFakerServiceProvider',
@@ -70,8 +71,13 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/app/Console/Commands/Makex',
 			'laravel-boilerplate-stable/app/Console/Commands/Makex.php',
 			'laravel-boilerplate-stable/app/Console/Commands/MakexUpdateCore.php',
+			'laravel-boilerplate-stable/app/Models/Product.php',
 			'laravel-boilerplate-stable/resources/views/Admin/',
 			'laravel-boilerplate-stable/resources/views/layouts/admin.blade.php',
+			'laravel-boilerplate-stable/public/js/admin/admin_products_form.js',
+			'laravel-boilerplate-stable/public/js/admin/jquery.priceformat.min.js',
+			'laravel-boilerplate-stable/public/js/admin/jQuery.SimpleMask.min.js',
+			'laravel-boilerplate-stable/database/migrations/2016_*.php',
 		];
 
 		$this->info('Extracting zip...');

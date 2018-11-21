@@ -123,7 +123,7 @@ class ProductValue
 			$raw_parcs[$k]['parc'] = $index;
 			$fmt_parcs[$k]['parc'] = $index;
 
-			$raw_parcs[$k]['unitary'] = $this->parcelate($payment['total'], $this->quant, $index);
+			$raw_parcs[$k]['unitary'] = $this->parcelate($payment['unitary'], $this->quant, $index);
 			$fmt_parcs[$k]['unitary'] = $this->format($raw_parcs[$k]['unitary']);
 
 			$raw_parcs[$k]['total'] = $raw_parcs[$k]['unitary'] * $index;
