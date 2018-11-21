@@ -1,7 +1,9 @@
 <?php
 namespace App\Models;
 
+use App\Http\Utilities\Cart;
 use App\Http\Utilities\Money;
+use App\Http\Utilities\ProductValue;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Utilities\MasterModel;
 
@@ -37,6 +39,6 @@ class Product extends MasterModel
 
 	public function getCashAttribute()
 	{
-		return discount(floatval($this->price), floatval($this->discount));
+		return new ProductValue(floatval($this->price), Cart::quant($this->id), floatval($this->discount));
 	}
 }

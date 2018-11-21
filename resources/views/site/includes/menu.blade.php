@@ -16,6 +16,9 @@
 		<a href="{{route('faleconosco')}}">{{ dic('Fale Conosco') }}</a>
 	</li>
 	<li>
+		<a href="{{route('produtos')}}">{{ dic('Produtos') }}</a>
+	</li>
+	<li>
 		<a href="{{route('sobre')}}">{{ dic('Sobre') }}</a>
 		<ul>
 			<li>

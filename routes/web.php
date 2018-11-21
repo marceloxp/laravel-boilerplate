@@ -29,6 +29,7 @@ Route::group
 			{
 				Route::get('/'           , 'PagesController@index'      )->name('home');
 				Route::get('/faleconosco', 'PagesController@faleconosco')->name('faleconosco');
+				Route::get('/products'   , 'ProductsController@index'   )->name('produtos');
 			}
 		);
 

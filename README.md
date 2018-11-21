@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.1.4
+> Version 0.1.5
 
 ## Install
 
@@ -180,6 +180,7 @@ RouteLang::getCurrentLocale();        // Returns app current locale config (dyna
 | admin_index_field_align_{table_name}_{field_name} | Index         | Define grid field record alignment      |
 | admin_show_{table_name}_{field_name}              | Show          | Before print field on show register     |
 | admin_edit_{table_name}_{field_name}              | Add/Edit      | Before print field on add/edit register |
+| master_model_field_type_{table_name}_{field_name} | Master Model  | Before get field type register          |
 
 ### Helpers
 
