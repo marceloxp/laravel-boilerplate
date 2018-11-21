@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Http\Utilities\MasterModel;
 use App\Http\Utilities\Cached;
 use App\Http\Utilities\Result;
