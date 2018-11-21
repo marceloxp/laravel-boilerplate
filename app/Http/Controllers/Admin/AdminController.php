@@ -458,21 +458,25 @@ class AdminController extends Controller
 
 	public function defaultShow($p_args)
 	{
-		$default_params = [];
+		$default_params =
+		[
+			'appends' => []
+		];
 		$params = array_merge($default_params, $p_args);
 		extract($params, EXTR_OVERWRITE);
 
-		$table_name     = $model::getTableName();
-		$register       = ($id) ? $model::find($id) : new $model;
-		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
-		$fields_schema  = $model::getFieldsMetaData();
-
-		View::share(compact('register','panel_title','display_fields','fields_schema','table_name'));
+		$table_name = $model::getTableName();
 
 		if (method_exists($this, 'hooks_show'))
 		{
 			$this->hooks_show($table_name);
 		}
+
+		$register       = ($id) ? $model::find($id) : new $model;
+		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
+		$fields_schema  = $model::getFieldsMetaData($appends);
+
+		View::share(compact('register','panel_title','display_fields','fields_schema','table_name'));
 
 		return view('Admin.generic_show');
 	}
