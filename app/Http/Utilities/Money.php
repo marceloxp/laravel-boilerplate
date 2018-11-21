@@ -21,7 +21,17 @@ class Money
 		}
 		elseif (is_string($p_value))
 		{
-			$this->fromJson($p_value);
+			if (str_contains($p_value, '{'))
+			{
+				$this->fromJson($p_value);
+			}
+			else
+			{
+				$p_value = str_replace('.', '', $p_value);
+				$p_value = str_replace(',', '.', $p_value);
+				$p_value = floatval($p_value);
+				$this->set($p_value, $p_quant);
+			}
 		}
 		else
 		{
