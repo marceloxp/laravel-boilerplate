@@ -1,6 +1,6 @@
 /* g'lobal CjsBaseClass,CJS_DEBUG_MODE_0,CJS_DEBUG_MODE_1,CJS_DEBUG_MODE_2 */
-var umsadmin = umsadmin || {};
-umsadmin.Tmodal_search = function($, objname, options)
+var webapp = webapp || {};
+webapp.Tmodal_search = function($, objname, options)
 {
 	'use strict';
 	var self = this;
@@ -339,7 +339,7 @@ umsadmin.Tmodal_search = function($, objname, options)
 
 window.search_options = [];
 
-umsadmin.modal_search = new umsadmin.Tmodal_search
+webapp.modal_search = new webapp.Tmodal_search
 (
 	window.cjsbaseclass_jquery,
 	'modal_search',
@@ -351,7 +351,7 @@ umsadmin.modal_search = new umsadmin.Tmodal_search
 
 function admin_modal_search(p_options)
 {
-	umsadmin.modal_search.setOptions(p_options);
+	webapp.modal_search.setOptions(p_options);
 }
 
 // admin_modal_search

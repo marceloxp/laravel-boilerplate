@@ -1,6 +1,6 @@
 /* global CjsBaseClass,CJS_DEBUG_MODE_0,CJS_DEBUG_MODE_1,CJS_DEBUG_MODE_2 */
-var umsadmin = umsadmin || {};
-umsadmin.Tadmin_cache_index = function($, objname, options)
+var webapp = webapp || {};
+webapp.Tadmin_cache_index = function($, objname, options)
 {
 	'use strict';
 	var self = this;
@@ -86,7 +86,7 @@ umsadmin.Tadmin_cache_index = function($, objname, options)
 	CjsBaseClass.call(this, $, objname, options);
 };
 
-umsadmin.admin_cache_index = new umsadmin.Tadmin_cache_index
+webapp.admin_cache_index = new webapp.Tadmin_cache_index
 (
 	window.cjsbaseclass_jquery,
 	'admin_cache_index',

@@ -1,6 +1,6 @@
 /* g'lobal CjsBaseClass,CJS_DEBUG_MODE_0,CJS_DEBUG_MODE_1,CJS_DEBUG_MODE_2 */
-var umsadmin = umsadmin || {};
-umsadmin.Tcommon = function($, objname, options)
+var webapp = webapp || {};
+webapp.Tcommon = function($, objname, options)
 {
 	'use strict';
 	var self = this;
@@ -71,7 +71,7 @@ umsadmin.Tcommon = function($, objname, options)
 	CjsBaseClass.call(this, $, objname, options);
 };
 
-umsadmin.common = new umsadmin.Tcommon
+webapp.common = new webapp.Tcommon
 (
 	window.cjsbaseclass_jquery,
 	'common',
