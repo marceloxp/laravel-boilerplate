@@ -11,7 +11,7 @@ class Cart
 
 	private static function getName($p_id)
 	{
-		return starts_with($p_id, self::prefix) ? $p_id : sprintf(self::prefix . $p_id);
+		return starts_with($p_id, self::prefix) ? $p_id : sprintf('%s%s', self::prefix, $p_id);
 	}
 
 	public static function all()
