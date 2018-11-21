@@ -91,23 +91,27 @@
 		@include('Admin.includes.modal_search')
 
 		<!-- jQuery 2.2.3 -->
-		<script src="{{vasset('/admin-lte/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+		<script src="{{ vasset('/admin-lte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 		<!-- Bootstrap 3.3.6 -->
-		<script src="{{vasset('/admin-lte/bootstrap/js/bootstrap.min.js')}}"></script>
+		<script src="{{ vasset('/admin-lte/bootstrap/js/bootstrap.min.js') }}"></script>
 		<!-- SlimScroll -->
-		<script src="{{vasset('/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+		<script src="{{ vasset('/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
 		<!-- FastClick -->
-		<script src="{{vasset('/admin-lte/plugins/fastclick/fastclick.js')}}"></script>
+		<script src="{{ vasset('/admin-lte/plugins/fastclick/fastclick.js') }}"></script>
 		<!-- bootstrap datepicker -->
-		<script src="{{vasset('/admin-lte/plugins/daterangepicker/moment.min.js')}}"></script>
+		<script src="{{ vasset('/admin-lte/plugins/daterangepicker/moment.min.js') }}"></script>
 		<!-- daterangepicker -->
-		<script src="{{vasset('/admin-lte/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+		<script src="{{ vasset('/admin-lte/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 		<!-- Select2 -->
-		<script src="{{vasset('/admin-lte/plugins/select2/select2.full.min.js')}}"></script>
+		<script src="{{ vasset('/admin-lte/plugins/select2/select2.full.min.js') }}"></script>
 		<!-- AdminLTE App -->
-		<script src="{{vasset('/admin-lte/dist/js/app.min.js')}}"></script>
+		<script src="{{ vasset('/admin-lte/dist/js/app.min.js') }}"></script>
+		<!-- jQuerySimpleMask -->
+		<script src="{{ vasset('/js/admin/jQuery.SimpleMask.min.js') }}"></script>
+		<!-- jQueryPriceFormat -->
+		<script src="{{ vasset('/js/admin/jquery.priceformat.min.js') }}"></script>
 		<!-- Scripts -->
-		<script type="text/javascript" src="{{vasset('/lib/cjsbaseclass.min.js')}}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
+		<script type="text/javascript" src="{{ vasset('/lib/cjsbaseclass.min.js') }}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
 		{{ javascript('/lib/sweetalert.min.js') }}
 		@include('Admin.includes.messages')
 
