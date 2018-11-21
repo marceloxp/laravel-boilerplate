@@ -42,6 +42,9 @@
 
 							switch ($field_type)
 							{
+								case 'decimal':
+									$display_value = (new \App\Http\Utilities\Money(floatval($display_value), 1))->formated->value;;
+								break;
 								case 'tinyint':
 									$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
 								break;

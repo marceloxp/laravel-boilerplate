@@ -151,6 +151,25 @@
 						@foreach($display_fields as $field_name)
 							@php
 								$title_align = 'left';
+								$field_type  = $fields_schema[$field_name]['type'];
+								switch ($field_type)
+								{
+									case 'int':
+										if ($fields_schema[$field_name]['pri'])
+										{
+											$title_align = 'center';
+										}
+									break;
+									case 'tinyint':
+										$title_align = 'center';
+									break;
+									case 'decimal':
+										$title_align = 'center';
+									break;
+									case 'enum':
+										$title_align = 'center';
+									break;
+								}
 								$hook_name   = hook_name(sprintf('admin_index_title_align_%s_%s', $table_name, $field_name));
 								$title_align = Hook::apply_filters($hook_name, $title_align);
 							@endphp
@@ -162,6 +181,7 @@
 						<td><input type="checkbox" class="ck-row" data-ids="{{$register['id']}}"></td>
 						@foreach($display_fields as $field_name)
 							@php
+								$field_align = 'left';
 								$field_type = $fields_schema[$field_name]['type'];
 								$display_value = $register[$field_name];
 								if (in_array($field_name, $image_fields) !== false)
@@ -177,12 +197,24 @@
 								{
 									switch ($field_type)
 									{
+										case 'int':
+											if ($fields_schema[$field_name]['pri'])
+											{
+												$field_align = 'right';
+											}
+										break;
 										case 'tinyint':
 											$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
+										break;
+										case 'decimal':
+											$display_value = new \App\Http\Utilities\Money(floatval($display_value), 1);
+											$display_value = $display_value->formated->value;
+											$field_align = 'right';
 										break;
 										case 'enum':
 											if ($field_name == 'status')
 											{
+												$field_align = 'center';
 												$display_value = admin_label_status($display_value);
 											}
 										break;
@@ -198,7 +230,6 @@
 								$hook_name     = hook_name(sprintf('admin_index_%s_%s', $table_name, $field_name));
 								$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
 
-								$field_align = 'left';
 								$hook_name   = hook_name(sprintf('admin_index_field_align_%s_%s', $table_name, $field_name));
 								$field_align = Hook::apply_filters($hook_name, $field_align, $register->toArray());
 							@endphp

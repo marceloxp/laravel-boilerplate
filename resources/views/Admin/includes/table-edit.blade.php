@@ -164,7 +164,8 @@
 									{
 										$input = sprintf
 										(
-											'<input type="text" class="form-control" name="%s" id="%s" maxlength="%s" autocomplete="no" placeholder="" value="%s" %s %s>',
+											'<input type="text" data-type="%s" class="form-control" name="%s" id="%s" maxlength="%s" autocomplete="no" placeholder="" value="%s" %s %s>',
+											$field_type,
 											$field_name,
 											$field_name,
 											$maxlength,
