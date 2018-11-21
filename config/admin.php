@@ -78,6 +78,13 @@ return [
 					'ico'     => 'fa-users',
 					'group'   => 'admin_customers',
 					'route'   => 'admin_customers'
+				],
+				[
+					'type'    => 'link',
+					'caption' => 'Produtos',
+					'ico'     => 'fa-cube',
+					'group'   => 'admin_product',
+					'route'   => 'admin_product'
 				]
 			]
 		],

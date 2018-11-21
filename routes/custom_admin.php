@@ -123,3 +123,17 @@
 			Route::post('delete/'   , 'SubcategoryController@destroy')->name('admin_subcategories_delete')->group('admin_subcategories');
 		}
 	);
+
+	// Produtos
+	Route::group
+	(
+		['prefix' => 'products'],
+		function()
+		{
+			Route::get ('/'         , 'ProductController@index'  )->name('admin_product'       )->group('admin_product');
+			Route::get ('edit/{id?}', 'ProductController@create' )->name('admin_product_edit'  )->group('admin_product');
+			Route::post('edit/{id?}', 'ProductController@store'  )->name('admin_product_save'  )->group('admin_product');
+			Route::get ('show/{id}' , 'ProductController@show'   )->name('admin_product_show'  )->group('admin_product');
+			Route::post('delete/'   , 'ProductController@destroy')->name('admin_product_delete')->group('admin_product');
+		}
+	);
