@@ -7,15 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Product;
+use App\Models\Payment;
 use Hook;
 
-class ProductController extends AdminController
+class PaymentController extends AdminController
 {
 	public function __construct()
 	{
-		$this->caption = 'Produtos';
-		$this->model   = Product::class;
+		$this->caption = 'Pagamentos';
+		$this->model   = Payment::class;
 		parent::__construct();
 	}
 
@@ -32,23 +32,14 @@ class ProductController extends AdminController
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
-				'appends'        => ['cash' => 'Cash'],
-				'display_fields' => ['id','name','price','status','created_at']
+				'display_fields' => ['id','name','title','type','discount','parcs','created_at']
 			]
 		);
 	}
 
 	public function hooks_index($table_name)
 	{
-		Hook::add_filter
-		(
-			sprintf('master_model_field_type_%s_%s', $table_name, 'cash'),
-			function($field_type)
-			{
-				return 'decimal';
-			},
-			10, 1
-		);
+		//
 	}
 
 	/**
@@ -68,10 +59,12 @@ class ProductController extends AdminController
 				'display_fields' => 
 				[
 					'id'         => 12,
-					'name'       => 12,
-					'price'      => 6,
-					'status'     => 6,
-					'created_at' => 6,
+					'name'       => 4,
+					'title'      => 4,
+					'type'       => 4,
+					'discount'    => 4,
+					'parcs'      => 4,
+					'created_at' => 4,
 				]
 			]
 		);
@@ -105,24 +98,15 @@ class ProductController extends AdminController
 		(
 			[
 				'id'             => $id,
-				'appends'        => ['cash' => 'Cash'],
 				'model'          => $this->model,
-				'display_fields' => ['id','name','price','status','created_at','updated_at']
+				'display_fields' => ['id','name','title','type','discount','parcs','created_at','updated_at']
 			]
 		);
 	}
 
 	public function hooks_show($table_name)
 	{
-		Hook::add_filter
-		(
-			sprintf('master_model_field_type_%s_%s', $table_name, 'cash'),
-			function($field_type)
-			{
-				return 'decimal';
-			},
-			10, 1
-		);
+		//
 	}
 
 	/**

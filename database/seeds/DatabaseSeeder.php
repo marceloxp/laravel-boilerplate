@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(StatesSeeder::class);
 		$this->call(CitiesSeeder::class);
         $this->call(TagsSeeder::class);
+        $this->call(PaymentsSeeder::class);
+        $this->call(ProductsSeeder::class);
         $this->call(CustomersSeeder::class);
-		$this->call(ProductsSeeder::class);
     }
 }

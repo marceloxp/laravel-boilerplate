@@ -14,6 +14,7 @@ class Product extends MasterModel
 	use SoftDeletes;
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
+	protected $casts   = ['price' => 'float', 'discount' => 'float'];
 
 	public static function boot()
 	{
@@ -39,6 +40,13 @@ class Product extends MasterModel
 
 	public function getCashAttribute()
 	{
-		return new ProductValue(floatval($this->price), Cart::quant($this->id), floatval($this->discount));
+		$result = new ProductValue(floatval($this->price), Cart::quant($this->id));
+
+		$payments = \App\Models\Payment::all();
+		foreach ($payments as $payment)
+		{
+			$result->addPayment($payment->name, $payment->discount, $payment->parcs);
+		}
+		return $result;
 	}
 }

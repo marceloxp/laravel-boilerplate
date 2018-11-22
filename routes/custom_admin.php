@@ -137,3 +137,17 @@
 			Route::post('delete/'   , 'ProductController@destroy')->name('admin_product_delete')->group('admin_product');
 		}
 	);
+
+	// Pagamentos
+	Route::group
+	(
+		['prefix' => 'payments'],
+		function()
+		{
+			Route::get ('/'         , 'PaymentController@index'  )->name('admin_payments'       )->group('admin_payments');
+			Route::get ('edit/{id?}', 'PaymentController@create' )->name('admin_payments_edit'  )->group('admin_payments');
+			Route::post('edit/{id?}', 'PaymentController@store'  )->name('admin_payments_save'  )->group('admin_payments');
+			Route::get ('show/{id}' , 'PaymentController@show'   )->name('admin_payments_show'  )->group('admin_payments');
+			Route::post('delete/'   , 'PaymentController@destroy')->name('admin_payments_delete')->group('admin_payments');
+		}
+	);

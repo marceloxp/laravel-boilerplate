@@ -81,6 +81,13 @@ return [
 				],
 				[
 					'type'    => 'link',
+					'caption' => 'Pagamentos',
+					'ico'     => 'fa-money',
+					'group'   => 'admin_payments',
+					'route'   => 'admin_payments'
+				],
+				[
+					'type'    => 'link',
 					'caption' => 'Produtos',
 					'ico'     => 'fa-cube',
 					'group'   => 'admin_product',

@@ -1,21 +1,20 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Video;
 
 class VideosSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+	/**
+	 * Run the database seeds.
+	 *
+	 * @return void
+	 */
+	public function run()
+	{
 		$now = \Carbon\Carbon::now();
 		$category_id = \App\Models\Category::select('id')->where(['name' => 'Space'])->first()->toArray()['id'];
 
-        Video::insert
+		\App\Models\Video::insert
 		(
 			[
 				[
@@ -38,5 +37,5 @@ class VideosSeeder extends Seeder
 				]
 			]
 		);
-    }
+	}
 }

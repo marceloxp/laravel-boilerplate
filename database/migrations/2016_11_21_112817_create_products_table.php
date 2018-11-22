@@ -17,7 +17,6 @@ class CreateProductsTable extends Migration
 			$table->increments('id');
 			$table->string('name', 255)->comment('Produto');
 			$table->decimal('price', 15, 2)->comment('Preço');
-			$table->decimal('discount', 15, 2)->comment('Desconto');
 			$table->enum('status', ['Ativo','Inativo'])->default('Ativo')->comment('Status');
 			$table->timestamps();
 			$table->softDeletes();
