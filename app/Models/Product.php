@@ -40,12 +40,11 @@ class Product extends MasterModel
 
 	public function getCashAttribute()
 	{
-		$result = new ProductValue(floatval($this->price), Cart::quant($this->id));
-
+		$result = new \App\Http\Utilities\Payment($this->price);
 		$payments = \App\Models\Payment::all();
 		foreach ($payments as $payment)
 		{
-			$result->addPayment($payment->name, $payment->title, $payment->discount, $payment->parcs);
+			$result->add($payment->name, $payment->title, $payment->discount, $payment->parcs);
 		}
 		return $result;
 	}
