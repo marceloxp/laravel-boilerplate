@@ -9,8 +9,10 @@ class ProductsController extends Controller
 {
 	public function index()
 	{
-		$product = \App\Models\Product::first();
-		r($product->toArray());
+		$product = \App\Models\Product::all();
+
+		View::share(compact('product'));
+		
 		return view('site/pages/products');
 	}
 }
