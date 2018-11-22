@@ -217,16 +217,8 @@
 											$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
 										break;
 										case 'decimal':
-											if (is_a($display_value, App\Http\Utilities\ProductValue::class))
-											{
-												$display_value->setQuant(1);
-												$display_value = $display_value->formated->unitary;
-											}
-											else
-											{
-												$display_value = new \App\Http\Utilities\Money(floatval($display_value), 1);
-												$display_value = $display_value->formated->value;
-											}
+											$display_value = new \App\Http\Utilities\Money($display_value);
+											$display_value = $display_value->formated;
 											$field_align = 'right';
 										break;
 										case 'enum':
