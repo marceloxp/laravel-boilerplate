@@ -82,7 +82,7 @@ class ProductValue
 
 		foreach ($this->payments as $key => $payment)
 		{
-			$this->setPayment($payment['name'], $payment['discount'], $payment['parcs']);
+			$this->addPayment($payment['name'], $payment['discount'], $payment['parcs']);
 		}
 	}
 
@@ -106,16 +106,12 @@ class ProductValue
 		];
 	}
 
-	public function addPayment($p_name, $p_discount = 0, $p_parcs = 1)
-	{
-		return $this->setPayment($p_name, $p_discount, $p_parcs);
-	}
-
-	public function setPayment($p_name, $p_discount = 0, $p_parcs = 1)
+	public function addPayment($p_name, $p_title = '', $p_discount = 0, $p_parcs = 1)
 	{
 		$payment = 
 		[
 			'name'     => $p_name,
+			'caption'  => $p_title,
 			'discount' => $p_discount,
 			'unitary'  => $this->getUnitaryValue($this->price, $p_discount),
 			'subtotal' => $this->price * $this->quant,
@@ -144,6 +140,8 @@ class ProductValue
 
 		$this->payments[$p_name] = 
 		[
+			'slug'     => $p_name,
+			'caption'  => $p_title,
 			'price'    => $this->price,
 			'discount' => $p_discount,
 			'parcs'    => $raw_parcs

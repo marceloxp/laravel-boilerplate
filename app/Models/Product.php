@@ -45,7 +45,7 @@ class Product extends MasterModel
 		$payments = \App\Models\Payment::all();
 		foreach ($payments as $payment)
 		{
-			$result->addPayment($payment->name, $payment->discount, $payment->parcs);
+			$result->addPayment($payment->name, $payment->title, $payment->discount, $payment->parcs);
 		}
 		return $result;
 	}
