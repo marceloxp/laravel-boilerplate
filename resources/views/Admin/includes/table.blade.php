@@ -211,10 +211,7 @@
 											$field_align = 'right';
 										break;
 										case 'int':
-											if ($fields_schema[$field_name]['pri'])
-											{
-												$field_align = 'right';
-											}
+											$field_align = 'right';
 										break;
 										case 'tinyint':
 											$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';

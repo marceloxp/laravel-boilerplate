@@ -106,7 +106,12 @@ class ProductValue
 		];
 	}
 
-	public function setPayment($p_name, $p_discount, $p_parcs)
+	public function addPayment($p_name, $p_discount = 0, $p_parcs = 1)
+	{
+		return $this->setPayment($p_name, $p_discount, $p_parcs);
+	}
+
+	public function setPayment($p_name, $p_discount = 0, $p_parcs = 1)
 	{
 		$payment = 
 		[
@@ -139,6 +144,7 @@ class ProductValue
 
 		$this->payments[$p_name] = 
 		[
+			'price'    => $this->price,
 			'discount' => $p_discount,
 			'parcs'    => $raw_parcs
 		];
