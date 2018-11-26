@@ -14,6 +14,86 @@ class MasterModel extends Model
 	public function getUpdatedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
 	public function getDeletedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
 
+	public static function getNumericFields()
+	{
+		return collect(self::getFieldsMetaData())->where('type', 'decimal')->keys()->all();
+	}
+
+	public static function boot()
+	{
+		parent::boot();
+
+		self::retrieved
+		(
+			function($model)
+			{
+				$fields = self::getNumericFields();
+				foreach ($fields as $field_name)
+				{
+					$model->$field_name = (new \App\Http\Utilities\Money($model->$field_name))->value;
+				}
+			}
+		);
+
+		self::saving
+		(
+			function($model)
+			{
+				$fields = self::getNumericFields();
+				foreach ($fields as $field_name)
+				{
+					$model->$field_name = (new \App\Http\Utilities\Money($model->$field_name))->value;
+				}
+			}
+		);
+
+		self::saved(function($model){
+			// ... code here
+		});
+
+		self::creating(function($model){
+			// ... code here
+		});
+
+		self::created(function($model){
+			// ... code here
+		});
+
+		self::updating(function($model){
+			// ... code here
+		});
+
+		self::updated(function($model){
+			// ... code here
+		});
+
+		self::deleting(function($model){
+			// ... code here
+		});
+
+		self::deleted(function($model){
+			// ... code here
+		});
+
+		self::restoring(function($model){
+			// ... code here
+		});
+
+		self::restored(function($model){
+			// ... code here
+		});
+	}
+
+	public static function ajustFormValues($request)
+	{
+		$fields = self::getNumericFields();
+		foreach ($fields as $field_name)
+		{
+			$value = (new \App\Http\Utilities\Money($request->input($field_name)))->value;
+			$request->merge([$field_name => $value]);
+		}
+	}
+
 	public static function getTableName()
 	{
 		$instanced_model = with(new static);

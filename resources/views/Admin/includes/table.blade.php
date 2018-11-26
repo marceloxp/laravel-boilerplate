@@ -219,14 +219,7 @@
 											$field_align = 'right';
 										break;
 										case 'enum':
-											if ($field_name == 'status')
-											{
-												$display_value = admin_label_status($display_value);
-											}
-											else
-											{
-												$display_value = admin_badge_status($display_value);
-											}
+											$display_value = ($field_name == 'status') ? admin_label_status($display_value) : admin_badge_status($display_value);
 											$field_align = 'center';
 										break;
 									}

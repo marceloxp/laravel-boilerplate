@@ -20,7 +20,7 @@ if (!function_exists('admin_badge_status'))
 {
 	function admin_badge_status($value)
 	{
-		return sprintf('<span class="badge pull-center">%s</span>', $value);
+		return sprintf('<span class="badge">%s</span>', $value);
 	}
 }
 

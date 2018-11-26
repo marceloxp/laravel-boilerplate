@@ -512,6 +512,8 @@ class AdminController extends Controller
 	{
 		$id = $request->get('id');
 
+		$model::ajustFormValues($request);
+
 		$valid = $model::validate($request, $id);
 		if (!$valid['success'])
 		{
@@ -547,6 +549,7 @@ class AdminController extends Controller
 		{
 			$register = $model::create($form);
 		}
+
 
 		$saved = (empty($id)) ? ($register->save()) : ($register->update()) ;
 

@@ -50,7 +50,7 @@
 									}
 									else
 									{
-										$display_value = (new \App\Http\Utilities\Money(floatval($display_value), 1))->formated->value;;
+										$display_value = (new \App\Http\Utilities\Money(floatval($display_value), 1))->formated;
 									}
 								break;
 								case 'tinyint':

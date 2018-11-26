@@ -157,6 +157,20 @@
 										(old($field_name) ?? $register->$field_name)
 									);
 								break;
+								case 'decimal':
+									$field_value = new \App\Http\Utilities\Money((old($field_name) ?? $register->$field_name));
+									$input = sprintf
+									(
+										'<input type="text" data-type="%s" class="form-control" name="%s" id="%s" maxlength="%s" autocomplete="no" placeholder="" value="%s" %s %s>',
+										$field_type,
+										$field_name,
+										$field_name,
+										$maxlength,
+										$field_value->getRaw(),
+										$required,
+										$is_disabled
+									);
+								break;
 								default:
 									$value = (old($field_name) ?? $register->$field_name);
 									$is_disabled = in_array($field_name, $disabled) ? ' disabled="disabled" ' : '';
