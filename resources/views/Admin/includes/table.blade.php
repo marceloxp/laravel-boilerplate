@@ -252,7 +252,10 @@
 			<span class="pull-left">{!! $paginate !!}</span>
 			<span class="pull-right">
 				<ul class="pagination">
-					<li class="page-item">{{ $table->total() }} registro{{ $table->total() > 1 ? 's' : '' }}, página {{ $table->currentPage() }} de um total de {{ $table->lastPage() }}</li>
+					<li class="page-item">
+						{{ $table->count() }} de {{ $table->total() }} registro{{ $table->total() > 1 ? 's' : '' }}
+						, página {{ $table->currentPage() }} de um total de {{ $table->lastPage() }} página{{ $table->lastPage() > 1 ? 's' : '' }}
+					</li>
 				</ul>
 			</span>
 		</div>
