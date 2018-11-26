@@ -155,10 +155,7 @@
 								switch ($field_type)
 								{
 									case 'int':
-										if ($fields_schema[$field_name]['pri'])
-										{
-											$title_align = 'center';
-										}
+										$title_align = 'center';
 									break;
 									case 'tinyint':
 										$title_align = 'center';
@@ -224,9 +221,13 @@
 										case 'enum':
 											if ($field_name == 'status')
 											{
-												$field_align = 'center';
 												$display_value = admin_label_status($display_value);
 											}
+											else
+											{
+												$display_value = admin_badge_status($display_value);
+											}
+											$field_align = 'center';
 										break;
 									}
 								}

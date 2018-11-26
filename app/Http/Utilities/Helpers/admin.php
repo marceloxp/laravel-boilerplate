@@ -16,6 +16,14 @@ if (!function_exists('admin_label_status'))
 	}
 }
 
+if (!function_exists('admin_badge_status'))
+{
+	function admin_badge_status($value)
+	{
+		return sprintf('<span class="badge pull-center">%s</span>', $value);
+	}
+}
+
 if (!function_exists('admin_select'))
 {
 	function admin_select($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
