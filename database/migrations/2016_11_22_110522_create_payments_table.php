@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
 			$table->string('name', 124)->unique()->comment('Nome');
 			$table->string('title', 124)->unique()->comment('Título');
 			$table->enum('type', ['creditcard','boleto','avista'])->default('avista')->comment('Tipo');
-			$table->decimal('discount', 15, 2)->comment('Desconto');
+			$table->decimal('discount', 15, 2)->default(0)->comment('Desconto');
 			$table->integer('parcs')->default(1)->comment('Parcelas');
 			$table->timestamps();
 			$table->softDeletes();
