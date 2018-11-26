@@ -34,20 +34,7 @@ webapp.Tproduct_form = function($, objname, options)
 	this.execute = function()
 	{
 		// AUTO STARTED CODE ON CLASS READY AND STARTED
-		self.maskMoney();
 	};
-
-	this.maskMoney = function()
-	{
-		jQuery('input[data-type="decimal"]').priceFormat
-		(
-			{
-				prefix             : '',
-				centsSeparator     : ',',
-				thousandsSeparator : '.'
-			}
-		);
-	}
 
 	CjsBaseClass.call(this, $, objname, options);
 };

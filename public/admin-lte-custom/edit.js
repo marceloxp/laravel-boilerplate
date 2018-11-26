@@ -34,6 +34,7 @@ umsappadmin.Tedit = function($, objname, options)
 	{
 		self.addInputMasks();
 		self.onChangeImages();
+		self.maskMoney();
 		self.setFirstFocus();
 	};
 
@@ -75,6 +76,18 @@ umsappadmin.Tedit = function($, objname, options)
 			reader.readAsDataURL(input.files[0]);
 		}
 	};
+
+	this.maskMoney = function()
+	{
+		jQuery('input[data-type="decimal"]').priceFormat
+		(
+			{
+				prefix             : '',
+				centsSeparator     : ',',
+				thousandsSeparator : '.'
+			}
+		);
+	}
 
 	CjsBaseClass.call(this, $, objname, options);
 };
