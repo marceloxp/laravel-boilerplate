@@ -81,6 +81,13 @@ return [
 				],
 				[
 					'type'    => 'link',
+					'caption' => 'Tipos de Pagamentos',
+					'ico'     => 'fa-credit-card',
+					'group'   => 'admin_paymenttype',
+					'route'   => 'admin_paymenttype'
+				],
+				[
+					'type'    => 'link',
 					'caption' => 'Pagamentos',
 					'ico'     => 'fa-money',
 					'group'   => 'admin_payments',

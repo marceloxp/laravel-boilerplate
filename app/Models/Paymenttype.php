@@ -5,12 +5,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Utilities\MasterModel;
 
-class Payment extends MasterModel
+class Paymenttype extends MasterModel
 {
 	use SoftDeletes;
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
-	protected $casts   = ['discount' => 'float'];
 
 	public static function validate($request, $id = '')
 	{
@@ -18,14 +17,7 @@ class Payment extends MasterModel
 		[
 			'name'        => 'required|max:124',
 			'description' => 'required|max:124',
-			'discount'    => 'required',
-			'parcs'       => 'required',
 		];
 		return Role::_validate($request, $rules, $id);
-	}
-
-	public function paymenttype()
-	{
-		return $this->belongsTo(\App\Models\Payment::class);
 	}
 }

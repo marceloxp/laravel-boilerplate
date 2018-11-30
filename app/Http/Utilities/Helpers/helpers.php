@@ -1,23 +1,23 @@
 <?php
 if (!function_exists('app_version'))
 {
-    function app_version($default = '0.0.1')
+	function app_version($default = '0.0.1')
 	{
 		return config('app.version', $default);
-    }
+	}
 }
 
 if (!function_exists('vasset'))
 {
-    function vasset($p_asset)
+	function vasset($p_asset)
 	{
 		return sprintf('%s?v=%s', asset($p_asset), app_version());
-    }
+	}
 }
 
 if (!function_exists('javascript'))
 {
-    function javascript($p_source)
+	function javascript($p_source)
 	{
 		if (file_exists(public_path($p_source)))
 		{
@@ -25,21 +25,21 @@ if (!function_exists('javascript'))
 		}
 		
 		return new \Illuminate\Support\HtmlString(sprintf('<!-- %s -->', $p_source));
-    }
+	}
 }
 
 if (!function_exists('css'))
 {
-    function css($p_source)
+	function css($p_source)
 	{
 		return new \Illuminate\Support\HtmlString( sprintf('<link rel="stylesheet" type="text/css" href="%s">', vasset($p_source)) );
-    }
+	}
 }
 
 if (!function_exists('img'))
 {
-    function img($p_source, $p_properties = '')
+	function img($p_source, $p_properties = '')
 	{
 		return new \Illuminate\Support\HtmlString( sprintf('<img src="%s" %s>', vasset($p_source), $p_properties) );
-    }
+	}
 }

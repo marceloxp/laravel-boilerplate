@@ -19,6 +19,23 @@ class MasterModel extends Model
 		return collect(self::getFieldsMetaData())->where('type', 'decimal')->keys()->all();
 	}
 
+	public static function hasField($p_field)
+	{
+		return collect(self::getFieldsMetaData())->where('name', $p_field)->keys()->count() > 0;
+	}
+
+	public static function anyField($p_field)
+	{
+		foreach ($p_field as $field_name)
+		{
+			if (collect(self::getFieldsMetaData())->where('name', $field_name)->keys()->count() > 0)
+			{
+				return $field_name;
+			}
+		}
+		return false;
+	}
+
 	public static function boot()
 	{
 		parent::boot();
@@ -72,14 +89,6 @@ class MasterModel extends Model
 		});
 
 		self::deleted(function($model){
-			// ... code here
-		});
-
-		self::restoring(function($model){
-			// ... code here
-		});
-
-		self::restored(function($model){
 			// ... code here
 		});
 	}
@@ -270,7 +279,7 @@ class MasterModel extends Model
 						'custom_field' => str_singular(trim($value['ref_table'], env('DB_TABLE_PREFIX'))),
 						'comment'      => ''
 					];
-					$value['comment'] = self::getTableFieldCaption($value['ref_table'], 'name');
+					$value['comment'] = self::getTableFieldCaption($value['table_name'], 'name');
 					$relations[$ref->field_name] = $value;
 				}
 
@@ -338,7 +347,6 @@ class MasterModel extends Model
 					if (array_key_exists($field_name, $relations))
 					{
 						$value['relation'] = $relations[$field_name];
-						$value['comment']  = $relations[$field_name]['comment'];
 						$value['has_relation'] = true;
 					}
 

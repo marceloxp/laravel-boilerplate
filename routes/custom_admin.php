@@ -151,3 +151,17 @@
 			Route::post('delete/'   , 'PaymentController@destroy')->name('admin_payments_delete')->group('admin_payments');
 		}
 	);
+
+	// Tipos de Pagamentos
+	Route::group
+	(
+		['prefix' => 'paymenttype'],
+		function()
+		{
+			Route::get ('/'         , 'PaymenttypeController@index'  )->name('admin_paymenttype'       )->group('admin_paymenttype');
+			Route::get ('edit/{id?}', 'PaymenttypeController@create' )->name('admin_paymenttype_edit'  )->group('admin_paymenttype');
+			Route::post('edit/{id?}', 'PaymenttypeController@store'  )->name('admin_paymenttype_save'  )->group('admin_paymenttype');
+			Route::get ('show/{id}' , 'PaymenttypeController@show'   )->name('admin_paymenttype_show'  )->group('admin_paymenttype');
+			Route::post('delete/'   , 'PaymenttypeController@destroy')->name('admin_paymenttype_delete')->group('admin_paymenttype');
+		}
+	);

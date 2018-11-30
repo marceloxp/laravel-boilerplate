@@ -165,14 +165,14 @@ webapp.Tmodal_search = function($, objname, options)
 		(
 			{
 				'model'   : model,
-				'fields'  : ['id', 'name'],
+				'fields'  : ['id','name','description'],
 				'multiple': false,
 				'caption' : 'Localizar ' + caption,
 				'field'   : field,
 				'value'   : value,
 				'find'    :
 				{
-					'fields': ['name'],
+					'fields': ['description','name'],
 					'value' : ''
 				}
 			}

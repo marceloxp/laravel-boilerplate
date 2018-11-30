@@ -33,7 +33,7 @@ class ProductController extends AdminController
 				'model'          => $this->model,
 				'editable'       => true,
 				'appends'        => ['cash' => 'Cash'],
-				'display_fields' => ['id','name','price','status','created_at']
+				'display_fields' => ['id','name','price','discount','status','created_at']
 			]
 		);
 	}
@@ -70,6 +70,7 @@ class ProductController extends AdminController
 					'id'         => 12,
 					'name'       => 12,
 					'price'      => 6,
+					'discount'   => 6,
 					'status'     => 6,
 					'created_at' => 6,
 				]
@@ -107,7 +108,7 @@ class ProductController extends AdminController
 				'id'             => $id,
 				'appends'        => ['cash' => 'Cash'],
 				'model'          => $this->model,
-				'display_fields' => ['id','name','price','status','created_at','updated_at']
+				'display_fields' => ['id','name','price','discount','status','created_at','updated_at']
 			]
 		);
 	}

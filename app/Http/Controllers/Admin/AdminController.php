@@ -550,7 +550,7 @@ class AdminController extends Controller
 			$register = $model::create($form);
 		}
 
-
+		$register->makeHidden($register->appends);
 		$saved = (empty($id)) ? ($register->save()) : ($register->update()) ;
 
 		if ($saved)

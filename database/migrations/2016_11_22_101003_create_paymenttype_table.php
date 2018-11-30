@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsTable extends Migration
+class CreatePaymenttypeTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -13,17 +13,16 @@ class CreateProductsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('products', function (Blueprint $table) {
+		Schema::create('paymenttypes', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('name', 255)->comment('Produto');
-			$table->decimal('price', 15, 2)->comment('Preço');
-			$table->decimal('discount', 15, 2)->default(0)->comment('Desconto');
-			$table->enum('status', ['Ativo','Inativo'])->default('Ativo')->comment('Status');
+			$table->string('name', 124)->unique()->comment('Nome');
+			$table->string('description', 124)->unique()->comment('Descrição');
 			$table->timestamps();
 			$table->softDeletes();
 
 			$table->index(['deleted_at']);
 		});
+		db_comment_table('paymenttypes', 'Tipos de Pagamentos');
 	}
 
 	/**
@@ -33,6 +32,6 @@ class CreateProductsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('products');
+		Schema::dropIfExists('paymenttypes');
 	}
 }

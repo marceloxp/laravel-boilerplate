@@ -29,4 +29,7 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<a href="{{route('login')}}">{{ dic('Login') }}</a>
+	</li>
 </ul>

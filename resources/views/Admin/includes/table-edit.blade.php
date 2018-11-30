@@ -100,13 +100,14 @@
 						}
 						elseif ($fields_schema[$field_name]['has_relation'])
 						{
-							// r($fields_schema);
 							$ref_model   = $fields_schema[$field_name]['relation']['ref_model'];
-							$field_label = $fields_schema[$field_name]['relation']['comment'];
+							$field_label = $fields_schema[$field_name]['comment'];
 
-							$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $register->$ref_model->name) : '');
-							$field_value = old($field_name) ?? $register->$field_name;
-
+							// r($register->$ref_model);
+							$display_text = $register->$ref_model->getAttribute('description') ?? $register->$ref_model->getAttribute('name');
+							$field_text   = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $display_text) : '');
+							$field_value  = old($field_name) ?? $register->$field_name;
+							
 							$input = sprintf
 							(
 								'
