@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PaymenttypeSeeder extends Seeder
+class PaymenttypesTableSeeder extends Seeder
 {
 	/**
 	 * Run the database seeds.

@@ -5,7 +5,7 @@ use App\Models\Customer;
 use Illuminate\Console\Command;
 use Faker\Factory as Faker;
 
-class CustomersSeeder extends Seeder
+class CustomersTableSeeder extends Seeder
 {
 	/**
 	 * Run the database seeds.
