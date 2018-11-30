@@ -9,10 +9,8 @@ class ProductsController extends Controller
 {
 	public function index()
 	{
-		$product = \App\Models\Product::all();
-
+		$product = \App\Models\Product::first();
 		View::share(compact('product'));
-		
 		return view('site/pages/products');
 	}
 }

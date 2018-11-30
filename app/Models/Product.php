@@ -26,7 +26,7 @@ class Product extends MasterModel
 
 	public function getCashAttribute()
 	{
-		$result = new \App\Http\Utilities\Payment($this->price, \App\Http\Utilities\Cart::quant($this->id), $this->discount);
+		$result = new \App\Http\Utilities\Payment($this->price, Cart::quant($this->id), $this->discount);
 		$payments = \App\Models\Payment::all();
 		foreach ($payments as $payment)
 		{
