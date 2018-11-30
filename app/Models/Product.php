@@ -9,7 +9,7 @@ use App\Http\Utilities\MasterModel;
 
 class Product extends MasterModel
 {
-	protected $appends = ['cash'];
+	public $appends = ['cash'];
 
 	use SoftDeletes;
 	protected $dates   = ['created_at','updated_at','deleted_at'];
@@ -28,11 +28,11 @@ class Product extends MasterModel
 
 	public function getCashAttribute()
 	{
-		$result = new \App\Http\Utilities\Payment($this->price);
+		$result = new \App\Http\Utilities\Payment($this->price, \App\Http\Utilities\Cart::quant($this->id), $this->discount);
 		$payments = \App\Models\Payment::all();
 		foreach ($payments as $payment)
 		{
-			$result->add($payment->name, $payment->title, $payment->discount, $payment->parcs);
+			$result->add($payment->name, $payment->paymenttype->name, $payment->description, $payment->discount, $payment->parcs);
 		}
 		return $result;
 	}

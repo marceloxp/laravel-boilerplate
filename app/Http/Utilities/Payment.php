@@ -4,7 +4,7 @@ namespace App\Http\Utilities;
 
 class Payment
 {
-	public $methods = [];
+	public $paymenttypes = [];
 	public $tag;
 	public $price;
 	public $quant;
@@ -15,7 +15,6 @@ class Payment
 	public $total;
 	public $saved;
 	public $payments = [];
-	public $info = [];
 
 	function __construct($p_price = 0.00, $p_quant = 1.00, $p_discount = 0.00)
 	{
@@ -28,17 +27,18 @@ class Payment
 		$this->totalize();
 	}
 
-	public function add($p_name, $p_title = '', $p_discount = 0, $p_parcs = 1)
+	public function add($p_name, $p_paymenttype, $p_title = '', $p_discount = 0, $p_parcs = 1)
 	{
-		if (!array_key_exists($p_name, $this->methods))
+		if (!array_key_exists($p_name, $this->paymenttypes))
 		{
-			$this->methods[] = $p_name;
+			$this->paymenttypes[] = $p_name;
 		}
 
 		$payment = (Object)
 		[
 			'name'     => $p_name,
 			'caption'  => $p_title,
+			'type'     => $p_paymenttype,
 			'quant'    => $this->quant->value,
 			'quotas'   => $p_parcs,
 			'minquota' => new Money(),
@@ -67,15 +67,18 @@ class Payment
 
 		$this->payments[$p_name] = $payment;
 
-		if (empty($this->tag))
+		if (is_creditcard($p_paymenttype))
 		{
-			$this->tag = $payment;
-		}
-		else
-		{
-			if ($this->tag->minquota->value < $payment->minquota->value)
+			if (empty($this->tag))
 			{
 				$this->tag = $payment;
+			}
+			else
+			{
+				if ($this->tag->minquota->value < $payment->minquota->value)
+				{
+					$this->tag = $payment;
+				}
 			}
 		}
 	}
