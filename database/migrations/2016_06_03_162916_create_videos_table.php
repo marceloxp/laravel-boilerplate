@@ -19,7 +19,7 @@ class CreateVideosTable extends Migration
 			function(Blueprint $table)
 			{
 				$table->increments('id');
-				$table->integer('category_id')->unsigned();
+				$table->integer('category_id')->unsigned()->comment('Categoria');
 				$table->string('name',150)->comment('Nome');
 				$table->string('youtube',150)->comment('YouTube');
 				$table->timestamps();

@@ -7,7 +7,6 @@ use Session;
 class Customer
 {
 	const name = 'customer';
-	const attr = 'customer.attr';
 	const data = ['id' => null, 'logged' => false];
 
 	protected $data;

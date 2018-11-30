@@ -103,8 +103,11 @@
 							$ref_model   = $fields_schema[$field_name]['relation']['ref_model'];
 							$field_label = $fields_schema[$field_name]['comment'];
 
-							// r($register->$ref_model);
-							$display_text = $register->$ref_model->getAttribute('description') ?? $register->$ref_model->getAttribute('name');
+							$display_text = '';
+							if (!$is_creating)
+							{
+								$display_text = $register->$ref_model->getAttribute('description') ?? $register->$ref_model->getAttribute('name');
+							}
 							$field_text   = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $display_text) : '');
 							$field_value  = old($field_name) ?? $register->$field_name;
 							
