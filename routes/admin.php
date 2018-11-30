@@ -53,11 +53,11 @@ Route::group
 					['prefix' => 'configs'],
 					function()
 					{
-						Route::get ('/'         , 'ConfigsController@index'  )->name('admin_configs'       )->group('admin_configs');
-						Route::get ('edit/{id?}', 'ConfigsController@create' )->name('admin_configs_edit'  )->group('admin_configs');
-						Route::post('edit/{id?}', 'ConfigsController@store'  )->name('admin_configs_save'  )->group('admin_configs');
-						Route::get ('show/{id}' , 'ConfigsController@show'   )->name('admin_configs_show'  )->group('admin_configs');
-						Route::post('delete/'   , 'ConfigsController@destroy')->name('admin_configs_delete')->group('admin_configs');
+						Route::get ('/'         , 'ConfigController@index'  )->name('admin_config'       )->group('admin_config');
+						Route::get ('edit/{id?}', 'ConfigController@create' )->name('admin_config_edit'  )->group('admin_config');
+						Route::post('edit/{id?}', 'ConfigController@store'  )->name('admin_config_save'  )->group('admin_config');
+						Route::get ('show/{id}' , 'ConfigController@show'   )->name('admin_config_show'  )->group('admin_config');
+						Route::post('delete/'   , 'ConfigController@destroy')->name('admin_config_delete')->group('admin_config');
 					}
 				);
 
@@ -80,11 +80,11 @@ Route::group
 					['prefix' => 'users'],
 					function()
 					{
-						Route::get ('/'         , 'UsersController@index'  )->name('admin_users'       )->group('admin_users');
-						Route::get ('edit/{id?}', 'UsersController@create' )->name('admin_users_edit'  )->group('admin_users');
-						Route::post('edit/{id?}', 'UsersController@store'  )->name('admin_users_save'  )->group('admin_users');
-						Route::get ('show/{id}' , 'UsersController@show'   )->name('admin_users_show'  )->group('admin_users');
-						Route::post('delete/'   , 'UsersController@destroy')->name('admin_users_delete')->group('admin_users');
+						Route::get ('/'         , 'UserController@index'  )->name('admin_user'       )->group('admin_user');
+						Route::get ('edit/{id?}', 'UserController@create' )->name('admin_user_edit'  )->group('admin_user');
+						Route::post('edit/{id?}', 'UserController@store'  )->name('admin_user_save'  )->group('admin_user');
+						Route::get ('show/{id}' , 'UserController@show'   )->name('admin_user_show'  )->group('admin_user');
+						Route::post('delete/'   , 'UserController@destroy')->name('admin_user_delete')->group('admin_user');
 					}
 				);
 
@@ -94,11 +94,11 @@ Route::group
 					['prefix' => 'roles'],
 					function()
 					{
-						Route::get ('/'         , 'RolesController@index'  )->name('admin_roles'       )->group('admin_roles');
-						Route::get ('edit/{id?}', 'RolesController@create' )->name('admin_roles_edit'  )->group('admin_roles');
-						Route::post('edit/{id?}', 'RolesController@store'  )->name('admin_roles_save'  )->group('admin_roles');
-						Route::get ('show/{id}' , 'RolesController@show'   )->name('admin_roles_show'  )->group('admin_roles');
-						Route::post('delete/'   , 'RolesController@destroy')->name('admin_roles_delete')->group('admin_roles');
+						Route::get ('/'         , 'RoleController@index'  )->name('admin_role'       )->group('admin_role');
+						Route::get ('edit/{id?}', 'RoleController@create' )->name('admin_role_edit'  )->group('admin_role');
+						Route::post('edit/{id?}', 'RoleController@store'  )->name('admin_role_save'  )->group('admin_role');
+						Route::get ('show/{id}' , 'RoleController@show'   )->name('admin_role_show'  )->group('admin_role');
+						Route::post('delete/'   , 'RoleController@destroy')->name('admin_role_delete')->group('admin_role');
 					}
 				);
 
@@ -108,24 +108,11 @@ Route::group
 					['prefix' => 'categories'],
 					function()
 					{
-						Route::get ('/'         , 'CategoriesController@index'  )->name('admin_categories'       )->group('admin_categories');
-						Route::get ('edit/{id?}', 'CategoriesController@create' )->name('admin_categories_edit'  )->group('admin_categories');
-						Route::post('edit/{id?}', 'CategoriesController@store'  )->name('admin_categories_save'  )->group('admin_categories');
-						Route::get ('show/{id}' , 'CategoriesController@show'   )->name('admin_categories_show'  )->group('admin_categories');
-						Route::post('delete/'   , 'CategoriesController@destroy')->name('admin_categories_delete')->group('admin_categories');
-
-						// Route::group
-						// (
-						// 	['prefix' => '{category_id}/subcategory'],
-						// 	function()
-						// 	{
-						// 		Route::get ('/'         , 'SubcategoriesController@index'  )->name('admin_subcategories'       )->group('admin_subcategories');
-						// 		Route::get ('edit/{id?}', 'SubcategoriesController@create' )->name('admin_subcategories_edit'  )->group('admin_subcategories');
-						// 		Route::post('edit/{id?}', 'SubcategoriesController@store'  )->name('admin_subcategories_save'  )->group('admin_subcategories');
-						// 		Route::get ('show/{id}' , 'SubcategoriesController@show'   )->name('admin_subcategories_show'  )->group('admin_subcategories');
-						// 		Route::post('delete/'   , 'SubcategoriesController@destroy')->name('admin_subcategories_delete')->group('admin_subcategories');
-						// 	}
-						// );
+						Route::get ('/'         , 'CategoryController@index'  )->name('admin_category'       )->group('admin_category');
+						Route::get ('edit/{id?}', 'CategoryController@create' )->name('admin_category_edit'  )->group('admin_category');
+						Route::post('edit/{id?}', 'CategoryController@store'  )->name('admin_category_save'  )->group('admin_category');
+						Route::get ('show/{id}' , 'CategoryController@show'   )->name('admin_category_show'  )->group('admin_category');
+						Route::post('delete/'   , 'CategoryController@destroy')->name('admin_category_delete')->group('admin_category');
 					}
 				);
 
@@ -135,11 +122,11 @@ Route::group
 					['prefix' => 'galleries'],
 					function()
 					{
-						Route::get ('/'         , 'GalleriesController@index'  )->name('admin_galleries'       )->group('admin_galleries');
-						Route::get ('edit/{id?}', 'GalleriesController@create' )->name('admin_galleries_edit'  )->group('admin_galleries');
-						Route::post('edit/{id?}', 'GalleriesController@store'  )->name('admin_galleries_save'  )->group('admin_galleries');
-						Route::get ('show/{id}' , 'GalleriesController@show'   )->name('admin_galleries_show'  )->group('admin_galleries');
-						Route::post('delete/'   , 'GalleriesController@destroy')->name('admin_galleries_delete')->group('admin_galleries');
+						Route::get ('/'         , 'GalleryController@index'  )->name('admin_gallery'       )->group('admin_gallery');
+						Route::get ('edit/{id?}', 'GalleryController@create' )->name('admin_gallery_edit'  )->group('admin_gallery');
+						Route::post('edit/{id?}', 'GalleryController@store'  )->name('admin_gallery_save'  )->group('admin_gallery');
+						Route::get ('show/{id}' , 'GalleryController@show'   )->name('admin_gallery_show'  )->group('admin_gallery');
+						Route::post('delete/'   , 'GalleryController@destroy')->name('admin_gallery_delete')->group('admin_gallery');
 					}
 				);
 

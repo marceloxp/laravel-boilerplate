@@ -7,16 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Config;
-use App\Exports\ConfigsExport;
+use App\Models\Gallery;
 use Hook;
 
-class ConfigsController extends AdminController
+class GalleryController extends AdminController
 {
-    public function __construct()
+	public function __construct()
 	{
-		$this->caption = 'Configurações';
-		$this->model   = Config::class;
+		$this->caption = 'Galeria';
+		$this->model   = Gallery::class;
 		parent::__construct();
 	}
 
@@ -32,19 +31,25 @@ class ConfigsController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','value','status','created_at']
+				'display_fields' => ['id','name','category','description','image','status','created_at']
 			]
 		);
+	}
+
+	public function getUploadedFile($p_file_name, $p_height = 100)
+	{
+		if (empty($p_file_name)) { return $p_file_name; }
+		return sprintf('%s<br/>%s', link_uploaded_file($p_file_name, sprintf('height="%s"', $p_height)), $p_file_name);
 	}
 
 	public function hooks_index($table_name)
 	{
 		Hook::add_filter
 		(
-			sprintf('admin_index_%s_name', $table_name),
+			sprintf('admin_index_%s_image', $table_name),
 			function($display_value, $register)
 			{
-				return sprintf('<i>%s</i>', $display_value);
+				return $this->getUploadedFile($display_value, 100);
 			},
 			10, 2
 		);
@@ -63,11 +68,31 @@ class ConfigsController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id', 'name', 'value', 'status']
+				'image_fields'   => ['image'],
+				'display_fields' => ['id','name','category','description','image','status']
 			]
 		);
 	}
 
+	public function hooks_edit($table_name)
+	{
+		Hook::add_filter
+		(
+			sprintf('admin_edit_%s_category', $table_name),
+			function($input, $field_value, $register, $field_schema)
+			{
+				$categories = Gallery::select('category')->distinct()->get()->toArray();
+				$categories = collect($categories)->pluck('category');
+				$categories = $categories->all();
+
+				$result = admin_select_simple_with_add_button('category', $categories, $field_value, true, true);
+				
+				return $result;
+			},
+			10, 4
+		);
+	}
+	
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -92,7 +117,7 @@ class ConfigsController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id', 'name', 'value','status','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','name','category','description','image','created_at','updated_at','deleted_at']
 			]
 		);
 	}
@@ -101,10 +126,10 @@ class ConfigsController extends AdminController
 	{
 		Hook::add_filter
 		(
-			sprintf('admin_show_%s_name', $table_name),
+			sprintf('admin_show_%s_image', $table_name),
 			function($display_value, $register)
 			{
-				return sprintf('<i>%s</i>', $display_value);
+				return $this->getUploadedFile($display_value, 100);
 			},
 			10, 2
 		);

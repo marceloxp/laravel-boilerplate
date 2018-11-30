@@ -20,8 +20,8 @@ Route::group
 	['middleware' => 'referer'],
 	function()
 	{
-		Route::post('addconfig', 'ConfigsController@store');
-		Route::post('configs'  , 'ConfigsController@index');
+		Route::post('addconfig', 'ConfigController@store');
+		Route::post('configs'  , 'ConfigController@index');
 	}
 );
 

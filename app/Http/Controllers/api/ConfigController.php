@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Config;
 use App\Http\Utilities\Cached;
 
-class ConfigsController extends Controller
+class ConfigController extends Controller
 {
     /**
      * Display a listing of the resource.

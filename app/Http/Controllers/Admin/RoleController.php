@@ -7,15 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Category;
+use App\Models\Role;
+use App\Exports\RolesExport;
 use Hook;
 
-class CategoriesController extends AdminController
+class RoleController extends AdminController
 {
-	public function __construct()
+    public function __construct()
 	{
-		$this->setCaption('Categorias');
-		$this->setModel(Category::class);
+		$this->caption = 'Permissões';
+		$this->model   = Role::class;
 		parent::__construct();
 	}
 
@@ -31,26 +32,25 @@ class CategoriesController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => $this->model,
-				'table_many'     => ['name' => 'subcategory', 'caption' => 'Sub Categorias', 'icon' => 'fa-folder-open'],
-				'display_fields' => ['id','name','image','description','created_at']
+				'display_fields' => ['id','name','description','color','created_at']
 			]
 		);
 	}
 
-	public function getUploadedFile($p_file_name, $p_height = 100)
+	private function formatRoleColor($p_display_value)
 	{
-		if (empty($p_file_name)) { return $p_file_name; }
-		return sprintf('%s<br/>%s', link_uploaded_file($p_file_name, sprintf('height="%s"', $p_height)), $p_file_name);
+		$color = Role::getColorBg($p_display_value);
+		return sprintf('<small class="label pull-center %s">%s</small>', $color, $p_display_value);
 	}
 
 	public function hooks_index($table_name)
 	{
 		Hook::add_filter
 		(
-			sprintf('admin_index_%s_image', $table_name),
+			sprintf('admin_index_%s_color', $table_name),
 			function($display_value, $register)
 			{
-				return $this->getUploadedFile($display_value, 100);
+				return $this->formatRoleColor($display_value);
 			},
 			10, 2
 		);
@@ -69,8 +69,7 @@ class CategoriesController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => $this->model,
-				'image_fields'   => ['image'],
-				'display_fields' => ['id','name','image','description']
+				'display_fields' => ['id', 'name', 'description','color']
 			]
 		);
 	}
@@ -99,7 +98,7 @@ class CategoriesController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','image','description','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','name','description','color','created_at','updated_at','deleted_at']
 			]
 		);
 	}
@@ -108,10 +107,10 @@ class CategoriesController extends AdminController
 	{
 		Hook::add_filter
 		(
-			sprintf('admin_show_%s_image', $table_name),
+			sprintf('admin_show_%s_color', $table_name),
 			function($display_value, $register)
 			{
-				return $this->getUploadedFile($display_value, 100);
+				return $this->formatRoleColor($display_value);
 			},
 			10, 2
 		);

@@ -27,9 +27,9 @@ Route::group
 			[],
 			function()
 			{
-				Route::get('/'           , 'PagesController@index'      )->name('home');
-				Route::get('/faleconosco', 'PagesController@faleconosco')->name('faleconosco');
-				Route::get('/products'   , 'ProductsController@index'   )->name('produtos');
+				Route::get('/'           , 'PageController@index'      )->name('home');
+				Route::get('/faleconosco', 'PageController@faleconosco')->name('faleconosco');
+				Route::get('/products'   , 'ProductController@index'   )->name('produtos');
 			}
 		);
 
@@ -44,7 +44,7 @@ Route::group
 			}
 		);
 
-		Route::get('/login', 'LoginController@login')->name('login');
+		Route::get('/login' , 'LoginController@login')->name('login');
 		Route::get('/logout', 'LoginController@logout')->name('logout');
 	}
 );

@@ -7,16 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Role;
-use App\Exports\RolesExport;
+use App\Models\Tag;
 use Hook;
 
-class RolesController extends AdminController
+class TagController extends AdminController
 {
-    public function __construct()
+	public function __construct()
 	{
-		$this->caption = 'Permissões';
-		$this->model   = Role::class;
+		$this->caption = 'Tags';
+		$this->model   = Tag::class;
 		parent::__construct();
 	}
 
@@ -32,27 +31,8 @@ class RolesController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','description','color','created_at']
+				'display_fields' => ['id','name','created_at']
 			]
-		);
-	}
-
-	private function formatRoleColor($p_display_value)
-	{
-		$color = Role::getColorBg($p_display_value);
-		return sprintf('<small class="label pull-center %s">%s</small>', $color, $p_display_value);
-	}
-
-	public function hooks_index($table_name)
-	{
-		Hook::add_filter
-		(
-			sprintf('admin_index_%s_color', $table_name),
-			function($display_value, $register)
-			{
-				return $this->formatRoleColor($display_value);
-			},
-			10, 2
 		);
 	}
 
@@ -69,7 +49,7 @@ class RolesController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id', 'name', 'description','color']
+				'display_fields' => ['id','name']
 			]
 		);
 	}
@@ -98,21 +78,20 @@ class RolesController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','description','color','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','name','created_at','updated_at','deleted_at']
 			]
 		);
 	}
 
-	public function hooks_show($table_name)
+	public function pivot_show($video_id, $tag_id)
 	{
-		Hook::add_filter
+		return $this->defaultShow
 		(
-			sprintf('admin_show_%s_color', $table_name),
-			function($display_value, $register)
-			{
-				return $this->formatRoleColor($display_value);
-			},
-			10, 2
+			[
+				'id'             => $tag_id,
+				'model'          => $this->model,
+				'display_fields' => ['id','name','created_at','updated_at','deleted_at']
+			]
 		);
 	}
 

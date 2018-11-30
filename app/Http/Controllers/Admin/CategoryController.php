@@ -7,15 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Gallery;
+use App\Models\Category;
 use Hook;
 
-class GalleriesController extends AdminController
+class CategoryController extends AdminController
 {
 	public function __construct()
 	{
-		$this->caption = 'Galeria';
-		$this->model   = Gallery::class;
+		$this->setCaption('Categorias');
+		$this->setModel(Category::class);
 		parent::__construct();
 	}
 
@@ -31,7 +31,8 @@ class GalleriesController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','category','description','image','status','created_at']
+				'table_many'     => ['name' => 'subcategory', 'caption' => 'Sub Categorias', 'icon' => 'fa-folder-open'],
+				'display_fields' => ['id','name','image','description','created_at']
 			]
 		);
 	}
@@ -69,30 +70,11 @@ class GalleriesController extends AdminController
 				'request'        => $request,
 				'model'          => $this->model,
 				'image_fields'   => ['image'],
-				'display_fields' => ['id','name','category','description','image','status']
+				'display_fields' => ['id','name','image','description']
 			]
 		);
 	}
 
-	public function hooks_edit($table_name)
-	{
-		Hook::add_filter
-		(
-			sprintf('admin_edit_%s_category', $table_name),
-			function($input, $field_value, $register, $field_schema)
-			{
-				$categories = Gallery::select('category')->distinct()->get()->toArray();
-				$categories = collect($categories)->pluck('category');
-				$categories = $categories->all();
-
-				$result = admin_select_simple_with_add_button('category', $categories, $field_value, true, true);
-				
-				return $result;
-			},
-			10, 4
-		);
-	}
-	
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -117,7 +99,7 @@ class GalleriesController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','category','description','image','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','name','image','description','created_at','updated_at','deleted_at']
 			]
 		);
 	}

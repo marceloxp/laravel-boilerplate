@@ -58,7 +58,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/README.md',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/AdminController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/CacheController.php',
-			'laravel-boilerplate-stable/app/Http/Controllers/Admin/ConfigsController.php',
+			'laravel-boilerplate-stable/app/Http/Controllers/Admin/ConfigController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/MasterManyController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/SearchmodalController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/ProductController.php',
@@ -82,8 +82,8 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/public/js/admin/jquery.priceformat.min.js',
 			'laravel-boilerplate-stable/public/js/admin/jQuery.SimpleMask.min.js',
 			'laravel-boilerplate-stable/database/migrations/2016_*.php',
-			'laravel-boilerplate-stable/database/seeds/PaymentsSeeder.php',
-			'laravel-boilerplate-stable/database/seeds/PaymenttypeSeeder.php',
+			'laravel-boilerplate-stable/database/seeds/PaymentsTableSeeder.php',
+			'laravel-boilerplate-stable/database/seeds/PaymenttypesTableSeeder.php',
 		];
 
 		$this->info('Extracting zip...');

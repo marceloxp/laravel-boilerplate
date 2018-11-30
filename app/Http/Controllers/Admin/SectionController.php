@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Menusection;
 use Hook;
 
-class SectionsController extends AdminController
+class SectionController extends AdminController
 {
 	public function __construct()
 	{

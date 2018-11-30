@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
 	public function index()
 	{

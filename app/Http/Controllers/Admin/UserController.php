@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Hook;
 
-class UsersController extends AdminController
+class UserController extends AdminController
 {
     public function __construct()
 	{

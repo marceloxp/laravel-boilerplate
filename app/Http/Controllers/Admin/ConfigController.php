@@ -7,15 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Tag;
+use App\Models\Config;
+use App\Exports\ConfigsExport;
 use Hook;
 
-class TagsController extends AdminController
+class ConfigController extends AdminController
 {
-	public function __construct()
+    public function __construct()
 	{
-		$this->caption = 'Tags';
-		$this->model   = Tag::class;
+		$this->caption = 'Configurações';
+		$this->model   = Config::class;
 		parent::__construct();
 	}
 
@@ -31,8 +32,21 @@ class TagsController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','created_at']
+				'display_fields' => ['id','name','value','status','created_at']
 			]
+		);
+	}
+
+	public function hooks_index($table_name)
+	{
+		Hook::add_filter
+		(
+			sprintf('admin_index_%s_name', $table_name),
+			function($display_value, $register)
+			{
+				return sprintf('<i>%s</i>', $display_value);
+			},
+			10, 2
 		);
 	}
 
@@ -49,7 +63,7 @@ class TagsController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id','name']
+				'display_fields' => ['id', 'name', 'value', 'status']
 			]
 		);
 	}
@@ -78,20 +92,21 @@ class TagsController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','created_at','updated_at','deleted_at']
+				'display_fields' => ['id', 'name', 'value','status','created_at','updated_at','deleted_at']
 			]
 		);
 	}
 
-	public function pivot_show($video_id, $tag_id)
+	public function hooks_show($table_name)
 	{
-		return $this->defaultShow
+		Hook::add_filter
 		(
-			[
-				'id'             => $tag_id,
-				'model'          => $this->model,
-				'display_fields' => ['id','name','created_at','updated_at','deleted_at']
-			]
+			sprintf('admin_show_%s_name', $table_name),
+			function($display_value, $register)
+			{
+				return sprintf('<i>%s</i>', $display_value);
+			},
+			10, 2
 		);
 	}
 

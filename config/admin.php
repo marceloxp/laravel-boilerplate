@@ -8,7 +8,7 @@ return [
 			'caption' => 'Vídeos',
 			'color'   => 'bg-green',
 			'ico'     => 'fa-video-camera',
-			'link'    => 'admin_videos',
+			'link'    => 'admin_video',
 			'model'   => 'Video'
 		],
 		[
@@ -16,7 +16,7 @@ return [
 			'caption' => 'Clientes',
 			'color'   => 'bg-purple',
 			'ico'     => 'fa-users',
-			'link'    => 'admin_customers',
+			'link'    => 'admin_customer',
 			'model'   => 'Customer'
 		]
 	],
@@ -48,36 +48,36 @@ return [
 					'type'    => 'link',
 					'caption' => 'Categorias',
 					'ico'     => 'fa-folder',
-					'group'   => 'admin_categories',
-					'route'   => 'admin_categories'
+					'group'   => 'admin_category',
+					'route'   => 'admin_category'
 				],
 				[
 					'type'    => 'link',
 					'caption' => 'Vídeos',
 					'ico'     => 'fa-youtube',
-					'group'   => 'admin_videos',
-					'route'   => 'admin_videos'
+					'group'   => 'admin_video',
+					'route'   => 'admin_video'
 				],
 				[
 					'type'    => 'link',
 					'caption' => 'Tags',
 					'ico'     => 'fa-tags',
-					'group'   => 'admin_tags',
-					'route'   => 'admin_tags'
+					'group'   => 'admin_tag',
+					'route'   => 'admin_tag'
 				],
 				[
 					'type'    => 'link',
 					'caption' => 'Tipos de Endereços',
 					'ico'     => 'fa-users',
-					'group'   => 'admin_address_types',
-					'route'   => 'admin_address_types'
+					'group'   => 'admin_address_type',
+					'route'   => 'admin_address_type'
 				],
 				[
 					'type'    => 'link',
 					'caption' => 'Clientes',
 					'ico'     => 'fa-users',
-					'group'   => 'admin_customers',
-					'route'   => 'admin_customers'
+					'group'   => 'admin_customer',
+					'route'   => 'admin_customer'
 				],
 				[
 					'type'    => 'link',
@@ -90,8 +90,8 @@ return [
 					'type'    => 'link',
 					'caption' => 'Pagamentos',
 					'ico'     => 'fa-money',
-					'group'   => 'admin_payments',
-					'route'   => 'admin_payments'
+					'group'   => 'admin_payment',
+					'route'   => 'admin_payment'
 				],
 				[
 					'type'    => 'link',
@@ -165,32 +165,32 @@ return [
 					'type'    => 'link',
 					'caption' => 'Galeria',
 					'ico'     => 'fa-picture-o',
-					'group'   => 'admin_galleries',
-					'route'   => 'admin_galleries'
+					'group'   => 'admin_gallery',
+					'route'   => 'admin_gallery'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Configurações',
 					'ico'     => 'fa-gear',
-					'group'   => 'admin_configs',
-					'route'   => 'admin_configs'
+					'group'   => 'admin_config',
+					'route'   => 'admin_config'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Permissões',
 					'ico'     => 'fa-unlock-alt',
-					'group'   => 'admin_roles',
-					'route'   => 'admin_roles'
+					'group'   => 'admin_role',
+					'route'   => 'admin_role'
 				],
 				[
 					'roles'   => ['Master','Developer'],
 					'type'    => 'link',
 					'caption' => 'Usuários',
 					'ico'     => 'fa-user',
-					'group'   => 'admin_users',
-					'route'   => 'admin_users'
+					'group'   => 'admin_user',
+					'route'   => 'admin_user'
 				],
 				[
 					'type'    => 'link',

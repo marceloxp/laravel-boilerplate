@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use Hook;
 
-class CustomersController extends AdminController
+class CustomerController extends AdminController
 {
 	public function __construct()
 	{

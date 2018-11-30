@@ -11,7 +11,7 @@ use App\Models\AddressType;
 use App\Exports\ConfigsExport;
 use Hook;
 
-class AddressTypesController extends AdminController
+class AddressTypeController extends AdminController
 {
     public function __construct()
 	{

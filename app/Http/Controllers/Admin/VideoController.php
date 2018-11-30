@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Video;
 use Hook;
 
-class VideosController extends AdminController
+class VideoController extends AdminController
 {
 	public function __construct()
 	{
