@@ -172,8 +172,13 @@
 								}
 								$hook_name   = hook_name(sprintf('admin_index_title_align_%s_%s', $table_name, $field_name));
 								$title_align = Hook::apply_filters($hook_name, $title_align);
+
+								$column_title = $fields_schema[$field_name]['comment'];
+								$hook_name    = hook_name(sprintf('admin_index_title_caption_%s_%s', $table_name, $field_name));
+								$column_title = Hook::apply_filters($hook_name, $column_title);
+								// r($hook_name);
 							@endphp
-							<th style="text-align: {{ $title_align }};" data-field="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</i></th>
+							<th style="text-align: {{ $title_align }};" data-field="{{ $field_name }}">{{ $column_title }}</i></th>
 						@endforeach
 					</tr>
 					@foreach($table as $register)

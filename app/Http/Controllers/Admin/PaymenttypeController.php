@@ -7,15 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Payment;
+use App\Models\Paymenttype;
 use Hook;
 
-class PaymentController extends AdminController
+class PaymenttypeController extends AdminController
 {
 	public function __construct()
 	{
-		$this->caption = 'Pagamentos';
-		$this->model   = Payment::class;
+		$this->caption = 'Tipos de Pagamentos';
+		$this->model   = Paymenttype::class;
 		parent::__construct();
 	}
 
@@ -32,7 +32,7 @@ class PaymentController extends AdminController
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
-				'display_fields' => ['id','name','description','paymenttype_id','discount','parcs','created_at']
+				'display_fields' => ['id','name','description','created_at']
 			]
 		);
 	}
@@ -58,13 +58,10 @@ class PaymentController extends AdminController
 				'disabled'       => ['created_at'],
 				'display_fields' => 
 				[
-					'id'             => 12,
-					'name'           => 4,
-					'description'    => 4,
-					'paymenttype_id' => 4,
-					'discount'       => 4,
-					'parcs'          => 4,
-					'created_at'     => 4,
+					'id'          => 12,
+					'name'        => 4,
+					'description' => 4,
+					'created_at'  => 4
 				]
 			]
 		);
@@ -99,7 +96,7 @@ class PaymentController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','description','paymenttype_id','discount','parcs','created_at','updated_at']
+				'display_fields' => ['id','name','description','created_at']
 			]
 		);
 	}

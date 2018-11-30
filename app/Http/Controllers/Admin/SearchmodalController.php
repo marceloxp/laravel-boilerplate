@@ -12,6 +12,8 @@ class SearchmodalController extends AdminController
 		$page = $request->query('page', 1);
 
 		$model = sprintf('\App\Models\%s', ucfirst(camel_case(strtolower($options['model']))));
+		$options['fields'] = collect($options['fields'])->filter(function ($value, $key) use ($model) { return $model::hasField($value); })->toArray();
+
 		$table = $model::select();
 		if (array_key_exists('find', $options))
 		{
@@ -67,8 +69,8 @@ class SearchmodalController extends AdminController
 							}
 							else
 							{
-								$value = $options['value'] ?? null;
-								$checked = ($ids == $value) ? 'checked' : '';
+								$value         = $options['value'] ?? null;
+								$checked       = ($ids == $value) ? 'checked' : '';
 								$display_value = sprintf('<div class="radio" style="margin-top: 0px; margin-bottom: 0px;"><label><input data-ids="%s" type="radio" %s name="register"> %s </label></div>', $ids, $checked, $field_value);
 							}
 						}
