@@ -17,7 +17,7 @@ use App\Http\Middleware\Shopping;
 Route::group
 (
 	[
-		'middleware' => ['frontend'],
+		'middleware' => ['frontend','shopping','customer'],
 		'namespace'  => 'Site'
 	],
 	function()
@@ -43,5 +43,8 @@ Route::group
 				Route::get('/tradicao', 'SobreController@tradicao')->name('sobre_tradicao');
 			}
 		);
+
+		Route::get('/login', 'LoginController@login')->name('login');
+		Route::get('/logout', 'LoginController@logout')->name('logout');
 	}
 );

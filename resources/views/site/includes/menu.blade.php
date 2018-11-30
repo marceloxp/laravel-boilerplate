@@ -10,26 +10,30 @@
 
 <ul>
 	<li>
-		<a href="{{route('home')}}">{{ dic('Página Inicial') }}</a>
+		<a href="{{ route('home') }}">{{ dic('Página Inicial') }}</a>
 	</li>
 	<li>
-		<a href="{{route('faleconosco')}}">{{ dic('Fale Conosco') }}</a>
+		<a href="{{ route('faleconosco') }}">{{ dic('Fale Conosco') }}</a>
 	</li>
 	<li>
-		<a href="{{route('produtos')}}">{{ dic('Produtos') }}</a>
+		<a href="{{ route('produtos') }}">{{ dic('Produtos') }}</a>
 	</li>
 	<li>
-		<a href="{{route('sobre')}}">{{ dic('Sobre') }}</a>
+		<a href="{{ route('sobre') }}">{{ dic('Sobre') }}</a>
 		<ul>
 			<li>
-				<a href="{{route('sobre_empresa')}}">{{ dic('Empresa') }}</a>
+				<a href="{{ route('sobre_empresa') }}">{{ dic('Empresa') }}</a>
 			</li>
 			<li>
-				<a href="{{route('sobre_tradicao')}}">{{ dic('Tradição') }}</a>
+				<a href="{{ route('sobre_tradicao') }}">{{ dic('Tradição') }}</a>
 			</li>
 		</ul>
 	</li>
 	<li>
-		<a href="{{route('login')}}">{{ dic('Login') }}</a>
+		@if($customer->logged())
+			<a href="{{ route('logout') }}">{{ dic('Logout') }}</a>
+		@else
+			<a href="{{ route('login') }}">{{ dic('Login') }}</a>
+		@endif
 	</li>
 </ul>
