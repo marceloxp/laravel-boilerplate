@@ -26,6 +26,6 @@ class Payment extends MasterModel
 
 	public function paymenttype()
 	{
-		return $this->belongsTo(\App\Models\Payment::class);
+		return $this->belongsTo(\App\Models\Paymenttype::class);
 	}
 }
