@@ -1,6 +1,10 @@
 <h1>Header</h1>
 <hr/>
 <div>
-	{{ $customer->get('name') }}
-	{{ $customer->logged() }}
+	@if ($customer->logged())
+		{{ $customer->get('name') }}
+		{{ $customer->logged() }}
+	@else
+		Usuário não logado
+	@endif
 </div>
