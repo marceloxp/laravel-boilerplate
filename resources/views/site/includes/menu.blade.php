@@ -19,6 +19,9 @@
 		<a href="{{ route('produtos') }}">{{ dic('Produtos') }}</a>
 	</li>
 	<li>
+		<a href="{{ route('usuario_cadastro') }}">{{ dic('Cadastro') }}</a>
+	</li>
+	<li>
 		<a href="{{ route('sobre') }}">{{ dic('Sobre') }}</a>
 		<ul>
 			<li>

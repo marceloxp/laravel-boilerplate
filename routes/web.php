@@ -17,7 +17,7 @@ use App\Http\Middleware\Shopping;
 Route::group
 (
 	[
-		'middleware' => ['frontend','shopping','customer'],
+		'middleware' => ['frontend','shopping'],
 		'namespace'  => 'Site'
 	],
 	function()
@@ -44,7 +44,9 @@ Route::group
 			}
 		);
 
-		Route::get('/login' , 'LoginController@login')->name('login');
-		Route::get('/logout', 'LoginController@logout')->name('logout');
+		Route::get ('/usuarios/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
+		Route::post('/usuarios/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
+		Route::get ('/login'            , 'LoginController@login')->name('login');
+		Route::get ('/logout'           , 'LoginController@logout')->name('logout');
 	}
 );

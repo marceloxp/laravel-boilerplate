@@ -230,6 +230,12 @@ class MasterModel extends Model
 		return $result['data'];
 	}
 
+	public static function getFieldMetaData($p_field_name)
+	{
+		$metadata = self::getFieldsMetaData();
+		return $metadata[$p_field_name];
+	}
+
 	public static function getFieldsMetaData($appends = [])
 	{
 		$table_name = self::getTableName();
@@ -462,5 +468,75 @@ class MasterModel extends Model
 	public function money($p_value)
 	{
 		return number_format($p_value, 2, ',', '.');
+	}
+
+	public function old($p_field_name, $p_default_value = '')
+	{
+		return $this->$p_field_name ?? old($p_field_name, $p_default_value);
+	}
+
+	public function input($p_field_name, $p_options = [])
+	{
+		$metadata = self::getFieldMetaData($p_field_name);
+		$options = 
+		[
+			'label' => true,
+			'attr'  => []
+		];
+		$options = array_merge($options, $p_options);
+		extract($options, EXTR_PREFIX_ALL, 'opt');
+
+		$result = '';
+
+		if ($opt_label)
+		{
+			$result .= $this->label($p_field_name);
+		}
+
+		$field_value = $this->$p_field_name ?? old($p_field_name, '');
+
+		$field_attr = ['class' => 'form-control', 'placeholder' => $metadata['comment']];
+		if (!$metadata['nullable'])
+		{
+			$field_attr['required'] = 'required';
+		}
+
+		switch ($metadata['type'])
+		{
+			case 'varchar':
+				$field_attr['maxlength'] = $metadata['max_length'];
+				switch ($p_field_name)
+				{
+					case 'email':
+					case 'mail':
+						$result .= \Form::email($p_field_name, $field_value, $field_attr);
+					break;
+					default:
+						$result .= \Form::text($p_field_name, $field_value, $field_attr);
+					break;
+				}
+			break;
+			case 'enum':
+				$list = array_combine($metadata['options'], $metadata['options']);
+				$result .= \Form::select($p_field_name, $list, $field_value, $field_attr);
+			break;
+			case 'tinyint':
+				$result  = '<div class="form-check">';
+				$result .= \Form::checkbox($p_field_name, '1', true, ['class' => 'form-check-input']);
+				$result .= \Form::label($p_field_name, ($metadata['comment'] ?? $p_field_name), ['class' => 'form-check-label']);
+				$result .= '</div>';
+			break;
+			default:
+				dump($metadata);
+			break;
+		}
+
+		return $result;
+	}
+
+	public function label($p_field_name)
+	{
+		$metadata = self::getFieldMetaData($p_field_name);
+		return \Form::label($p_field_name, ($metadata['comment'] ?? $p_field_name), ['class' => 'control-label']);
 	}
 }
