@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\View;
 use App\Http\Utilities\Datasite;
 use App\Http\Utilities\MetaSocial;
 
-class PageController extends Controller
+class PageController extends SiteController
 {
 	public function index()
 	{

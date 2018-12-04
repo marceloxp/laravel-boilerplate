@@ -18,13 +18,32 @@ class Customer extends MasterModel
 		parent::__construct();
 	}
 
+	public static function boot()
+	{
+		parent::boot();
+
+		self::saving
+		(
+			function($model)
+			{
+				if (self::hasField('password'))
+				{
+					if (!empty($model->password))
+					{
+						$model->password = \Hash::make($model->password);
+					}
+				}
+			}
+		);
+	}
+
 	public function address_type()
 	{
 		return $this->belongsTo(\App\Models\AddressType::class);
 	}
 
-    public static function validate($request, $id = '')
-    {
+	public static function validate($request, $id = '')
+	{
 		$rules = 
 		[
 			'address_type_id' => 'required',
@@ -54,5 +73,5 @@ class Customer extends MasterModel
 		}
 
 		return Config::_validate($request, $rules, $id);
-    }
+	}
 }

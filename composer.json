@@ -17,6 +17,7 @@
         "guzzlehttp/guzzle": "~6.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "~1.0",
+        "laravelcollective/html": "^5.7",
         "marceloxp/laravel_commands": "dev-master",
         "miroc/laravel-adminer": "dev-master",
         "shridharkaushik29/laravel-hooks": "dev-master"

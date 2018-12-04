@@ -27,6 +27,8 @@
 			<![endif]-->
 
 			@section('vendor.css')
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 				{{ AutoAssets::print('css') }}
 			@show
 
@@ -36,24 +38,26 @@
 		@show
 	</head>
 	<body>
-		@section('header')
-			<header>
-				@include('site/includes/header')
-				@section('menu')
-					@include('site/includes/menu')
-				@show
-			</header>
-		@show
-
-		<div id="container">
-			@yield('content')
-		</div>
-
-		<footer>
-			@section('footer')
-				@include('site/includes/footer')
+		<div class="container-fluid">
+			@section('header')
+				<header>
+					@include('site/includes/header')
+					@section('menu')
+						@include('site/includes/menu')
+					@show
+				</header>
 			@show
-		</footer>
+
+			<div id="container">
+				@yield('content')
+			</div>
+
+			<footer>
+				@section('footer')
+					@include('site/includes/footer')
+				@show
+			</footer>
+		</div>
 		
 		{{-- Vendor Scripts --}}
 		@section('vendor.js')

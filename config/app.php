@@ -186,6 +186,7 @@ return [
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
 		App\Providers\BrFakerServiceProvider::class,
+		Collective\Html\HtmlServiceProvider::class,
 
 	],
 
@@ -239,6 +240,8 @@ return [
 		'Hook' => Shridhar\Hooks\Hook::class,
 		'Stringy' => Stringy\Stringy::class,
 		'Zipper' => Chumper\Zipper\Zipper::class,
+		'Form' => Collective\Html\FormFacade::class,
+		'Html' => Collective\Html\HtmlFacade::class,
 
 	],
 
