@@ -14,6 +14,10 @@ class Customer
 	public function __construct()
 	{
 		$this->data = $this->get();
+		if (!empty($this->get('id')))
+		{
+			$this->login($this->get('id'), $this->get('data'));
+		}
 	}
 
 	public function logged()

@@ -1,9 +1,8 @@
 <h1>Header</h1>
 <hr/>
-<div>
+<div class="alert alert-primary" role="alert">
 	@if ($customer->logged())
 		{{ $customer->get('name') }}
-		{{ $customer->logged() }}
 	@else
 		Usuário não logado
 	@endif

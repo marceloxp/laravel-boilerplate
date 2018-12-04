@@ -8,13 +8,52 @@ use Illuminate\Support\Facades\View;
 
 class CustomerController extends SiteController
 {
+	public function login(Request $request)
+	{
+		if ($request->isMethod('post'))
+		{
+			$data = ['email' => $request->get('email')];
+
+			$user = \App\Models\Customer::where($data)->first();
+			$user->makeHidden('password');
+
+			if (!$user) { return \Redirect::back()->withErrors(['Usuário não localizado.']); }
+
+			if (\Hash::check($request->get('password'), \Hash::make($request->get('password'))) == false)
+			{
+				ddd('Usuário e/ou senha incorretos.');
+				return \Redirect::back()->withErrors(['Usuário e/ou senha incorretos.']);
+			}
+
+			$customer = new \App\Http\Utilities\Customer();
+			$customer->login($user->id, $user);
+
+			return redirect()->route('home');
+		}
+
+		return view('site/pages/usuario/login');
+	}
+
+	public function logout(Request $request)
+	{
+		$customer = new \App\Http\Utilities\Customer();
+		$customer->logout();
+		return redirect()->route('home');
+	}
+
 	public function cadastro(Request $request)
 	{
-		$cliente = \App\Models\Customer::first();
+		$cliente = \App\Models\Customer::firstOrNew(['id' => $this->customer->get('id')]);
 
 		if ($request->isMethod('post'))
 		{
-			dump($request->all());
+			$valid = \App\Models\Customer::validate($request->except(['_token']), $request->get('id'));
+			if (!$valid['success'])
+			{
+				$cliente->setErrors($valid['fields']);
+				return back()->withErrors($valid['fields'])->withInput();
+			}
+			return back()->with('message', 'Cadastro atualizado com sucesso.')->withInput();
 		}
 
 		View::share(compact('cliente'));

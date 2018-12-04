@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Http\Utilities\MetaSocial;
 
-class SobreController extends Controller
+class SobreController extends SiteController
 {
 	public function index()
 	{

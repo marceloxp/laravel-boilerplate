@@ -34,9 +34,9 @@
 	</li>
 	<li>
 		@if($customer->logged())
-			<a href="{{ route('logout') }}">{{ dic('Logout') }}</a>
+			<a href="{{ route('usuario_logout') }}">{{ dic('Logout') }}</a>
 		@else
-			<a href="{{ route('login') }}">{{ dic('Login') }}</a>
+			<a href="{{ route('usuario_login') }}">{{ dic('Login') }}</a>
 		@endif
 	</li>
 </ul>

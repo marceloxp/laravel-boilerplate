@@ -26,7 +26,7 @@
 @section('content')
 	<div id="home">Content of home page</div>
 
-	<div style="padding: 20px; background-color: silver; width: 320px;">
-		{{ img('/images/laravel-logo.png', 'width="300"') }}
+	<div>
+		{{ img('/images/laravel-logo.png', 'width="300" class="img-thumbnail border border-secondary"') }}
 	</div>
 @endsection

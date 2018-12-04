@@ -40,7 +40,7 @@ class CustomersTableSeeder extends Seeder
 					'address_number' => $address['number'],
 					'complement'     => $address['complement'],
 					'neighborhood'   => $address['neighborhood'],
-					'password'       => $faker->password,
+					'password'       => \Hash::make($faker->password),
 					'newsletter'     => true,
 					'rules'          => true,
 					'created_at'     => $now

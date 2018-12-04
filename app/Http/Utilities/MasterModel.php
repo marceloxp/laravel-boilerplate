@@ -10,6 +10,13 @@ use Carbon\Carbon;
 
 class MasterModel extends Model
 {
+	public $errors;
+	public function __construct(array $attributes = [])
+	{
+		$this->errors = new \Illuminate\Support\ViewErrorBag;
+		parent::__construct($attributes);
+	}
+
 	public function getCreatedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
 	public function getUpdatedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
 	public function getDeletedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
@@ -418,9 +425,9 @@ class MasterModel extends Model
 
 				foreach ($errors->keys() as $field_name)
 				{
-					$str_error          = $errors->first($field_name);
-					$result['fields'][] = [$field_name => $str_error];
-					$result['all'][]    = $str_error;
+					$str_error                       = $errors->first($field_name);
+					$result['fields'][$field_name][] = $str_error;
+					$result['all'][]                 = $str_error;
 				}
 			}
 			else
@@ -435,6 +442,33 @@ class MasterModel extends Model
 			$result['error'] = $e->getMessage();
 		}
 
+		return $result;
+	}
+
+	public function setErrors($p_errors)
+	{
+		$this->errors = $p_errors;
+	}
+
+	public function getErrors()
+	{
+		return $this->errors;
+	}
+
+	public function getError($p_input_name)
+	{
+		return $this->errors->get($p_input_name);
+	}
+
+	public function hasError($p_input_name)
+	{
+		return count($this->errors->get($p_input_name)) > 0;
+	}
+
+	public function getErrorAsString($p_input_name)
+	{
+		$result = $this->errors->get($p_input_name);
+		$result = implode('; ', $result);
 		return $result;
 	}
 
@@ -480,8 +514,9 @@ class MasterModel extends Model
 		$metadata = self::getFieldMetaData($p_field_name);
 		$options = 
 		[
-			'label' => true,
-			'attr'  => []
+			'errors' => new \Illuminate\Support\ViewErrorBag(),
+			'label'  => true,
+			'attr'   => []
 		];
 		$options = array_merge($options, $p_options);
 		extract($options, EXTR_PREFIX_ALL, 'opt');
@@ -501,34 +536,50 @@ class MasterModel extends Model
 			$field_attr['required'] = 'required';
 		}
 
-		switch ($metadata['type'])
+		if ($metadata['has_relation'])
 		{
-			case 'varchar':
-				$field_attr['maxlength'] = $metadata['max_length'];
-				switch ($p_field_name)
-				{
-					case 'email':
-					case 'mail':
-						$result .= \Form::email($p_field_name, $field_value, $field_attr);
-					break;
-					default:
-						$result .= \Form::text($p_field_name, $field_value, $field_attr);
-					break;
-				}
-			break;
-			case 'enum':
-				$list = array_combine($metadata['options'], $metadata['options']);
-				$result .= \Form::select($p_field_name, $list, $field_value, $field_attr);
-			break;
-			case 'tinyint':
-				$result  = '<div class="form-check">';
-				$result .= \Form::checkbox($p_field_name, '1', true, ['class' => 'form-check-input']);
-				$result .= \Form::label($p_field_name, ($metadata['comment'] ?? $p_field_name), ['class' => 'form-check-label']);
-				$result .= '</div>';
-			break;
-			default:
-				dump($metadata);
-			break;
+			$relation  = $metadata['relation']['ref_model'];
+			$secondary = DB::table($metadata['relation']['ref_table'])->select('id','name')->pluck('name','id')->toArray();
+			$result   .= \Form::select($p_field_name, $secondary, $field_value, $field_attr);
+			if (!empty($this->hasError($p_field_name)))
+			{
+				$result .= sprintf('<small id="emailHelp" class="form-text text-danger">%s</small>', $this->getErrorAsString($p_field_name));
+			}
+		}
+		else
+		{
+			switch ($metadata['type'])
+			{
+				case 'varchar':
+					$field_attr['maxlength'] = $metadata['max_length'];
+					switch ($p_field_name)
+					{
+						case 'email':
+						case 'mail':
+							$result .= \Form::email($p_field_name, $field_value, $field_attr);
+						break;
+						default:
+							$result .= \Form::text($p_field_name, $field_value, $field_attr);
+						break;
+
+						// <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					}
+				break;
+				case 'enum':
+					$list = array_combine($metadata['options'], $metadata['options']);
+					$result .= \Form::select($p_field_name, $list, $field_value, $field_attr);
+				break;
+				case 'tinyint':
+					$result  = '<div class="form-check">';
+					$result .= \Form::checkbox($p_field_name, '1', true, ['class' => 'form-check-input']);
+					$result .= \Form::label($p_field_name, ($metadata['comment'] ?? $p_field_name), ['class' => 'form-check-label']);
+					$result .= '</div>';
+				break;
+				default:
+					dump('MasterModel Input');
+					dump($metadata);
+				break;
+			}
 		}
 
 		return $result;

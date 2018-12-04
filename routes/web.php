@@ -44,9 +44,10 @@ Route::group
 			}
 		);
 
-		Route::get ('/usuarios/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
-		Route::post('/usuarios/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
-		Route::get ('/login'            , 'LoginController@login')->name('login');
-		Route::get ('/logout'           , 'LoginController@logout')->name('logout');
+		Route::get ('/usuario/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
+		Route::post('/usuario/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
+		Route::get ('/usuario/login'   , 'CustomerController@login')->name('usuario_login');
+		Route::post('/usuario/login'   , 'CustomerController@login')->name('usuario_login');
+		Route::get ('/usuario/logout'  , 'CustomerController@logout')->name('usuario_logout');
 	}
 );

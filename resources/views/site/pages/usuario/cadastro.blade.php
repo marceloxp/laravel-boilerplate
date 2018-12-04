@@ -27,6 +27,16 @@
 
 	<h1>Cadastro</h1>
 
+	@php
+		$messages = Session::pull('message');
+	@endphp
+
+	@if($messages)
+		<div class="alert alert-success" role="alert">
+			{{ $messages }}
+		</div>
+	@endif
+
 	<div class="container-fluid">
 		{!! Form::open(['url' => url()->full(), 'method' => 'POST']) !!}
 			<div class="form-group row">
@@ -71,6 +81,11 @@
 			</div>
 			<div class="form-group row">
 				<div class="col-md-6">
+					{!! $cliente->input('address_type_id') !!}
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6">
 					{!! $cliente->input('address') !!}
 				</div>
 				<div class="col-md-6">
@@ -83,6 +98,11 @@
 				</div>
 				<div class="col-md-6">
 					{!! $cliente->input('neighborhood') !!}
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6 form-check">
+					{!! $cliente->input('status') !!}
 				</div>
 			</div>
 			<div class="form-group row">
