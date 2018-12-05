@@ -165,3 +165,17 @@
 			Route::post('delete/'   , 'PaymenttypeController@destroy')->name('admin_paymenttype_delete')->group('admin_paymenttype');
 		}
 	);
+
+	// Contatos
+	Route::group
+	(
+		['prefix' => 'contact'],
+		function()
+		{
+			Route::get ('/'         , 'ContactController@index'  )->name('admin_contact'       )->group('admin_contact');
+			Route::get ('edit/{id?}', 'ContactController@create' )->name('admin_contact_edit'  )->group('admin_contact');
+			Route::post('edit/{id?}', 'ContactController@store'  )->name('admin_contact_save'  )->group('admin_contact');
+			Route::get ('show/{id}' , 'ContactController@show'   )->name('admin_contact_show'  )->group('admin_contact');
+			Route::post('delete/'   , 'ContactController@destroy')->name('admin_contact_delete')->group('admin_contact');
+		}
+	);

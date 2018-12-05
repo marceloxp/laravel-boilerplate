@@ -20,7 +20,7 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title"><i class="fa {{$panel_title[2]}}"></i> {{ $panel_title[1] }}</h3>
+		<h3 class="box-title"><i class="fa {{ $panel_title[2] }}"></i> {{ $panel_title[1] }}</h3>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -222,7 +222,7 @@
 						$input       = Hook::apply_filters($hook_name, $input, $field_value, $register, $fields_schema[$field_name]);
 					@endphp
 
-					<div class="col-xs-{{ $field_width }}">
+					<div class="col-md-{{ $field_width }}">
 						<div class="form-group" style="display: {{ $row_visible }}">
 							<label for="{{ $field_name }}">{{ $field_label }}{!! $asterisk !!}</label>
 							{!! $input !!}

@@ -67,6 +67,13 @@ return [
 				],
 				[
 					'type'    => 'link',
+					'caption' => 'Contatos',
+					'ico'     => 'fa-envelope',
+					'group'   => 'admin_contact',
+					'route'   => 'admin_contact'
+				],
+				[
+					'type'    => 'link',
 					'caption' => 'Tipos de Endereços',
 					'ico'     => 'fa-users',
 					'group'   => 'admin_address_type',
