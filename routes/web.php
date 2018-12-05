@@ -27,9 +27,10 @@ Route::group
 			[],
 			function()
 			{
-				Route::get('/'           , 'PageController@index'      )->name('home');
-				Route::get('/faleconosco', 'PageController@faleconosco')->name('faleconosco');
-				Route::get('/products'   , 'ProductController@index'   )->name('produtos');
+				Route::get ('/'           , 'PageController@index'      )->name('home');
+				Route::get ('/faleconosco', 'PageController@faleconosco')->name('faleconosco');
+				Route::post('/faleconosco', 'PageController@faleconosco')->name('faleconosco');
+				Route::get ('/products'   , 'ProductController@index'   )->name('produtos');
 			}
 		);
 

@@ -18,6 +18,8 @@ class PageController extends SiteController
 	{
 		MetaSocial::append('title', ' - Fale Conosco');
 		MetaSocial::set('description', 'Entre em contato conosco.');
+		$contact = \App\Models\Contact::firstOrNew(['id' => null]);
+		View::share(compact('contact'));
 		return view('site/pages/faleconosco');
 	}
 }

@@ -13,7 +13,6 @@
 		<div class="alert alert-success" role="alert">
 			{{ $messages }}
 		</div>
-
 	@endif
 
 	<div class="container-fluid">
