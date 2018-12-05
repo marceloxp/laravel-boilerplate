@@ -50,7 +50,6 @@ class CustomerController extends SiteController
 			$valid = \App\Models\Customer::validate($request->except(['_token']), $request->get('id'));
 			if (!$valid['success'])
 			{
-				$cliente->setErrors($valid['fields']);
 				return back()->withErrors($valid['fields'])->withInput();
 			}
 			return back()->with('message', 'Cadastro atualizado com sucesso.')->withInput();

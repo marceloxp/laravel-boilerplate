@@ -3,6 +3,17 @@
 @section('content')
 	<div id="home">Content of Fale Conosco</div>
 
+	@php
+		$messages = Session::pull('message');
+		$contact->setErrors($errors);
+	@endphp
+
+	@if($messages)
+		<div class="alert alert-success" role="alert">
+			{{ $messages }}
+		</div>
+	@endif
+
 	<div class="container-fluid">
 		{!! Form::open(['url' => url()->full(), 'method' => 'POST']) !!}
 			<div class="form-group row">
