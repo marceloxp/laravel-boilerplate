@@ -16,6 +16,7 @@
 			<meta name="framework-version" content="{{ App::VERSION() }}">
 			<meta name="app-version" content="{{ app_version() }}">
 			<meta name="robots" content="noindex">
+			<link rel="shortcut icon" type="image/png" href="{{ url('/favicon.png') }}"/>
 
 			{{ MetaSocial::print() }}
 

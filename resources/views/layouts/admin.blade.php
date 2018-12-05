@@ -15,6 +15,7 @@
 		<meta name="app-version" content="{{ app_version() }}">
 
 		<title>{{ env('ADMIN_TITLE', 'Admin') }}</title>
+		<link rel="shortcut icon" type="image/png" href="{{ url('/favicon.png') }}"/>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- Bootstrap 3.3.6 -->

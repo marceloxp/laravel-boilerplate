@@ -550,7 +550,7 @@ class MasterModel extends Model
 			$result   .= \Form::select($p_field_name, $secondary, $field_value, $field_attr);
 			if (!empty($this->hasError($p_field_name)))
 			{
-				$result .= sprintf('<small id="emailHelp" class="form-text text-danger">%s</small>', $this->getErrorAsString($p_field_name));
+				$result .= sprintf('<small id="%sHelp" class="form-text text-danger">%s</small>', $p_field_name, $this->getErrorAsString($p_field_name));
 			}
 		}
 		else
@@ -571,22 +571,38 @@ class MasterModel extends Model
 						default:
 							$result .= \Form::text($p_field_name, $field_value, $field_attr);
 						break;
-						// <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					}
+
+					if (!empty($this->hasError($p_field_name)))
+					{
+						$result .= sprintf('<small id="%sHelp" class="form-text text-danger">%s</small>', $p_field_name, $this->getErrorAsString($p_field_name));
 					}
 				break;
 				case 'text':
 					$field_attr['maxlength'] = $metadata['max_length'];
 					$result .= \Form::textarea($p_field_name, $field_value, $field_attr);
+					if (!empty($this->hasError($p_field_name)))
+					{
+						$result .= sprintf('<small id="%sHelp" class="form-text text-danger">%s</small>', $p_field_name, $this->getErrorAsString($p_field_name));
+					}
 				break;
 				case 'enum':
 					$list = array_combine($metadata['options'], $metadata['options']);
 					$result .= \Form::select($p_field_name, $list, $field_value, $field_attr);
+					if (!empty($this->hasError($p_field_name)))
+					{
+						$result .= sprintf('<small id="%sHelp" class="form-text text-danger">%s</small>', $p_field_name, $this->getErrorAsString($p_field_name));
+					}
 				break;
 				case 'tinyint':
 					$result  = '<div class="form-check">';
 					$result .= \Form::checkbox($p_field_name, '1', true, ['class' => 'form-check-input']);
 					$result .= \Form::label($p_field_name, ($metadata['comment'] ?? $p_field_name), ['class' => 'form-check-label']);
 					$result .= '</div>';
+					if (!empty($this->hasError($p_field_name)))
+					{
+						$result .= sprintf('<small id="%sHelp" class="form-text text-danger">%s</small>', $p_field_name, $this->getErrorAsString($p_field_name));
+					}
 				break;
 				default:
 					dump('MasterModel Input');
