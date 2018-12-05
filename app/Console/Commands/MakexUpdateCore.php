@@ -83,7 +83,6 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/public/js/admin/admin_products_form.js',
 			'laravel-boilerplate-stable/public/js/admin/jquery.priceformat.min.js',
 			'laravel-boilerplate-stable/public/js/admin/jQuery.SimpleMask.min.js',
-			'laravel-boilerplate-stable/database/migrations/2016_*.php',
 			'laravel-boilerplate-stable/database/seeds/PaymentsTableSeeder.php',
 			'laravel-boilerplate-stable/database/seeds/PaymenttypesTableSeeder.php',
 		];
