@@ -52,6 +52,7 @@ class CustomerController extends SiteController
 			{
 				return back()->withErrors($valid['fields'])->withInput();
 			}
+			$register = \App\Models\Customer::create($request->except(['_token']));
 			return back()->with('message', 'Cadastro atualizado com sucesso.')->withInput();
 		}
 

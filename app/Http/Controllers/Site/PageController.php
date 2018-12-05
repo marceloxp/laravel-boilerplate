@@ -19,15 +19,26 @@ class PageController extends SiteController
 	{
 		if ($request->isMethod('post'))
 		{
-			$valid = \App\Models\Contact::validate($request->except(['_token']));
-			if (!$valid['success'])
+			try
 			{
-				return back()->withErrors($valid['fields'])->withInput();
+				$valid = \App\Models\Contact::validate($request->except(['_token']));
+				if (!$valid['success'])
+				{
+					return back()->withErrors($valid['fields'])->withInput();
+				}
+				$register = \App\Models\Contact::create($request->except(['_token']));
+
+				return back()->withSuccess('Mensagem enviada com sucesso.');
 			}
-
-			$register = \App\Models\Contact::create($request->except(['_token']));
-
-			return back()->with('message', 'Mensagem enviada com sucesso.');
+			catch (\Illuminate\Database\QueryException $e)
+			{
+				\Log::error($e->getMessage());
+				return back()->withError('Ocorreu um erro na solicitação.')->withInput();
+			}
+			catch (Exception $e)
+			{
+				return back()->withError('Ocorreu um erro na solicitação.')->withInput();
+			}
 		}
 
 		MetaSocial::append('title', ' - Fale Conosco');

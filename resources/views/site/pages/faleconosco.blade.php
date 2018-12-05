@@ -1,7 +1,9 @@
 @extends('layouts.site')
 
 @section('content')
-	<div id="home">Content of Fale Conosco</div>
+	<div id="home">Fale Conosco</div>
+
+	{{ print_alert() }}
 
 	@php
 		$messages = Session::pull('message');
