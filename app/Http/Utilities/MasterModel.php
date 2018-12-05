@@ -523,20 +523,27 @@ class MasterModel extends Model
 
 		$result = '';
 
-		if ($opt_label)
-		{
-			$result .= $this->label($p_field_name);
-		}
-
 		$field_value = $this->$p_field_name ?? old($p_field_name, '');
 
 		$field_attr = ['class' => 'form-control', 'placeholder' => $metadata['comment']];
+		$required = false;
 		if (!$metadata['nullable'])
 		{
+			$required = true;
 			$field_attr['required'] = 'required';
 		}
 
-		if ($metadata['has_relation'])
+		if ($opt_label)
+		{
+			$result .= $this->label($p_field_name, $required);
+		}
+
+		if ($p_field_name == 'id')
+		{
+			unset($field_attr['required']);
+			$result = \Form::hidden($p_field_name, $field_value, $field_attr);
+		}
+		elseif ($metadata['has_relation'])
 		{
 			$relation  = $metadata['relation']['ref_model'];
 			$secondary = DB::table($metadata['relation']['ref_table'])->select('id','name')->pluck('name','id')->toArray();
@@ -558,12 +565,18 @@ class MasterModel extends Model
 						case 'mail':
 							$result .= \Form::email($p_field_name, $field_value, $field_attr);
 						break;
+						case 'password':
+							$result .= \Form::text($p_field_name, null, $field_attr);
+						break;
 						default:
 							$result .= \Form::text($p_field_name, $field_value, $field_attr);
 						break;
-
 						// <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 					}
+				break;
+				case 'text':
+					$field_attr['maxlength'] = $metadata['max_length'];
+					$result .= \Form::textarea($p_field_name, $field_value, $field_attr);
 				break;
 				case 'enum':
 					$list = array_combine($metadata['options'], $metadata['options']);
@@ -585,9 +598,11 @@ class MasterModel extends Model
 		return $result;
 	}
 
-	public function label($p_field_name)
+	public function label($p_field_name, $p_required = false)
 	{
 		$metadata = self::getFieldMetaData($p_field_name);
-		return \Form::label($p_field_name, ($metadata['comment'] ?? $p_field_name), ['class' => 'control-label']);
+		$asterisk = ($p_required) ? '&nbsp;*' : '';
+		$label_text = ($metadata['comment'] ?? $p_field_name) . $asterisk;
+		return \Form::label($p_field_name, $label_text, ['class' => 'control-label']);
 	}
 }
