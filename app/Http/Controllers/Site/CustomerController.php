@@ -15,13 +15,16 @@ class CustomerController extends SiteController
 			$data = ['email' => $request->get('email')];
 
 			$user = \App\Models\Customer::where($data)->first();
+			if (!$user)
+			{
+				return \Redirect::back()->withError('Usuário e/ou senha incorretos.');
+			}
 			$user->makeHidden('password');
 
 			if (!$user) { return \Redirect::back()->withErrors(['Usuário não localizado.']); }
 
 			if (\Hash::check($request->get('password'), \Hash::make($request->get('password'))) == false)
 			{
-				ddd('Usuário e/ou senha incorretos.');
 				return \Redirect::back()->withErrors(['Usuário e/ou senha incorretos.']);
 			}
 

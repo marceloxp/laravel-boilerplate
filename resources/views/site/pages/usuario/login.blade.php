@@ -4,6 +4,8 @@
 
 	<h1>Login</h1>
 
+	{{ print_alert() }}
+
 	<div class="container-fluid">
 		{!! Form::open(['url' => url()->full(), 'method' => 'POST']) !!}
 			<div class="form-group row">

@@ -18,6 +18,14 @@ return [
 			'ico'     => 'fa-users',
 			'link'    => 'admin_customer',
 			'model'   => 'Customer'
+		],
+		[
+			'roles'   => ['Master'],
+			'caption' => 'Contatos',
+			'color'   => 'bg-blue',
+			'ico'     => 'fa-envelope',
+			'link'    => 'admin_contact',
+			'model'   => 'Contact'
 		]
 	],
 	'menu' =>
