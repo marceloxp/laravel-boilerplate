@@ -27,7 +27,7 @@ class PageController extends SiteController
 					return back()->withErrors($valid['fields'])->withInput();
 				}
 				$register = \App\Models\Contact::create($request->except(['_token']));
-				if (!\$register)
+				if (!$register)
 				{
 					return back()->withError('Ocorreu um erro na solicitação.')->withInput();
 				}
