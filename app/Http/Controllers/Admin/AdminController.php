@@ -485,6 +485,7 @@ class AdminController extends Controller
 	{
 		$default_params = 
 		[
+			'appends'      => [],
 			'image_fields' => [],
 			'disabled'     => [],
 		];
@@ -495,7 +496,7 @@ class AdminController extends Controller
 		$register      = ($id) ? $model::find($id) : new $model;
 		$is_creating   = (empty($id));
 		$panel_title   = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
-		$fields_schema = $model::getFieldsMetaData();
+		$fields_schema = $model::getFieldsMetaData($appends);
 		$field_names   = array_keys($fields_schema);
 
 		if (method_exists($this, 'hooks_edit'))

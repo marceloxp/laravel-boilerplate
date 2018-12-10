@@ -80,11 +80,11 @@ Route::group
 					['prefix' => 'users'],
 					function()
 					{
-						Route::get ('/'         , 'UserController@index'  )->name('admin_user'       )->group('admin_user');
-						Route::get ('edit/{id?}', 'UserController@create' )->name('admin_user_edit'  )->group('admin_user');
-						Route::post('edit/{id?}', 'UserController@store'  )->name('admin_user_save'  )->group('admin_user');
-						Route::get ('show/{id}' , 'UserController@show'   )->name('admin_user_show'  )->group('admin_user');
-						Route::post('delete/'   , 'UserController@destroy')->name('admin_user_delete')->group('admin_user');
+						Route::get ('/'         , 'UserController@index'  )->name('admin_users'       )->group('admin_user');
+						Route::get ('edit/{id?}', 'UserController@create' )->name('admin_users_edit'  )->group('admin_user');
+						Route::post('edit/{id?}', 'UserController@store'  )->name('admin_users_save'  )->group('admin_user');
+						Route::get ('show/{id}' , 'UserController@show'   )->name('admin_users_show'  )->group('admin_user');
+						Route::post('delete/'   , 'UserController@destroy')->name('admin_users_delete')->group('admin_user');
 					}
 				);
 

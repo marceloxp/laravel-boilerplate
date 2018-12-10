@@ -97,6 +97,7 @@ class UserController extends AdminController
 			[
 				'id'             => $id,
 				'request'        => $request,
+				'appends'        => $this->appends,
 				'model'          => $this->model,
 				'display_fields' => ['id','name','email','password','roles']
 			]
@@ -113,7 +114,7 @@ class UserController extends AdminController
 				$field_name = $field_schema['name'];
 				$required   = (!$field_schema['nullable']) ? 'required' : '';
 				$options    = \App\Models\Role::select('id', 'name')->get()->pluck('name', 'id')->all();
-				$register   = (!is_array($register)) ? $register->pluck('id') : collect($register);
+				$register   = (!is_array($register)) ? $register->roles->pluck('id') : collect($register);
 
 				$input = '';
 				foreach($options as $role_id => $role_name)
@@ -171,8 +172,6 @@ class UserController extends AdminController
 			$form['password'] = Hash::make($form['password']);
 		}
 
-		$form = $this->processUploadImages($request, $form);
-
 		if (!empty($id))
 		{
 			$register = User::firstOrNew(['id' => $id]);
@@ -217,8 +216,9 @@ class UserController extends AdminController
 		(
 			[
 				'id'             => $id,
+				'appends'        => $this->appends,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','email','roles','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','name','email','roles','created_at','updated_at']
 			]
 		);
 	}

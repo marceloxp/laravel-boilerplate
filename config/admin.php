@@ -204,8 +204,8 @@ return [
 					'type'    => 'link',
 					'caption' => 'Usuários',
 					'ico'     => 'fa-user',
-					'group'   => 'admin_user',
-					'route'   => 'admin_user'
+					'group'   => 'admin_users',
+					'route'   => 'admin_users'
 				],
 				[
 					'type'    => 'link',
