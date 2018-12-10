@@ -21,11 +21,11 @@ class CustomerController extends SiteController
 			}
 			$user->makeHidden('password');
 
-			if (!$user) { return \Redirect::back()->withErrors(['Usuário não localizado.']); }
+			if (!$user) { return \Redirect::back()->withError('Usuário não localizado.'); }
 
 			if (\Hash::check($request->get('password'), \Hash::make($request->get('password'))) == false)
 			{
-				return \Redirect::back()->withErrors(['Usuário e/ou senha incorretos.']);
+				return \Redirect::back()->withError('Usuário e/ou senha incorretos.');
 			}
 
 			$customer = new \App\Http\Utilities\Customer();
