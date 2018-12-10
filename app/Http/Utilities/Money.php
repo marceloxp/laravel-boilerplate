@@ -14,13 +14,37 @@ class Money
 
 	function set($p_value)
 	{
+		$this->value    = $this->getValue($p_value);
+		$this->formated = number_format($this->value, 2, ',', '.');
+		return $this;
+	}
+
+	public function inc($p_value)
+	{
+		$this->set($this->value + $this->getValue($p_value));
+		return $this;
+	}
+
+	public function reset()
+	{
+		$this->set(0.00);
+		return $this;
+	}
+
+	public function getRaw()
+	{
+		return preg_replace( '/[^0-9]/', '', $this->formated);
+	}
+
+	private function getValue($p_value)
+	{
 		if (is_a($p_value, \App\Http\Utilities\Money::class))
 		{
-			$p_value = $p_value->value;
+			return $p_value->value;
 		}
 		elseif (is_a($p_value, \App\Http\Utilities\Payment::class))
 		{
-			$p_value = $p_value->price->value;
+			return $p_value->price->value;
 		}
 		elseif (is_string($p_value))
 		{
@@ -28,26 +52,10 @@ class Money
 			{
 				$p_value = str_replace('.', '', $p_value);
 				$p_value = str_replace(',', '.', $p_value);
-				$p_value = floatval($p_value);
+				return floatval($p_value);
 			}
 		}
-
-		$this->value    = ensureFloat($p_value);
-		$this->formated = number_format($p_value, 2, ',', '.');
-	}
-
-	public function inc($p_value)
-	{
-		$this->set($this->value + ensureFloat($p_value));
-	}
-
-	public function reset()
-	{
-		$this->set(0.00);
-	}
-
-	public function getRaw()
-	{
-		return preg_replace( '/[^0-9]/', '', $this->formated);
+		
+		return ensureFloat($p_value);
 	}
 }
