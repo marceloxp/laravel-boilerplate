@@ -251,7 +251,7 @@ class MasterModel extends Model
 		(
 			'sys-model',
 			['getFieldsMetaData', $table_name],
-			function() use ($appends, $table_name)
+			function() use ($table_name)
 			{
 				$query = sprintf
 				(
@@ -366,29 +366,29 @@ class MasterModel extends Model
 					$result[$field_name] = $value;
 				}
 
-				foreach ($appends as $field_name => $field_caption)
-				{
-					$field_type = 'appends';
-					$hook_name  = hook_name(sprintf('master_model_field_type_%s_%s', $table_name, $field_name));
-					$field_type = \Hook::apply_filters($hook_name, $field_type);
-
-					$result[$field_name] = 
-					[
-						'name'         => $field_name,
-						'is_appends'   => true,
-						'type'         => $field_type,
-						'pri'          => false,
-						'comment'      => $field_caption,
-						'max_length'   => null,
-						'nullable'     => false,
-						'has_relation' => false
-					];
-				}
-
 				return $result;
 			}
 		);
 		
+		foreach ($appends as $field_name => $field_caption)
+		{
+			$field_type = 'appends';
+			$hook_name  = hook_name(sprintf('master_model_field_type_%s_%s', $table_name, $field_name));
+			$field_type = \Hook::apply_filters($hook_name, $field_type);
+
+			$result['data'][$field_name] = 
+			[
+				'name'         => $field_name,
+				'is_appends'   => true,
+				'type'         => $field_type,
+				'pri'          => false,
+				'comment'      => $field_caption,
+				'max_length'   => null,
+				'nullable'     => false,
+				'has_relation' => false
+			];
+		}
+
 		return $result['data'];
 	}
 
