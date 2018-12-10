@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fd0e5c0deab7c0a514d72e23a0ea0fe",
+    "content-hash": "2959e9b5adc38033691a7d4444bc5559",
     "packages": [
         {
             "name": "ajthinking/tinx",
