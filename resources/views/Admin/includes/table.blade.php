@@ -27,7 +27,7 @@
 									<span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu" id="search-fields-items">
 										@foreach($search_fields as $field_name)
-											<li><a class="search_field" data-field="{{$field_name}}" data-caption="{{ $fields_schema[$field_name]['comment'] }}" href="#">{{ $fields_schema[$field_name]['comment'] }}</a></li>
+											<li><a class="search_field" data-field="{{ $field_name }}" data-caption="{{ $fields_schema[$field_name]['comment'] }}" href="#">{{ $fields_schema[$field_name]['comment'] }}</a></li>
 										@endforeach
 										<li class="divider"></li>
 										<li><a class="search_field" data-field="___clear" href="#">Limpar Busca</a></li>
@@ -45,7 +45,7 @@
 								<label>Filtrar por data</label>
 								<select id="select-field-date" class="form-control">
 									@foreach($search_dates as $field_name)
-										<option class="option_search_date" value="{{$field_name}}">{{ $fields_schema[$field_name]['comment'] }}</option>
+										<option class="option_search_date" value="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -70,7 +70,7 @@
 							<select id="select-field-order" class="form-control">
 								<option class="option_search_field" value="0">Selecione</option>
 								@foreach($sort_fields as $field_name)
-									<option class="option_search_field" value="{{$field_name}}">{{ $fields_schema[$field_name]['comment'] }}</option>
+									<option class="option_search_field" value="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -176,14 +176,13 @@
 								$column_title = $fields_schema[$field_name]['comment'];
 								$hook_name    = hook_name(sprintf('admin_index_title_caption_%s_%s', $table_name, $field_name));
 								$column_title = Hook::apply_filters($hook_name, $column_title);
-								// r($hook_name);
 							@endphp
 							<th style="text-align: {{ $title_align }};" data-field="{{ $field_name }}">{{ $column_title }}</i></th>
 						@endforeach
 					</tr>
 					@foreach($table as $register)
 					<tr>
-						<td><input type="checkbox" class="ck-row" data-ids="{{$register['id']}}"></td>
+						<td><input type="checkbox" class="ck-row" data-ids="{{ $register['id'] }}"></td>
 						@foreach($display_fields as $field_name)
 							@php
 								$field_align = 'left';
