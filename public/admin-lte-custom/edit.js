@@ -87,7 +87,7 @@ umsappadmin.Tedit = function($, objname, options)
 				thousandsSeparator : '.'
 			}
 		);
-	}
+	};
 
 	CjsBaseClass.call(this, $, objname, options);
 };
