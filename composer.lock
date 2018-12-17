@@ -841,16 +841,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.16",
+            "version": "v5.7.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "9acea9e0a356cba7e6a13f8784d5532a82fee92a"
+                "reference": "a15898e2de5f5ae5548a09349c558ef0435d495a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/9acea9e0a356cba7e6a13f8784d5532a82fee92a",
-                "reference": "9acea9e0a356cba7e6a13f8784d5532a82fee92a",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a15898e2de5f5ae5548a09349c558ef0435d495a",
+                "reference": "a15898e2de5f5ae5548a09349c558ef0435d495a",
                 "shasum": ""
             },
             "require": {
@@ -983,7 +983,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-12-05T14:36:24+00:00"
+            "time": "2018-12-12T14:38:09+00:00"
         },
         {
             "name": "laravel/nexmo-notification-channel",
@@ -1044,16 +1044,16 @@
         },
         {
             "name": "laravel/slack-notification-channel",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/slack-notification-channel.git",
-                "reference": "0ede60acbbf5f91be2e45d0c0b4d95e2f3837252"
+                "reference": "6e164293b754a95f246faf50ab2bbea3e4923cc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/0ede60acbbf5f91be2e45d0c0b4d95e2f3837252",
-                "reference": "0ede60acbbf5f91be2e45d0c0b4d95e2f3837252",
+                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/6e164293b754a95f246faf50ab2bbea3e4923cc9",
+                "reference": "6e164293b754a95f246faf50ab2bbea3e4923cc9",
                 "shasum": ""
             },
             "require": {
@@ -1097,7 +1097,7 @@
                 "notifications",
                 "slack"
             ],
-            "time": "2018-12-04T12:58:59+00:00"
+            "time": "2018-12-12T13:12:06+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1378,12 +1378,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marceloxp/laravel_commands.git",
-                "reference": "248758e92a73bd8ca7cf76a1548a493db3c4b777"
+                "reference": "283b5e80395b3dc11afca262230f1cdff4d376de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/248758e92a73bd8ca7cf76a1548a493db3c4b777",
-                "reference": "248758e92a73bd8ca7cf76a1548a493db3c4b777",
+                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/283b5e80395b3dc11afca262230f1cdff4d376de",
+                "reference": "283b5e80395b3dc11afca262230f1cdff4d376de",
                 "shasum": ""
             },
             "require-dev": {
@@ -1413,7 +1413,7 @@
                 }
             ],
             "description": "Laravel Artisan Commands Utilities",
-            "time": "2018-12-07T16:13:39+00:00"
+            "time": "2018-12-11T13:27:35+00:00"
         },
         {
             "name": "miroc/laravel-adminer",

@@ -29,3 +29,11 @@ if (!function_exists('db_get_name'))
 		return $register[0]->name;
 	}
 }
+
+if (!function_exists('db_model_to_table_name'))
+{
+	function db_model_to_table_name($model_name)
+	{
+		return str_plural(mb_strtolower($model_name));
+	}
+}
