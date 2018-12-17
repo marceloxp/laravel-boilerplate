@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2959e9b5adc38033691a7d4444bc5559",
+    "content-hash": "6af35e72eeb15807d1e55f0a76c208f9",
     "packages": [
         {
             "name": "ajthinking/tinx",
@@ -841,16 +841,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.17",
+            "version": "v5.7.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "a15898e2de5f5ae5548a09349c558ef0435d495a"
+                "reference": "d329797ae0e2ece220d85a5b59ffe659ce2050ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/a15898e2de5f5ae5548a09349c558ef0435d495a",
-                "reference": "a15898e2de5f5ae5548a09349c558ef0435d495a",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d329797ae0e2ece220d85a5b59ffe659ce2050ae",
+                "reference": "d329797ae0e2ece220d85a5b59ffe659ce2050ae",
                 "shasum": ""
             },
             "require": {
@@ -983,7 +983,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-12-12T14:38:09+00:00"
+            "time": "2018-12-17T16:47:43+00:00"
         },
         {
             "name": "laravel/nexmo-notification-channel",
@@ -1378,12 +1378,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marceloxp/laravel_commands.git",
-                "reference": "283b5e80395b3dc11afca262230f1cdff4d376de"
+                "reference": "0907fa43c65569219dcbad43d3d4fa0b01d89563"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/283b5e80395b3dc11afca262230f1cdff4d376de",
-                "reference": "283b5e80395b3dc11afca262230f1cdff4d376de",
+                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/0907fa43c65569219dcbad43d3d4fa0b01d89563",
+                "reference": "0907fa43c65569219dcbad43d3d4fa0b01d89563",
                 "shasum": ""
             },
             "require-dev": {
@@ -1413,7 +1413,7 @@
                 }
             ],
             "description": "Laravel Artisan Commands Utilities",
-            "time": "2018-12-11T13:27:35+00:00"
+            "time": "2018-12-17T19:04:37+00:00"
         },
         {
             "name": "miroc/laravel-adminer",
@@ -1695,16 +1695,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "d3209e46ad6c69a969b705df0738fd0dbe26ef9e"
+                "reference": "de00c69a2328d3ee5baa71fc584dc643222a574c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/d3209e46ad6c69a969b705df0738fd0dbe26ef9e",
-                "reference": "d3209e46ad6c69a969b705df0738fd0dbe26ef9e",
+                "url": "https://api.github.com/repos/opis/closure/zipball/de00c69a2328d3ee5baa71fc584dc643222a574c",
+                "reference": "de00c69a2328d3ee5baa71fc584dc643222a574c",
                 "shasum": ""
             },
             "require": {
@@ -1712,7 +1712,7 @@
             },
             "require-dev": {
                 "jeremeamia/superclosure": "^2.0",
-                "phpunit/phpunit": "^4.0"
+                "phpunit/phpunit": "^4.0|^5.0|^6.0|^7.0"
             },
             "type": "library",
             "extra": {
@@ -1752,7 +1752,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2018-10-02T13:36:53+00:00"
+            "time": "2018-12-16T21:48:23+00:00"
         },
         {
             "name": "paragonie/random_compat",
