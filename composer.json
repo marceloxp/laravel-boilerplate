@@ -1,12 +1,13 @@
 {
     "name": "marceloxp/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
     "type": "project",
-	"version" : "0.1.10",
-	"minimum-stability": "dev",
-    "prefer-stable": true,
+    "description": "The Laravel Framework.",
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
+    "version": "0.1.10",
+    "license": "MIT",
     "require": {
         "php": ">=7.0.0",
         "ajthinking/tinx": "^2.1",
@@ -30,11 +31,28 @@
         "phpunit/phpunit": "~6.0",
         "symfony/thanks": "^1.0"
     },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
     "autoload": {
-		"files": [
-			"app/Http/Utilities/Helpers/admin.php",
-			"app/Http/Utilities/Helpers/cached.php",
-			"app/Http/Utilities/Helpers/datasite.php",
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "classmap": [
+            "database/seeds",
+            "database/factories"
+        ],
+        "files": [
+            "app/Http/Utilities/Helpers/admin.php",
+            "app/Http/Utilities/Helpers/cached.php",
+            "app/Http/Utilities/Helpers/datasite.php",
             "app/Http/Utilities/Helpers/db.php",
             "app/Http/Utilities/Helpers/developer.php",
             "app/Http/Utilities/Helpers/filesystem.php",
@@ -45,38 +63,22 @@
             "app/Http/Utilities/Helpers/money.php",
             "app/Http/Utilities/Helpers/payment.php",
             "app/Http/Utilities/Helpers/bootstrap.php"
-		],
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
-        "psr-4": {
-            "App\\": "app/"
-        }
+        ]
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
         }
     },
-    "extra": {
-        "laravel": {
-            "dont-discover": [
-            ]
-        }
-    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "scripts": {
-        "post-create-project-cmd": [
-            "@php artisan key:generate"
-        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate"
         ]
-    },
-    "config": {
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "optimize-autoloader": true
     }
 }

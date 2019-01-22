@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "2959e9b5adc38033691a7d4444bc5559",
@@ -2375,6 +2375,7 @@
                     "Shridhar\\Hooks\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2385,9 +2386,6 @@
                 }
             ],
             "description": "Wordpress like actions and filters for laravel",
-            "support": {
-                "source": "https://github.com/marceloxp/laravel-hooks/tree/master"
-            },
             "time": "2018-04-29T14:26:08+00:00"
         },
         {
