@@ -6,10 +6,9 @@
         "framework",
         "laravel"
     ],
-    "version": "0.1.10",
     "license": "MIT",
     "type": "project",
-	"version" : "0.1.12",
+	"version" : "0.1.13",
 	"minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
