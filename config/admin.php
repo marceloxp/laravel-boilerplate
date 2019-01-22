@@ -52,6 +52,7 @@ return [
 			'ico'     => 'fa-table',
 			'items'   => 
 			[
+				// ADMIN ADD ITEM DON'T REMOVE THIS LINE
 				[
 					'type'    => 'link',
 					'caption' => 'Categorias',

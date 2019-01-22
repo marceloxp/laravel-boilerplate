@@ -1,12 +1,4 @@
 <?php
-if (!function_exists('admin_helpers_exists'))
-{
-	function admin_helpers_exists($value)
-	{
-		return true;
-	}
-}
-
 if (!function_exists('admin_label_status'))
 {
 	function admin_label_status($value)

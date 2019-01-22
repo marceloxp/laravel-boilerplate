@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.1.10
+> Version 0.1.12
 
 ## Install
 
@@ -184,6 +184,80 @@ RouteLang::getCurrentLocale();        // Returns app current locale config (dyna
 
 ### Helpers
 
+#### admin
+
+```php
+// ['inativo','não','i','n','no','0','excluido'])) ? 'red' : 'green';
+echo admin_label_status($value);
+
+// bootstrap badge
+echo admin_badge_status($value);
+
+// ['RJ' => 'Rio de Janeiro', 'SP' => 'São Paulo']
+echo admin_select($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
+
+// ['RJ', 'SP']
+echo admin_select_simple($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
+
+echo admin_select_simple_with_add_button($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
+```
+
+#### Bootstrap
+
+```php
+echo alert_success('Mensagem enviada com sucesso.');
+echo alert_danger('Ocorreu um erro na solicitação!');
+echo print_alert(); // Auto print messages from Session
+```
+
+#### Money
+```sh
+>>> use \App\Http\Utilities\Money;
+
+## Basic ------------------------------------------------
+>>> $var = new Money(2.5);
+=> App\Http\Utilities\Money {
+     +value: 2.5,
+     +formated: "2,50",
+   }
+>>> $var->value;
+=> 2.5
+>>> $var->formated;
+=> "2,50"
+>>> $var->getRaw();
+=> "250"
+
+## Increment --------------------------------------------
+>>> $var->inc(3.50);
+=> App\Http\Utilities\Money {
+     +value: 6.0,
+     +formated: "6,00",
+   }
+   
+## Create another Money object
+>>> $another = new Money(1.00);
+=> App\Http\Utilities\Money {
+     +value: 1.0,
+     +formated: "1,00",
+   }
+   
+## Increment using Money Object -------------------------
+>>> $var->inc($another);
+=> App\Http\Utilities\Money {
+     +value: 7.0,
+     +formated: "7,00",
+   }
+```
+
+#### DB
+
+```php
+echo db_comment_table('table_name', 'comment_table'); // Define table comment
+echo db_get_primary_key('table_name');                // Returns id
+echo db_get_name('table_name', 10);                   // Returns `name` field value
+echo db_model_to_table_name('Product');               // Returns table name from model name
+```
+
 #### vasset
 
 ```html
@@ -247,14 +321,6 @@ echo str_plural_2_singular('corações');  // Returns 'coração';
 echo str2bool('true');  // Returns true;
 echo str2bool('false'); // Returns false;
 echo str2bool('foo');   // Returns false;
-```
-
-#### DB
-
-```php
-echo db_comment_table('table_name', 'comment_table'); // Define table comment
-echo db_get_primary_key('table_name');                // Returns id
-echo db_get_name('table_name', 10);                   // Returns `name` field value
 ```
 
 ### Custom configs

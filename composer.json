@@ -8,6 +8,10 @@
     ],
     "version": "0.1.10",
     "license": "MIT",
+    "type": "project",
+	"version" : "0.1.12",
+	"minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=7.0.0",
         "ajthinking/tinx": "^2.1",
