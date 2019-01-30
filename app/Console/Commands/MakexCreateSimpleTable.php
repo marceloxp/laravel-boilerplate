@@ -358,7 +358,7 @@ class Create{ClassName}Table extends Migration
 		{
 			$field_name  = "'" . $field . "'";
 			$line        = str_pad($field_name, ($max_length+2));
-			$line       .= in_array($field_name, ['created_at','updated_at','deleted_at']) ? ' => null,' : ' => 12,';
+			$line       .= in_array($field, ['created_at','updated_at','deleted_at']) ? ' => null,' : ' => 12,';
 			$line        = str_repeat(chr(9), 5) . $line;
 			$colunmed[]  = $line;
 		}
