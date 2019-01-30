@@ -105,8 +105,13 @@ class Create{ClassName}Table extends Migration
 	{
 		$this->clear();
 
-		$this->info('CREATE SIMPLE TABLE');
-		$this->br();
+		$this->info('');
+		$this->info('   __________  _________  ____________   _________    ____  __    ______');
+		$this->info('  / ____/ __ \/ ____/   |/_  __/ ____/  /_  __/   |  / __ )/ /   / ____/');
+		$this->info(' / /   / /_/ / __/ / /| | / / / __/      / / / /| | / __  / /   / __/   ');
+		$this->info('/ /___/ _, _/ /___/ ___ |/ / / /___     / / / ___ |/ /_/ / /___/ /___   ');
+		$this->info('\____/_/ |_/_____/_/  |_/_/ /_____/    /_/ /_/  |_/_____/_____/_____/   ');
+		$this->info('');
 
 		$folder_name = $this->ask('Folder name (ex: Models)', 'Models');
 		$folder_name = (empty($folder_name)) ? 'Models' : $folder_name;
