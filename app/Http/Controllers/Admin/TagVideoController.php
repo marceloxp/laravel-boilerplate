@@ -107,7 +107,7 @@ class TagVideoController extends AdminController
 	public function detach(Request $request, $video_id)
 	{
 		$ids = $request->input('ids');
-		$ids = explode(',', $ids['ids']);
+		$ids = explode(',', $ids);
 		foreach ($ids as $tag_id)
 		{
 			$video = Video::findOrFail($video_id);
