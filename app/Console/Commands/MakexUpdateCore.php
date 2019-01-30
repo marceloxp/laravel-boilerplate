@@ -74,6 +74,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/app/routes/admin.php',
 			'laravel-boilerplate-stable/app/Console/Commands/Makex',
 			'laravel-boilerplate-stable/app/Console/Commands/Makex.php',
+			'laravel-boilerplate-stable/app/Console/Commands/MakexAdminController.php',
 			'laravel-boilerplate-stable/app/Console/Commands/MakexUpdateCore.php',
 			'laravel-boilerplate-stable/app/Console/Commands/MakexCreateSimpleTable.php',
 			'laravel-boilerplate-stable/app/Models/Product.php',
