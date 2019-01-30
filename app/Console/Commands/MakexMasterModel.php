@@ -52,6 +52,9 @@ class %s extends MasterModel
 	public function handle()
 	{
 		$this->clear();
+		$this->printLogo();
+		$this->info(mb_strtoupper($this->description));
+		$this->br();
 
 		$folder_name = $this->ask('Folder name (ex: Models)', 'Models');
 		$folder_name = (empty($folder_name)) ? 'Models' : $folder_name;

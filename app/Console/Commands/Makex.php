@@ -39,6 +39,7 @@ class Makex extends \App\Console\MakexCommand
 	public function handle()
 	{
 		$this->clear();
+		$this->printLogo();
 
 		$options = 
 		[
@@ -59,7 +60,7 @@ class Makex extends \App\Console\MakexCommand
 		];
 
 		$this->printLine('COMMANDS');
-		$this->printSingleArray($options);
+		// $this->printSingleArray($options);
 
 		$defaultIndex = 'X';
 		$option = $this->choice('Choose Command', $options, $defaultIndex);
@@ -70,6 +71,7 @@ class Makex extends \App\Console\MakexCommand
 
 		$command = sprintf('php artisan %s',  $commands[$option]);
 
+		$this->clear();
 		$this->call($commands[$option]);
 	}
 }

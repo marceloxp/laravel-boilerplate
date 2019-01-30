@@ -39,6 +39,9 @@ class MakexAdminController extends \App\Console\MakexCommand
 	public function handle()
 	{
 		$this->clear();
+		$this->printLogo();
+		$this->info(mb_strtoupper($this->description));
+		$this->br();
 
 		$models = $this->___getModels();
 		$models[] = '-------------------------------------------------------';

@@ -39,6 +39,9 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 	public function handle()
 	{
 		$this->clear();
+		$this->printLogo();
+		$this->info(mb_strtoupper($this->description));
+		$this->br();
 
 		if (!$this->confirm('Update Core?')) { exit; }
 
