@@ -31,8 +31,10 @@
 			<div class="row">
 
 				@foreach($display_fields as $field_name => $field_width)
-
 					@php
+						if ( ($field_width === false) || ($field_width === null) ):
+							continue;
+						endif;
 						$row_visible = 'block';
 						$field_type  = $fields_schema[$field_name]['type'];
 						$input_type  = 'text';
@@ -221,6 +223,11 @@
 						$field_value = (old($field_name) ?? $register->$field_name);
 						$hook_name   = hook_name(sprintf('admin_edit_%s_%s', $table_name, $field_name));
 						$input       = Hook::apply_filters($hook_name, $input, $field_value, $register, $fields_schema[$field_name]);
+
+						if ($field_width == 0)
+						{
+							$row_visible = 'none';
+						}
 					@endphp
 
 					<div class="col-md-{{ $field_width }}">

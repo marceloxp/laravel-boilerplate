@@ -55,7 +55,7 @@ class UserCustomInputController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => $this->model,
-				'disabled'       => ['created_at'],
+				'disabled'       => ['created_at','updated_at','deleted_at'],
 				'display_fields' => 
 				[
 [columned_display_fields]

@@ -18,7 +18,7 @@
 					}
 				@endphp
 				<tr>
-					<td width="100">
+					<td width="100" align="right">
 						<label >{{ $field_label }}</label>
 					</td>
 					<td>

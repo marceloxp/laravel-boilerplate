@@ -12,7 +12,8 @@ class SearchmodalController extends AdminController
 		$page = $request->query('page', 1);
 
 		$model = sprintf('\App\Models\%s', ucfirst(camel_case(strtolower($options['model']))));
-		$options['fields'] = collect($options['fields'])->filter(function ($value, $key) use ($model) { return $model::hasField($value); })->toArray();
+		$options['fields'] = collect($options['fields'])->filter(function($value, $key) use ($model) { return $model::hasField($value); })->toArray();
+		$options['find']['fields'] = collect($options['find']['fields'])->filter(function($value, $key) use ($model) { return $model::hasField($value); })->toArray();
 
 		$table = $model::select();
 		if (array_key_exists('find', $options))
