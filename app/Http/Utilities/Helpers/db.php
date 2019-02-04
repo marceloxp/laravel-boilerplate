@@ -37,3 +37,11 @@ if (!function_exists('db_model_to_table_name'))
 		return str_plural(mb_strtolower($model_name));
 	}
 }
+
+if (!function_exists('db_table_exists'))
+{
+	function db_table_exists($table_name)
+	{
+		return \Schema::hasTable($table_name);
+	}
+}

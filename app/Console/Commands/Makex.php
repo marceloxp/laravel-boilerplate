@@ -43,8 +43,8 @@ class Makex extends \App\Console\MakexCommand
 
 		$options = 
 		[
-			'Create a new Admin Controller',
 			'Create a new Table, Migration, Model and Admin Page',
+			'Create a new Admin Controller',
 			'Create a new Single Master Model',
 			'Update framework core files',
 			'-------------------------------------------------------',
@@ -53,14 +53,13 @@ class Makex extends \App\Console\MakexCommand
 
 		$commands = 
 		[
-			'makex:admin_controller',
 			'makex:create_simple_table',
+			'makex:admin_controller',
 			'makex:mastermodel',
 			'makex:updatecore',
 		];
 
 		$this->printLine('COMMANDS');
-		// $this->printSingleArray($options);
 
 		$defaultIndex = 'X';
 		$option = $this->choice('Choose Command', $options, $defaultIndex);

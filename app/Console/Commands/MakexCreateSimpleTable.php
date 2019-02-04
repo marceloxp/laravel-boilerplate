@@ -117,12 +117,19 @@ class Create{ClassName}Table extends Migration
 		{
 			exit;
 		}
-		$model_name = ucfirst(camel_case(strtolower($model_name)));
-		$class_name = str_plural($model_name);
+		$model_name        = ucfirst(camel_case(strtolower($model_name)));
+		$class_name        = str_plural($model_name);
 		$model_description = $this->ask('Model description');
+		$table_name        = db_model_to_table_name($model_name);
 
 		$this->info('Model Name: ' . $model_name);
+		$this->info('Table Name: ' . $table_name);
 		$this->info('Description: ' . $model_description);
+
+		$file_search     = sprintf('migrations/*_create_%s_table.php', $table_name);
+		$file_search     = database_path($file_search);
+		$file_migrations = \File::glob($file_search);
+		$has_migrations  = (count($file_migrations) > 0);
 
 		$use_soft_deletes = ($this->confirm('Use SoftDeletes?', 1));
 		$changes = 
@@ -143,18 +150,58 @@ class Create{ClassName}Table extends Migration
 			\File::delete($file_name);
 		}
 
-		$command = sprintf('php artisan make:model %s%s -m', $folder_name, $model_name);
-		// if ($this->confirm($command, 1))
-		// {
+		$letter_migration = ($has_migrations) ? '' : '-m';
+		$do_migration = (!empty($letter_migration));
+
+		$table_exists = db_table_exists($table_name);
+		if ($table_exists)
+		{
+			if ($this->confirm('Table already exists, drop it?', 1))
+			{
+				\Schema::dropIfExists($table_name);
+
+				system('php artisan migrate:status');
+				if ($this->confirm('Execute 1 rollback?', 1))
+				{
+					$this->info('ROLLBACK PREVIEW');
+					system(sprintf('php artisan migrate:rollback --step=%s --pretend', 1));
+
+					if ($this->confirm('Proceed Rollback?'))
+					{
+						system(sprintf('php artisan migrate:rollback --step=%s', 1));
+					}
+				}
+			}
+			else
+			{
+				exit;
+			}
+		}
+
+		$command = sprintf('php artisan make:model %s%s %s', $folder_name, $model_name, $letter_migration);
+
+		if ($do_migration)
+		{
 			$this->info('EXECUTING MIGRATE AND MODEL CREATION');
-			$result = system($command);
-			if (strpos($result, 'Created Migration') === false)
+		}
+		else
+		{
+			$this->info('EXECUTING MODEL CREATION');
+		}
+
+		$result = system($command);
+		if ($do_migration)
+		{
+			$search_message = (!$has_migrations) ? 'Created Migration' : 'Model created successfully';
+
+			if (strpos($result, $search_message) === false)
 			{
 				die('Migration creation error!');
 			}
+
 			$migration_file_name = trim(str_replace('Created Migration: ', '', $result));
 			$migration_file_name .= '.php';
-		// }
+		}
 
 		$body = sprintf($this->string_class, $model_name);
 
@@ -183,21 +230,24 @@ class Create{ClassName}Table extends Migration
 		// ██║ ╚═╝ ██║██║╚██████╔╝██║  ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║    ██║  ██║╚█████╔╝╚██████╔╝███████║   ██║   
 		// ╚═╝     ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝    ╚═╝  ╚═╝ ╚════╝  ╚═════╝ ╚══════╝   ╚═╝   
 
-		$migration_path = database_path('migrations/' . $migration_file_name);
-		$body = $this->migration_class;
-
-		$body = str_replace('{ClassName}'    , $class_name, $body);
-		$body = str_replace('{table_name}'   , db_model_to_table_name($model_name), $body);
-		$body = str_replace('{ModelName}'    , $model_name, $body);
-		$body = str_replace('{table_comment}', $model_description, $body);
-
-		if (!$use_soft_deletes)
+		if ($do_migration)
 		{
-			$body = str_replace(PHP_EOL . '				$table->softDeletes();', '', $body);
-			$body = str_replace(PHP_EOL . '				$table->index([\'deleted_at\']);', '', $body);
-		}
+			$migration_path = database_path('migrations/' . $migration_file_name);
+			$body = $this->migration_class;
 
-		\File::put($migration_path, $body);
+			$body = str_replace('{ClassName}'    , $class_name, $body);
+			$body = str_replace('{table_name}'   , $table_name, $body);
+			$body = str_replace('{ModelName}'    , $model_name, $body);
+			$body = str_replace('{table_comment}', $model_description, $body);
+
+			if (!$use_soft_deletes)
+			{
+				$body = str_replace(PHP_EOL . '				$table->softDeletes();', '', $body);
+				$body = str_replace(PHP_EOL . '				$table->index([\'deleted_at\']);', '', $body);
+			}
+
+			\File::put($migration_path, $body);
+		}
 
 		// ███╗   ███╗███████╗███╗   ██╗██╗   ██╗
 		// ████╗ ████║██╔════╝████╗  ██║██║   ██║
@@ -369,7 +419,7 @@ class Create{ClassName}Table extends Migration
 
 		if (file_exists($dest_file))
 		{
-			if (!$this->confirm('Destination file already exists, overwrite?'))
+			if (!$this->confirm('Destination file (' . $dest_file . ') already exists, overwrite?'))
 			{
 				exit;
 			}
