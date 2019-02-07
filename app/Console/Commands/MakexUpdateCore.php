@@ -80,7 +80,6 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/app/Console/Commands/MakexCreateSimpleTable.php',
 			'laravel-boilerplate-stable/app/Console/Commands/MakexMasterModel.php',
 			'laravel-boilerplate-stable/app/Console/Commands/MakexUpdateCore.php',
-			'laravel-boilerplate-stable/app/Console/Commands/Makex',
 			'laravel-boilerplate-stable/app/Models/Product.php',
 			'laravel-boilerplate-stable/app/Models/Payment.php',
 			'laravel-boilerplate-stable/app/Models/Paymenttype.php',
