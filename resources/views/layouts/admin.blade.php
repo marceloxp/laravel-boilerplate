@@ -50,7 +50,7 @@
 		@show
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
-		<div class="wrapper">
+		<div class="wrapper" style="height: auto;overflow-y: hidden;">
 			<header class="main-header">
 				<a href="{{ route('admin_dashboard') }}" class="logo">
 					<span class="logo-mini">{{ env('ADMIN_SLUG', 'ADM') }}</span>
