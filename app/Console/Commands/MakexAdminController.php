@@ -44,14 +44,14 @@ class MakexAdminController extends \App\Console\MakexCommand
 		$this->br();
 
 		$models = $this->___getModels();
-		$models[] = '-------------------------------------------------------';
+		$models[] = $this->__getSingleLine();
 		$models[] = 'CANCEL';
 
 		$this->printLine('MODELS');
 		$this->printSingleArray($models);
 
 		$model = $this->anticipate('Choose Model Base [cancel]', $models);
-		if ( ($model === 'CANCEL') || ($model === null) || ($model === '-------------------------------------------------------') )
+		if ( ($model === 'CANCEL') || ($model === null) || ($model === $this->__getSingleLine()) )
 		{
 			exit;
 		}

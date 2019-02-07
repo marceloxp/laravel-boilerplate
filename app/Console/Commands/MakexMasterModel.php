@@ -56,9 +56,7 @@ class %s extends MasterModel
 		$this->info(mb_strtoupper($this->description));
 		$this->br();
 
-		$folder_name = $this->ask('Folder name (ex: Models)', 'Models');
-		$folder_name = (empty($folder_name)) ? 'Models' : $folder_name;
-		$folder_name .= '/';
+		$folder_name = 'Models/';
 
 		$model_name = $this->ask('Master Model name (Singular)', 'cancel');
 		if ($model_name == 'cancel')
