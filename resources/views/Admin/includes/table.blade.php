@@ -12,9 +12,12 @@
 
 @if ($has_table)
 	<form name="frmTable" method="get" id="frmTable" action="{{url()->current()}}">
-		<div class="box box-info">
+		<div class="box box-info collapsed-box">
 			<div class="box-header with-border">
 				<h3 class="box-title">Ordenação e Busca</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+				</div>
 			</div>
 			<div class="box-body">
 				<div class="row">

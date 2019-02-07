@@ -110,6 +110,32 @@ class MasterModel extends Model
 		}
 	}
 
+	public static function getTableCaption()
+	{
+		$table_name = self::getTableName();
+
+		$result = Cached::get
+		(
+			'sys-model',
+			['getTableCaption', $table_name],
+			function() use ($table_name)
+			{
+				$query = sprintf
+				(
+					'SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "%s";',
+					db_database_name(),
+					db_prefixed_table($table_name)
+				);
+				$result = collect(DB::select($query))->pluck('TABLE_COMMENT')->first();
+
+				return $result;
+			},
+			5
+		);
+
+		return $result['data'];
+	}
+
 	public static function getTableName()
 	{
 		$instanced_model = with(new static);
