@@ -7,11 +7,19 @@ if (!function_exists('db_database_name'))
 	}
 }
 
+if (!function_exists('db_prefix'))
+{
+	function db_prefix()
+	{
+		return env('DB_TABLE_PREFIX');
+	}
+}
+
 if (!function_exists('db_comment_table'))
 {
 	function db_comment_table($table_name, $table_comment)
 	{
-		DB::select(sprintf('ALTER TABLE %s%s COMMENT = "%s"', db_prefixed_table($table_name), $table_comment));
+		DB::select(sprintf('ALTER TABLE %s COMMENT = "%s"', db_prefixed_table($table_name), $table_comment));
 	}
 }
 
@@ -68,7 +76,16 @@ if (!function_exists('db_trim_table_prefix'))
 {
 	function db_trim_table_prefix($table_name)
 	{
-		return ltrim($table_name, env('DB_TABLE_PREFIX'));
+		$temp = explode(db_prefix(), $table_name);
+		return array_pop($temp);
+	}
+}
+
+if (!function_exists('ln'))
+{
+	function ln()
+	{
+		echo PHP_EOL;
 	}
 }
 
@@ -76,7 +93,7 @@ if (!function_exists('db_prefixed_table'))
 {
 	function db_prefixed_table($table_name)
 	{
-		return sprintf('%s%s', env('DB_TABLE_PREFIX'), db_trim_table_prefix($table_name));
+		return sprintf('%s%s', db_prefix(), db_trim_table_prefix($table_name));
 	}
 }
 
