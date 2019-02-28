@@ -43,6 +43,26 @@ class MasterModel extends Model
 		return false;
 	}
 
+	public function cacheKey($p_str_append = '')
+	{
+		if (!$p_str_append)
+		{
+			return sprintf
+			(
+				'model-%s-%s',
+				$this->getModelName(),
+				$this->getKey()
+			);
+		}
+		return sprintf
+		(
+			'model-%s-%s-%s',
+			$this->getModelName(),
+			$this->getKey(),
+			$p_str_append
+		);
+	}
+
 	public static function boot()
 	{
 		parent::boot();
