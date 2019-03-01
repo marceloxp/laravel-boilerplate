@@ -55,6 +55,13 @@ return [
 				// ADMIN ADD ITEM - DON'T REMOVE THIS LINE
 				[
 					'type'    => 'link',
+					'caption' => 'Admin Menu',
+					'ico'     => 'fa-folder',
+					'group'   => 'admin_menu',
+					'route'   => 'admin_menu'
+				],
+				[
+					'type'    => 'link',
 					'caption' => 'Categorias',
 					'ico'     => 'fa-folder',
 					'group'   => 'admin_category',

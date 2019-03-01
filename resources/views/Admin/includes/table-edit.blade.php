@@ -72,6 +72,20 @@
 								$required
 							);
 						}
+						elseif (in_array($field_name, ['parent_id']))
+						{
+							$parent_id = \DB::table($model::getTableName())->where('slug', '=', 'principal')->first()->id;
+							$input = array_to_dropdown
+							(
+								$model::parent($parent_id)->renderAsArray(),
+								[
+									'name'     => 'parent_id',
+									'optgroup' => false,
+									'attr'     => [ 'class' => 'form-control' ]
+								]
+							);
+							r($input);
+						}
 						elseif (in_array($field_name, $image_fields) !== false)
 						{
 							$url_image = url('images/admin/no-image.png');
@@ -205,8 +219,9 @@
 							$input = sprintf('<input type="hidden" name="%s" id="%s" value="%s" %s>', $field_name, $field_name, (old($field_name) ?? $register->$field_name), $required);
 						}
 
-						if (substr($field_name, -3) == '_id')
+						if ( (substr($field_name, -3) == '_id') && (!in_array($field_name, ['parent_id'])) )
 						{
+							dump($field_name);
 							if (isset($$field_name))
 							{
 								$_field_value = $$field_name;

@@ -11,6 +11,7 @@
 	"require": {
 		"php": ">=7.0.0",
 		"ajthinking/tinx": "^2.1",
+		"atayahmet/laravel-nestable": "^0.8.8",
 		"chumper/zipper": "1.0.x",
 		"danielstjules/stringy": "~3.1.0",
 		"digitalnature/php-ref": "dev-master",
@@ -62,7 +63,8 @@
 			"app/Http/Utilities/Helpers/string.php",
 			"app/Http/Utilities/Helpers/money.php",
 			"app/Http/Utilities/Helpers/payment.php",
-			"app/Http/Utilities/Helpers/bootstrap.php"
+			"app/Http/Utilities/Helpers/bootstrap.php",
+			"app/Http/Utilities/Helpers/forms.php"
 		]
 	},
 	"autoload-dev": {

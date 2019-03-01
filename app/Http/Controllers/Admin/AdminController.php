@@ -504,7 +504,7 @@ class AdminController extends Controller
 			$this->hooks_edit($table_name);
 		}
 
-		View::share(compact('register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled'));
+		View::share(compact('model','register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled'));
 
 		return view('Admin.generic_add');
 	}

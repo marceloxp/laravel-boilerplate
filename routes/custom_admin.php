@@ -179,3 +179,17 @@
 			Route::post('delete/'   , 'ContactController@destroy')->name('admin_contact_delete')->group('admin_contact');
 		}
 	);
+	
+	// Admin Menu
+	Route::group
+	(
+		['prefix' => 'menu'],
+		function()
+		{
+			Route::get ('/'         , 'MenuController@index'  )->name('admin_menu'       )->group('admin_menu');
+			Route::get ('edit/{id?}', 'MenuController@create' )->name('admin_menu_edit'  )->group('admin_menu');
+			Route::post('edit/{id?}', 'MenuController@store'  )->name('admin_menu_save'  )->group('admin_menu');
+			Route::get ('show/{id}' , 'MenuController@show'   )->name('admin_menu_show'  )->group('admin_menu');
+			Route::post('delete/'   , 'MenuController@destroy')->name('admin_menu_delete')->group('admin_menu');
+		}
+	);

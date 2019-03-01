@@ -164,6 +164,11 @@ class MasterModel extends Model
 		return $result;
 	}
 
+	public static function getInstance()
+	{
+		return with(new static);
+	}
+
 	public static function getModelName()
 	{
 		$instanced_model = with(new static);
