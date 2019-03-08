@@ -456,6 +456,56 @@ class AdminController extends Controller
 		return view('Admin.generic');
 	}
 
+	public function defaultTreeIndex($p_args)
+	{
+		$default_params = 
+		[
+			'slug'         => null,
+			'where'        => [],
+			'appends'      => [],
+			'editable'     => true,
+			'exportable'   => false
+		];
+
+		$params = array_merge($default_params, $p_args);
+
+		if (!empty($params['pivot_scope']))
+		{
+			$params['pivot_scope']['model'] = (string)S::create($params['pivot_scope']['name'])->underscored();
+		}
+
+		extract($params, EXTR_OVERWRITE);
+
+		$is_pivot          = false;
+		$panel_title       = $this->caption;
+		$panel_description = $this->description;
+		$table_name        = $model::getTableName();
+		$model_name        = $model::getModelName();
+
+		if (method_exists($this, 'hooks_index'))
+		{
+			$this->hooks_index($table_name);
+		}
+
+		$fields_schema = $model::getFieldsMetaData($appends);
+		$field_names   = array_keys($fields_schema);
+		$table         = $model::getTreeAligned($slug, $display_fields);
+		$has_table     = ($table->count() > 0);
+
+		$share_params = compact('model','panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','has_table','is_pivot','exportable','editable');
+		
+		View::share($share_params);
+
+		$request->session()->put('url_back', url()->current());
+
+		$excepts = ['fields_schema','field_names','search_dates','exportable'];
+		$jsvars = collect($share_params)->except($excepts)->toArray();
+		
+		datasite_add(['params' => $jsvars]);
+
+		return view('Admin.tree');
+	}
+
 	public function defaultShow($p_args)
 	{
 		$default_params =
@@ -504,7 +554,7 @@ class AdminController extends Controller
 			$this->hooks_edit($table_name);
 		}
 
-		View::share(compact('model','register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled'));
+		View::share(compact('request','model','register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled'));
 
 		return view('Admin.generic_add');
 	}

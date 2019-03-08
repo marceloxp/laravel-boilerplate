@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use \App\Http\Utilities\Cached;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class MasterModel extends Model
@@ -120,6 +121,11 @@ class MasterModel extends Model
 		});
 	}
 
+	public static function table()
+	{
+		return \DB::table(self::getTableName());
+	}
+
 	public static function ajustFormValues($request)
 	{
 		$fields = self::getNumericFields();
@@ -164,6 +170,12 @@ class MasterModel extends Model
 		return $result;
 	}
 
+	public static function getTableSlug()
+	{
+		$result = self::getTableName();
+		return Str::slug($result, '-');
+	}
+
 	public static function getInstance()
 	{
 		return with(new static);
@@ -175,6 +187,12 @@ class MasterModel extends Model
 		$result = (new \ReflectionClass($instanced_model))->getShortName();
 		unset($instanced_model);
 		return $result;
+	}
+
+	public static function getModelSlug()
+	{
+		$result = self::getModelName();
+		return Str::slug($result, '-');
 	}
 
 	public static function translateNameCaptions($p_field_names)

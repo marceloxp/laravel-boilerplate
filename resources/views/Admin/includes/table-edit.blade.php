@@ -74,17 +74,22 @@
 						}
 						elseif (in_array($field_name, ['parent_id']))
 						{
-							$parent_id = \DB::table($model::getTableName())->where('slug', '=', 'principal')->first()->id;
+							$slug = $request->segment(2);
+							$root = $model::table()->where('slug', '=', $slug)->first();
+							$parent_id  = (!empty($root)) ? $root->id : '0';
+							$array_tree = $model::getTree($slug, ['id','name','slug']);
+
 							$input = array_to_dropdown
 							(
-								$model::parent($parent_id)->renderAsArray(),
+								$array_tree->toArray(),
 								[
-									'name'     => 'parent_id',
-									'optgroup' => false,
-									'attr'     => [ 'class' => 'form-control' ]
+									'root'      => $root,
+									'name'      => 'parent_id',
+									'value'     => $field_value,
+									'optgroup'  => false,
+									'attr'      => [ 'class' => 'form-control' ]
 								]
 							);
-							r($input);
 						}
 						elseif (in_array($field_name, $image_fields) !== false)
 						{
@@ -245,7 +250,7 @@
 						}
 					@endphp
 
-					<div class="col-md-{{ $field_width }}">
+					<div class="field col-md-{{ $field_width }}">
 						<div class="form-group" style="display: {{ $row_visible }}">
 							<label for="{{ $field_name }}">{{ $field_label }}{!! $asterisk !!}</label>
 							{!! $input !!}

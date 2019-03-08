@@ -38,7 +38,7 @@ if (!function_exists('array_to_dropdown'))
 				$child      = $register['child'];
 				$has_child  = (!empty($child));
 				$optgroup   = $p_options['optgroup'];
-				$prefix     = str_repeat('&nbsp;&nbsp;', $p_level);
+				$prefix     = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $p_level);
 
 				if ($optgroup && $has_child)
 				{
@@ -48,7 +48,8 @@ if (!function_exists('array_to_dropdown'))
 					return $result;
 				}
 
-				$item = sprintf('<option data-slug="%s" value="%s">%s%s</option>', $register['slug'], $register['id'], $prefix, $register['name']);
+				$selected = ($p_options['value'] == $register['id']) ? 'selected' : '';
+				$item     = sprintf('<option value="%s" data-caption="%s" data-slug="%s" %s>%s%s</option>', $register['id'], $register['name'], $register['slug'], $selected, $prefix, $register['name']);
 				$result[] = $item;
 
 				if (!empty($register['child']))
@@ -70,7 +71,7 @@ if (!function_exists('array_to_dropdown'))
 			'optgroup' => false
 		];
 
-		$options = array_merge($default, $p_options);
+		$options   = array_merge($default, $p_options);
 		$html_attr = html_to_attr($options['attr']);
 
 		$result = [];
