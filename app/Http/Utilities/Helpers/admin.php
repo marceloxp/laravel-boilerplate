@@ -42,7 +42,7 @@ if (!function_exists('admin_select'))
 
 if (!function_exists('admin_select_simple'))
 {
-	function admin_select_simple($p_field_name, $p_options, $p_field_value, $p_required, $p_add_text_select = false)
+	function admin_select_simple($p_field_name, $p_options, $p_default_value, $p_field_value, $p_required, $p_add_text_select = false)
 	{
 		$required = (!empty($p_required)) ? 'required' : '';
 
@@ -56,6 +56,10 @@ if (!function_exists('admin_select_simple'))
 		foreach($p_options as $option)
 		{
 			$selected = ($p_field_value == $option) ? 'selected' : '';
+			if (empty($selected))
+			{
+				$selected = ($option == $p_default_value) ? 'selected' : '';
+			}
 			$result .= sprintf('<option value="%s" %s>%s</option>', $option, $selected, $option);
 		}
 		$result .= '</select>';

@@ -373,6 +373,7 @@ class MasterModel extends Model
 							DATA_TYPE                AS `type`,
 							COLUMN_TYPE              AS `rawtype`,
 							(COLUMN_KEY = "PRI")     AS `pri`,
+							COLUMN_DEFAULT           AS `default_value`,
 							COLUMN_COMMENT           AS `comment`,
 							CHARACTER_MAXIMUM_LENGTH AS `max_length`,
 							(IS_NULLABLE = "YES") AS `nullable`
