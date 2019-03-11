@@ -166,7 +166,7 @@
 							switch ($field_type)
 							{
 								case 'enum':
-									$input = admin_select_simple($field_name, $fields_schema[$field_name]['options'], (old($field_name) ?? $register->$field_name), $required);
+									$input = admin_select_simple($field_name, $fields_schema[$field_name]['options'], $fields_schema[$field_name]['default_value'], (old($field_name) ?? $register->$field_name), $required);
 								break;
 								case 'tinyint':
 									$options = ['Não', 'Sim'];
