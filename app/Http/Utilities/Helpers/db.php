@@ -33,6 +33,33 @@ if (!function_exists('db_get_comment_table'))
 	}
 }
 
+if (!function_exists('db_get_pivot_table_name'))
+{
+	function db_get_pivot_table_name($p_table_names, $use_prefix = true)
+	{
+		$sorted = Illuminate\Support\Arr::sort($p_table_names);
+		$table_name = sprintf('%s_%s', \Illuminate\Support\Str::singular($sorted[0]), \Illuminate\Support\Str::singular($sorted[1]));
+		if ($use_prefix)
+		{
+			$table_name = db_prefixed_table($table_name);
+		}
+		return $table_name;
+	}
+}
+
+if (!function_exists('db_get_pivot_scope_name'))
+{
+	function db_get_pivot_scope_name($p_models)
+	{
+		$array  = [$p_models[0]::getTableName(), $p_models[1]::getTableName()];
+		$table  = array_sort_ex($array, true);
+		$table  = str_to_singular($table);
+		$table  = str_to_lower($table);
+		$result = sprintf('%s%s', $table[0], ucfirst($table[1]));
+		return $result;
+	}
+}
+
 if (!function_exists('db_get_primary_key'))
 {
 	function db_get_primary_key($table_name)

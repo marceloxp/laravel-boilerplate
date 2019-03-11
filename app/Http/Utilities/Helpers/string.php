@@ -1,5 +1,50 @@
 <?php
 
+if (!function_exists('array_sort_ex'))
+{
+	function array_sort_ex($p_array, $p_reindex_keys = false)
+	{
+		if (!$p_reindex_keys)
+		{
+			return Illuminate\Support\Arr::sort($p_array);
+		}
+
+		return array_merge(Illuminate\Support\Arr::sort($p_array));
+	}
+}
+
+if (!function_exists('str_to_singular'))
+{
+	function str_to_singular($p_arg)
+	{
+		if (is_string($p_arg))
+		{
+			return \Illuminate\Support\Str::singular($p_arg);
+		}
+
+		if (is_array($p_arg))
+		{
+			return collect($p_arg)->transform(function ($item, $key) { return \Illuminate\Support\Str::singular($item); })->toArray();
+		}
+	}
+}
+
+if (!function_exists('str_to_lower'))
+{
+	function str_to_lower($p_arg)
+	{
+		if (is_string($p_arg))
+		{
+			return mb_strtolower($p_arg);
+		}
+
+		if (is_array($p_arg))
+		{
+			return collect($p_arg)->transform(function ($item, $key) { return mb_strtolower($item); })->toArray();
+		}
+	}
+}
+
 if (!function_exists('str_mask'))
 {
 	function str_mask($text, $mask)

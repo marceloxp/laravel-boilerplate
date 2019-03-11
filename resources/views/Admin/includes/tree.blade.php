@@ -1,15 +1,3 @@
-@php
-	$search_fields = array_merge($display_fields);
-	$hook_name     = hook_name(sprintf('admin_index_search_fields_%s', $table_name));
-	$search_fields = Hook::apply_filters($hook_name, $search_fields);
-
-	$sort_fields   = array_merge($display_fields);
-	$hook_name     = hook_name(sprintf('admin_index_sort_fields_%s', $table_name));
-	$sort_fields   = Hook::apply_filters($hook_name, $sort_fields);
-
-	$image_fields = $image_fields ?? [];
-@endphp
-
 <div class="box box-success">
 	<div class="box-header with-border">
 		<div class="row">
@@ -25,6 +13,9 @@
 					<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fa fa-eye"></i> Visualizar</button>
 					@if (!empty($table_many))
 						<button type="button" id="btn-table-many" data-parent="{{ $table_name }}" data-link="{{ $table_many['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $table_many['icon'] }}"></i> {{ $table_many['caption'] }}</button>
+					@endif
+					@if (!empty($pivot))
+						<button type="button" id="btn-table-pvt" data-link="{{ $pivot['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $pivot['icon'] }}"></i> {{ $pivot['caption'] }}</button>
 					@endif
 					@if ($buttons_edit)
 						<button type="button" id="btn-table-del" class="btn btn-danger disabled"><i class="fa fa-close"></i> Excluir</button>
@@ -49,7 +40,7 @@
 						<th style="width:20px"><input id="ch-rows-all" type="checkbox"></th>
 						@foreach($display_fields as $field_name)
 							@php
-								$title_align = 'left';
+								$title_align  = 'left';
 								$column_title = $field_name;
 								$column_title = $fields_schema[$field_name]['comment'];
 							@endphp

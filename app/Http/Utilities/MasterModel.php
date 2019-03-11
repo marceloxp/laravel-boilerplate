@@ -126,6 +126,16 @@ class MasterModel extends Model
 		return \DB::table(self::getTableName());
 	}
 
+	public static function getPivotConfig($p_table_name, $p_icon, $p_caption = '')
+	{
+		return
+		[
+			'name'    => db_get_pivot_table_name([self::getTableName(), $p_table_name], false),
+			'caption' => db_get_comment_table($p_table_name),
+			'icon'    => $p_icon
+		];
+	}
+
 	public static function ajustFormValues($request)
 	{
 		$fields = self::getNumericFields();

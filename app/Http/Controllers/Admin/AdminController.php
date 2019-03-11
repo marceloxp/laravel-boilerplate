@@ -80,15 +80,40 @@ class AdminController extends Controller
 		$this->description = $p_description;
 	}
 
+	public function setCaptionByModel($p_model_1, $p_model_2 = null)
+	{
+		$this->caption     = $p_model_1::getTableCaption();
+		$this->description = (!empty($p_model_2)) ? $p_model_2::getTableCaption() : '';
+	}
+
+	public function setPivotCaption($p_master_id)
+	{
+		$this->setCaption($this->master::getTableCaption() . ' - ' . db_get_name($this->master::getTableName(), $p_master_id), $this->model::getTableCaption());
+	}
+
 	public function setModel($p_model)
 	{
 		$this->model = $p_model;
+	}
+
+	public function setMasterModel($p_master)
+	{
+		$this->master = $p_master;
 	}
 
 	public function defineCaption($p_model, $p_id)
 	{
 		$parent = $p_model::select('id','name')->where('id',$p_id)->first();
 		$this->setCaption(sprintf('%s - %s', $parent->name, $this->caption));
+	}
+
+	public function getPivotScopeConfig($p_master_id)
+	{
+		return
+		[
+			'name'  => db_get_pivot_scope_name([$this->model, $this->master]),
+			'param' => $p_master_id
+		];
 	}
 
 	public function getCaption()
@@ -461,6 +486,9 @@ class AdminController extends Controller
 		$default_params = 
 		[
 			'slug'         => null,
+			'pivot'        => [],
+			'pivot_scope'  => [],
+			'table_many'   => [],
 			'where'        => [],
 			'appends'      => [],
 			'editable'     => true,
@@ -476,7 +504,8 @@ class AdminController extends Controller
 
 		extract($params, EXTR_OVERWRITE);
 
-		$is_pivot          = false;
+		$is_pivot          = (!empty($pivot_scope));
+		$class_pivot       = ($is_pivot) ? 'pivot' : '';
 		$panel_title       = $this->caption;
 		$panel_description = $this->description;
 		$table_name        = $model::getTableName();
@@ -492,7 +521,7 @@ class AdminController extends Controller
 		$table         = $model::getTreeAligned($slug, $display_fields);
 		$has_table     = ($table->count() > 0);
 
-		$share_params = compact('model','panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','has_table','is_pivot','exportable','editable');
+		$share_params = compact('model','panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','has_table','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');
 		
 		View::share($share_params);
 

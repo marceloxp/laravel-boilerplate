@@ -2,7 +2,7 @@
 
 @section('styles')
 	{{ css('/assets/jquery-treegrid/css/jquery.treegrid.css') }}
-@show
+@endsection
 
 @section('content-header')
 	{{ $panel_title }}
