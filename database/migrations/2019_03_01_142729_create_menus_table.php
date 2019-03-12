@@ -20,15 +20,35 @@ class CreateMenusTable extends Migration
 			{
 				$table->increments('id');
 				$table->bigInteger('parent_id')->comment('Parent');
-				$table->string('name', 255)->comment('Nome');
-				$table->string('slug', 255)->comment('Slug');
+				$table->enum('type', ['root','header','link'])->default('link')->comment('Tipo');
+				$table->string('name', 255)->comment('Caption');
+				$table->string('slug', 255)->nullable()->comment('Slug');
+				$table->string('color', 64)->nullable()->default('bg-green')->comment('Cor');
+				$table->string('ico', 64)->default('fa-envelope')->comment('Ícone');
+				$table->string('link', 124)->nullable()->comment('Link');
+				$table->string('model', 124)->nullable()->comment('Model');
+				$table->string('group', 124)->nullable()->comment('Grupo');
+				$table->string('route', 124)->nullable()->comment('Rota');
 
 				$table->timestamps();
 				$table->softDeletes();
 				$table->index(['deleted_at']);
+				$table->unique(['name','parent_id']);
 			}
 		);
 		db_comment_table('menus', 'Admin Menu');
+
+		\DB::table('menus')->insert
+		(
+			[
+				'parent_id' => 0,
+				'type'      => 'root',
+				'name'      => 'Menu',
+				'slug'      => 'menu',
+				'color'     => 'bg-green',
+				'ico'       => 'fa-table'
+			]
+		);
 	}
 
 	/**

@@ -55,4 +55,20 @@ class Role extends MasterModel
 	{
 		return $this->scopeMasterMany($query, \App\Models\Menusection::class, \App\Models\Role::class, $p_role_id);
 	}
+
+	/**
+	* Retrieve All Roles related to One Menu
+	*/
+	public function scopeMenuRole($query, $p_menu_id)
+	{
+		return $query->join('menu_role', 'roles.id', '=', 'menu_role.role_id')->where('menu_role.menu_id', $p_menu_id);
+	}
+	
+	/**
+	* Retrieve All Pivots related to One Target
+	*/
+	public function scopeRoleVideo($query, $p_target_id)
+	{
+		return $query->join('role_video', 'roles.id', '=', 'role_video.role_id')->where('role_video.video_id', $p_target_id);
+	}
 }

@@ -8,7 +8,7 @@ use App\Http\Utilities\MasterModel;
 use Nestable\NestableTrait;
 use App\Traits\TreeModelTrait;
 
-class Menu extends MasterModel 
+class Menu extends MasterModel
 {
 	use SoftDeletes;
 	use NestableTrait;
@@ -29,19 +29,36 @@ class Menu extends MasterModel
 		];
 		return Role::_validate($request, $rules, $id);
 	}
+
+	/**
+	* Retrieve Tags pivot Table
+	*/
+	public function roles()
+	{
+		return $this->belongsToMany(\App\Models\Role::class);
+	}
 }
 
 /*
 
 TRUNCATE TABLE blp_menus;
-INSERT INTO blp_menus (name, slug, parent_id) VALUES
-	('Menu', 'menu', 0),
-	('Tabelas', 'tabelas', 1),
-	('Categorias', 'categorias', 2),
-	('Produtos', 'produtos', 2),
-	('Sistema', 'sistema', 1),
-	('Usuários', 'usuarios', 5),
-	('Permissões', 'permissoes', 5)
+INSERT INTO blp_menus (name, slug, description, parent_id) VALUES
+	('Menu'      , 'menu'      , 'Descrição de Menu'      , 0),
+	('Tabelas'   , 'tabelas'   , 'Descrição de Tabelas'   , 1),
+	('Categorias', 'categorias', 'Descrição de Categorias', 2),
+	('Produtos'  , 'produtos'  , 'Descrição de Produtos'  , 2),
+	('Sistema'   , 'sistema'   , 'Descrição de Sistema'   , 1),
+	('Usuários'  , 'usuarios'  , 'Descrição de Usuários'  , 5),
+	('Permissões', 'permissoes', 'Descrição de Permissões', 5)
+;
+INSERT INTO blp_menus (name, slug, description, parent_id) VALUES
+	('Departamentos', 'departamentos', 'Descrição de Departamentos', 0),
+	('Roupa'        , 'roupa'        , 'Descrição de Roupa'        , 8),
+	('Masculina'    , 'masculina'    , 'Descrição de Masculina'    , 9),
+	('Feminina'     , 'feminina'     , 'Descrição de Feminina'     , 9),
+	('Eletrônicos'  , 'eletronicos'  , 'Descrição de Eletrônicos'  , 8),
+	('Games'        , 'games'        , 'Descrição de Games'        , 12),
+	('TVs'          , 'tvs'          , 'Descrição de TVs'          , 12)
 ;
 SELECT * FROM blp_menus;
 
