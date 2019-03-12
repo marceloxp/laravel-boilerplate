@@ -226,7 +226,6 @@
 
 						if ( (substr($field_name, -3) == '_id') && (!in_array($field_name, ['parent_id'])) )
 						{
-							dump($field_name);
 							if (isset($$field_name))
 							{
 								$_field_value = $$field_name;
