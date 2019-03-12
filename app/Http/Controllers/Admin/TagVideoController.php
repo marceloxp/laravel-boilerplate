@@ -5,19 +5,18 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
-use App\Http\Utilities\Youtube;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use \App\Http\Utilities\Result;
-use App\Models\Video;
-use App\Models\Tag;
 use Hook;
 
 class TagVideoController extends AdminController
 {
 	public function __construct()
 	{
-		$this->setCaption('Vídeos (Tags)');
+		$this->setMasterModel(\App\Models\Video::class);
+		$this->setModel(\App\Models\Tag::class);
+		$this->setCaptionByModel($this->master, $this->model);
 		parent::__construct();
 	}
 
@@ -26,44 +25,22 @@ class TagVideoController extends AdminController
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(Request $request, $video_id)
+	public function index(Request $request, $target_id)
 	{
-		if (empty($video_id))
+		if (empty($target_id))
 		{
 			die('Invalid parameters.');
 		}
 
-		$this->setCaption('Tags', db_get_name('videos', $video_id));
+		$this->setPivotCaption($target_id);
 
 		return $this->defaultIndex
 		(
 			[
-				'pivot_scope'    =>
-				[
-					'name'  => 'tagVideo',
-					'param' => $video_id
-				],
+				'pivot_scope'    => $this->getPivotScopeConfig($target_id),
 				'request'        => $request,
-				'model'          => Tag::class,
+				'model'          => $this->model,
 				'display_fields' => ['id','name','created_at']
-			]
-		);
-	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create(Request $request, $id = null)
-	{
-		return $this->defaultCreate
-		(
-			[
-				'id'             => $id,
-				'request'        => $request,
-				'model'          => Video::class,
-				'display_fields' => ['id','category_id','name','youtube']
 			]
 		);
 	}
@@ -74,13 +51,14 @@ class TagVideoController extends AdminController
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request, $video_id)
+	public function store(Request $request, $target_id)
 	{
+		$model_name = $this->model::getTableName();
 		$ids = $request->input('ids');
-		foreach ($ids as $tag_id)
+		foreach ($ids as $model_id)
 		{
-			$video = Video::findOrFail($video_id);
-			$result = $video->tags()->attach($tag_id);
+			$master = $this->master::findOrFail($target_id);
+			$result = $master->$model_name()->attach($model_id);
 		}
 
 		return Result::success('Registros adicionados com sucesso.');
@@ -92,26 +70,27 @@ class TagVideoController extends AdminController
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($video_id, $tag_id)
+	public function show($target_id, $model_id)
 	{
 		return $this->defaultShow
 		(
 			[
-				'id'             => $tag_id,
-				'model'          => Tag::class,
+				'id'             => $model_id,
+				'model'          => $this->model,
 				'display_fields' => ['id','name']
 			]
 		);
 	}
 
-	public function detach(Request $request, $video_id)
+	public function detach(Request $request, $target_id)
 	{
+		$model_name = $this->model::getTableName();
 		$ids = $request->input('ids');
 		$ids = explode(',', $ids);
-		foreach ($ids as $tag_id)
+		foreach ($ids as $model_id)
 		{
-			$video = Video::findOrFail($video_id);
-			$result = $video->tags()->detach($tag_id);
+			$master = $this->master::findOrFail($target_id);
+			$result = $master->$model_name()->detach($model_id);
 		}
 
 		return Result::success('Registros excluídos com sucesso.');
