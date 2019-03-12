@@ -126,14 +126,19 @@ class MasterModel extends Model
 		return \DB::table(self::getTableName());
 	}
 
-	public static function getPivotConfig($p_table_name, $p_icon, $p_caption = '')
+	public static function getPivotConfig($p_args)
 	{
-		return
-		[
-			'name'    => db_get_pivot_table_name([self::getTableName(), $p_table_name], false),
-			'caption' => db_get_comment_table($p_table_name),
-			'icon'    => $p_icon
-		];
+		$result = [];
+		foreach ($p_args as $table_name => $icon)
+		{
+			$result[] = 
+			[
+				'name'    => db_get_pivot_table_name([self::getTableName(), $table_name], false),
+				'caption' => db_get_comment_table($table_name),
+				'icon'    => $icon
+			];
+		}
+		return $result;
 	}
 
 	public static function ajustFormValues($request)

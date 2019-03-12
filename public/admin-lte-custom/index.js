@@ -98,11 +98,11 @@ umsappadmin.Tindex = function($, objname, options)
 		$(document).on
 		(
 			'click',
-			'#btn-table-pvt',
+			'.btn-table-pvt',
 			function(e)
 			{
 				e.preventDefault();
-				self.onPivotButtonClick();
+				self.onPivotButtonClick($(this));
 			}
 		);
 
@@ -243,11 +243,11 @@ umsappadmin.Tindex = function($, objname, options)
 	{
 		if ($('.ck-row:checked').length == 1)
 		{
-			$('#btn-table-edt,#btn-table-viw,#btn-table-pvt,#btn-table-many').removeClass('disabled');
+			$('#btn-table-edt,#btn-table-viw,.btn-table-pvt,#btn-table-many').removeClass('disabled');
 		}
 		else
 		{
-			$('#btn-table-edt,#btn-table-viw,#btn-table-pvt,#btn-table-many').addClass('disabled');
+			$('#btn-table-edt,#btn-table-viw,.btn-table-pvt,#btn-table-many').addClass('disabled');
 		}
 
 		if ($('.ck-row:checked').length > 0)
@@ -563,14 +563,14 @@ umsappadmin.Tindex = function($, objname, options)
 		window.location.href = new_url;
 	};
 
-	this.onPivotButtonClick = function()
+	this.onPivotButtonClick = function($button)
 	{
 		if ($('.ck-row:checked').length !== 1)
 		{
 			return;
 		}
 		var ids = $('.ck-row:checked').attr('data-ids');
-		var route = $('#btn-table-pvt').attr('data-link');
+		var route = $button.attr('data-link');
 		if (empty(ids)){ return; }
 		var new_url = datasite.url.admin + '/' + route + '/' + ids;
 		window.open(new_url);

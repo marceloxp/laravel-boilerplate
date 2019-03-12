@@ -153,3 +153,20 @@ if (!function_exists('link_uploaded_img'))
 		}
 	}
 }
+
+if (!function_exists('file_to_array'))
+{
+	function file_to_array($p_file_name)
+	{
+		return explode(PHP_EOL, file_get_contents($p_file_name));
+	}
+}
+
+if (!function_exists('array_to_file'))
+{
+	function array_to_file($p_array, $p_file_name)
+	{
+		file_put_contents($p_file_name, implode(PHP_EOL, $p_array));
+		return true;
+	}
+}

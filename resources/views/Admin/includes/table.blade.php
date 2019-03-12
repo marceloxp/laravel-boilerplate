@@ -128,7 +128,9 @@
 						<button type="button" id="btn-table-many" data-parent="{{ $table_name }}" data-link="{{ $table_many['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $table_many['icon'] }}"></i> {{ $table_many['caption'] }}</button>
 					@endif
 					@if (!empty($pivot))
-						<button type="button" id="btn-table-pvt" data-link="{{ $pivot['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $pivot['icon'] }}"></i> {{ $pivot['caption'] }}</button>
+						@foreach($pivot as $pivot_config)
+							<button type="button" id="btn-table-pvt" data-link="{{ $pivot_config['name'] }}" class="btn-table-pvt btn btn-warning disabled"><i class="fa {{ $pivot_config['icon'] }}"></i> {{ $pivot_config['caption'] }}</button>
+						@endforeach
 					@endif
 					@if ($buttons_edit)
 						<button type="button" id="btn-table-del" class="btn btn-danger {{ $class_pivot }} disabled"><i class="fa fa-close"></i> Excluir</button>
