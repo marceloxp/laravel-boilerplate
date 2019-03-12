@@ -38,7 +38,7 @@ if (!function_exists('db_get_pivot_table_name'))
 	function db_get_pivot_table_name($p_table_names, $use_prefix = true)
 	{
 		$sorted = array_sort_ex($p_table_names, true);
-		$table_name = sprintf('%s_%s', \Illuminate\Support\Str::singular($sorted[0]), \Illuminate\Support\Str::singular($sorted[1]));
+		$table_name = sprintf('%s_%s', str_to_singular($sorted[0]), str_to_singular($sorted[1]));
 		if ($use_prefix)
 		{
 			$table_name = db_prefixed_table($table_name);

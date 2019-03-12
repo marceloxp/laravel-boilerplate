@@ -299,8 +299,8 @@ class MasterModel extends Model
 				{
 					$table = $relation->table_name;
 					$pivot = $table;
-					$ligation = ltrim($table, env('DB_TABLE_PREFIX'));
-					$table = ltrim($table, env('DB_TABLE_PREFIX'));
+					$ligation = db_trim_table_prefix($table);
+					$table = db_trim_table_prefix($table);
 					$table = trim($table, $table_name);
 					$table = trim($table, '_');
 					$model = $table;
@@ -364,16 +364,16 @@ class MasterModel extends Model
 				foreach ($fields_relations as $ref)
 				{
 					$value = (array)$ref;
-
 					$value = 
 					[
-						'table_name'   => trim($value['table_name'], env('DB_TABLE_PREFIX')),
-						'table_model'  => str_singular(trim($value['table_name'], env('DB_TABLE_PREFIX'))),
+						'table_name'   => db_trim_table_prefix($value['table_name']),
+						'table_model'  => str_singular(db_trim_table_prefix($value['table_name'])),
 						'field_name'   => $value['field_name'],
-						'ref_table'    => trim($value['ref_table'], env('DB_TABLE_PREFIX')),
-						'ref_model'    => str_singular(trim($value['ref_table'], env('DB_TABLE_PREFIX'))),
+						'ref_table'    => db_trim_table_prefix($value['ref_table']),
+						'ref_table'    => db_trim_table_prefix($value['ref_table']),
+						'ref_model'    => str_singular(db_trim_table_prefix($value['ref_table'])),
 						'field_index'  => $value['field_index'],
-						'custom_field' => str_singular(trim($value['ref_table'], env('DB_TABLE_PREFIX'))),
+						'custom_field' => str_singular(db_trim_table_prefix($value['ref_table'])),
 						'comment'      => ''
 					];
 					$value['comment'] = self::getTableFieldCaption($value['table_name'], 'name');
