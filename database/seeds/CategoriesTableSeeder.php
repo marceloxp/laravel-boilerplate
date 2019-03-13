@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Category;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -23,24 +22,29 @@ class CategoriesTableSeeder extends Seeder
 				['name' => 'Cities' , 'description' => 'Cities Videos' , 'created_at' => $now],
 			];
 
-			$subcategories = 
-			[
-				'Space'   => ['Sun','Earth','Galaxy'],
-				'Animals' => ['Cat','Dog','Duck','Rat','Horse'],
-				'Cities'  => ['São Paulo','Rio de Janeiro','Amazonas','Ceará','Goiás'],
-			];
-
 			foreach ($categories as $category)
 			{
-				$result      = Category::create($category);
-				$category_id = $result->id;
-				$subs        = $subcategories[$result->name];
-
-				foreach ($subs as $sub)
-				{
-					\App\Models\Subcategory::create(['category_id' => $category_id, 'name' => $sub, 'created_at' => $now]);
-				}
+				App\Models\Category::create($category)->save();
 			}
+
+			// $subcategories = 
+			// [
+			// 	'Space'   => ['Sun','Earth','Galaxy'],
+			// 	'Animals' => ['Cat','Dog','Duck','Rat','Horse'],
+			// 	'Cities'  => ['São Paulo','Rio de Janeiro','Amazonas','Ceará','Goiás'],
+			// ];
+
+			// foreach ($categories as $category)
+			// {
+			// 	$result      = Category::create($category);
+			// 	$category_id = $result->id;
+			// 	$subs        = $subcategories[$result->name];
+
+			// 	foreach ($subs as $sub)
+			// 	{
+			// 		\App\Models\Subcategory::create(['category_id' => $category_id, 'name' => $sub, 'created_at' => $now]);
+			// 	}
+			// }
 		}
 		catch (Exception $e)
 		{

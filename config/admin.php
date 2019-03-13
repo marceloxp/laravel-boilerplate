@@ -50,20 +50,6 @@ return [
 					'ico'     => 'fa-folder',
 					'group'   => 'admin_category',
 					'route'   => 'admin_category'
-				],
-				[
-					'type'    => 'link',
-					'caption' => 'Vídeos',
-					'ico'     => 'fa-youtube',
-					'group'   => 'admin_video',
-					'route'   => 'admin_video'
-				],
-				[
-					'type'    => 'link',
-					'caption' => 'Tags',
-					'ico'     => 'fa-tags',
-					'group'   => 'admin_tag',
-					'route'   => 'admin_tag'
 				]
 			]
 		],
@@ -148,6 +134,20 @@ return [
 					'ico'     => 'fa-unlock-alt',
 					'group'   => 'admin_role',
 					'route'   => 'admin_role'
+				],
+				[
+					'type'    => 'link',
+					'caption' => 'Tags',
+					'ico'     => 'fa-tags',
+					'group'   => 'admin_tag',
+					'route'   => 'admin_tag'
+				],
+				[
+					'type'    => 'link',
+					'caption' => 'Vídeos',
+					'ico'     => 'fa-youtube',
+					'group'   => 'admin_video',
+					'route'   => 'admin_video'
 				],
 				[
 					'roles'   => ['Master','Developer'],

@@ -29,17 +29,6 @@ class CreateMenuroleTable extends Migration
 				$table->foreign('role_id')->references('id')->on('roles');
 			}
 		);
-
-		$menu_id = \DB::table('menus')->select('id')->where('slug', 'menu')->first()->id;
-		$role_id = \DB::table('roles')->select('id')->where('name', 'Developer')->first()->id;
-
-		\DB::table('menu_role')->insert
-		(
-			[
-				'menu_id' => $menu_id,
-				'role_id' => $role_id,
-			]
-		);
 	}
 
 	/**

@@ -37,18 +37,6 @@ class CreateMenusTable extends Migration
 			}
 		);
 		db_comment_table('menus', 'Admin Menu');
-
-		\DB::table('menus')->insert
-		(
-			[
-				'parent_id' => 0,
-				'type'      => 'root',
-				'name'      => 'Menu',
-				'slug'      => 'menu',
-				'color'     => 'bg-green',
-				'ico'       => 'fa-table'
-			]
-		);
 	}
 
 	/**

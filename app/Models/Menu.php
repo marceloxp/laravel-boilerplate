@@ -37,6 +37,19 @@ class Menu extends MasterModel
 	{
 		return $this->belongsToMany(\App\Models\Role::class);
 	}
+
+	public static function addRole($p_menu_id, $p_role_name)
+	{
+		$menu_id = $p_menu_id;
+		$role = db_select_one(['id'], 'roles', ['name' => $p_role_name], true);
+		$role_id = $role->id;
+		$menu_role_id = \DB::table('menu_role')->insertGetId(compact('menu_id', 'role_id'));
+		if (empty($menu_role_id))
+		{
+			throw new Exception('Falha na inserção da Regra.');
+		}
+		return $menu_role_id;
+	}
 }
 
 /*

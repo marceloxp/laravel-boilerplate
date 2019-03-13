@@ -83,6 +83,22 @@ if (!function_exists('db_get_name'))
 	}
 }
 
+if (!function_exists('db_select_one'))
+{
+	function db_select_one($p_fields, $p_table_name, $p_where, $raise_if_empty = false)
+	{
+		$result = \DB::table($p_table_name)->select($p_fields)->where($p_where)->first();
+		if ($raise_if_empty)
+		{
+			if (empty($result))
+			{
+				throw new Exception('Falha na captura dos dados solicitados.');
+			}
+		}
+		return $result;
+	}
+}
+
 if (!function_exists('db_model_to_table_name'))
 {
 	function db_model_to_table_name($model_name)
