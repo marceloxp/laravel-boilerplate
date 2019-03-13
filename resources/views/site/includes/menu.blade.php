@@ -13,9 +13,6 @@
 		<a href="{{ route('home') }}">{{ dic('Página Inicial') }}</a>
 	</li>
 	<li>
-		<a href="{{ route('usuario_cadastro') }}">{{ dic('Cadastro') }}</a>
-	</li>
-	<li>
 		<a href="{{ route('sobre') }}">{{ dic('Sobre') }}</a>
 		<ul>
 			<li>

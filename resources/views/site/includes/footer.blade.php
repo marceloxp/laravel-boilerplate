@@ -2,15 +2,15 @@
 
 <ul class="social">
 	<li>
-		<a href="{{ config('social.url.facebook') }}" target="_blank">Facebook</a>
+		<a href="{{ config('social.facebook.url') }}" target="_blank">Facebook</a>
 	</li>
 	<li>
-		<a href="{{ config('social.url.twitter') }}" target="_blank">Twitter</a>
+		<a href="{{ config('social.twitter.url') }}" target="_blank">Twitter</a>
 	</li>
 	<li>
-		<a href="{{ config('social.url.youtube') }}" target="_blank">YouTube</a>
+		<a href="{{ config('social.youtube.url') }}" target="_blank">YouTube</a>
 	</li>
 	<li>
-		<a href="{{ config('social.url.instagram') }}" target="_blank">Instagram</a>
+		<a href="{{ config('social.instagram.url') }}" target="_blank">Instagram</a>
 	</li>
 </ul>

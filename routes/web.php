@@ -41,9 +41,5 @@ Route::group
 				Route::get('/tradicao', 'SobreController@tradicao')->name('sobre_tradicao');
 			}
 		);
-
-		Route::get ('/usuario/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
-		Route::post('/usuario/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
-		Route::get ('/usuario/login'   , 'CustomerController@login')->name('usuario_login');
 	}
 );
