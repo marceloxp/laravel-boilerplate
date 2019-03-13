@@ -10,14 +10,6 @@ return [
 			'ico'     => 'fa-video-camera',
 			'link'    => 'admin_video',
 			'model'   => 'Video'
-		],
-		[
-			'roles'   => ['Master'],
-			'caption' => 'Contatos',
-			'color'   => 'bg-blue',
-			'ico'     => 'fa-envelope',
-			'link'    => 'admin_contact',
-			'model'   => 'Contact'
 		]
 	],
 	'menu' =>
@@ -72,13 +64,6 @@ return [
 					'ico'     => 'fa-tags',
 					'group'   => 'admin_tag',
 					'route'   => 'admin_tag'
-				],
-				[
-					'type'    => 'link',
-					'caption' => 'Contatos',
-					'ico'     => 'fa-envelope',
-					'group'   => 'admin_contact',
-					'route'   => 'admin_contact'
 				],
 				[
 					'type'    => 'link',
