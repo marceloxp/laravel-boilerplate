@@ -31,8 +31,7 @@ Route::group
 					[],
 					function($route)
 					{
-						Route::get(RouteLang::root()                       , 'PagesController@index'      )->name('home');
-						Route::get(RouteLang::route($route, '/faleconosco'), 'PagesController@faleconosco')->name('faleconosco');
+						Route::get(RouteLang::root(), 'PagesController@index'      )->name('home');
 					}
 				);
 			}
