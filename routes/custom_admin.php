@@ -96,48 +96,6 @@
 		}
 	);
 
-	// Produtos
-	Route::group
-	(
-		['prefix' => 'products'],
-		function()
-		{
-			Route::get ('/'         , 'ProductController@index'  )->name('admin_product'       )->group('admin_product');
-			Route::get ('edit/{id?}', 'ProductController@create' )->name('admin_product_edit'  )->group('admin_product');
-			Route::post('edit/{id?}', 'ProductController@store'  )->name('admin_product_save'  )->group('admin_product');
-			Route::get ('show/{id}' , 'ProductController@show'   )->name('admin_product_show'  )->group('admin_product');
-			Route::post('delete/'   , 'ProductController@destroy')->name('admin_product_delete')->group('admin_product');
-		}
-	);
-
-	// Pagamentos
-	Route::group
-	(
-		['prefix' => 'payments'],
-		function()
-		{
-			Route::get ('/'         , 'PaymentController@index'  )->name('admin_payment'       )->group('admin_payment');
-			Route::get ('edit/{id?}', 'PaymentController@create' )->name('admin_payment_edit'  )->group('admin_payment');
-			Route::post('edit/{id?}', 'PaymentController@store'  )->name('admin_payment_save'  )->group('admin_payment');
-			Route::get ('show/{id}' , 'PaymentController@show'   )->name('admin_payment_show'  )->group('admin_payment');
-			Route::post('delete/'   , 'PaymentController@destroy')->name('admin_payment_delete')->group('admin_payment');
-		}
-	);
-
-	// Tipos de Pagamentos
-	Route::group
-	(
-		['prefix' => 'paymenttype'],
-		function()
-		{
-			Route::get ('/'         , 'PaymenttypeController@index'  )->name('admin_paymenttype'       )->group('admin_paymenttype');
-			Route::get ('edit/{id?}', 'PaymenttypeController@create' )->name('admin_paymenttype_edit'  )->group('admin_paymenttype');
-			Route::post('edit/{id?}', 'PaymenttypeController@store'  )->name('admin_paymenttype_save'  )->group('admin_paymenttype');
-			Route::get ('show/{id}' , 'PaymenttypeController@show'   )->name('admin_paymenttype_show'  )->group('admin_paymenttype');
-			Route::post('delete/'   , 'PaymenttypeController@destroy')->name('admin_paymenttype_delete')->group('admin_paymenttype');
-		}
-	);
-
 	// Admin Menu
 	Route::group
 	(

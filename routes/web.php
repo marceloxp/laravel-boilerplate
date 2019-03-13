@@ -17,7 +17,7 @@ use App\Http\Middleware\Shopping;
 Route::group
 (
 	[
-		'middleware' => ['frontend','shopping'],
+		'middleware' => ['frontend'],
 		'namespace'  => 'Site'
 	],
 	function()
@@ -27,10 +27,7 @@ Route::group
 			[],
 			function()
 			{
-				Route::get ('/'           , 'PageController@index'      )->name('home');
-				Route::get ('/faleconosco', 'PageController@faleconosco')->name('faleconosco');
-				Route::post('/faleconosco', 'PageController@faleconosco')->name('faleconosco');
-				Route::get ('/products'   , 'ProductController@index'   )->name('produtos');
+				Route::get ('/', 'PageController@index')->name('home');
 			}
 		);
 
@@ -48,7 +45,5 @@ Route::group
 		Route::get ('/usuario/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
 		Route::post('/usuario/cadastro', 'CustomerController@cadastro')->name('usuario_cadastro');
 		Route::get ('/usuario/login'   , 'CustomerController@login')->name('usuario_login');
-		Route::post('/usuario/login'   , 'CustomerController@login')->name('usuario_login');
-		Route::get ('/usuario/logout'  , 'CustomerController@logout')->name('usuario_logout');
 	}
 );

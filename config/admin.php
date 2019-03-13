@@ -64,27 +64,6 @@ return [
 					'ico'     => 'fa-tags',
 					'group'   => 'admin_tag',
 					'route'   => 'admin_tag'
-				],
-				[
-					'type'    => 'link',
-					'caption' => 'Tipos de Pagamentos',
-					'ico'     => 'fa-credit-card',
-					'group'   => 'admin_paymenttype',
-					'route'   => 'admin_paymenttype'
-				],
-				[
-					'type'    => 'link',
-					'caption' => 'Pagamentos',
-					'ico'     => 'fa-money',
-					'group'   => 'admin_payment',
-					'route'   => 'admin_payment'
-				],
-				[
-					'type'    => 'link',
-					'caption' => 'Produtos',
-					'ico'     => 'fa-cube',
-					'group'   => 'admin_product',
-					'route'   => 'admin_product'
 				]
 			]
 		],
