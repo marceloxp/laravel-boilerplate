@@ -41,34 +41,6 @@
 		}
 	);
 
-	// Customers
-	Route::group
-	(
-		['prefix' => 'customers'],
-		function()
-		{
-			Route::get ('/'         , 'CustomerController@index'  )->name('admin_customer'       )->group('admin_customer');
-			Route::get ('edit/{id?}', 'CustomerController@create' )->name('admin_customer_edit'  )->group('admin_customer');
-			Route::post('edit/{id?}', 'CustomerController@store'  )->name('admin_customer_save'  )->group('admin_customer');
-			Route::get ('show/{id}' , 'CustomerController@show'   )->name('admin_customer_show'  )->group('admin_customer');
-			Route::post('delete/'   , 'CustomerController@destroy')->name('admin_customer_delete')->group('admin_customer');
-		}
-	);
-
-	// Address Types
-	Route::group
-	(
-		['prefix' => 'address_types'],
-		function()
-		{
-			Route::get ('/'         , 'AddressTypeController@index'  )->name('admin_address_type'       )->group('admin_address_type');
-			Route::get ('edit/{id?}', 'AddressTypeController@create' )->name('admin_address_type_edit'  )->group('admin_address_type');
-			Route::post('edit/{id?}', 'AddressTypeController@store'  )->name('admin_address_type_save'  )->group('admin_address_type');
-			Route::get ('show/{id}' , 'AddressTypeController@show'   )->name('admin_address_type_show'  )->group('admin_address_type');
-			Route::post('delete/'   , 'AddressTypeController@destroy')->name('admin_address_type_delete')->group('admin_address_type');
-		}
-	);
-
 	// Seções
 	Route::group
 	(

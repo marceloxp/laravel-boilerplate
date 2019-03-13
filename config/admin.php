@@ -13,14 +13,6 @@ return [
 		],
 		[
 			'roles'   => ['Master'],
-			'caption' => 'Clientes',
-			'color'   => 'bg-purple',
-			'ico'     => 'fa-users',
-			'link'    => 'admin_customer',
-			'model'   => 'Customer'
-		],
-		[
-			'roles'   => ['Master'],
 			'caption' => 'Contatos',
 			'color'   => 'bg-blue',
 			'ico'     => 'fa-envelope',
@@ -87,20 +79,6 @@ return [
 					'ico'     => 'fa-envelope',
 					'group'   => 'admin_contact',
 					'route'   => 'admin_contact'
-				],
-				[
-					'type'    => 'link',
-					'caption' => 'Tipos de Endereços',
-					'ico'     => 'fa-users',
-					'group'   => 'admin_address_type',
-					'route'   => 'admin_address_type'
-				],
-				[
-					'type'    => 'link',
-					'caption' => 'Clientes',
-					'ico'     => 'fa-users',
-					'group'   => 'admin_customer',
-					'route'   => 'admin_customer'
 				],
 				[
 					'type'    => 'link',
