@@ -109,3 +109,16 @@
 			Route::post('delete/'   , 'MenuController@destroy')->name('admin_menu_delete')->group('admin_menu');
 		}
 	);
+
+	// Menu - Role
+	Route::group
+	(
+		['prefix' => 'menu_role'],
+		function()
+		{
+			Route::get ('{menu_id}'              , 'MenuRoleController@index' )->name('admin_menu_role'       )->group('admin_menu_role');
+			Route::post('{menu_id}/attach'       , 'MenuRoleController@store' )->name('admin_menu_role_attach')->group('admin_menu_role');
+			Route::get ('{menu_id}/show/{role_id}', 'RoleController@pivot_show')->name('admin_menus_show'     )->group('admin_role');
+			Route::post('{menu_id}/detach'       , 'MenuRoleController@detach')->name('admin_menu_role_detach')->group('admin_menu_role');
+		}
+	);

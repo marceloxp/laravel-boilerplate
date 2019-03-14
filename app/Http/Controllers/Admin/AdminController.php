@@ -518,7 +518,7 @@ class AdminController extends Controller
 
 		$fields_schema = $model::getFieldsMetaData($appends);
 		$field_names   = array_keys($fields_schema);
-		$table         = $model::getTreeAligned($slug, $display_fields);
+		$table         = $model::getTreeAligned($slug, $display_fields, $fields_schema);
 		$has_table     = ($table->count() > 0);
 
 		$share_params = compact('model','panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','has_table','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');

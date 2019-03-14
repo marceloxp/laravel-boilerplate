@@ -50,4 +50,17 @@ class Role extends MasterModel
 	{
 		return $this->belongsToMany(\App\Models\User::class);
 	}
+	
+	public function menus()
+	{
+		return $this->belongsToMany(\App\Models\Menu::class);
+	}
+	
+	/**
+	* Retrieve All Pivots related to One Target
+	*/
+	public function scopeMenuRole($query, $p_target_id)
+	{
+		return $query->join('menu_role', 'roles.id', '=', 'menu_role.role_id')->where('menu_role.menu_id', $p_target_id);
+	}
 }

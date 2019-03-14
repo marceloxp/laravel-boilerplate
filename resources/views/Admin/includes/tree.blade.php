@@ -66,8 +66,41 @@
 							@foreach($display_fields as $field_name)
 								@php
 									$field_align = 'left';
+									$field_type = $fields_schema[$field_name]['type'];
 									$display_value = $register[$field_name];
 									$prefix = ($field_name == 'name') ? str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $register['level']) . '&nbsp;' : '';
+
+									switch ($field_type)
+									{
+										case 'appends':
+											if (is_a($display_value, App\Http\Utilities\Money::class))
+											{
+												$display_value = $display_value->formated->value;
+												$field_align = 'right';
+											}
+										break;
+										case 'timestamp':
+											$field_align = 'right';
+										break;
+										case 'int':
+											if ($field_name != 'id')
+											{
+												$field_align = 'right';
+											}
+										break;
+										case 'tinyint':
+											$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
+										break;
+										case 'decimal':
+											$display_value = new \App\Http\Utilities\Money($display_value);
+											$display_value = $display_value->formated;
+											$field_align = 'right';
+										break;
+										case 'enum':
+											$display_value = ($field_name == 'status') ? admin_label_status($display_value) : admin_badge_status($display_value);
+											$field_align = 'center';
+										break;
+									}
 
 									$hook_name     = hook_name(sprintf('admin_index_%s_%s', $table_name, $field_name));
 									$display_value = Hook::apply_filters($hook_name, $display_value, $register);

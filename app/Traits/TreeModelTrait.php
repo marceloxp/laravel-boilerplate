@@ -90,9 +90,11 @@ trait TreeModelTrait
 		return $result;
 	}
 
-	public static function getTree($p_slug, $p_fields)
+	public static function getTree($p_slug, $p_fields, $fields_schema)
 	{
 		$use_fields = (!in_array('parent_id', $p_fields)) ? array_merge($p_fields, ['parent_id']) : array_merge($p_fields);
+		$select_fields = collect($use_fields)->filter(function ($key, $value) use ($fields_schema) { return $fields_schema[$key]['is_appends'] == false; })->toArray();
+
 		$ids        = [];
 		$master_id  = self::table()->where('slug', $p_slug)->whereNull('deleted_at')->first(['id']);
 		if (empty($master_id))
@@ -102,7 +104,7 @@ trait TreeModelTrait
 		$master_id  = $master_id->id;
 		$childs     = self::getChildsIds($master_id);
 		$ids        = array_merge([$master_id], $childs);
-		$registers  = self::table()->select($use_fields)->whereIn('id', $ids)->whereNull('deleted_at')->get();
+		$registers  = self::table()->select($select_fields)->whereIn('id', $ids)->whereNull('deleted_at')->get();
 		$registers  = collect($registers->toArray())->map(function ($item, $key) { return (array)$item; });
 
 		$default_fields = config('nestable.body');
@@ -116,9 +118,9 @@ trait TreeModelTrait
 		return $registers;
 	}
 
-	public static function getTreeAligned($p_slug, $p_fields)
+	public static function getTreeAligned($p_slug, $p_fields, $fields_schema)
 	{
-		$registers = self::getTree($p_slug, $p_fields);
+		$registers = self::getTree($p_slug, $p_fields, $fields_schema);
 		$registers = self::alignTreeToLeft($registers->toArray());
 		return collect($registers);
 	}

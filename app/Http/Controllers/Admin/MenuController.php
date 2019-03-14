@@ -13,6 +13,7 @@ class MenuController extends AdminController
 {
 	public function __construct()
 	{
+		$this->appends = ['roles' => 'Permissões'];
 		$this->setModel(\App\Models\Menu::class);
 		$this->setCaptionByModel($this->model);
 		parent::__construct();
@@ -29,11 +30,12 @@ class MenuController extends AdminController
 		(
 			[
 				'pivot'          => $this->model::getPivotConfig(['roles' => 'fa-key']),
+				'appends'        => $this->appends,
 				'slug'           => 'menu',
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
-				'display_fields' => ['id','name','ico','link','created_at']
+				'display_fields' => ['id','name','ico','roles','link','created_at']
 			]
 		);
 	}
@@ -46,6 +48,33 @@ class MenuController extends AdminController
 			function($display_value, $register)
 			{
 				return sprintf('<i class="fa fa-fw %s"></i> ', $register['ico']) . $display_value;
+			},
+			10, 2
+		);
+
+		Hook::add_filter
+		(
+			sprintf('admin_index_%s_%s', $table_name, 'roles'),
+			function($display_value, $register)
+			{
+				$roles = $this->model::getRoles($register['id']);
+				if ($roles->isEmpty())
+				{
+					return '<small class="label pull-center label-default">Public</small>';
+				}
+
+				$display_value = $roles->transform
+				(
+					function($role, $key)
+					{
+						$bg_color = \App\Models\Role::getBgColorByRole($role['name']);
+						return sprintf('<small class="label pull-center %s">%s</small>', $bg_color, $role['name']);
+					}
+				);
+
+				$display_value = implode('&nbsp;', $display_value->toArray());
+
+				return $display_value;
 			},
 			10, 2
 		);

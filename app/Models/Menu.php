@@ -38,6 +38,12 @@ class Menu extends MasterModel
 		return $this->belongsToMany(\App\Models\Role::class);
 	}
 
+	public static function getRoles($p_id)
+	{
+		$result = self::whereId($p_id)->get();
+		return collect($result->first()->roles()->get()->toArray());
+	}
+
 	public static function addRole($p_menu_id, $p_role_name)
 	{
 		$menu_id      = $p_menu_id;
