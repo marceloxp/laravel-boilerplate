@@ -58,7 +58,7 @@ class Menu extends MasterModel
 		return $menu_role_id;
 	}
 
-	public static function addMenuRoot($p_caption, $p_roles)
+	public static function addMenuRoot($p_caption, $p_roles, $p_ico)
 	{
 		$now = \Carbon\Carbon::now();
 		$menu_id = \App\Models\Menu::insertGetId
@@ -67,6 +67,7 @@ class Menu extends MasterModel
 				'parent_id'  => 0,
 				'type'       => 'root',
 				'name'       => $p_caption,
+				'ico'        => $p_ico,
 				'slug'       => str_slugfy($p_caption),
 				'created_at' => $now
 			]
@@ -91,7 +92,7 @@ class Menu extends MasterModel
 				'type'       => 'header',
 				'name'       => $p_caption,
 				'slug'       => str_slugfy($p_caption),
-				'ico'        => 'fa-book',
+				'ico'        => $p_ico,
 				'created_at' => $now
 			]
 		);
