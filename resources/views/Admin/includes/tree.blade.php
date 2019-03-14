@@ -1,3 +1,7 @@
+@php
+	$hook_name      = hook_name(sprintf('admin_index_display_fields_%s', $table_name));
+	$display_fields = Hook::apply_filters($hook_name, $display_fields);
+@endphp
 <div class="box box-success">
 	<div class="box-header with-border">
 		<div class="row">
@@ -64,7 +68,12 @@
 									$field_align = 'left';
 									$display_value = $register[$field_name];
 									$prefix = ($field_name == 'name') ? str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $register['level']) . '&nbsp;' : '';
+
+									$hook_name     = hook_name(sprintf('admin_index_%s_%s', $table_name, $field_name));
+									$display_value = Hook::apply_filters($hook_name, $display_value, $register);
 								@endphp
+
+
 								<td align="{{ $field_align }}">{!! $prefix !!}{!! $display_value !!}</td>
 							@endforeach
 						</tr>

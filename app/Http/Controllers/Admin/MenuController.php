@@ -33,14 +33,33 @@ class MenuController extends AdminController
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
-				'display_fields' => ['id','name','type','slug','ico','link','model','route','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','name','ico','link','created_at']
 			]
 		);
 	}
 
 	public function hooks_index($table_name)
 	{
-		//
+		Hook::add_filter
+		(
+			sprintf('admin_index_%s_%s', $table_name, 'name'),
+			function($display_value, $register)
+			{
+				return sprintf('<i class="fa fa-fw %s"></i> ', $register['ico']) . $display_value;
+			},
+			10, 2
+		);
+
+		Hook::add_filter
+		(
+			sprintf('admin_index_display_fields_%s', $table_name),
+			function($display_value)
+			{
+				$hide_fields = ['ico','link'];
+				return collect($display_value)->reject(function ($value, $key) use ($hide_fields) { return (in_array($value, $hide_fields)); })->toArray();
+			},
+			10, 1
+		);
 	}
 
 	/**
