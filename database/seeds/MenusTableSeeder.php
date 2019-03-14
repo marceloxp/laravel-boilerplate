@@ -22,7 +22,7 @@ class MenusTableSeeder extends Seeder
 		$menu = \App\Models\Menu::addMenuRoot('Menu', [], 'fa-table');
 		
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Páginas', 'fa-book', $public);
-			$item = \App\Models\Menu::addMenuDashboard($group, 'Dashboard', 'bg-green', 'fa-video-camera', $master_admin_developer, 'admin_video', 'Video');
+			$item = \App\Models\Menu::addMenuDashboard($group, 'Dashboard', 'bg-green', 'fa-dashboard', $master_admin_developer, 'admin_video', 'Video');
 		
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Tabelas', 'fa-table', $master_developer);
 			$item = \App\Models\Menu::addMenuLink($group, 'Admin Menu', 'fa-list-ul', $master_developer, 'admin_menu');
