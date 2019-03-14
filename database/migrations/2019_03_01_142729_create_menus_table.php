@@ -20,14 +20,14 @@ class CreateMenusTable extends Migration
 			{
 				$table->increments('id');
 				$table->bigInteger('parent_id')->comment('Parent');
-				$table->enum('type', ['root','header','link'])->default('link')->comment('Tipo');
+				$table->enum('type', ['root','dashboard','header','link','internal-link'])->default('link')->comment('Tipo');
 				$table->string('name', 255)->comment('Caption');
 				$table->string('slug', 255)->nullable()->comment('Slug');
 				$table->string('color', 64)->nullable()->default('bg-green')->comment('Cor');
 				$table->string('ico', 64)->default('fa-envelope')->comment('Ícone');
 				$table->string('link', 124)->nullable()->comment('Link');
+				$table->string('target', 124)->nullable()->comment('Target');
 				$table->string('model', 124)->nullable()->comment('Model');
-				$table->string('group', 124)->nullable()->comment('Grupo');
 				$table->string('route', 124)->nullable()->comment('Rota');
 
 				$table->timestamps();

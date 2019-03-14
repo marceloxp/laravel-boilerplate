@@ -33,7 +33,7 @@ class MenuController extends AdminController
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
-				'display_fields' => ['id','parent_id','type','name','slug','color','ico','link','model','group','route','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','name','type','slug','ico','link','model','route','created_at','updated_at','deleted_at']
 			]
 		);
 	}
@@ -68,7 +68,6 @@ class MenuController extends AdminController
 					'ico'        => 6,
 					'link'       => 6,
 					'model'      => 6,
-					'group'      => 6,
 					'route'      => 6,
 					'created_at' => 6,
 					'updated_at' => 6,

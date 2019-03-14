@@ -4,7 +4,8 @@ return [
 	'dashboard' =>
 	[
 		[
-			'roles'   => ['Master'],
+			'type'    => 'dashboard',
+			'roles'   => ['Master','Admin','Developer'],
 			'caption' => 'Vídeos',
 			'color'   => 'bg-green',
 			'ico'     => 'fa-video-camera',

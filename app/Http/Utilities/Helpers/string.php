@@ -1,4 +1,11 @@
 <?php
+if (!function_exists('str_slugfy'))
+{
+	function str_slugfy($p_string, $p_separator = '-')
+	{
+		return Illuminate\Support\Str::slug($p_string, $p_separator);
+	}
+}
 
 if (!function_exists('array_sort_ex'))
 {
