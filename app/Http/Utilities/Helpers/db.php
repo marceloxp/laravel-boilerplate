@@ -99,6 +99,20 @@ if (!function_exists('db_select_one'))
 	}
 }
 
+if (!function_exists('db_select_id'))
+{
+	// echo db_select_id(\App\Models\Menu::class, ['slug' => 'tabelas'], true);
+	function db_select_id($p_model, $p_where, $raise_if_empty = false)
+	{
+		$result = $p_model::where($p_where)->get(['id'])->take(1)->first();
+		if ($raise_if_empty && empty($result))
+		{
+			throw new Exception('Falha na captura dos dados solicitados.');
+		}
+		return (!empty($result)) ? $result->id : null;
+	}
+}
+
 if (!function_exists('db_model_to_table_name'))
 {
 	function db_model_to_table_name($model_name)

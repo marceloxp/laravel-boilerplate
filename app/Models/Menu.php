@@ -150,6 +150,47 @@ class Menu extends MasterModel
 		return $menu_id;
 	}
 
+	public static function menuExists($p_parent_id, $p_caption)
+	{
+		return self::where(['name' => $p_caption, 'parent_id' => $p_parent_id])->exists();
+	}
+
+	public static function getMenuId($p_parent_id, $p_caption)
+	{
+		$result = self::where(['name' => $p_caption, 'parent_id' => $p_parent_id])->get(['id'])->first();
+		if (empty($result)) { return null; }
+		return $result->id;
+	}
+
+	public static function addMenuLinkToTablesItem($p_caption, $p_ico, $p_roles, $p_route)
+	{
+		$parent_id = db_select_id(self, ['slug' => 'tabelas'], true);
+		$menu_id = getMenuId($parent_id, $p_caption);
+		if (empty($menu_id))
+		{
+			$now = \Carbon\Carbon::now();
+			$menu_id = \App\Models\Menu::insertGetId
+			(
+				[
+					'parent_id'  => $parent_id,
+					'type'       => 'link',
+					'name'       => $p_caption,
+					'slug'       => str_slugfy($p_caption),
+					'ico'        => $p_ico,
+					'route'      => $p_route,
+					'created_at' => $now
+				]
+			);
+			if (!$menu_id) { throw new Exception('Falha na inserção do Menu.'); }
+
+			foreach ($p_roles as $role)
+			{
+				\App\Models\Menu::addRole($menu_id, $role);
+			}
+		}
+		return $menu_id;
+	}
+
 	public static function addMenuInternalLink($parent_id, $p_caption, $p_ico, $p_roles, $p_link, $p_target = '_self')
 	{
 		$now = \Carbon\Carbon::now();

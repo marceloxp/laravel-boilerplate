@@ -29,15 +29,6 @@ class MakexCreateSimpleTable extends \App\Console\MakexCommand
 	{
 		parent::__construct();
 
-		$this->admin_menu = "				[
-					'type'    => 'link',
-					'caption' => '{Caption}',
-					'ico'     => 'fa-folder',
-					'group'   => 'admin_{model_singular}',
-					'route'   => 'admin_{model_singular}'
-				],"
-		;
-
 		$this->string_class = "<?php
 
 namespace App\Models;
@@ -254,18 +245,7 @@ class Create{ClassName}Table extends Migration
 		// ██║ ╚═╝ ██║███████╗██║ ╚████║╚██████╔╝
 		// ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝ 
 
-		$config_admin_path = config_path('admin.php');
-
-		$table_name = db_model_to_table_name($model_name);
-
-		$admin_menu = '// ADMIN ADD ITEM - DON\'T REMOVE THIS LINE' . PHP_EOL . $this->admin_menu;
-		$admin_menu = str_replace('{Caption}', $model_description, $admin_menu);
-		$admin_menu = str_replace('{model_singular}', $table_name, $admin_menu);
-
-		$body = \File::get($config_admin_path);
-		$body = str_replace('// ADMIN ADD ITEM - DON\'T REMOVE THIS LINE', $admin_menu, $body);
-
-		\File::replace($config_admin_path, $body);
+		\App\Models\Menu::addMenuLinkToTablesItem($model_description, 'fa-folder', [], 'admin_' . $table_name);
 
 		//  ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗     ███╗   ███╗██╗ ██████╗ ██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
 		// ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝     ████╗ ████║██║██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
