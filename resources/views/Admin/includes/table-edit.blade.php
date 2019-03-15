@@ -36,6 +36,7 @@
 							continue;
 						endif;
 						$row_visible = 'block';
+						$field_value = $register->$field_name;
 						$field_type  = $fields_schema[$field_name]['type'];
 						$input_type  = 'text';
 						$input       = '<input type="text" class="form-control" placeholder="render error!!!">';
@@ -77,7 +78,7 @@
 							$slug = $request->segment(2);
 							$root = $model::table()->where('slug', '=', $slug)->first();
 							$parent_id  = (!empty($root)) ? $root->id : '0';
-							$array_tree = $model::getTree($slug, ['id','name','slug']);
+							$array_tree = $model::getTree($slug, ['id','name','slug'], $fields_schema);
 
 							$input = array_to_dropdown
 							(

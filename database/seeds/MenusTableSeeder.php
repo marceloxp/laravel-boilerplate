@@ -18,25 +18,32 @@ class MenusTableSeeder extends Seeder
 
 		\DB::select('DELETE FROM blp_menu_role WHERE id >= 0');
 		\DB::select('DELETE FROM blp_menus WHERE id >= 0');
+
+		$group_order = 0;
 		
 		$menu = \App\Models\Menu::addMenuRoot('Menu', [], 'fa-table');
 		
-		$group = \App\Models\Menu::addMenuHeader($menu, 'Páginas', 'fa-book', $public);
+		$group_order += 10;
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Páginas', 'fa-book', $public, $group_order);
 			$item = \App\Models\Menu::addMenuDashboard($group, 'Dashboard', 'bg-green', 'fa-dashboard', $master_admin_developer, 'admin_video', 'Video');
 		
-		$group = \App\Models\Menu::addMenuHeader($menu, 'Tabelas', 'fa-table', $master_developer);
+		$group_order += 10;
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Tabelas', 'fa-table', $master_developer, $group_order);
 			$item = \App\Models\Menu::addMenuLink($group, 'Admin Menu', 'fa-list-ul', $master_developer, 'admin_menu');
 			$item = \App\Models\Menu::addMenuLink($group, 'Categorias', 'fa-folder', $master_developer, 'admin_category');
 
-		$group = \App\Models\Menu::addMenuHeader($menu, 'Cache', 'fa-rocket', $master_developer);
+		$group_order += 10;
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Cache', 'fa-rocket', $master_developer, $group_order);
 			$item = \App\Models\Menu::addMenuLink($group, 'Listar', 'fa-list', $master_developer, 'admin_cache_list');
 			$item = \App\Models\Menu::addMenuLink($group, 'Configurar', 'fa-gears', $master_developer, 'admin_cache');
 
-		$group = \App\Models\Menu::addMenuHeader($menu, 'Developer', 'fa-terminal', $developer);
+		$group_order += 10;
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Developer', 'fa-terminal', $developer, $group_order);
 			$item = \App\Models\Menu::addMenuLink($group, 'phpinfo', 'fa-info-circle', $developer, 'admin_phpinfo');
 			$item = \App\Models\Menu::addMenuInternalLink($group, 'Adminer', 'fa-database', $developer, 'adminer', '_blank');
 
-		$group = \App\Models\Menu::addMenuHeader($menu, 'Sistema', 'fa-gears', $public);
+		$group_order += 10;
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Sistema', 'fa-gears', $public, $group_order);
 			$item = \App\Models\Menu::addMenuLink($group, 'Galeria', 'fa-picture-o', $master_admin_developer, 'admin_gallery');
 			$item = \App\Models\Menu::addMenuLink($group, 'Configurações', 'fa-gear', $master_developer, 'admin_config');
 			$item = \App\Models\Menu::addMenuLink($group, 'Permissões', 'fa-unlock-alt', $master_developer, 'admin_role');

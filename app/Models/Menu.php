@@ -65,6 +65,7 @@ class Menu extends MasterModel
 		(
 			[
 				'parent_id'  => 0,
+				'order'      => 0,
 				'type'       => 'root',
 				'name'       => $p_caption,
 				'ico'        => $p_ico,
@@ -82,13 +83,14 @@ class Menu extends MasterModel
 		return $menu_id;
 	}
 
-	public static function addMenuHeader($parent_id, $p_caption, $p_ico, $p_roles)
+	public static function addMenuHeader($parent_id, $p_caption, $p_ico, $p_roles, $p_order = 0)
 	{
 		$now = \Carbon\Carbon::now();
 		$menu_id = \App\Models\Menu::insertGetId
 		(
 			[
 				'parent_id'  => $parent_id,
+				'order'      => $p_order,
 				'type'       => 'header',
 				'name'       => $p_caption,
 				'slug'       => str_slugfy($p_caption),
