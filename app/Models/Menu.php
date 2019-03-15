@@ -64,7 +64,7 @@ class Menu extends MasterModel
 	public static function addRole($p_menu_id, $p_role_name)
 	{
 		$menu_id      = $p_menu_id;
-		$role         = db_select_one(['id'], 'roles', ['name' => $p_role_name], true);
+		$role         = db_select_one(\App\Models\Role::class, ['id'], ['name' => $p_role_name], true);
 		$role_id      = $role->id;
 		$menu_role_id = \DB::table('menu_role')->insertGetId(compact('menu_id', 'role_id'));
 

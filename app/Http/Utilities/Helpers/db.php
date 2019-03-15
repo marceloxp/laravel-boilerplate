@@ -85,9 +85,9 @@ if (!function_exists('db_get_name'))
 
 if (!function_exists('db_select_one'))
 {
-	function db_select_one($p_fields, $p_table_name, $p_where, $raise_if_empty = false)
+	function db_select_one($p_model, $p_fields, $p_where, $raise_if_empty = false)
 	{
-		$result = \DB::table($p_table_name)->select($p_fields)->where($p_where)->first();
+		$result = $p_model::where($p_where)->get($p_fields)->first();
 		if ($raise_if_empty)
 		{
 			if (empty($result))
