@@ -14,7 +14,7 @@ class Menu extends MasterModel
 	use NestableTrait;
 	use TreeModelTrait;
 
-    protected $parent = 'parent_id';
+	protected $parent = 'parent_id';
 
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
@@ -36,6 +36,23 @@ class Menu extends MasterModel
 	public function roles()
 	{
 		return $this->belongsToMany(\App\Models\Role::class);
+	}
+
+	public static function ajustRoles($p_tree_array)
+	{
+		$p_tree_array->transform
+		(
+			function ($item, $key)
+			{
+				$item['roles'] = self::getRoles($item['id'])->toArray();
+				if (!empty($item['child']))
+				{
+					$item['child'] = self::ajustRoles(collect($item['child']))->toArray();
+				}
+				return $item;
+			}
+		);
+		return $p_tree_array;
 	}
 
 	public static function getRoles($p_id)
@@ -120,33 +137,6 @@ class Menu extends MasterModel
 				'slug'       => str_slugfy($p_caption),
 				'ico'        => $p_ico,
 				'route'      => $p_route,
-				'created_at' => $now
-			]
-		);
-		if (!$menu_id) { throw new Exception('Falha na inserção do Menu.'); }
-
-		foreach ($p_roles as $role)
-		{
-			\App\Models\Menu::addRole($menu_id, $role);
-		}
-
-		return $menu_id;
-	}
-
-	public static function addMenuDashboard($parent_id, $p_caption, $p_color, $p_ico, $p_roles, $p_route, $p_model)
-	{
-		$now = \Carbon\Carbon::now();
-		$menu_id = \App\Models\Menu::insertGetId
-		(
-			[
-				'parent_id'  => $parent_id,
-				'type'       => 'dashboard',
-				'name'       => $p_caption,
-				'slug'       => str_slugfy($p_caption),
-				'color'      => $p_color,
-				'ico'        => $p_ico,
-				'link'       => $p_route,
-				'model'      => $p_model,
 				'created_at' => $now
 			]
 		);

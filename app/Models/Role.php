@@ -63,4 +63,17 @@ class Role extends MasterModel
 	{
 		return $query->join('menu_role', 'roles.id', '=', 'menu_role.role_id')->where('menu_role.menu_id', $p_target_id);
 	}
+
+	public static function ajustCollectionRolesColor($p_collection)
+	{
+		$p_collection->transform
+		(
+			function($role, $key)
+			{
+				$role['color'] = \App\Models\Role::getBgColorByRole($role['name']);
+				return $role;
+			}
+		);
+		return $p_collection;
+	}
 }

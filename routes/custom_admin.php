@@ -36,63 +36,8 @@
 		{
 			Route::get ('{video_id}'              , 'TagVideoController@index' )->name('admin_tag_video'       )->group('admin_tag_video');
 			Route::post('{video_id}/attach'       , 'TagVideoController@store' )->name('admin_tag_video_attach')->group('admin_tag_video');
-			Route::get ('{video_id}/show/{tag_id}', 'TagsController@pivot_show')->name('admin_videos_show'     )->group('admin_tag');
+			Route::get ('{video_id}/show/{tag_id}', 'TagController@pivot_show')->name('admin_videos_show'     )->group('admin_tag');
 			Route::post('{video_id}/detach'       , 'TagVideoController@detach')->name('admin_tag_video_detach')->group('admin_tag');
-		}
-	);
-
-	// Seções
-	Route::group
-	(
-		['prefix' => 'sections'],
-		function()
-		{
-			Route::get ('/'         , 'SectionController@index'  )->name('admin_menusection'       )->group('admin_menusection');
-			Route::get ('edit/{id?}', 'SectionController@create' )->name('admin_menusection_edit'  )->group('admin_menusection');
-			Route::post('edit/{id?}', 'SectionController@store'  )->name('admin_menusection_save'  )->group('admin_menusection');
-			Route::get ('show/{id}' , 'SectionController@show'   )->name('admin_menusection_show'  )->group('admin_menusection');
-			Route::post('delete/'   , 'SectionController@destroy')->name('admin_menusection_delete')->group('admin_menusection');
-		}
-	);
-
-	// Menu Links
-	Route::group
-	(
-		['prefix' => 'menusections/{section_id}/menulinks'],
-		function()
-		{
-			Route::get ('/'         , 'MenulinkController@index'  )->name('admin_menulinks'       )->group('admin_menulinks');
-			Route::get ('edit/{id?}', 'MenulinkController@create' )->name('admin_menulinks_edit'  )->group('admin_menulinks');
-			Route::post('edit/{id?}', 'MenulinkController@store'  )->name('admin_menulinks_save'  )->group('admin_menulinks');
-			Route::get ('show/{id}' , 'MenulinkController@show'   )->name('admin_menulinks_show'  )->group('admin_menulinks');
-			Route::post('delete/'   , 'MenulinkController@destroy')->name('admin_menulinks_delete')->group('admin_menulinks');
-		}
-	);
-
-	// Permissões das Seções
-	Route::group
-	(
-		['prefix' => 'menusection_role'],
-		function()
-		{
-			Route::get ('{menusection_id}'               , 'MenusectionRoleController@index' )->name('admin_menusection_role'       )->group('admin_menusection_role');
-			Route::post('{menusection_id}/attach'        , 'MenusectionRoleController@store' )->name('admin_menusection_role_attach')->group('admin_menusection_role');
-			Route::get ('{menusection_id}/show/{role_id}', 'SectionController@pivot_show'    )->name('admin_sections_show'          )->group('admin_role');
-			Route::post('{menusection_id}/detach'        , 'MenusectionRoleController@detach')->name('admin_menusection_role_detach')->group('admin_role');
-		}
-	);
-
-	// Sub Categorias
-	Route::group
-	(
-		['prefix' => 'categories/{category_id}/subcategory'],
-		function()
-		{
-			Route::get ('/'         , 'SubcategoryController@index'  )->name('admin_subcategoy'       )->group('admin_subcategory');
-			Route::get ('edit/{id?}', 'SubcategoryController@create' )->name('admin_subcategoy_edit'  )->group('admin_subcategory');
-			Route::post('edit/{id?}', 'SubcategoryController@store'  )->name('admin_subcategoy_save'  )->group('admin_subcategory');
-			Route::get ('show/{id}' , 'SubcategoryController@show'   )->name('admin_subcategoy_show'  )->group('admin_subcategory');
-			Route::post('delete/'   , 'SubcategoryController@destroy')->name('admin_subcategoy_delete')->group('admin_subcategory');
 		}
 	);
 

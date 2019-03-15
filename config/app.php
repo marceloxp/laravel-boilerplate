@@ -191,6 +191,11 @@ return [
 		Collective\Html\HtmlServiceProvider::class,
 		Nestable\NestableServiceProvider::class,
 
+		/*
+		 * Others Service Providers...
+		 */
+		App\Providers\XpCollectionServiceProvider::class,
+
 	],
 
 	/*

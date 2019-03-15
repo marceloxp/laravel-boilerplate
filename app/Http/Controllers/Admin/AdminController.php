@@ -665,6 +665,12 @@ class AdminController extends Controller
 
 	private function buildMenus()
 	{
-		return config('admin.menu');
+		$appends = ['roles' => 'Permissões'];
+		$fields_schema = \App\Models\Menu::getFieldsMetaData($appends);
+		$table = \App\Models\Menu::getTree('menu', ['id','type','order','name','ico','roles','link','route','created_at'], $fields_schema, $appends);
+		$table = \App\Models\Menu::ajustRoles($table);
+		$admin_menu = $table->where('name', 'Menu')->first();
+		$admin_menu = collect($admin_menu['child']);
+		return $admin_menu;
 	}
 }

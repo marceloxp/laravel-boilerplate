@@ -25,7 +25,7 @@ class MenusTableSeeder extends Seeder
 		
 		$group_order += 10;
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Páginas', 'fa-book', $public, $group_order);
-			$item = \App\Models\Menu::addMenuDashboard($group, 'Dashboard', 'bg-green', 'fa-dashboard', $master_admin_developer, 'admin_video', 'Video');
+			$item = \App\Models\Menu::addMenuLink($group, 'Dashboard', 'fa-dashboard', $public, 'admin_dashboard');
 		
 		$group_order += 10;
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Tabelas', 'fa-table', $master_developer, $group_order);

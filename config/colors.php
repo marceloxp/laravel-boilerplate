@@ -9,6 +9,7 @@ return [
 		'Verde'       => 'bg-green',
 		'Laranja'     => 'bg-orange',
 		'Cinza'       => 'bg-gray-active',
+		'Default'     => 'bg-gray-active',
 		'Preto'       => 'bg-black-active'
 	]
 ];

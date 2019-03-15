@@ -47,7 +47,7 @@ class MenuController extends AdminController
 			sprintf('admin_index_%s_%s', $table_name, 'name'),
 			function($display_value, $register)
 			{
-				return sprintf('<i class="fa fa-fw %s"></i> ', $register['ico']) . $display_value;
+				return fa_ico($register['ico'], $display_value);
 			},
 			10, 2
 		);
@@ -58,22 +58,9 @@ class MenuController extends AdminController
 			function($display_value, $register)
 			{
 				$roles = $this->model::getRoles($register['id']);
-				if ($roles->isEmpty())
-				{
-					return '<small class="label pull-center label-default">Public</small>';
-				}
-
-				$display_value = $roles->transform
-				(
-					function($role, $key)
-					{
-						$bg_color = \App\Models\Role::getBgColorByRole($role['name']);
-						return sprintf('<small class="label pull-center %s">%s</small>', $bg_color, $role['name']);
-					}
-				);
-
-				$display_value = implode('&nbsp;', $display_value->toArray());
-
+				if ($roles->isEmpty()) { return bs_label(0, 'Public'); }
+				\App\Models\Role::ajustCollectionRolesColor($roles);
+				$display_value = $roles->toBootstrapLabel()->toText('&nbsp;');
 				return $display_value;
 			},
 			10, 2
@@ -153,15 +140,27 @@ class MenuController extends AdminController
 		(
 			[
 				'id'             => $id,
+				'appends'        => $this->appends,
 				'model'          => $this->model,
-				'display_fields' => ['id','name','slug','created_at','updated_at']
+				'display_fields' => ['id','parent_id','order','type','name','roles','slug','color','ico','link','target','model','route','created_at','updated_at','deleted_at']
 			]
 		);
 	}
 
 	public function hooks_show($table_name)
 	{
-		//
+		Hook::add_filter
+		(
+			sprintf('admin_show_%s_%s', $table_name, 'roles'),
+			function($display_value, $register)
+			{
+				$display_value = collect($display_value->toArray());
+				if ($display_value->isEmpty()) { return bs_label(0, 'Public'); }
+				\App\Models\Role::ajustCollectionRolesColor($display_value);
+				return $display_value->toBootstrapLabel()->toText('&nbsp;');
+			},
+			10, 2
+		);
 	}
 
 	/**
