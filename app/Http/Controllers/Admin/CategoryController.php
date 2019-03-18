@@ -14,7 +14,7 @@ class CategoryController extends AdminController
 	public function __construct()
 	{
 		$this->setCaption('Categorias');
-		$this->setModel(App\Models\Category::class);
+		$this->setModel(\App\Models\Category::class);
 		parent::__construct();
 	}
 
