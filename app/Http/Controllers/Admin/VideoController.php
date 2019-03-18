@@ -49,6 +49,16 @@ class VideoController extends AdminController
 			},
 			10, 2
 		);
+
+		Hook::add_filter
+		(
+			sprintf('admin_index_%s_category_id', $table_name),
+			function($display_value, $register)
+			{
+				return \App\Models\Category::getStrPath($register['category_id']);
+			},
+			10, 2
+		);
 	}
 
 	/**

@@ -217,7 +217,10 @@
 											$field_align = 'right';
 										break;
 										case 'int':
-											$field_align = 'right';
+											if (str_right($field_name, 3) != '_id')
+											{
+												$field_align = 'right';
+											}
 										break;
 										case 'tinyint':
 											$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';

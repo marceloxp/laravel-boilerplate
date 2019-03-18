@@ -1,4 +1,12 @@
 <?php
+if (!function_exists('str_right'))
+{
+	function str_right($p_string, $p_count)
+	{
+		return substr($p_string, ($p_count * -1));
+	}
+}
+
 if (!function_exists('str_slugfy'))
 {
 	function str_slugfy($p_string, $p_separator = '-')
