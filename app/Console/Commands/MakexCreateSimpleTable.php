@@ -36,10 +36,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 UseSoftDeletes1
 use App\Http\Utilities\MasterModel;
+HasParentId1
 
 class %s extends MasterModel
 {
 	UseSoftDeletes2
+	HasParentId2
 	protected \$dates   = ['created_at','updated_at','deleted_at'];
 	protected \$guarded = ['created_at','updated_at','deleted_at'];
 }";
@@ -125,6 +127,13 @@ class Create{ClassName}Table extends Migration
 		[
 			'UseSoftDeletes1' => (!$use_soft_deletes) ? '{delete_line}' : 'use Illuminate\Database\Eloquent\SoftDeletes;',
 			'UseSoftDeletes2' => (!$use_soft_deletes) ? '{delete_line}' : 'use SoftDeletes;'
+		];
+
+		$use_has_parent_id = ($this->confirm('Table has *parent_id*?', 1));
+		$changes = 
+		[
+			'HasParentId1' => (!$use_has_parent_id) ? '{delete_line}' : 'use App\Traits\TreeModelTrait;',
+			'HasParentId2' => (!$use_has_parent_id) ? '{delete_line}' : 'use TreeModelTrait;'
 		];
 
 		$file_name = sprintf('%s%s.php', $folder_name, $model_name);
@@ -416,6 +425,11 @@ class Create{ClassName}Table extends Migration
 		$body = str_replace('[display_fields]'         , '[' . $field_names . ']', $body);
 		$body = str_replace('[columned_display_fields]', $colunmed_str, $body);
 		$body = str_replace('UserCustomInput'          , $controller_name, $body);
+		if (in_array('parent_id', $fields))
+		{
+			$body = str_replace('return $this->defaultIndex', 'return $this->defaultTreeIndex', $body);
+			$body = str_replace("'editable'       => true,", "", $body);
+		}
 
 		file_put_contents($dest_file, $body);
 

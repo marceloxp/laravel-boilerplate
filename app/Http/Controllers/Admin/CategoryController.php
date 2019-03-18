@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Category;
 use Hook;
 
 class CategoryController extends AdminController
@@ -15,7 +14,7 @@ class CategoryController extends AdminController
 	public function __construct()
 	{
 		$this->setCaption('Categorias');
-		$this->setModel(Category::class);
+		$this->setModel(App\Models\Category::class);
 		parent::__construct();
 	}
 
@@ -31,8 +30,6 @@ class CategoryController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => $this->model,
-				'request'        => $request,
-				'slug'           => '',
 				'display_fields' => ['id','parent_id','name','slug','image','description','created_at']
 			]
 		);
