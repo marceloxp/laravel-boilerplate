@@ -6,14 +6,14 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateVideosTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create
 		(
 			'videos',
 			function(Blueprint $table)
@@ -28,18 +28,18 @@ class CreateVideosTable extends Migration
 				$table->index(['deleted_at']);
 
 				$table->foreign('category_id')->references('id')->on('categories');
-        	}
+			}
 		);
-        db_comment_table('videos', 'Vídeos');
-    }
+		db_comment_table('videos', 'Vídeos');
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('videos');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('videos');
+	}
 }

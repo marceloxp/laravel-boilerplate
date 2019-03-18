@@ -5,16 +5,16 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
 		Schema::dropIfExists('users');
 		
-        Schema::create
+		Schema::create
 		(
 			'users',
 			function(Blueprint $table)
@@ -28,18 +28,18 @@ class CreateUsersTable extends Migration
 				$table->softDeletes();
 
 				$table->index(['name','deleted_at']);
-        	}
+			}
 		);
-        db_comment_table('users', 'Usuários');
-    }
+		db_comment_table('users', 'Usuários');
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('users');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('users');
+	}
 }

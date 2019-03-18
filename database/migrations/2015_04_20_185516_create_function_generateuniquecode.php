@@ -6,13 +6,13 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateFunctionGenerateuniquecode extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
 		$prefix = trim(DB::getTablePrefix(), '_');
 
 		$querys = 
@@ -79,15 +79,15 @@ class CreateFunctionGenerateuniquecode extends Migration
 		{
 			DB::unprepared($query);
 		}
-    }
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
 		$prefix = trim(DB::getTablePrefix(), '_');
 
 		$querys = 
@@ -100,5 +100,5 @@ class CreateFunctionGenerateuniquecode extends Migration
 		{
 			DB::unprepared($query);
 		}
-    }
+	}
 }

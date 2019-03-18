@@ -6,14 +6,14 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateStatesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create
 		(
 			'states',
 			function(Blueprint $table)
@@ -25,18 +25,18 @@ class CreateStatesTable extends Migration
 				$table->softDeletes();
 
 				$table->index(['deleted_at']);
-        	}
+			}
 		);
-        db_comment_table('states', 'Estados');
-    }
+		db_comment_table('states', 'Estados');
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('states');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('states');
+	}
 }

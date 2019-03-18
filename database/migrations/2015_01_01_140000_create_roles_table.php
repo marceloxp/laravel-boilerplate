@@ -6,14 +6,14 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateRolesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create
 		(
 			'roles',
 			function(Blueprint $table)
@@ -26,18 +26,18 @@ class CreateRolesTable extends Migration
 				$table->softDeletes();
 
 				$table->index(['name','deleted_at']);
-        	}
+			}
 		);
-        db_comment_table('roles', 'Regras');
-    }
+		db_comment_table('roles', 'Regras');
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('roles');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('roles');
+	}
 }

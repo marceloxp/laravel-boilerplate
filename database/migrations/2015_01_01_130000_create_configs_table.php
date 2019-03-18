@@ -6,16 +6,17 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateConfigsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create
 		(
-			'configs', function(Blueprint $table)
+			'configs',
+			function(Blueprint $table)
 			{
 				$table->increments('id');
 				$table->string('name',150)->unique()->comment('Nome');
@@ -26,18 +27,18 @@ class CreateConfigsTable extends Migration
 				$table->softDeletes();
 
 				$table->index(['name','deleted_at']);
-        	}
+			}
 		);
-        db_comment_table('configs', 'Configurações');
-    }
+		db_comment_table('configs', 'Configurações');
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('configs');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('configs');
+	}
 }
