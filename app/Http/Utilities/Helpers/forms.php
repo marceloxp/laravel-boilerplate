@@ -28,8 +28,6 @@ if (!function_exists('array_to_dropdown'))
 	// laravel-nestable - helper
 	function array_to_dropdown($p_array, $p_options = [])
 	{
-		$level = 0;
-
 		function __itemToOptions($p_item, $p_level, $p_options)
 		{
 			$registers = (array_key_exists('id', $p_item)) ? [$p_item] : $p_item;
@@ -66,16 +64,23 @@ if (!function_exists('array_to_dropdown'))
 
 		$default = 
 		[
-			'name'     => 'select',
-			'attr'     => [],
-			'optgroup' => false
+			'add_first' => true,
+			'name'      => 'select',
+			'attr'      => [],
+			'optgroup'  => false
 		];
 
+		$level     = 0;
 		$options   = array_merge($default, $p_options);
 		$html_attr = html_to_attr($options['attr']);
+		$result    = [];
+		$result[]  = sprintf('<select name="%s" %s >', $options['name'], $html_attr);
+		if ($options['add_first'])
+		{
+			$level    = 1;
+			$result[] = sprintf('<option value="0" data-caption="Topo" data-slug="topo">Topo</option>');
+		}
 
-		$result = [];
-		$result[] = sprintf('<select name="%s" %s >', $options['name'], $html_attr);
 		foreach ($p_array as $_key => $_value)
 		{
 			$result[] = implode(PHP_EOL, __itemToOptions($_value, $level, $options));

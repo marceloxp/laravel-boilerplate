@@ -35,6 +35,8 @@
 						if ( ($field_width === false) || ($field_width === null) ):
 							continue;
 						endif;
+						$is_new      = (empty($register->id));
+						$is_edit     = (!$is_new);
 						$row_visible = 'block';
 						$field_value = $register->$field_name;
 						$field_type  = $fields_schema[$field_name]['type'];
@@ -75,16 +77,12 @@
 						}
 						elseif (in_array($field_name, ['parent_id']))
 						{
-							$slug = $request->segment(2);
-							$root = $model::table()->where('slug', '=', $slug)->first();
-							$parent_id  = (!empty($root)) ? $root->id : '0';
-							$array_tree = $model::getTree($slug, ['id','name','slug'], $fields_schema);
+							$array_tree = $model::getTree(['id','name','slug'], $fields_schema);
 
 							$input = array_to_dropdown
 							(
 								$array_tree->toArray(),
 								[
-									'root'      => $root,
 									'name'      => 'parent_id',
 									'value'     => $field_value,
 									'optgroup'  => false,
@@ -122,45 +120,68 @@
 						}
 						elseif ($fields_schema[$field_name]['has_relation'])
 						{
-							$ref_model   = $fields_schema[$field_name]['relation']['ref_model'];
-							$field_label = $fields_schema[$field_name]['comment'];
+							$ref_model     = $fields_schema[$field_name]['relation']['ref_model'];
+							$ref_table     = $fields_schema[$field_name]['relation']['ref_table'];
+							$field_label   = $fields_schema[$field_name]['comment'];
+							$rel_parent_id = $fields_schema[$field_name]['relation']['has_parent_id'];
 
-							$display_text = '';
-							if (!$is_creating)
+							if ($rel_parent_id)
 							{
-								$display_text = (!empty($register->$ref_model->getAttribute('description'))) ? $register->$ref_model->getAttribute('description') : $register->$ref_model->getAttribute('name');
-								$display_text = null ?? $register->$ref_model->getAttribute('name');
-							}
-							$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $display_text) : '');
-							$field_value = old($field_name) ?? $register->$field_name;
-							
-							$input = sprintf
-							(
-								'
-									<div class="input-group">
-										<input type="text" class="form-control dontsend" readonly="readonly" disabled id="%s_text" name="%s_text" value="%s">
-										<span class="input-group-btn">
-											<button data-field="%s" data-model="%s" data-caption="%s" type="button" class="btn btn-primary btn-flat search-modal-field"><i class="fa fa-fw fa-search"></i> Procurar</button>
-										</span>
-									</div>
-									<input type="hidden" readonly="readonly" id="%s" name="%s" value="%s">
-								',
-								// input with formated value "id - name"
-								$field_name,
-								$field_name,
-								$field_text,
-								
-								// data values to modal search
-								$field_name,
-								$ref_model,
-								$field_label,
+								$ref_model_path    = db_table_name_to_model_path($ref_table);
+								$ref_fields_schema = $ref_model_path::getFieldsMetaData();
+								$array_tree        = $ref_model_path::getTree(['id','name','slug'], $ref_fields_schema);
 
-								// oficial input with value
-								$field_name,
-								$field_name,
-								$field_value
-								// $register->$field_name
-							);
+								$input = array_to_dropdown
+								(
+									$array_tree->toArray(),
+									[
+										'add_first' => $is_new,
+										'name'      => $field_name,
+										'value'     => $field_value,
+										'optgroup'  => false,
+										'attr'      => [ 'class' => 'form-control' ]
+									]
+								);
+							}
+							else
+							{
+								$display_text = '';
+								if (!$is_creating)
+								{
+									$display_text = (!empty($register->$ref_model->getAttribute('description'))) ? $register->$ref_model->getAttribute('description') : $register->$ref_model->getAttribute('name');
+									$display_text = null ?? $register->$ref_model->getAttribute('name');
+								}
+								$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $display_text) : '');
+								$field_value = old($field_name) ?? $register->$field_name;
+								
+								$input = sprintf
+								(
+									'
+										<div class="input-group">
+											<input type="text" class="form-control dontsend" readonly="readonly" disabled id="%s_text" name="%s_text" value="%s">
+											<span class="input-group-btn">
+												<button data-field="%s" data-model="%s" data-caption="%s" type="button" class="btn btn-primary btn-flat search-modal-field"><i class="fa fa-fw fa-search"></i> Procurar</button>
+											</span>
+										</div>
+										<input type="hidden" readonly="readonly" id="%s" name="%s" value="%s">
+									',
+									// input with formated value "id - name"
+									$field_name,
+									$field_name,
+									$field_text,
+									
+									// data values to modal search
+									$field_name,
+									$ref_model,
+									$field_label,
+
+									// oficial input with value
+									$field_name,
+									$field_name,
+									$field_value
+									// $register->$field_name
+								);
+							}
 						}
 						else
 						{

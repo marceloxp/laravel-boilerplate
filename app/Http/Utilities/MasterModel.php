@@ -242,10 +242,9 @@ class MasterModel extends Model
 			{
 				$query = sprintf
 				(
-					'SELECT "caption", COLUMN_COMMENT AS `caption` FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "%s%s" AND COLUMN_NAME = "%s" LIMIT 1;',
-					env('DB_DATABASE'),
-					env('DB_TABLE_PREFIX'),
-					$p_table_name,
+					'SELECT "caption", COLUMN_COMMENT AS `caption` FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "%s" AND COLUMN_NAME = "%s" LIMIT 1;',
+					db_database_name(),
+					db_prefixed_table($p_table_name),
 					$p_field_name
 				);
 				$result = collect(DB::select($query))->pluck('caption')->first();
@@ -283,15 +282,14 @@ class MasterModel extends Model
 							AND
 							`REFERENCED_TABLE_SCHEMA` = "%s"
 							AND
-							`REFERENCED_TABLE_NAME` = "%s%s"
+							`REFERENCED_TABLE_NAME` = "%s"
 							AND
 							`REFERENCED_COLUMN_NAME` = "id"
 						;
 					',
-					env('DB_DATABASE'),
-					env('DB_DATABASE'),
-					env('DB_TABLE_PREFIX'),
-					$table_name
+					db_database_name(),
+					db_database_name(),
+					db_prefixed_table($table_name)
 				);
 
 				$relations = DB::select($query);
@@ -306,13 +304,55 @@ class MasterModel extends Model
 					$model = $table;
 					$table = str_plural($table);
 					$prop  = $table;
-					$table = env('DB_TABLE_PREFIX') . $table;
+					$table = db_prefixed_table($table);
 
 					$primary = db_get_primary_key($prop);
 					$relation = sprintf('%s_%s', $model, $primary);
 					
 					$result[] = compact('pivot','table','ligation','prop','model','primary','relation');
 				}
+
+				return $result;
+			}
+		);
+		
+		return $result['data'];
+	}
+
+	public static function getHasParentId($p_table_name)
+	{
+		$result = Cached::get
+		(
+			'sys-model',
+			['getHasParentId', $p_table_name],
+			function() use ($p_table_name)
+			{
+				$result = [];
+
+				$query = sprintf
+				(
+					'
+						SELECT exists
+						(
+							SELECT
+								COLUMN_NAME
+							FROM 
+								information_schema.COLUMNS
+							WHERE
+								TABLE_SCHEMA = "%s"
+								AND
+								TABLE_NAME = "%s"
+								AND
+								COLUMN_NAME = "parent_id"
+						) AS has_parent_id;
+					',
+					db_database_name(),
+					db_prefixed_table($p_table_name)
+				);
+
+				$register      = DB::select($query);
+				$has_parent_id = intval($register[0]->has_parent_id);
+				$result        = ($has_parent_id == 1);
 
 				return $result;
 			}
@@ -352,11 +392,11 @@ class MasterModel extends Model
 							AND
 							`REFERENCED_TABLE_NAME` IS NOT NULL
 							AND
-							`TABLE_NAME` = "%s%s"
+							`TABLE_NAME` = "%s"
+						;
 					',
-					env('DB_DATABASE'),
-					env('DB_TABLE_PREFIX'),
-					$table_name
+					db_database_name(),
+					db_prefixed_table($table_name)
 				);
 
 				$fields_relations = DB::select($query);
@@ -366,15 +406,16 @@ class MasterModel extends Model
 					$value = (array)$ref;
 					$value = 
 					[
-						'table_name'   => db_trim_table_prefix($value['table_name']),
-						'table_model'  => str_singular(db_trim_table_prefix($value['table_name'])),
-						'field_name'   => $value['field_name'],
-						'ref_table'    => db_trim_table_prefix($value['ref_table']),
-						'ref_table'    => db_trim_table_prefix($value['ref_table']),
-						'ref_model'    => str_singular(db_trim_table_prefix($value['ref_table'])),
-						'field_index'  => $value['field_index'],
-						'custom_field' => str_singular(db_trim_table_prefix($value['ref_table'])),
-						'comment'      => ''
+						'table_name'    => db_trim_table_prefix($value['table_name']),
+						'table_model'   => str_singular(db_trim_table_prefix($value['table_name'])),
+						'field_name'    => $value['field_name'],
+						'ref_table'     => db_trim_table_prefix($value['ref_table']),
+						'ref_table'     => db_trim_table_prefix($value['ref_table']),
+						'ref_model'     => str_singular(db_trim_table_prefix($value['ref_table'])),
+						'field_index'   => $value['field_index'],
+						'custom_field'  => str_singular(db_trim_table_prefix($value['ref_table'])),
+						'has_parent_id' => self::getHasParentId($value['ref_table']),
+						'comment'       => ''
 					];
 					$value['comment'] = self::getTableFieldCaption($value['table_name'], 'name');
 					$relations[$ref->field_name] = $value;
@@ -391,19 +432,19 @@ class MasterModel extends Model
 							COLUMN_DEFAULT           AS `default_value`,
 							COLUMN_COMMENT           AS `comment`,
 							CHARACTER_MAXIMUM_LENGTH AS `max_length`,
-							(IS_NULLABLE = "YES") AS `nullable`
+							(IS_NULLABLE = "YES")    AS `nullable`
 						FROM 
 							information_schema.COLUMNS
 						WHERE
 							TABLE_SCHEMA = "%s"
 							AND
-							TABLE_NAME = "%s%s"
+							TABLE_NAME = "%s"
 						ORDER BY
 							ORDINAL_POSITION
+						;
 					',
-					env('DB_DATABASE'),
-					env('DB_TABLE_PREFIX'),
-					$table_name
+					db_database_name(),
+					db_prefixed_table($table_name)
 				);
 
 				$result = [];

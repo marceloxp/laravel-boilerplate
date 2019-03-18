@@ -129,6 +129,14 @@ if (!function_exists('db_table_name_to_model'))
 	}
 }
 
+if (!function_exists('db_table_name_to_model_path'))
+{
+	function db_table_name_to_model_path($table_name)
+	{
+		return sprintf('\App\Models\%s', db_table_name_to_model($table_name));
+	}
+}
+
 if (!function_exists('db_trim_table_prefix'))
 {
 	function db_trim_table_prefix($table_name)

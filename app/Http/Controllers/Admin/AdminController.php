@@ -485,14 +485,13 @@ class AdminController extends Controller
 	{
 		$default_params = 
 		[
-			'slug'         => null,
-			'pivot'        => [],
-			'pivot_scope'  => [],
-			'table_many'   => [],
-			'where'        => [],
-			'appends'      => [],
-			'editable'     => true,
-			'exportable'   => false
+			'pivot'       => [],
+			'pivot_scope' => [],
+			'table_many'  => [],
+			'where'       => [],
+			'appends'     => [],
+			'editable'    => true,
+			'exportable'  => false
 		];
 
 		$params = array_merge($default_params, $p_args);
@@ -518,7 +517,7 @@ class AdminController extends Controller
 
 		$fields_schema = $model::getFieldsMetaData($appends);
 		$field_names   = array_keys($fields_schema);
-		$table         = $model::getTreeAligned($slug, $display_fields, $fields_schema);
+		$table         = $model::getTreeAligned($display_fields, $fields_schema);
 		$has_table     = ($table->count() > 0);
 
 		$share_params = compact('model','panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','has_table','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');
@@ -673,11 +672,9 @@ class AdminController extends Controller
 			{
 				$appends = ['roles' => 'Permissões'];
 				$fields_schema = \App\Models\Menu::getFieldsMetaData($appends);
-				$table = \App\Models\Menu::getTree('menu', ['id','type','order','name','ico','roles','link','route','created_at'], $fields_schema, $appends);
+				$table = \App\Models\Menu::getTree(['id','type','order','name','ico','roles','link','route','created_at'], $fields_schema, $appends);
 				$table = \App\Models\Menu::ajustRoles($table);
-				$admin_menu = $table->where('name', 'Menu')->first();
-				$admin_menu = collect($admin_menu['child']);
-				return $admin_menu;
+				return $table;
 			}
 		);
 		return $result;
