@@ -44,13 +44,16 @@ class MenusTableSeeder extends Seeder
 			$item = \App\Models\Menu::addMenuInternalLink($group, 'Adminer', 'fa-database', $developer, 'adminer', '_blank');
 
 		$group_order += 10;
-		$group = \App\Models\Menu::addMenuHeader($menu, 'Sistema', 'fa-gears', $public, $group_order);
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Comum', 'fa-circle', $public, $group_order);
 			$item = \App\Models\Menu::addMenuLink($group, 'Galeria', 'fa-picture-o', $master_admin_developer, 'admin_gallery');
-			$item = \App\Models\Menu::addMenuLink($group, 'Configurações', 'fa-gear', $master_developer, 'admin_config');
-			$item = \App\Models\Menu::addMenuLink($group, 'Permissões', 'fa-unlock-alt', $master_developer, 'admin_role');
 			$item = \App\Models\Menu::addMenuLink($group, 'Tags', 'fa-tags', $public, 'admin_tag');
 			$item = \App\Models\Menu::addMenuLink($group, 'Vídeos', 'fa-youtube', $public, 'admin_video');
-			$item = \App\Models\Menu::addMenuLink($group, 'Usuários', 'fa-user', $master_developer, 'admin_users');
+
+		$group_order += 10;
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Sistema', 'fa-gears', $public, $group_order);
+			$item = \App\Models\Menu::addMenuLink($group, 'Configurações', 'fa-gear', $master_admin_developer, 'admin_config');
+			$item = \App\Models\Menu::addMenuLink($group, 'Permissões', 'fa-unlock-alt', $master_admin_developer, 'admin_role');
+			$item = \App\Models\Menu::addMenuLink($group, 'Usuários', 'fa-user', $master_admin_developer, 'admin_users');
 			$item = \App\Models\Menu::addMenuLink($group, 'Ir ao Site', 'fa-home', $public, 'home');
 			$item = \App\Models\Menu::addMenuLink($group, 'Sair', 'fa-close', $public, 'logout');
 	}
