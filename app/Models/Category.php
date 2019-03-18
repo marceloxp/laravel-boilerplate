@@ -3,10 +3,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Utilities\MasterModel;
+use App\Traits\TreeModelTrait;
 
 class Category extends MasterModel
 {
 	use SoftDeletes;
+	use TreeModelTrait;
+
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
@@ -20,13 +23,34 @@ class Category extends MasterModel
 		return Role::_validate($request, $rules, $id);
 	}
 
-	public function videos()
+	public static function boot()
 	{
-		return $this->hasMany(\App\Models\Video::class);
+		parent::boot();
+
+		self::saving
+		(
+			function($model)
+			{
+				$model->slug = str_slugfy($model->name);
+			}
+		);
+
+		self::updating
+		(
+			function($model)
+			{
+				$model->slug = str_slugfy($model->name);
+			}
+		);
 	}
 
-	public function subcategories()
+	public static function addRoot($p_name, $p_description)
 	{
-		return $this->hasMany(\App\Models\Subcategory::class);
+		return self::create(['parent_id' => 0, 'name' => $p_name, 'description' => $p_description]);
+	}
+
+	public static function addSubCategory($parent_id, $p_name, $p_description)
+	{
+		return self::create(['parent_id' => $parent_id, 'name' => $p_name, 'description' => $p_description]);
 	}
 }

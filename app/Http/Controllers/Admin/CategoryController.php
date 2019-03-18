@@ -26,13 +26,14 @@ class CategoryController extends AdminController
 	 */
 	public function index(Request $request)
 	{
-		return $this->defaultIndex
+		return $this->defaultTreeIndex
 		(
 			[
 				'request'        => $request,
 				'model'          => $this->model,
-				'table_many'     => ['name' => 'subcategory', 'caption' => 'Sub Categorias', 'icon' => 'fa-folder-open'],
-				'display_fields' => ['id','name','image','description','created_at']
+				'request'        => $request,
+				'slug'           => '',
+				'display_fields' => ['id','parent_id','name','slug','image','description','created_at']
 			]
 		);
 	}
@@ -69,8 +70,19 @@ class CategoryController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => $this->model,
+				'disabled'       => ['created_at','updated_at'],
 				'image_fields'   => ['image'],
-				'display_fields' => ['id','name','image','description']
+				'display_fields' => 
+				[
+					'id'          => 0,
+					'parent_id'   => 6,
+					'name'        => 6,
+					'slug'        => 6,
+					'description' => 6,
+					'image'       => 12,
+					'created_at'  => 6,
+					'updated_at'  => 6,
+				]
 			]
 		);
 	}

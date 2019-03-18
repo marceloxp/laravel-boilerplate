@@ -20,6 +20,8 @@ class CreateCategoriesTable extends Migration
 			{
 				$table->increments('id');
 				$table->string('name',150)->comment('Categoria');
+                $table->string('slug', 255)->comment('Slug');
+                $table->bigInteger('parent_id')->comment('Parent');
 				$table->string('description',255)->nullable()->comment('Descrição');
 				$table->string('image',255)->nullable()->comment('Imagem');
 				$table->enum('status', ['Ativo', 'Inativo'])->default('Ativo')->comment('Status');
@@ -27,6 +29,7 @@ class CreateCategoriesTable extends Migration
 				$table->softDeletes();
 
 				$table->index(['deleted_at']);
+                $table->unique(['name','parent_id']);
         	}
 		);
         db_comment_table('categories', 'Categorias');

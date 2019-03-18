@@ -13,38 +13,25 @@ class CategoriesTableSeeder extends Seeder
 	{
 		try
 		{
-			$now = \Carbon\Carbon::now();
+			\DB::select('DELETE FROM blp_tag_video  WHERE id >= 0');
+			\DB::select('DELETE FROM blp_videos     WHERE id >= 0');
+			\DB::select('DELETE FROM blp_categories WHERE id >= 0');
 
 			$categories = 
 			[
-				['name' => 'Space'  , 'description' => 'Space Videos'  , 'created_at' => $now],
-				['name' => 'Animals', 'description' => 'Animals Videos', 'created_at' => $now],
-				['name' => 'Cities' , 'description' => 'Cities Videos' , 'created_at' => $now],
+				['name' => 'Space'  , 'description' => 'Space Videos'  , 'childs' => ['Sun','Earth','Galaxy'] ],
+				['name' => 'Animals', 'description' => 'Animals Videos', 'childs' => ['Cat','Dog','Duck','Rat','Horse'] ],
+				['name' => 'Cities' , 'description' => 'Cities Videos' , 'childs' => ['São Paulo','Rio de Janeiro','Amazonas','Ceará','Goiás'] ],
 			];
 
 			foreach ($categories as $category)
 			{
-				App\Models\Category::create($category)->save();
+				$register = App\Models\Category::addRoot($category['name'], $category['description']);
+				foreach ($category['childs'] as $child)
+				{
+					App\Models\Category::addSubCategory($register->id, $child, '');
+				}
 			}
-
-			// $subcategories = 
-			// [
-			// 	'Space'   => ['Sun','Earth','Galaxy'],
-			// 	'Animals' => ['Cat','Dog','Duck','Rat','Horse'],
-			// 	'Cities'  => ['São Paulo','Rio de Janeiro','Amazonas','Ceará','Goiás'],
-			// ];
-
-			// foreach ($categories as $category)
-			// {
-			// 	$result      = Category::create($category);
-			// 	$category_id = $result->id;
-			// 	$subs        = $subcategories[$result->name];
-
-			// 	foreach ($subs as $sub)
-			// 	{
-			// 		\App\Models\Subcategory::create(['category_id' => $category_id, 'name' => $sub, 'created_at' => $now]);
-			// 	}
-			// }
 		}
 		catch (Exception $e)
 		{
