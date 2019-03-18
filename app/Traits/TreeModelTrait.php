@@ -25,6 +25,48 @@ trait TreeModelTrait
 		return $result;
 	}
 
+	public static function getPath($p_register_id, $p_first = true)
+	{
+		$result = \App\Http\Utilities\Cached::get
+		(
+			self::getModelName(),
+			['getpath', $p_register_id],
+			function() use ($p_register_id, $p_first)
+			{
+				$result = collect([]);
+				$table = self::whereId($p_register_id)->get()->first();
+				$result->push($table);
+				if (!empty($table->parent_id))
+				{
+					$parents = self::getPath($table->parent_id, false);
+					$parents->each
+					(
+						function($item, $key) use ($result)
+						{
+							$result->push($item);
+						}
+					);
+				}
+				if ($p_first)
+				{
+					$result = $result->reverse();
+				}
+
+				return $result;
+			},
+			15
+		);
+
+		return $result['data'];
+	}
+
+	public static function getStrPath($p_register_id, $p_separator = ' > ')
+	{
+		$path = self::getPath($p_register_id);
+		$result = $path->extract('name')->toText($p_separator);
+		return $result;
+	}
+
 	private static function getLevel($p_array, $p_level = 0)
 	{
 		$result = collect($p_array)->map

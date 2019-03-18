@@ -103,11 +103,22 @@ datasite_add(compact('url'));
 ### Cached `\App\Http\Utilities\Cached`
 
 ```php
-Cached::get('brasil', 'states', $states, 10);   // Minutes
+// Time in minutes
+Cached::get('brasil', 'states', $states, 10);
 Cached::get('brasil', 'regions', $regions, 10);
+$result = Cached::get
+(
+	'group_name',
+	['name_1', 'name_2'],
+	function() use ($args)
+	{
+		return \App\Models\Category::get()->first();
+	},
+	5
+);
 Cached::forget('admin', 'states');
-Cached::forget('admin');                        // Clear all files on admin prefix
-Cached::flush();                                // Clear all cache
+Cached::forget('admin'); // Clear all files on admin prefix
+Cached::flush();         // Clear all cache
 ```
 
 ### MetaSocial `\App\Http\Utilities\MetaSocial`
@@ -217,8 +228,8 @@ echo print_alert(); // Auto print messages from Session
 ## Basic ------------------------------------------------
 >>> $var = new Money(2.5);
 => App\Http\Utilities\Money {
-     +value: 2.5,
-     +formated: "2,50",
+	 +value: 2.5,
+	 +formated: "2,50",
    }
 >>> $var->value;
 => 2.5
@@ -230,22 +241,22 @@ echo print_alert(); // Auto print messages from Session
 ## Increment --------------------------------------------
 >>> $var->inc(3.50);
 => App\Http\Utilities\Money {
-     +value: 6.0,
-     +formated: "6,00",
+	 +value: 6.0,
+	 +formated: "6,00",
    }
    
 ## Create another Money object
 >>> $another = new Money(1.00);
 => App\Http\Utilities\Money {
-     +value: 1.0,
-     +formated: "1,00",
+	 +value: 1.0,
+	 +formated: "1,00",
    }
    
 ## Increment using Money Object -------------------------
 >>> $var->inc($another);
 => App\Http\Utilities\Money {
-     +value: 7.0,
-     +formated: "7,00",
+	 +value: 7.0,
+	 +formated: "7,00",
    }
 ```
 

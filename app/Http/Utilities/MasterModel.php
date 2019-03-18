@@ -93,7 +93,7 @@ class MasterModel extends Model
 		);
 
 		self::saved(function($model){
-			// ... code here
+			Cached::forget(self::getModelName());
 		});
 
 		self::creating(function($model){
@@ -101,7 +101,7 @@ class MasterModel extends Model
 		});
 
 		self::created(function($model){
-			// ... code here
+			Cached::forget(self::getModelName());
 		});
 
 		self::updating(function($model){
@@ -109,7 +109,7 @@ class MasterModel extends Model
 		});
 
 		self::updated(function($model){
-			// ... code here
+			Cached::forget(self::getModelName());
 		});
 
 		self::deleting(function($model){
@@ -117,7 +117,7 @@ class MasterModel extends Model
 		});
 
 		self::deleted(function($model){
-			// ... code here
+			Cached::forget(self::getModelName());
 		});
 	}
 

@@ -49,5 +49,23 @@ class XpCollectionServiceProvider extends ServiceProvider
 				return implode($p_glue, $this->toArray());
 			}
 		);
+
+		// collect([ ['id' => 1, 'name' => 'Tony'], ['id' => 2, 'name' => 'Loki'], ['id' => 4, 'name' => 'Peter'] ])->extract('name');
+		\Illuminate\Support\Collection::macro
+		(
+			'extract',
+			function($p_field_name)
+			{
+				$result = collect([]);
+				$this->each
+				(
+					function($item, $key) use ($p_field_name, $result)
+					{
+						$result->push($item[$p_field_name]);
+					}
+				);
+				return $result;
+			}
+		);
 	}
 }

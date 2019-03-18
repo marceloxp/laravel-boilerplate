@@ -75,6 +75,7 @@ class Cached
 					if ($caches->get($prefix)->has($key))
 					{
 						$caches[$prefix] = $caches[$prefix]->except([$key]);
+						Cache::forever('gcache-prefixes', $caches);
 					}
 				}
 
@@ -93,6 +94,7 @@ class Cached
 				);
 
 				unset($caches[$prefix]);
+				Cache::forever('gcache-prefixes', $caches);
 			}
 
 			return true;

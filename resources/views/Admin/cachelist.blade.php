@@ -9,14 +9,30 @@
 @endsection
 
 @section('content')
-	<div class="row">
-		<div class="col-md-12">
-			@foreach ($caches as $prefix => $cache)
-				<h4>{{ $prefix }}</h4>
-				<pre><code class="language-json line-numbers">{{ json_encode($cache, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</code></pre>
-			@endforeach
-		</div>
+
+<div class="box-body">
+	<div class="box-group" id="accordion">
+		@php $index = 1; @endphp
+		@foreach ($caches as $prefix => $cache)
+			<div class="panel box box-primary">
+				<div class="box-header with-border">
+					<h4 class="box-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $index }}" aria-expanded="false" class="">
+							{{ $prefix }}
+						</a>
+					</h4>
+				</div>
+				<div id="collapse{{ $index }}" class="panel-collapse collapse" style="">
+					<div class="box-body">
+						<pre><code class="language-json line-numbers">{{ json_encode($cache, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</code></pre>
+					</div>
+				</div>
+			</div>
+			@php $index++; @endphp
+		@endforeach
 	</div>
+</div>
+
 @endsection
 
 @section('styles')
