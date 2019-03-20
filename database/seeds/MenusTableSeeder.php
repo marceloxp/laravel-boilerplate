@@ -21,7 +21,6 @@ class MenusTableSeeder extends Seeder
 
 		$group_order = 0;
 		
-		// $menu = \App\Models\Menu::addMenuRoot('Menu', [], 'fa-table');
 		$menu = 0;
 		
 		$group_order += 10;

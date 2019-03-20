@@ -142,7 +142,7 @@ trait TreeModelTrait
 		$childs    = self::getChildsIds($master_id);
 		$ids       = array_merge([$master_id], $childs);
 		$order     = (array_key_exists('order', $fields_schema)) ? 'order' : 'id';
-		$registers = self::table()->select($select_fields)->whereIn('id', $ids)->whereNull('deleted_at')->orderBy($order)->get();
+		$registers = self::whereIn('id', $ids)->whereNull('deleted_at')->orderBy($order)->get($select_fields);
 		$registers = collect($registers->toArray())->map(function ($item, $key) { return (array)$item; });
 
 		$default_fields = config('nestable.body');

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e926f10f693c637b6e02c6af3b61b5d6",
+    "content-hash": "e8535efff49337258cbbb8d7bb3fd2d9",
     "packages": [
         {
             "name": "ajthinking/tinx",
-            "version": "v2.1.9",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/furey/tinx.git",
-                "reference": "78ce2b2a588c8494dcb5a7f600f291a76843bb51"
+                "reference": "ddcc280b279b0d2969a053175a1c66460fb8a380"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/furey/tinx/zipball/78ce2b2a588c8494dcb5a7f600f291a76843bb51",
-                "reference": "78ce2b2a588c8494dcb5a7f600f291a76843bb51",
+                "url": "https://api.github.com/repos/furey/tinx/zipball/ddcc280b279b0d2969a053175a1c66460fb8a380",
+                "reference": "ddcc280b279b0d2969a053175a1c66460fb8a380",
                 "shasum": ""
             },
             "require": {
@@ -55,7 +55,7 @@
                 }
             ],
             "description": "Reload your Laravel Tinker session from inside Tinker, plus magic shortcuts for first(), find(), where(), and more!",
-            "time": "2019-02-05T05:48:27+00:00"
+            "time": "2019-03-19T05:38:59+00:00"
         },
         {
             "name": "atayahmet/laravel-nestable",
@@ -1445,12 +1445,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marceloxp/laravel_commands.git",
-                "reference": "5e518a0526a64f7480625dacf100687b53749e52"
+                "reference": "e9e8aa86e725fa9948bdfc28e1f8b8c84b124374"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/5e518a0526a64f7480625dacf100687b53749e52",
-                "reference": "5e518a0526a64f7480625dacf100687b53749e52",
+                "url": "https://api.github.com/repos/marceloxp/laravel_commands/zipball/e9e8aa86e725fa9948bdfc28e1f8b8c84b124374",
+                "reference": "e9e8aa86e725fa9948bdfc28e1f8b8c84b124374",
                 "shasum": ""
             },
             "require-dev": {
@@ -1480,7 +1480,7 @@
                 }
             ],
             "description": "Laravel Artisan Commands Utilities",
-            "time": "2019-02-15T20:37:24+00:00"
+            "time": "2019-03-20T16:40:06+00:00"
         },
         {
             "name": "miroc/laravel-adminer",
@@ -4968,6 +4968,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-08-09T05:50:03+00:00"
         },
         {
