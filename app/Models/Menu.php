@@ -57,7 +57,7 @@ class Menu extends MasterModel
 
 	public static function getRoles($p_id)
 	{
-		$result = self::whereId($p_id)->get();
+		$result = self::where('id', $p_id)->get();
 		return collect($result->first()->roles()->get()->toArray());
 	}
 

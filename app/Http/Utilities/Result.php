@@ -42,9 +42,12 @@ class Result
 		return self::get(true, '', $data, false, $message_log);
 	}
 
-	public static function cached($message = '', $data = [], $cached, $message_log = '')
+	public static function cached($p_prefix, $p_cache_name, $message = '', $data = [], $cached, $message_log = '')
 	{
-		return self::get(true, $message, $data, $cached, $message_log);
+		$cache_name = sprintf('%s-%s', $p_prefix, $p_cache_name);
+		$result     = self::get(true, $message, $data, $cached, $message_log);
+		$result     = array_merge(compact('cache_name'), $result);
+		return $result;
 	}
 
 	public static function error($message = '', $data = [], $message_log = '')

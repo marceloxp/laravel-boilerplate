@@ -6,15 +6,33 @@ trait TreeModelTrait
 	public static function hasChildsIds($p_parents)
 	{
 		$parents = (is_array($p_parents)) ? array_merge($p_parents) : array_merge([$p_parents]);
-		$table = self::table()->whereIn('parent_id', $parents)->whereNull('deleted_at')->count();
+		$table = \App\Http\Utilities\Cached::get
+		(
+			self::getModelName(),
+			['hasChildsIds', implode('-', $parents)],
+			function() use ($parents)
+			{
+				return self::whereIn('parent_id', $parents)->get(['id'])->count();
+			}
+		);
+		$table = $table['data'];
 		return ($table > 0);
 	}
 
 	public static function getChildsIds($p_parent)
 	{
-		$result     = [];
-		$parents    = (is_array($p_parent)) ? array_merge($p_parent) : array_merge([$p_parent]);
-		$childs     = self::table()->whereIn('parent_id', $parents)->whereNull('deleted_at')->get(['id'])->pluck('id')->toArray();
+		$result  = [];
+		$parents = (is_array($p_parent)) ? array_merge($p_parent) : array_merge([$p_parent]);
+		$childs  = \App\Http\Utilities\Cached::get
+		(
+			self::getModelName(),
+			['getChildsIds', implode('-', $parents)],
+			function() use ($parents)
+			{
+				return self::whereIn('parent_id', $parents)->get(['id'])->pluck('id')->toArray();
+			}
+		);
+		$childs     = $childs['data'];
 		$result     = array_merge($result, $childs);
 		$has_childs = self::hasChildsIds($childs);
 		if ($has_childs)
@@ -53,10 +71,8 @@ trait TreeModelTrait
 				}
 
 				return $result;
-			},
-			15
+			}
 		);
-
 		return $result['data'];
 	}
 
@@ -142,11 +158,20 @@ trait TreeModelTrait
 		$childs    = self::getChildsIds($master_id);
 		$ids       = array_merge([$master_id], $childs);
 		$order     = (array_key_exists('order', $fields_schema)) ? 'order' : 'id';
-		$registers = self::whereIn('id', $ids)->whereNull('deleted_at')->orderBy($order)->get($select_fields);
-		$registers = collect($registers->toArray())->map(function ($item, $key) { return (array)$item; });
+		
+		$registers = \App\Http\Utilities\Cached::get
+		(
+			self::getModelName(),
+			['getTree', implode('-', $p_fields)],
+			function() use ($ids, $order, $select_fields)
+			{
+				return self::whereIn('id', $ids)->orderBy($order)->get($select_fields);
+			}
+		)['data'];
 
+		$registers      = collect($registers->toArray())->map(function ($item, $key) { return (array)$item; });
 		$default_fields = config('nestable.body');
-		$array_fields = array_merge($default_fields, $use_fields);
+		$array_fields   = array_merge($default_fields, $use_fields);
 		\Config::set('nestable.body', $array_fields);
 
 		$registers = \Nestable::make($registers->toArray());

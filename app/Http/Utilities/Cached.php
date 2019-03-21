@@ -16,7 +16,7 @@ class Cached
 		$cache_name = sprintf('%s-%s', $prefix, $key);
 		if (Cache::has($cache_name))
 		{
-			return Result::cached('', Cache::get($cache_name), true);
+			return Result::cached($prefix, $cache_name, '', Cache::get($cache_name), true);
 		}
 		else
 		{
@@ -40,7 +40,7 @@ class Cached
 				}
 			}
 
-			return Result::cached('', $data, false);
+			return Result::cached($prefix, $cache_name, '', $data, false);
 		}
     }
 
