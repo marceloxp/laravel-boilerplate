@@ -33,6 +33,8 @@
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/select2/select2.min.css') }}">
 		<!-- daterange picker -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/bootstrap-daterangepicker/daterangepicker.css') }}">
+		<!-- summernote -->
+		<link rel="stylesheet" href="{{ vasset('/vendor/summernote/summernote.css') }}">
 		<!-- <link rel="stylesheet" href="/admin-lte/plugins/daterangepicker/daterangepicker.css"> -->
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -115,6 +117,9 @@
 		<script type="text/javascript" src="{{ vasset('/lib/cjsbaseclass.min.js') }}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
 		{{ javascript('/lib/sweetalert.min.js') }}
 		@include('Admin.includes.messages')
+
+		<!-- summernote -->
+		<script src="{{ vasset('/vendor/summernote/summernote.min.js') }}"></script>
 
 		<!-- User Scripts -->
 		@yield('scripts')

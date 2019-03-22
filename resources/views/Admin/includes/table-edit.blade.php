@@ -194,6 +194,17 @@
 									$options = ['Não', 'Sim'];
 									$input = admin_select($field_name, $options, (old($field_name) ?? $register->$field_name), $required);
 								break;
+								case 'longtext':
+									$input = sprintf
+									(
+										'<textarea name="%s" id="%s" maxlength="%s" class="summernote" %s>%s</textarea>',
+										$field_name,
+										$field_name,
+										$maxlength,
+										$required,
+										(old($field_name) ?? $register->$field_name)
+									);
+								break;
 								case 'text':
 									$input = sprintf
 									(

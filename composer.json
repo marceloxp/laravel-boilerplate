@@ -15,6 +15,7 @@
 		"chumper/zipper": "1.0.x",
 		"danielstjules/stringy": "~3.1.0",
 		"digitalnature/php-ref": "dev-master",
+		"ezyang/htmlpurifier": "^4.10",
 		"fideloper/proxy": "~4.0",
 		"guzzlehttp/guzzle": "~6.0",
 		"laravel/framework": "5.7.*",
@@ -23,8 +24,8 @@
 		"marceloxp/laravel_commands": "dev-master",
 		"miroc/laravel-adminer": "dev-master",
 		"shridharkaushik29/laravel-hooks": "dev-master",
-		"technoknol/log-my-queries": "^1.0",
-		"summernote/summernote": "^0.8.8"
+		"summernote/summernote": "^0.8.8",
+		"technoknol/log-my-queries": "^1.0"
 	},
 	"require-dev": {
 		"barryvdh/laravel-debugbar": "^3.2@dev",
@@ -66,7 +67,8 @@
 			"app/Http/Utilities/Helpers/money.php",
 			"app/Http/Utilities/Helpers/payment.php",
 			"app/Http/Utilities/Helpers/bootstrap.php",
-			"app/Http/Utilities/Helpers/forms.php"
+			"app/Http/Utilities/Helpers/forms.php",
+			"app/Http/Utilities/Helpers/html.php"
 		]
 	},
 	"autoload-dev": {

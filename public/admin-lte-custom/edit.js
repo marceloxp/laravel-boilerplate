@@ -70,7 +70,28 @@ umsappadmin.Tedit = function($, objname, options)
 		self.onChangeImages();
 		self.maskMoney();
 		self.verifySlugFields();
+		self.addSummerNote();
 		self.setFirstFocus();
+	};
+
+	this.addSummerNote = function()
+	{
+		if (jQuery('.summernote').length > 0)
+		{
+			jQuery('.summernote').summernote
+			(
+				{
+					'height': 300,
+					'codemirror':
+					{
+						'mode'        : 'text/html',
+						'htmlMode'    : true,
+						'lineNumbers' : true,
+						'theme'       : 'monokai'
+					},
+				}
+			);
+		}
 	};
 
 	this.addInputMasks = function()
