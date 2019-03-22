@@ -164,31 +164,41 @@ class Menu extends MasterModel
 
 	public static function addMenuLinkToTablesItem($p_caption, $p_ico, $p_roles, $p_route)
 	{
-		$parent_id = db_select_id(\App\Models\Menu::class, ['slug' => 'tabelas'], true);
-		$menu_id = self::getMenuId($parent_id, $p_caption);
-		if (empty($menu_id))
-		{
-			$now = \Carbon\Carbon::now();
-			$menu_id = \App\Models\Menu::insertGetId
-			(
-				[
-					'parent_id'  => $parent_id,
-					'type'       => 'link',
-					'name'       => $p_caption,
-					'slug'       => str_slugfy($p_caption),
-					'ico'        => $p_ico,
-					'route'      => $p_route,
-					'created_at' => $now
-				]
-			);
-			if (!$menu_id) { throw new Exception('Falha na inserção do Menu.'); }
+		$table_id    = \App\Models\Menu::where('type', 'header')->where('slug', 'tabelas')->get(['id'])->first()->id;
+		$menu_exists = \App\Models\Menu::where('type', 'link')->where('name', $p_caption)->where('parent_id', $table_id)->exists();
 
-			foreach ($p_roles as $role)
+		if (!$menu_exists)
+		{
+			$parent_id = db_select_id(\App\Models\Menu::class, ['slug' => 'tabelas'], true);
+			$menu_id = self::getMenuId($parent_id, $p_caption);
+			if (empty($menu_id))
 			{
-				\App\Models\Menu::addRole($menu_id, $role);
+				$now = \Carbon\Carbon::now();
+				$menu_id = \App\Models\Menu::insertGetId
+				(
+					[
+						'parent_id'  => $parent_id,
+						'type'       => 'link',
+						'name'       => $p_caption,
+						'slug'       => str_slugfy($p_caption),
+						'ico'        => $p_ico,
+						'route'      => $p_route,
+						'created_at' => $now
+					]
+				);
+				if (!$menu_id) { throw new Exception('Falha na inserção do Menu.'); }
+
+				foreach ($p_roles as $role)
+				{
+					\App\Models\Menu::addRole($menu_id, $role);
+				}
 			}
+			return $menu_id;
 		}
-		return $menu_id;
+		else
+		{
+			return \App\Models\Menu::where('type', 'link')->where('name', $p_caption)->where('parent_id', $table_id)->get(['id'])->first()->id;
+		}
 	}
 
 	public static function addMenuInternalLink($parent_id, $p_caption, $p_ico, $p_roles, $p_link, $p_target = '_self')
