@@ -323,7 +323,7 @@ class Create{ClassName}Table extends Migration
 		$this->info('RULES GENERATED - TABLE: ' . $table);
 		$this->br();
 
-		$rules = $this->printSingleArray($result, 1, false);
+		$str_rules = $this->printSingleArray($result, 1, true);
 
 		$function_body = 
 		[
@@ -332,7 +332,7 @@ class Create{ClassName}Table extends Migration
 			"	{",
 			"		\$rules = ",
 			"		[",
-			"	" . $rules,
+			"	" . $str_rules,
 			"		];",
 			"		return Role::_validate(\$request, \$rules, \$id);",
 			"	}",

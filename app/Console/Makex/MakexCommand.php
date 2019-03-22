@@ -191,10 +191,14 @@ class MakexCommand extends Command
 		}
 	}
 
-	public function printSingleArray($p_array, $columns = 1)
+	public function printSingleArray($p_array, $columns = 1, $p_return_value = false)
 	{
 		if ($columns == 1)
 		{
+			if ($p_return_value)
+			{
+				return implode(PHP_EOL, $p_array);
+			}
 			print_r( implode(PHP_EOL, $p_array) );
 			$this->breakLine();
 			return;
@@ -234,6 +238,10 @@ class MakexCommand extends Command
 			}
 		}
 
+		if ($p_return_value)
+		{
+			return $this->printSingleArray($result, $columns, $p_return_value);
+		}
 		$this->printSingleArray($result);
 	}
 }
