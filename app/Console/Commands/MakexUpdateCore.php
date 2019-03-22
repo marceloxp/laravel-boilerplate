@@ -59,29 +59,27 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 		$core_files = 
 		[
 			'laravel-boilerplate-stable/README.md',
+			'laravel-boilerplate-stable/app/Console/Commands',
+			'laravel-boilerplate-stable/app/Http/Utilities',
+			'laravel-boilerplate-stable/resources/views/Admin',
+
+			'laravel-boilerplate-stable/app/config/app.php',
+			'laravel-boilerplate-stable/app/config/brasil.php',
+			'laravel-boilerplate-stable/app/config/cep.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/AdminController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/CacheController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/ConfigController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/MasterManyController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/SearchmodalController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Site/SiteController.php',
-			'laravel-boilerplate-stable/app/Http/Utilities',
 			'laravel-boilerplate-stable/app/Http/Kernel.php',
 			'laravel-boilerplate-stable/app/Http/Middleware/Shopping.php',
 			'laravel-boilerplate-stable/app/Providers/BrFakerServiceProvider',
-			'laravel-boilerplate-stable/app/config/app.php',
-			'laravel-boilerplate-stable/app/config/brasil.php',
-			'laravel-boilerplate-stable/app/config/cep.php',
+			'laravel-boilerplate-stable/app/Providers/XpCollectionServiceProvider.php',
 			'laravel-boilerplate-stable/app/routes/admin.php',
-			'laravel-boilerplate-stable/app/Console/Commands/Makex.php',
-			'laravel-boilerplate-stable/app/Console/Commands/MakexAdminController.php',
-			'laravel-boilerplate-stable/app/Console/Commands/MakexCreateSimpleTable.php',
-			'laravel-boilerplate-stable/app/Console/Commands/MakexMasterModel.php',
-			'laravel-boilerplate-stable/app/Console/Commands/MakexUpdateCore.php',
-			'laravel-boilerplate-stable/resources/views/Admin/',
-			'laravel-boilerplate-stable/resources/views/layouts/admin.blade.php',
 			'laravel-boilerplate-stable/public/js/admin/jquery.priceformat.min.js',
 			'laravel-boilerplate-stable/public/js/admin/jQuery.SimpleMask.min.js',
+			'laravel-boilerplate-stable/resources/views/layouts/admin.blade.php',
 		];
 
 		$this->info('Extracting zip...');
