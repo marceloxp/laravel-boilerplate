@@ -33,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
 			// $fs = new Symfony\Component\Filesystem\Filesystem();
 			// $fs->symlink(storage_path('app/public'), public_path('storage'));
 		}
+
+		$publishes = [ base_path('vendor/summernote/summernote/dist') => public_path('vendor/summernote') ];
+		$this->publishes($publishes, 'summernote');
 	}
 
 	/**

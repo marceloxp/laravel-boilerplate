@@ -26,3 +26,4 @@ app/Console/Commands/master/laravel-boilerplate-master/
 app/Console/Commands/master\.zip
 storage/framework/cache/data/
 *.directory
+public/vendor/summernote

@@ -44,6 +44,34 @@ php artisan migrate:refresh --seed
 
 > http://www.local.laravel-boilerplate.com.br
 
+### Updates
+
+## summernote
+
+`composer.json`
+```json
+	"require": {
+	    ...
+		"summernote/summernote": "^0.8.8"
+	},
+	"scripts": {
+		"post-update-cmd": [
+			"php artisan vendor:publish --tag=summernote"
+		],
+		...
+	}
+```
+
+`AppServiceProvider.php`
+```php
+	public function boot()
+	{
+        // ...
+		$publishes = [ base_path('vendor/summernote/summernote/dist') => public_path('vendor/summernote') ];
+		$this->publishes($publishes, 'summernote');
+	}
+```
+
 ## Plugins
 
 | Plugin                           | Address                                                  |
