@@ -164,8 +164,8 @@ class Menu extends MasterModel
 
 	public static function addMenuLinkToTablesItem($p_caption, $p_ico, $p_roles, $p_route)
 	{
-		$parent_id = db_select_id(self, ['slug' => 'tabelas'], true);
-		$menu_id = getMenuId($parent_id, $p_caption);
+		$parent_id = db_select_id(\App\Models\Menu::class, ['slug' => 'tabelas'], true);
+		$menu_id = self::getMenuId($parent_id, $p_caption);
 		if (empty($menu_id))
 		{
 			$now = \Carbon\Carbon::now();

@@ -122,19 +122,15 @@ class Create{ClassName}Table extends Migration
 		$file_migrations = \File::glob($file_search);
 		$has_migrations  = (count($file_migrations) > 0);
 
-		$use_soft_deletes = ($this->confirm('Use SoftDeletes?', 1));
-		$changes = 
-		[
-			'UseSoftDeletes1' => (!$use_soft_deletes) ? '{delete_line}' : 'use Illuminate\Database\Eloquent\SoftDeletes;',
-			'UseSoftDeletes2' => (!$use_soft_deletes) ? '{delete_line}' : 'use SoftDeletes;'
-		];
+		$changes = [];
 
-		$use_has_parent_id = ($this->confirm('Table has *parent_id*?', 1));
-		$changes = 
-		[
-			'HasParentId1' => (!$use_has_parent_id) ? '{delete_line}' : 'use App\Traits\TreeModelTrait;',
-			'HasParentId2' => (!$use_has_parent_id) ? '{delete_line}' : 'use TreeModelTrait;'
-		];
+		$use_soft_deletes = ($this->confirm('Use SoftDeletes?', 1));
+		$changes['UseSoftDeletes1'] = (!$use_soft_deletes) ? '{delete_line}' : 'use Illuminate\Database\Eloquent\SoftDeletes;';
+		$changes['UseSoftDeletes2'] = (!$use_soft_deletes) ? '{delete_line}' : 'use SoftDeletes;';
+
+		$use_has_parent_id = ($this->confirm('Table has parent_id?', 0));
+		$changes['HasParentId1'] = (!$use_has_parent_id) ? '{delete_line}' : 'use App\Traits\TreeModelTrait;';
+		$changes['HasParentId2'] = (!$use_has_parent_id) ? '{delete_line}' : 'use TreeModelTrait;';
 
 		$file_name = sprintf('%s%s.php', $folder_name, $model_name);
 		$file_name = app_path($file_name);
