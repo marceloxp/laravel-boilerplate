@@ -27,6 +27,11 @@ class MasterModel extends Model
 		return collect(self::getFieldsMetaData())->where('type', 'decimal')->keys()->all();
 	}
 
+	public static function getLongTextFields()
+	{
+		return collect(self::getFieldsMetaData())->where('type', 'longtext')->keys()->all();
+	}
+
 	public static function hasField($p_field)
 	{
 		return collect(self::getFieldsMetaData())->where('name', $p_field)->keys()->count() > 0;
@@ -77,6 +82,12 @@ class MasterModel extends Model
 				{
 					$model->$field_name = (new \App\Http\Utilities\Money($model->$field_name))->value;
 				}
+
+				$fields = self::getLongTextFields();
+				foreach ($fields as $field_name)
+				{
+					$model->$field_name = html_purifier($model->$field_name);
+				}
 			}
 		);
 
@@ -88,6 +99,12 @@ class MasterModel extends Model
 				foreach ($fields as $field_name)
 				{
 					$model->$field_name = (new \App\Http\Utilities\Money($model->$field_name))->value;
+				}
+
+				$fields = self::getLongTextFields();
+				foreach ($fields as $field_name)
+				{
+					$model->$field_name = html_purifier($model->$field_name);
 				}
 			}
 		);
