@@ -170,3 +170,31 @@ if (!function_exists('array_to_file'))
 		return true;
 	}
 }
+
+if (!function_exists('trim_file'))
+{
+	function trim_file($p_file_name)
+	{
+		$body = file_get_contents($p_file_name);
+		$array = explode(PHP_EOL, $body);
+		$k = 0;
+		$cuts = true;
+		$last = $array[count($array)-1];
+		$last = str_replace(chr(9), '', $last);
+		$cuts = (empty($last));
+		while($cuts)
+		{
+			array_pop($array);
+			$k++;
+			if ($k > 1000)
+			{
+				throw new Exception('Stack Overflow!');
+			}
+			$last = $array[count($array)-1];
+			$last = str_replace(chr(9), '', $last);
+			$cuts = (empty($last));
+		}
+		$body = implode(PHP_EOL, $array);
+		file_put_contents($p_file_name, $body);
+	}
+}

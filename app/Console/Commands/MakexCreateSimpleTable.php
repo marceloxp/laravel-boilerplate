@@ -429,10 +429,17 @@ class Create{ClassName}Table extends Migration
 
 		file_put_contents($dest_file, $body);
 
+		// ██████╗  ██████╗ ██╗   ██╗████████╗███████╗███████╗
+		// ██╔══██╗██╔═══██╗██║   ██║╚══██╔══╝██╔════╝██╔════╝
+		// ██████╔╝██║   ██║██║   ██║   ██║   █████╗  ███████╗
+		// ██╔══██╗██║   ██║██║   ██║   ██║   ██╔══╝  ╚════██║
+		// ██║  ██║╚██████╔╝╚██████╔╝   ██║   ███████╗███████║
+		// ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚══════╝╚══════╝
+
 		$route_prefix = $table_name;
 
 		$template = "
-	// " . $model_description . "
+	// Begin " . $model_description . "
 	Route::group
 	(
 		['prefix' => '" . $route_prefix . "'],
@@ -444,13 +451,16 @@ class Create{ClassName}Table extends Migration
 			Route::get ('show/{id}' , '" . $controller_name . "Controller@show'   )->name('admin_" . $route_prefix . "_show'  )->group('admin_" . $route_prefix . "');
 			Route::post('delete/'   , '" . $controller_name . "Controller@destroy')->name('admin_" . $route_prefix . "_delete')->group('admin_" . $route_prefix . "');
 		}
-	);";
+	);
+	// End " . $model_description;
 
 		$file_name = base_path('routes/custom_admin.php');
-
+		trim_file($file_name);
 		$body = file_get_contents($file_name);
+		$body = delete_all_between(sprintf('// Begin %s', $model_description), sprintf('// End %s', $model_description), $body);
 		$body .= PHP_EOL . $template;
 		file_put_contents($file_name, $body);
+		trim_file($file_name);
 
 		$this->info('DONE');
 	}

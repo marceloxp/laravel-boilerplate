@@ -124,7 +124,7 @@ class MakexAdminController extends \App\Console\MakexCommand
 		}
 
 		$template = "
-	// " . $caption . "
+	// begin " . $caption . "
 	Route::group
 	(
 		['prefix' => '" . $route_prefix . "'],
@@ -139,9 +139,11 @@ class MakexAdminController extends \App\Console\MakexCommand
 	);";
 
 		$file_name = base_path('routes/custom_admin.php');
-
+		trim_file($file_name);
 		$body = file_get_contents($file_name);
+		$body = delete_all_between(sprintf('// Begin %s', $caption), sprintf('// End %s', $caption), $body);
 		$body .= PHP_EOL . $template;
 		file_put_contents($file_name, $body);
+		trim_file($file_name);
 	}
 }
