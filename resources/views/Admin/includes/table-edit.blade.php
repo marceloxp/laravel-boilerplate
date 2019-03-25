@@ -148,8 +148,14 @@
 								$display_text = '';
 								if (!$is_creating)
 								{
-									$display_text = (!empty($register->$ref_model->getAttribute('description'))) ? $register->$ref_model->getAttribute('description') : $register->$ref_model->getAttribute('name');
-									$display_text = null ?? $register->$ref_model->getAttribute('name');
+									if (array_key_exists('description', $fields_schema))
+									{
+										$display_text = $register->$ref_model->description;
+									}
+									else
+									{
+										$display_text = $register->$ref_model->name;
+									}
 								}
 								$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $display_text) : '');
 								$field_value = old($field_name) ?? $register->$field_name;

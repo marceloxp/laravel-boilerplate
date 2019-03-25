@@ -37,6 +37,12 @@ class Customer
 		}
 	}
 
+	public function toJson()
+	{
+		$result = self::get()->toJson();
+		return $result;
+	}
+
 	public function login($p_id, $p_data)
 	{
 		$data = collect(['id' => $p_id, 'logged' => true]);
