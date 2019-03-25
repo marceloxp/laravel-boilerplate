@@ -1,5 +1,5 @@
 <?php
-	// Vídeos
+	// Begin Vídeos
 	Route::group
 	(
 		['prefix' => 'videos'],
@@ -13,8 +13,9 @@
 			Route::post('delete/'    , 'VideoController@destroy')->name('admin_video_delete')->group('admin_video');
 		}
 	);
+	// End Vídeos
 
-	// Tags
+	// Begin Tags
 	Route::group
 	(
 		['prefix' => 'tags'],
@@ -27,8 +28,9 @@
 			Route::post('delete/'   , 'TagController@destroy')->name('admin_tag_delete')->group('admin_tag');
 		}
 	);
+	// End Tags
 
-	// Tags dos Vídeos
+	// Begin Tags dos Vídeos
 	Route::group
 	(
 		['prefix' => 'tag_video'],
@@ -40,8 +42,9 @@
 			Route::post('{video_id}/detach'       , 'TagVideoController@detach')->name('admin_tag_video_detach')->group('admin_tag');
 		}
 	);
+	// End Tags dos Vídeos
 
-	// Admin Menu
+	// Begin Admin Menu
 	Route::group
 	(
 		['prefix' => 'menu'],
@@ -54,8 +57,9 @@
 			Route::post('delete/'   , 'MenuController@destroy')->name('admin_menu_delete')->group('admin_menu');
 		}
 	);
+	// End Admin Menu
 
-	// Menu - Role
+	// Begin Menu - Role
 	Route::group
 	(
 		['prefix' => 'menu_role'],

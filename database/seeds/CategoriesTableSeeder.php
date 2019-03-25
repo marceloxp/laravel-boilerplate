@@ -13,10 +13,10 @@ class CategoriesTableSeeder extends Seeder
 	{
 		try
 		{
-			\DB::select('DELETE FROM blp_tag_video  WHERE id >= 0');
-			\DB::select('DELETE FROM blp_videos     WHERE id >= 0');
-			\DB::select('DELETE FROM blp_categories WHERE id >= 0');
-
+			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', db_prefixed_table('tag_video')));
+			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', db_prefixed_table('videos')));
+			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', db_prefixed_table('categories')));
+			
 			$categories = 
 			[
 				['name' => 'Space'  , 'description' => 'Space Videos'  , 'childs' => ['Sun','Earth','Galaxy'] ],
