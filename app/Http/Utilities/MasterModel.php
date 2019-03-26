@@ -434,7 +434,7 @@ class MasterModel extends Model
 						'has_parent_id' => self::getHasParentId($value['ref_table']),
 						'comment'       => ''
 					];
-					$value['comment'] = self::getTableFieldCaption($value['table_name'], 'name');
+					$value['comment'] = self::getTableFieldCaption($value['table_name'], $value['field_name']);
 					$relations[$ref->field_name] = $value;
 				}
 
