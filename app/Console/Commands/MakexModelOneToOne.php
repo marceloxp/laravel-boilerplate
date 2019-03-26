@@ -70,15 +70,11 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 		$folder_model  = (empty($folder_model)) ? 'Models' : $folder_model;
 		$folder_model .= '/';
 
-		$class_path_model = '\\App\\' . str_replace('/', '\\', $folder_model);
-
+		$class_path_model   = '\\App\\' . str_replace('/', '\\', $folder_model);
 		$list_function_name = strtolower($model_list);
-		$list_model_path = 
-
-		// MASTER
-		$master_path = app_path(sprintf('%s%s.php', $folder_model, $model_target));
-		$string_body = \File::get($master_path);
-		$master_body = explode(PHP_EOL, $string_body);
+		$master_path        = app_path(sprintf('%s%s.php', $folder_model, $model_target));
+		$string_body        = \File::get($master_path);
+		$master_body        = explode(PHP_EOL, $string_body);
 
 		$func       = new \ReflectionClass($class_path_model . $model_target);
 		$filename   = $func->getFileName();

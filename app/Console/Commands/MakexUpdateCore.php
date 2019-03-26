@@ -60,9 +60,9 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 		[
 			'laravel-boilerplate-stable/README.md',
 			'laravel-boilerplate-stable/app/Console/Commands',
+			'laravel-boilerplate-stable/app/Console/Makex',
 			'laravel-boilerplate-stable/app/Http/Utilities',
 			'laravel-boilerplate-stable/resources/views/Admin',
-
 			'laravel-boilerplate-stable/app/config/app.php',
 			'laravel-boilerplate-stable/app/config/brasil.php',
 			'laravel-boilerplate-stable/app/config/cep.php',
