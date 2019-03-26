@@ -30,7 +30,7 @@ class CategoryController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id','parent_id','name','slug','image','description','created_at']
+				'display_fields' => ['id','parent_id','name','slug','image','description','status','created_at']
 			]
 		);
 	}
@@ -77,6 +77,7 @@ class CategoryController extends AdminController
 					'slug'        => 6,
 					'description' => 6,
 					'image'       => 12,
+					'status'      => 12,
 					'created_at'  => 6,
 					'updated_at'  => 6,
 				]
