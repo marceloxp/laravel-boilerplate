@@ -29,7 +29,7 @@ class Gallery extends MasterModel
 		$rules = 
 		[
 			'name'        => 'required|max:150',
-			'description' => 'required|max:255',
+			'description' => 'max:255',
 			'status'      => 'required|in:Ativo,Inativo'
 		];
 
