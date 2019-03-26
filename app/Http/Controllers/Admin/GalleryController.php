@@ -36,12 +36,6 @@ class GalleryController extends AdminController
 		);
 	}
 
-	public function getUploadedFile($p_file_name, $p_height = 100)
-	{
-		if (empty($p_file_name)) { return $p_file_name; }
-		return sprintf('%s<br/>%s', link_uploaded_file($p_file_name, sprintf('height="%s"', $p_height)), $p_file_name);
-	}
-
 	public function hooks_index($table_name)
 	{
 		Hook::add_filter
