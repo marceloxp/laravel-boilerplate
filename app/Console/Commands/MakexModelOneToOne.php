@@ -22,6 +22,14 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 	protected $description = 'Ajust Model Relationships';
 
 	/**
+	 * The console command example.
+	 *
+	 * @var string
+	 */
+	protected $example = 'php artisan makex:model Post Category --onetoone';
+
+
+	/**
 	 * Create a new command instance.
 	 *
 	 * @return void
@@ -77,16 +85,17 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 		$start_line = $func->getStartLine();
 		$end_line   = $func->getEndLine();
 		$length     = $end_line - $start_line;
+		$tab1       = chr(9);
 
 		if (strpos($string_body, $list_function_name . '(') === false)
 		{
 			$detail_body = 
 			[
 				PHP_EOL,
-				'   public function ' . $list_function_name . '()',
-				'   {',
-				'       return $this->hasOne(' . $class_path_model . $model_list . '::class, \'id\'1);',
-				'   }',
+				$tab1 . 'public function ' . $list_function_name . '()',
+				$tab1 . '{',
+				$tab1.$tab1 . 'return $this->hasOne(' . $class_path_model . $model_list . '::class, \'id\');',
+				$tab1 . '}',
 				'}',
 				PHP_EOL,
 			];
