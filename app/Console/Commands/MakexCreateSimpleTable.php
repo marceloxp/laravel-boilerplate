@@ -150,6 +150,7 @@ class Create{ClassName}Table extends Migration
 		$table_exists = db_table_exists($table_name);
 		if ($table_exists)
 		{
+			system('php artisan migrate:status');
 			if ($this->confirm('Table already exists, drop it?', 1))
 			{
 				\Schema::dropIfExists($table_name);
@@ -274,6 +275,7 @@ class Create{ClassName}Table extends Migration
 		// ╚██████╔╝██║ ╚████║███████╗       ██║   ╚██████╔╝    ╚██████╔╝██║ ╚████║███████╗
 		//  ╚═════╝ ╚═╝  ╚═══╝╚══════╝       ╚═╝    ╚═════╝      ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
+		$this->call('makex:cache', ['--clear' => true]);
 		$model    = sprintf('\App\Models\%s', $model_name);
 		$metadata = collect($model::getFieldsMetaData());
 		$quant    = $metadata->where('has_relation', 'true')->count();
@@ -281,16 +283,18 @@ class Create{ClassName}Table extends Migration
 		{
 			foreach ($metadata->where('has_relation', 'true') as $field)
 			{
+				$model_list   = db_table_name_to_model($field['relation']['ref_table']);
+				$model_target = db_table_name_to_model($field['relation']['table_name']);
 				$this->info(sprintf('MODEL RELATION ONE TO ONE: %s => %s', $model_list, $model_target));
-				$this->call
-				(
-					'makex:model',
-					[
-						'model_target' => $model_target,
-						'model_list'   => $model_list,
-						'--onetoone'   => true
-					]
-				);
+				$call_options =
+				[
+					'model_target' => $model_target,
+					'model_list'   => $model_list,
+					'--onetoone'   => true
+				];
+
+				$command = sprintf('php artisan makex:model %s %s --onetoone', $model_target, $model_list);
+				system($command);
 			}
 		}
 
@@ -301,104 +305,8 @@ class Create{ClassName}Table extends Migration
 		// ██║  ██║╚██████╔╝███████╗███████╗███████║
 		// ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝
 
-		$table = str_plural(strtolower($model_name));
-		$fields = $this->__getFieldsMetadata($table);
-
-		$data = [];
-		foreach ($fields as $field)
-		{
-			$field_name        = $field['COLUMN_NAME'];
-			$field_length      = $field['CHARACTER_MAXIMUM_LENGTH'];
-			$field_required    = ($field['IS_NULLABLE'] == 'NO');
-			$field_enum        = (substr($field['COLUMN_TYPE'], 0, 4) == 'enum');
-			$data[$field_name] = [];
-
-			if ($field_enum)
-			{
-				preg_match("/^enum\(\'(.*)\'\)$/", $field['COLUMN_TYPE'], $matches);
-				$options = explode("','", $matches[1]);
-				$options = implode(',', $options);
-				$data[$field_name][] = sprintf('in:%s', $options);
-			}
-
-			if (!empty($field_required))
-			{
-				$data[$field_name][] = 'required';
-			}
-
-			if (!empty($field_length))
-			{
-				$data[$field_name][] = sprintf('max:%s', $field_length);
-			}
-		}
-
-		$max_length = $this->__getArrayKeyMaxLength($data);
-
-		$result = [];
-		reset($data);
-		foreach ($data as $field_name => $value)
-		{
-			if (!empty($value))
-			{
-				if ($field_name != 'id')
-				{
-					$result[] = sprintf("		'%s'%s=> '%s',", $field_name, str_pad('', ($max_length + 1 - strlen($field_name) )), implode('|', $value));
-				}
-			}
-		}
-
-		$this->info('RULES GENERATED - TABLE: ' . $table);
-		$this->br();
-
-		$str_rules = $this->printSingleArray($result, 1, true);
-
-		$function_body = 
-		[
-			PHP_EOL,
-			"	public static function validate(\$request, \$id = '')",
-			"	{",
-			"		\$rules = ",
-			"		[",
-			"	" . $str_rules,
-			"		];",
-			"		return Role::_validate(\$request, \$rules, \$id);",
-			"	}",
-			"}",
-			PHP_EOL,
-		];
-
-		// MODEL FILE
-		$model_path  = app_path(sprintf('%s%s.php', $folder_name, $model_name));
-		$string_body = \File::get($model_path);
-		$model_body  = explode(PHP_EOL, $string_body);
-
-		$class_path_model = '\\App\\' . str_replace('/', '\\', $folder_name);
-
-		$func       = new \ReflectionClass($class_path_model . $model_name);
-		$filename   = $func->getFileName();
-		$start_line = $func->getStartLine();
-		$end_line   = $func->getEndLine();
-		$length     = $end_line - $start_line;
-
-		if (strpos($string_body, 'validate(') === false)
-		{
-			$new_body = 
-			[
-				array_slice($model_body, 0, $end_line - 1),
-				$function_body,
-				array_slice($model_body, $end_line + 1)
-			];
-			$final_body = implode(PHP_EOL, $new_body[0]) . implode(PHP_EOL, $new_body[1]) . implode(PHP_EOL, $new_body[2]);
-
-			\File::put($model_path, $final_body);
-			$this->info(sprintf('File %s saved.', $model_path));
-		}
-		else
-		{
-			$this->info('Function "validate()" already exists in ' . $model_name . '.');
-			$this->waitKey();
-			die;
-		}
+		$command = sprintf('php artisan makex:model_rules %s', $model_name);
+		system($command);
 
 		//  █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗     ██████╗ ██████╗ ███╗   ██╗████████╗██████╗  ██████╗ ██╗     ██╗     ███████╗██████╗ 
 		// ██╔══██╗██╔══██╗████╗ ████║██║████╗  ██║    ██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔══██╗██╔═══██╗██║     ██║     ██╔════╝██╔══██╗
