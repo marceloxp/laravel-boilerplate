@@ -79,9 +79,6 @@ class MakexModelRules extends \App\Console\MakexCommand
 		$end_line   = $func->getEndLine();
 		$length     = $end_line - $start_line;
 
-		dump($start_line);
-		dump($end_line);
-
 		if (strpos($string_body, $list_function_name . '(') === false)
 		{
 			$str_rules = $this->getRules();
