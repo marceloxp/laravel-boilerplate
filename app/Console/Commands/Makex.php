@@ -57,7 +57,7 @@ class Makex extends \App\Console\MakexCommand
 		[
 			'makex:create_simple_table',
 			'makex:add_pivot_to_table',
-			'makex:clear_cached',
+			['makex:cached', ['--clear' => true]],
 			// 'makex:admin_controller',
 			// 'makex:mastermodel',
 			'makex:updatecore',
@@ -71,10 +71,16 @@ class Makex extends \App\Console\MakexCommand
 		{
 			exit;
 		}
-
-		$command = sprintf('php artisan %s',  $commands[$option]);
-
 		$this->clear();
-		$this->call($commands[$option]);
+
+		$command = $commands[$option];
+		if (!is_array($command))
+		{
+			$this->call($command);
+		}
+		else
+		{
+			$this->call($command[0], $command[1]);
+		}
 	}
 }
