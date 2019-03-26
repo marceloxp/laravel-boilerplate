@@ -15,6 +15,18 @@ class MakexCached extends \App\Console\MakexCommand
 	protected $signature = 'makex:cached {--clear : Clear cached files} {--list : List cached files} {--count : Show count od cached files}';
 
 	/**
+	 * The name and signature of the console command.
+	 *
+	 * @var string
+	 */
+	protected $examples = 
+	[
+		'php artisan makex:cached --clear',
+		'php artisan makex:cached --list',
+		'php artisan makex:cached --count'
+	];
+
+	/**
 	 * The console command description.
 	 *
 	 * @var string
