@@ -267,6 +267,33 @@ class Create{ClassName}Table extends Migration
 		$this->info('EXECUTING MIGRATION');
 		system('php artisan migrate');
 
+		//  ██████╗ ███╗   ██╗███████╗    ████████╗ ██████╗      ██████╗ ███╗   ██╗███████╗
+		// ██╔═══██╗████╗  ██║██╔════╝    ╚══██╔══╝██╔═══██╗    ██╔═══██╗████╗  ██║██╔════╝
+		// ██║   ██║██╔██╗ ██║█████╗         ██║   ██║   ██║    ██║   ██║██╔██╗ ██║█████╗  
+		// ██║   ██║██║╚██╗██║██╔══╝         ██║   ██║   ██║    ██║   ██║██║╚██╗██║██╔══╝  
+		// ╚██████╔╝██║ ╚████║███████╗       ██║   ╚██████╔╝    ╚██████╔╝██║ ╚████║███████╗
+		//  ╚═════╝ ╚═╝  ╚═══╝╚══════╝       ╚═╝    ╚═════╝      ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+
+		$model    = sprintf('\App\Models\%s', $model_name);
+		$metadata = collect($model::getFieldsMetaData());
+		$quant    = $metadata->where('has_relation', 'true')->count();
+		if ($quant > 0)
+		{
+			foreach ($metadata->where('has_relation', 'true') as $field)
+			{
+				$this->info(sprintf('MODEL RELATION ONE TO ONE: %s => %s', $model_list, $model_target));
+				$this->call
+				(
+					'makex:model',
+					[
+						'model_target' => $model_target,
+						'model_list'   => $model_list,
+						'--onetoone'   => true
+					]
+				);
+			}
+		}
+
 		// ██████╗ ██╗   ██╗██╗     ███████╗███████╗
 		// ██╔══██╗██║   ██║██║     ██╔════╝██╔════╝
 		// ██████╔╝██║   ██║██║     █████╗  ███████╗
