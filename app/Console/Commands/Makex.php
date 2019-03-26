@@ -45,6 +45,7 @@ class Makex extends \App\Console\MakexCommand
 		[
 			'Create a new Table, Migration, Model and Admin Page',
 			'Add Pivot to Table',
+			'Clear Cached',
 			// 'Create a new Admin Controller',
 			// 'Create a new Single Master Model',
 			'Update framework core files',
@@ -56,6 +57,7 @@ class Makex extends \App\Console\MakexCommand
 		[
 			'makex:create_simple_table',
 			'makex:add_pivot_to_table',
+			'makex:clear_cached',
 			// 'makex:admin_controller',
 			// 'makex:mastermodel',
 			'makex:updatecore',
