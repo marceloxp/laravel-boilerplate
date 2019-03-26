@@ -71,3 +71,4 @@
 			Route::post('{menu_id}/detach'       , 'MenuRoleController@detach')->name('admin_menu_role_detach')->group('admin_menu_role');
 		}
 	);
+	// End Menu - Role
