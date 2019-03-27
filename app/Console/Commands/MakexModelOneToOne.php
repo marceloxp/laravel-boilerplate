@@ -88,7 +88,7 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 		{
 			$has_one_line = sprintf
 			(
-				'return \$this->hasOne(%s%s::class, \'id\', \'%s\');',
+				'return $this->hasOne(%s%s::class, \'id\', \'%s\');',
 				$class_path_model,
 				$model_list,
 				$target_relation_id

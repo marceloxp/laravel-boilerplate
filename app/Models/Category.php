@@ -53,7 +53,7 @@ class Category extends MasterModel
 			'parent_id'   => 'required',
 			'description' => 'max:255',
 			'image'       => 'max:255',
-			'status'      => 'in:Ativo,Inativo|required|max:7',
+			'status'      => 'in:Ativo,Inativo|max:7',
 		];
 		return Role::_validate($request, $rules, $id);
 	}
