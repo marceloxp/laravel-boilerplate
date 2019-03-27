@@ -75,6 +75,7 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 		$master_path        = app_path(sprintf('%s%s.php', $folder_model, $model_target));
 		$string_body        = \File::get($master_path);
 		$master_body        = explode(PHP_EOL, $string_body);
+		$target_relation_id = sprintf('%s_id', mb_strtolower($model_list));
 
 		$func       = new \ReflectionClass($class_path_model . $model_target);
 		$filename   = $func->getFileName();
@@ -85,12 +86,20 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 
 		if (strpos($string_body, $list_function_name . '(') === false)
 		{
+			$has_one_line = sprintf
+			(
+				'return \$this->hasOne(%s%s::class, \'id\', \'%s\');',
+				$class_path_model,
+				$model_list,
+				$target_relation_id
+			);
+
 			$detail_body = 
 			[
 				PHP_EOL,
 				$tab1 . 'public function ' . $list_function_name . '()',
 				$tab1 . '{',
-				$tab1.$tab1 . 'return $this->hasOne(' . $class_path_model . $model_list . '::class, \'id\');',
+				$tab1.$tab1 . $has_one_line,
 				$tab1 . '}',
 				'}',
 				PHP_EOL,
