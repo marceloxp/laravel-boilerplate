@@ -80,6 +80,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/public/js/admin/jquery.priceformat.min.js',
 			'laravel-boilerplate-stable/public/js/admin/jQuery.SimpleMask.min.js',
 			'laravel-boilerplate-stable/resources/views/layouts/admin.blade.php',
+			'laravel-boilerplate-stable/public/admin-lte-custom/edit.js'
 		];
 
 		$this->info('Extracting zip...');
