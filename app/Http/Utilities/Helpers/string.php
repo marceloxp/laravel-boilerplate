@@ -20,9 +20,9 @@ if (!function_exists('str_right'))
 	}
 }
 
-if (!function_exists('str_slugfy'))
+if (!function_exists('str_slugify'))
 {
-	function str_slugfy($p_string, $p_separator = '-')
+	function str_slugify($p_string, $p_separator = '-')
 	{
 		return Illuminate\Support\Str::slug($p_string, $p_separator);
 	}

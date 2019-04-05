@@ -67,5 +67,83 @@ class XpCollectionServiceProvider extends ServiceProvider
 				return $result;
 			}
 		);
+
+		// collect([ ['id' => 1, 'name' => ' Tony '], ['id' => 2, 'name' => '   Loki  '], ['id' => 4, 'name' => 'Peter'] ])->trim('name');
+		// collect([' Tony ', '   Loki  ', 'Peter'])->trim();
+		\Illuminate\Support\Collection::macro
+		(
+			'trim',
+			function($p_field_name = '')
+			{
+				$this->transform
+				(
+					function($item, $key) use ($p_field_name)
+					{
+						if ($p_field_name)
+						{
+							$item[$p_field_name] = trim($item[$p_field_name]);
+						}
+						else
+						{
+							$item = trim($item);
+						}
+						return $item;
+					}
+				);
+				return $this;
+			}
+		);
+
+		// collect([ ['id' => 1, 'name' => 'Tony'], ['id' => 2, 'name' => 'Loki'], ['id' => 4, 'name' => 'Peter'] ])->toLower('name');
+		// collect(['Tony', 'Loki', 'Peter'])->toLower();
+		\Illuminate\Support\Collection::macro
+		(
+			'toLower',
+			function($p_field_name = '')
+			{
+				$this->transform
+				(
+					function($item, $key) use ($p_field_name)
+					{
+						if ($p_field_name)
+						{
+							$item[$p_field_name] = mb_strtolower($item[$p_field_name]);
+						}
+						else
+						{
+							$item = mb_strtolower($item);
+						}
+						return $item;
+					}
+				);
+				return $this;
+			}
+		);
+
+		// collect([ ['id' => 1, 'name' => 'Tony Stark'], ['id' => 2, 'name' => 'Loki'], ['id' => 4, 'name' => 'Peter Paker'] ])->slugify('name');
+		// collect(['Tony', 'Loki', 'Peter'])->slugify();
+		\Illuminate\Support\Collection::macro
+		(
+			'slugify',
+			function($p_field_name = '', $p_separator = '-')
+			{
+				$this->transform
+				(
+					function($item, $key) use ($p_field_name, $p_separator)
+					{
+						if ($p_field_name)
+						{
+							$item[$p_field_name] = str_slugify($item[$p_field_name], $p_separator);
+						}
+						else
+						{
+							$item = str_slugify($item, $p_separator);
+						}
+						return $item;
+					}
+				);
+				return $this;
+			}
+		);
 	}
 }
