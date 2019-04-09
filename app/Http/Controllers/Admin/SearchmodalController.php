@@ -75,6 +75,10 @@ class SearchmodalController extends AdminController
 								$display_value = sprintf('<div class="radio" style="margin-top: 0px; margin-bottom: 0px;"><label><input data-ids="%s" type="radio" %s name="register"> %s </label></div>', $ids, $checked, $field_value);
 							}
 						}
+						if (is_array($display_value))
+						{
+							$display_value = implode(', ', $display_value);
+						}
 						return '<td>' . $display_value . '</td>';
 					}
 				)->values()->implode('');
