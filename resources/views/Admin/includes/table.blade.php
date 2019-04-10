@@ -30,7 +30,9 @@
 									<span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu" id="search-fields-items">
 										@foreach($search_fields as $field_name)
-											<li><a class="search_field" data-field="{{ $field_name }}" data-caption="{{ $fields_schema[$field_name]['comment'] }}" href="#">{{ $fields_schema[$field_name]['comment'] }}</a></li>
+											@if (array_key_exists($field_name, $fields_schema))
+												<li><a class="search_field" data-field="{{ $field_name }}" data-caption="{{ $fields_schema[$field_name]['comment'] }}" href="#">{{ $fields_schema[$field_name]['comment'] }}</a></li>
+											@endif
 										@endforeach
 										<li class="divider"></li>
 										<li><a class="search_field" data-field="___clear" href="#">Limpar Busca</a></li>
@@ -73,7 +75,9 @@
 							<select id="select-field-order" class="form-control">
 								<option class="option_search_field" value="0">Selecione</option>
 								@foreach($sort_fields as $field_name)
-									<option class="option_search_field" value="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</option>
+									@if (array_key_exists($field_name, $fields_schema))
+										<option class="option_search_field" value="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</option>
+									@endif
 								@endforeach
 							</select>
 						</div>
@@ -155,32 +159,41 @@
 						<th style="width:20px"><input id="ch-rows-all" type="checkbox"></th>
 						@foreach($display_fields as $field_name)
 							@php
-								$title_align = 'left';
-								$field_type  = $fields_schema[$field_name]['type'];
-								switch ($field_type)
+								if (!array_key_exists($field_name, $fields_schema))
 								{
-									case 'int':
-										$title_align = 'center';
-									break;
-									case 'tinyint':
-										$title_align = 'center';
-									break;
-									case 'decimal':
-										$title_align = 'center';
-									break;
-									case 'enum':
-										$title_align = 'center';
-									break;
-									case 'timestamp':
-										$title_align = 'center';
-									break;
+									$hook_name    = hook_name(sprintf('admin_index_custom_field_title_%s_%s', $table_name, $field_name));
+									$column_title = Hook::apply_filters($hook_name, $field_name);
 								}
+								else
+								{
+									$title_align = 'left';
+									$field_type  = $fields_schema[$field_name]['type'];
+									switch ($field_type)
+									{
+										case 'int':
+											$title_align = 'center';
+										break;
+										case 'tinyint':
+											$title_align = 'center';
+										break;
+										case 'decimal':
+											$title_align = 'center';
+										break;
+										case 'enum':
+											$title_align = 'center';
+										break;
+										case 'timestamp':
+											$title_align = 'center';
+										break;
+									}
+
+									$column_title = $fields_schema[$field_name]['comment'];
+									$hook_name    = hook_name(sprintf('admin_index_title_caption_%s_%s', $table_name, $field_name));
+									$column_title = Hook::apply_filters($hook_name, $column_title);
+								}
+
 								$hook_name   = hook_name(sprintf('admin_index_title_align_%s_%s', $table_name, $field_name));
 								$title_align = Hook::apply_filters($hook_name, $title_align);
-
-								$column_title = $fields_schema[$field_name]['comment'];
-								$hook_name    = hook_name(sprintf('admin_index_title_caption_%s_%s', $table_name, $field_name));
-								$column_title = Hook::apply_filters($hook_name, $column_title);
 							@endphp
 							<th style="text-align: {{ $title_align }};" data-field="{{ $field_name }}">{{ $column_title }}</i></th>
 						@endforeach
@@ -190,64 +203,73 @@
 						<td><input type="checkbox" class="ck-row" data-ids="{{ $register['id'] }}"></td>
 						@foreach($display_fields as $field_name)
 							@php
-								$field_align = 'left';
-								$field_type = $fields_schema[$field_name]['type'];
-								$display_value = $register[$field_name];
-								if (in_array($field_name, $image_fields) !== false)
+								if (!array_key_exists($field_name, $fields_schema))
 								{
-									$url_image = url('images/admin/no-image.png');
-									if ($display_value)
-									{
-										$url_image = url('uploads/images/' . $display_value);
-									}
-									$display_value = sprintf('<img src="%s" style="max-height:150px; max-width:150px; border: 1px solid silver;" alt="">', $url_image);
+									$display_value = 'ops';
+									$hook_name     = hook_name(sprintf('admin_index_custom_field_%s_%s', $table_name, $field_name));
+									$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
 								}
 								else
 								{
-									switch ($field_type)
+									$field_align = 'left';
+									$field_type = $fields_schema[$field_name]['type'];
+									$display_value = $register[$field_name];
+									if (in_array($field_name, $image_fields) !== false)
 									{
-										case 'appends':
-											if (is_a($display_value, App\Http\Utilities\Money::class))
-											{
-												$display_value = $display_value->formated->value;
-												$field_align = 'right';
-											}
-										break;
-										case 'timestamp':
-											$field_align = 'right';
-										break;
-										case 'int':
-											if (str_right($field_name, 3) != '_id')
-											{
-												$field_align = 'right';
-											}
-										break;
-										case 'tinyint':
-											$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
-										break;
-										case 'decimal':
-											$display_value = new \App\Http\Utilities\Money($display_value);
-											$display_value = $display_value->formated;
-											$field_align = 'right';
-										break;
-										case 'enum':
-											$display_value = ($field_name == 'status') ? admin_label_status($display_value) : admin_badge_status($display_value);
-											$field_align = 'center';
-										break;
+										$url_image = url('images/admin/no-image.png');
+										if ($display_value)
+										{
+											$url_image = url('uploads/images/' . $display_value);
+										}
+										$display_value = sprintf('<img src="%s" style="max-height:150px; max-width:150px; border: 1px solid silver;" alt="">', $url_image);
 									}
+									else
+									{
+										switch ($field_type)
+										{
+											case 'appends':
+												if (is_a($display_value, App\Http\Utilities\Money::class))
+												{
+													$display_value = $display_value->formated->value;
+													$field_align = 'right';
+												}
+											break;
+											case 'timestamp':
+												$field_align = 'right';
+											break;
+											case 'int':
+												if (str_right($field_name, 3) != '_id')
+												{
+													$field_align = 'right';
+												}
+											break;
+											case 'tinyint':
+												$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
+											break;
+											case 'decimal':
+												$display_value = new \App\Http\Utilities\Money($display_value);
+												$display_value = $display_value->formated;
+												$field_align = 'right';
+											break;
+											case 'enum':
+												$display_value = ($field_name == 'status') ? admin_label_status($display_value) : admin_badge_status($display_value);
+												$field_align = 'center';
+											break;
+										}
+	
+										if ($fields_schema[$field_name]['has_relation'])
+										{
+											$custom_field  = $fields_schema[$field_name]['relation']['custom_field'];
+											$display_value = $register->$custom_field;
+										}
+									}
+
+									$hook_name     = hook_name(sprintf('admin_index_%s_%s', $table_name, $field_name));
+									$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
+
+									$hook_name   = hook_name(sprintf('admin_index_field_align_%s_%s', $table_name, $field_name));
+									$field_align = Hook::apply_filters($hook_name, $field_align, $register->toArray());
 								}
-
-								if ($fields_schema[$field_name]['has_relation'])
-								{
-									$custom_field  = $fields_schema[$field_name]['relation']['custom_field'];
-									$display_value = $register->$custom_field;
-								}
-
-								$hook_name     = hook_name(sprintf('admin_index_%s_%s', $table_name, $field_name));
-								$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
-
-								$hook_name   = hook_name(sprintf('admin_index_field_align_%s_%s', $table_name, $field_name));
-								$field_align = Hook::apply_filters($hook_name, $field_align, $register->toArray());
 							@endphp
 							<td align="{{ $field_align }}">{!! $display_value !!}</td>
 						@endforeach

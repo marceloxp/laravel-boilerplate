@@ -23,24 +23,43 @@ class XpCollectionServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		// $a = [ ['id' => 1, 'name' => 'Marcelo', 'color' => 'bg-green'], ['id' => 2, 'name' => 'Gomes', 'color' => 'bg-orange'] ]; collect($a)->toBootstrapLabel();
+		// collect([ ['id' => 1, 'name' => 'Marcelo', 'color' => 'bg-green'], ['id' => 2, 'name' => 'Gomes', 'color' => 'bg-orange'] ])->toBootstrapLabel()->toText();
 		\Illuminate\Support\Collection::macro
 		(
 			'toBootstrapLabel',
-			function()
+			function($p_color = 'bg-green')
 			{
 				return $this->map
 				(
-					function($value)
+					function($value) use ($p_color)
 					{
-						return bs_label($value['id'], $value['name'], $value['color']);
+						$color = $p_color ?? $value['color'];
+						return bs_label($value['id'], $value['name'], $color);
 					}
 				);
 			}
 		);
 
-		// $a = ['Marcelo', 'Gomes']; collect($a)->toText();
-		// $a = [ ['id' => 1, 'name' => 'Marcelo', 'color' => 'bg-green'], ['id' => 2, 'name' => 'Gomes', 'color' => 'bg-orange'] ]; collect($a)->toBootstrapLabel()->toText();
+		// collect([ ['id' => 1, 'name' => 'Marcelo', 'color' => 'bg-green'], ['id' => 2, 'name' => 'Gomes', 'color' => 'bg-orange'] ])->toBootstrapLabels()->toText();
+		\Illuminate\Support\Collection::macro
+		(
+			'toBootstrapLabels',
+			function($color = 'bg-light-blue')
+			{
+				$items = $this->map
+				(
+					function($value, $key) use ($color)
+					{
+						$br = ( ($key != 0) && ($key % 2 == 0) ) ? '<br>' : '&nbsp;';
+						return bs_label($value['id'], $value['name'], $color) . $br;
+					}
+				);
+				return collect()->concat($items);
+			}
+		);
+
+		// collect(['Marcelo', 'Gomes'])->toText(', ');
+		// collect([ ['id' => 1, 'name' => 'Marcelo', 'color' => 'bg-green'], ['id' => 2, 'name' => 'Gomes', 'color' => 'bg-orange'] ])->toBootstrapLabel()->toText();
 		\Illuminate\Support\Collection::macro
 		(
 			'toText',
