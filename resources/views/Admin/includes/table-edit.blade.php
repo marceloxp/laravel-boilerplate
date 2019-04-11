@@ -245,6 +245,34 @@
 											$is_disabled
 										);
 									break;
+									case 'pivot':
+										$pivot_model = db_table_name_to_model_path($fields_schema[$field_name]['name']);
+										$table_options = $pivot_model::get(['id','name']);
+										$list_field_id = $fields_schema[$field_name]['list_field_id'];
+
+										$field_value->transform
+										(
+											function($item, $key) use ($list_field_id)
+											{
+												return (string)$item->pivot->$list_field_id;
+											}
+										);
+
+										$table_options->transform
+										(
+											function($item, $key) use ($field_value)
+											{
+												$selected = collect($field_value)->contains((string)$item->id) ? ' selected="selected"' : '';
+												$result = sprintf('<option value="%s" %s>%s</option>', $item->id, $selected, $item->name);
+												return $result;
+											}
+										);
+										$table_options = $table_options->toText(PHP_EOL);
+										$placeholder = 'Selecione um ou mais registros';
+										$input = sprintf('<select class="form-control select2" name="%s" id="%s" multiple="multiple" data-placeholder="%s" style="width: 100%%;">', $field_name, $field_name, $placeholder);
+										$input .= $table_options;
+										$input .= '</select>';
+									break;
 									default:
 										$value = (old($field_name) ?? $register->$field_name);
 										$is_disabled = in_array($field_name, $disabled) ? ' disabled="disabled" ' : '';

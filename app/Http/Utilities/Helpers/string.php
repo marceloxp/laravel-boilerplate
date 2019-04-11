@@ -124,7 +124,7 @@ if (!function_exists('str_plural_2_singular'))
 		$result = $p_word;
 		foreach ($regras as $pl => $si)
 		{
-			$str_final = $this->right($p_word, strlen($pl));
+			$str_final = str_right($p_word, strlen($pl));
 			if (mb_strtolower($str_final) == mb_strtolower($pl))
 			{
 				$suffix = ($str_final == mb_strtoupper($pl)) ? mb_strtoupper($si) : $si;
@@ -135,7 +135,7 @@ if (!function_exists('str_plural_2_singular'))
 		}
 		if (!$located)
 		{
-			if (strcasecmp($this->right($p_word, 1), 's') === 0)
+			if (strcasecmp(str_right($p_word, 1), 's') === 0)
 			{
 				$result = rtrim($p_word, 's', 'S');
 			}

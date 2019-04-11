@@ -137,6 +137,14 @@ if (!function_exists('db_table_name_to_model_path'))
 	}
 }
 
+if (!function_exists('db_table_name_to_field_id'))
+{
+	function db_table_name_to_field_id($table_name)
+	{
+		return sprintf('%s_id', str_to_singular($table_name));
+	}
+}
+
 if (!function_exists('db_trim_table_prefix'))
 {
 	function db_trim_table_prefix($table_name)

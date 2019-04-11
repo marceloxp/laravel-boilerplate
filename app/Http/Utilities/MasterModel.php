@@ -583,6 +583,7 @@ class MasterModel extends Model
 							$dynamic['has_pivot']      = true;
 							$dynamic['name']           = $pivot_table_name;
 							$dynamic['type']           = 'pivot';
+							$dynamic['list_field_id']  = db_table_name_to_field_id($pivot_table_name);
 							$dynamic['metadata']       = array_merge($metadata);
 							$result[$pivot_table_name] = $dynamic;
 						}
