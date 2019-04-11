@@ -241,7 +241,7 @@ class AdminController extends Controller
 		{
 			if (array_key_exists($field_name, $fields_schema))
 			{
-				if ($fields_schema[$field_name]['is_appends'] == false)
+				if ( ($fields_schema[$field_name]['is_appends'] == false) && ($fields_schema[$field_name]['has_pivot'] == false) )
 				{
 					$query_fields[] = sprintf('%s.%s', $table_name, $field_name);
 
@@ -610,6 +610,14 @@ class AdminController extends Controller
 
 		$form = $request->all();
 
+		$syncs = [];
+		$pivot_fields = $model::getPìvotFields();
+		foreach ($pivot_fields as $pivot_table)
+		{
+			$syncs[$pivot_table] = $request->$pivot_table;
+			unset($form[$pivot_table]);
+		}
+
 		$form = $this->processUploads($request, $form);
 
 		if (array_key_exists('password', $form))
@@ -640,6 +648,10 @@ class AdminController extends Controller
 
 		if ($saved)
 		{
+			foreach ($syncs as $pivot_table => $pivot_values)
+			{
+				$register->$pivot_table()->sync($pivot_values);
+			}
 			$table_name = $model::getTableName();
 			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
 			$request->session()->flash('messages', [$message]);
@@ -678,7 +690,7 @@ class AdminController extends Controller
 			{
 				$appends = ['roles' => 'Permissões'];
 				$fields_schema = \App\Models\Menu::getFieldsMetaData($appends);
-				$table = \App\Models\Menu::getTree(['id','type','order','name','ico','roles','link','route','created_at'], $fields_schema, $appends);
+				$table = \App\Models\Menu::getTree(['id','type','order','name','ico','roles','link','target','route','created_at'], $fields_schema, $appends);
 				$table = \App\Models\Menu::ajustRoles($table);
 				return $table;
 			}

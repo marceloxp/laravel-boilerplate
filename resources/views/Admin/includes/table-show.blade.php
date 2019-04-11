@@ -48,6 +48,18 @@
 								case 'tinyint':
 									$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
 								break;
+								case 'pivot':
+									$pivot_model = sprintf('\App\Models\%s', db_table_name_to_model($fields_schema[$field_name]['name']));
+									$admin_index_function_exists = method_exists($pivot_model, 'onAdminShow');
+									if ($admin_index_function_exists)
+									{
+										$display_value = $pivot_model::onAdminShow($register);
+									}
+									else
+									{
+										$display_value = $register->tags->toBootstrapLabels()->toText();
+									}
+								break;
 								case 'enum':
 									if ($field_name == 'status')
 									{

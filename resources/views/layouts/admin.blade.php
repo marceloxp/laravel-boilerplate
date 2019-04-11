@@ -24,13 +24,13 @@
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/fonts/font-awesome.min.css') }}">
 		<!-- Ionicons -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/fonts/ionicons.min.css') }}">
+		<!-- Select2 -->
+		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/select2/select2.min.css') }}">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/dist/css/AdminLTE.min.css') }}">
 		<!-- AdminLTE Skins. Choose a skin from the css/skins
 			folder instead of downloading all of them to reduce the load. -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/dist/css/skins/_all-skins.min.css') }}">
-		<!-- Select2 -->
-		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/select2/select2.min.css') }}">
 		<!-- daterange picker -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/bootstrap-daterangepicker/daterangepicker.css') }}">
 		<!-- summernote -->
