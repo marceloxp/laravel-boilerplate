@@ -86,7 +86,7 @@ class Menu extends MasterModel
 				'type'       => 'root',
 				'name'       => $p_caption,
 				'ico'        => $p_ico,
-				'slug'       => str_slugfy($p_caption),
+				'slug'       => str_slugify($p_caption),
 				'created_at' => $now
 			]
 		);
@@ -110,7 +110,7 @@ class Menu extends MasterModel
 				'order'      => $p_order,
 				'type'       => 'header',
 				'name'       => $p_caption,
-				'slug'       => str_slugfy($p_caption),
+				'slug'       => str_slugify($p_caption),
 				'ico'        => $p_ico,
 				'created_at' => $now
 			]
@@ -125,7 +125,7 @@ class Menu extends MasterModel
 		return $menu_id;
 	}
 
-	public static function addMenuLink($parent_id, $p_caption, $p_ico, $p_roles, $p_route)
+	public static function addMenuLink($parent_id, $p_caption, $p_ico, $p_roles, $p_route, $p_target_blank = false)
 	{
 		$now = \Carbon\Carbon::now();
 		$menu_id = \App\Models\Menu::insertGetId
@@ -134,9 +134,10 @@ class Menu extends MasterModel
 				'parent_id'  => $parent_id,
 				'type'       => 'link',
 				'name'       => $p_caption,
-				'slug'       => str_slugfy($p_caption),
+				'slug'       => str_slugify($p_caption),
 				'ico'        => $p_ico,
 				'route'      => $p_route,
+				'target'     => ($p_target_blank) ? '_blank' : '_self',
 				'created_at' => $now
 			]
 		);
@@ -180,7 +181,7 @@ class Menu extends MasterModel
 						'parent_id'  => $parent_id,
 						'type'       => 'link',
 						'name'       => $p_caption,
-						'slug'       => str_slugfy($p_caption),
+						'slug'       => str_slugify($p_caption),
 						'ico'        => $p_ico,
 						'route'      => $p_route,
 						'created_at' => $now
@@ -210,7 +211,7 @@ class Menu extends MasterModel
 				'parent_id'  => $parent_id,
 				'type'       => 'internal-link',
 				'name'       => $p_caption,
-				'slug'       => str_slugfy($p_caption),
+				'slug'       => str_slugify($p_caption),
 				'ico'        => $p_ico,
 				'link'       => $p_link,
 				'target'     => $p_target,
