@@ -610,6 +610,14 @@ class AdminController extends Controller
 
 		$form = $request->all();
 
+		$syncs = [];
+		$pivot_fields = $model::getPìvotFields();
+		foreach ($pivot_fields as $pivot_table)
+		{
+			$syncs[$pivot_table] = $request->$pivot_table;
+			unset($form[$pivot_table]);
+		}
+
 		$form = $this->processUploads($request, $form);
 
 		if (array_key_exists('password', $form))
@@ -640,6 +648,10 @@ class AdminController extends Controller
 
 		if ($saved)
 		{
+			foreach ($syncs as $pivot_table => $pivot_values)
+			{
+				$register->$pivot_table()->sync($pivot_values);
+			}
 			$table_name = $model::getTableName();
 			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
 			$request->session()->flash('messages', [$message]);

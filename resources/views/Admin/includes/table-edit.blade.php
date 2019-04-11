@@ -269,7 +269,7 @@
 										);
 										$table_options = $table_options->toText(PHP_EOL);
 										$placeholder = 'Selecione um ou mais registros';
-										$input = sprintf('<select class="form-control select2" name="%s" id="%s" multiple="multiple" data-placeholder="%s" style="width: 100%%;">', $field_name, $field_name, $placeholder);
+										$input = sprintf('<select class="form-control select2" name="%s[]" id="%s" multiple="multiple" data-placeholder="%s" style="width: 100%%;">', $field_name, $field_name, $placeholder);
 										$input .= $table_options;
 										$input .= '</select>';
 									break;

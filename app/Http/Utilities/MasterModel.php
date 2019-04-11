@@ -22,6 +22,11 @@ class MasterModel extends Model
 	public function getUpdatedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
 	public function getDeletedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
 
+	public static function getPìvotFields()
+	{
+		return collect(self::getFieldsMetaData())->where('type', 'pivot')->keys()->all();
+	}
+
 	public static function getNumericFields()
 	{
 		return collect(self::getFieldsMetaData())->where('type', 'decimal')->keys()->all();
