@@ -33,7 +33,7 @@ class VideoController extends AdminController
 				'pivot'          => $this->model::getPivotConfig(['tags' => 'fa-tags']),
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id','category_id','name','youtube','created_at']
+				'display_fields' => ['id','category_id','tags','name','youtube','created_at']
 			]
 		);
 	}
@@ -74,9 +74,14 @@ class VideoController extends AdminController
 				'id'             => $id,
 				'request'        => $request,
 				'model'          => $this->model,
-				'display_fields' => ['id','category_id','name','youtube']
+				'display_fields' => ['id','category_id','tags','name','youtube']
 			]
 		);
+	}
+
+	public function hooks_edit($table_name)
+	{
+		//
 	}
 
 	/**
@@ -103,7 +108,7 @@ class VideoController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id','category_id','name','youtube','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','category_id','name','tags','youtube','created_at','updated_at']
 			]
 		);
 	}
