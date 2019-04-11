@@ -148,7 +148,7 @@ class MasterModel extends Model
 		$result = [];
 		foreach ($p_args as $table_name => $icon)
 		{
-			$result[] = 
+			$result[] =
 			[
 				'name'    => db_get_pivot_table_name([self::getTableName(), $table_name], false),
 				'caption' => db_get_comment_table($table_name),
@@ -325,14 +325,14 @@ class MasterModel extends Model
 
 					$primary = db_get_primary_key($prop);
 					$relation = sprintf('%s_%s', $model, $primary);
-					
+
 					$result[] = compact('pivot','table','ligation','prop','model','primary','relation');
 				}
 
 				return $result;
 			}
 		);
-		
+
 		return $result['data'];
 	}
 
@@ -353,7 +353,7 @@ class MasterModel extends Model
 						(
 							SELECT
 								COLUMN_NAME
-							FROM 
+							FROM
 								information_schema.COLUMNS
 							WHERE
 								TABLE_SCHEMA = "%s"
@@ -374,7 +374,7 @@ class MasterModel extends Model
 				return $result;
 			}
 		);
-		
+
 		return $result['data'];
 	}
 
@@ -384,7 +384,7 @@ class MasterModel extends Model
 		return $metadata[$p_field_name];
 	}
 
-	public static function getFieldsMetaData($appends = [])
+	public static function getFieldsMetaData($appends = [], $level = 0)
 	{
 		$table_name = self::getTableName();
 
@@ -392,12 +392,13 @@ class MasterModel extends Model
 		(
 			'sys-model',
 			['getFieldsMetaData', $table_name],
-			function() use ($table_name)
+			function() use ($table_name, $appends, $level)
 			{
+				// SIMPLE RELATIONS
 				$query = sprintf
 				(
 					'
-						SELECT 
+						SELECT
 							`TABLE_NAME` AS table_name,
 							`COLUMN_NAME` AS field_name,
 							`REFERENCED_TABLE_NAME` AS ref_table,
@@ -421,7 +422,7 @@ class MasterModel extends Model
 				foreach ($fields_relations as $ref)
 				{
 					$value = (array)$ref;
-					$value = 
+					$value =
 					[
 						'table_name'    => db_trim_table_prefix($value['table_name']),
 						'table_model'   => str_singular(db_trim_table_prefix($value['table_name'])),
@@ -438,10 +439,69 @@ class MasterModel extends Model
 					$relations[$ref->field_name] = $value;
 				}
 
+				if ($level == 0)
+				{
+					// PIVOT RELATION
+					$query = sprintf
+					(
+						'
+							SELECT
+								TABLE_NAME
+							FROM
+								`INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE`
+							WHERE
+								`TABLE_SCHEMA` = "%s"
+								AND
+								COLUMN_NAME = "%s"
+								AND
+								REFERENCED_TABLE_NAME = "%s"
+							ORDER BY
+								TABLE_NAME, COLUMN_NAME
+							;
+						',
+						db_database_name(),
+						sprintf('%s_id', str_plural_2_singular($table_name)),
+						db_prefixed_table($table_name)
+					);
+					$pivot_tables = DB::select($query);
+
+					$pivot_relations = [];
+					foreach ($pivot_tables as $pivot_table)
+					{
+						$query = sprintf
+						(
+							'
+							SELECT
+								REFERENCED_TABLE_NAME
+							FROM
+								`INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE`
+							WHERE
+								`TABLE_SCHEMA` = "%s"
+								AND
+								TABLE_NAME = "%s"
+								AND
+								POSITION_IN_UNIQUE_CONSTRAINT = 1
+								AND
+								COLUMN_NAME != "%s"
+								;
+							',
+							db_database_name(),
+							$pivot_table->TABLE_NAME,
+							sprintf('%s_id', str_plural_2_singular($table_name))
+						);
+						$pivot_table           = DB::select($query);
+						$referenced_table_name = $pivot_table[0]->REFERENCED_TABLE_NAME;
+						$pivot_field_name      = db_trim_table_prefix($referenced_table_name);
+						$pivot_relations[]     = $pivot_field_name;
+					}
+					// r($pivot_relations);
+				}
+
+				// TABLE SCHEMA
 				$query = sprintf
 				(
 					'
-						SELECT 
+						SELECT
 							COLUMN_NAME              AS `name`,
 							DATA_TYPE                AS `type`,
 							COLUMN_TYPE              AS `rawtype`,
@@ -450,7 +510,7 @@ class MasterModel extends Model
 							COLUMN_COMMENT           AS `comment`,
 							CHARACTER_MAXIMUM_LENGTH AS `max_length`,
 							(IS_NULLABLE = "YES")    AS `nullable`
-						FROM 
+						FROM
 							information_schema.COLUMNS
 						WHERE
 							TABLE_SCHEMA = "%s"
@@ -471,6 +531,7 @@ class MasterModel extends Model
 					$field_name = $value->name;
 					$value = (array)$value;
 					$value['pri'] = (boolean)$value['pri'];
+					$value['has_pivot'] = false;
 					$value['is_appends'] = false;
 					$value['nullable'] = (boolean)$value['nullable'];
 					switch ($field_name)
@@ -509,17 +570,36 @@ class MasterModel extends Model
 					$result[$field_name] = $value;
 				}
 
+				if ($level == 0)
+				{
+					foreach ($pivot_relations as $pivot_table_name)
+					{
+						$pivot_model = db_table_name_to_model($pivot_table_name);
+
+						$metadata = sprintf('\App\Models\%s', $pivot_model)::getFieldsMetaData($appends, ($level+1));
+						if (array_key_exists('name', $metadata))
+						{
+							$dynamic                   = array_merge($metadata['name']);
+							$dynamic['has_pivot']      = true;
+							$dynamic['name']           = $pivot_table_name;
+							$dynamic['type']           = 'pivot';
+							$dynamic['metadata']       = array_merge($metadata);
+							$result[$pivot_table_name] = $dynamic;
+						}
+					}
+				}
+
 				return $result;
 			}
 		);
-		
+
 		foreach ($appends as $field_name => $field_caption)
 		{
 			$field_type = 'appends';
 			$hook_name  = hook_name(sprintf('master_model_field_type_%s_%s', $table_name, $field_name));
 			$field_type = \Hook::apply_filters($hook_name, $field_type);
 
-			$result['data'][$field_name] = 
+			$result['data'][$field_name] =
 			[
 				'name'         => $field_name,
 				'is_appends'   => true,
@@ -655,7 +735,7 @@ class MasterModel extends Model
 	public function input($p_field_name, $p_options = [])
 	{
 		$metadata = self::getFieldMetaData($p_field_name);
-		$options = 
+		$options =
 		[
 			'errors' => new \Illuminate\Support\ViewErrorBag(),
 			'label'  => true,

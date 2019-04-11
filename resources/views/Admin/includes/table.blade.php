@@ -205,7 +205,7 @@
 							@php
 								if (!array_key_exists($field_name, $fields_schema))
 								{
-									$display_value = 'ops';
+									$display_value = '';
 									$hook_name     = hook_name(sprintf('admin_index_custom_field_%s_%s', $table_name, $field_name));
 									$display_value = Hook::apply_filters($hook_name, $display_value, $register->toArray());
 								}
@@ -254,6 +254,18 @@
 											case 'enum':
 												$display_value = ($field_name == 'status') ? admin_label_status($display_value) : admin_badge_status($display_value);
 												$field_align = 'center';
+											break;
+											case 'pivot':
+												$pivot_model = sprintf('\App\Models\%s', db_table_name_to_model($fields_schema[$field_name]['name']));
+												$admin_index_function_exists = method_exists($pivot_model, 'onAdminIndex');
+												if ($admin_index_function_exists)
+												{
+													$display_value = $pivot_model::onAdminIndex($register);
+												}
+												else
+												{
+													$display_value = $register->tags->toBootstrapLabels()->toText();
+												}
 											break;
 										}
 	

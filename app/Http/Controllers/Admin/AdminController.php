@@ -241,7 +241,7 @@ class AdminController extends Controller
 		{
 			if (array_key_exists($field_name, $fields_schema))
 			{
-				if ($fields_schema[$field_name]['is_appends'] == false)
+				if ( ($fields_schema[$field_name]['is_appends'] == false) && ($fields_schema[$field_name]['has_pivot'] == false) )
 				{
 					$query_fields[] = sprintf('%s.%s', $table_name, $field_name);
 
