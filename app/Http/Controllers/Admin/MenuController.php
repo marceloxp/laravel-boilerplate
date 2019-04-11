@@ -95,11 +95,11 @@ class MenuController extends AdminController
 				'display_fields' => 
 				[
 					'id'         => 0,
+					'name'       => 3,
+					'slug'       => 3,
 					'parent_id'  => 3,
 					'type'       => 3,
-					'name'       => 3,
 					'order'      => 3,
-					'slug'       => 3,
 					'color'      => 3,
 					'ico'        => 3,
 					'link'       => 3,
