@@ -181,5 +181,25 @@ class XpCollectionServiceProvider extends ServiceProvider
 				return $this->toArray();
 			}
 		);
+
+		// $a = [ ['id' => 1, 'name' => 'Marcelo', 'color' => 'bg-green'], ['id' => 2, 'name' => 'Gomes', 'color' => 'bg-orange'] ]; collect($a)->toBootstrapLabel();
+		\Illuminate\Support\Collection::macro
+		(
+			'toHtmlUnorderedList',
+			function()
+			{
+				$result = '<ul>' . PHP_EOL;
+				$unlist = $this->map
+				(
+					function($value)
+					{
+						return '<li>' . $value . '</li>';
+					}
+				);
+				$result .= $unlist->toText(PHP_EOL);
+				$result .= '</ul>' . PHP_EOL;
+				return $result;
+			}
+		);
 	}
 }
