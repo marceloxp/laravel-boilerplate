@@ -142,7 +142,7 @@
 
 									$input = array_to_dropdown
 									(
-										$array_tree->toArray(),
+										$array_tree,
 										[
 											'add_first' => $is_new,
 											'name'      => $field_name,

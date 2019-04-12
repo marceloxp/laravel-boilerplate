@@ -45,24 +45,28 @@ class UsersTableSeeder extends Seeder
 		(
 			function() use($admin_user, $master_user, $developer_user)
 			{
-				$role_admin  = \App\Models\Role::where('name', 'Admin')->first();
+				$role_public = \App\Models\Role::where('name', 'Public')->first();
+                $role_admin  = \App\Models\Role::where('name', 'Admin')->first();
 				$role_master = \App\Models\Role::where('name', 'Master')->first();
 				$role_dev    = \App\Models\Role::where('name', 'Developer')->first();
 
 				$register = App\Models\User::create($admin_user);
 				$register->save();
 				$register->roles()->attach($role_admin);
+                $register->roles()->attach($role_public);
 
 				$register = App\Models\User::create($master_user);
 				$register->save();
 				$register->roles()->attach($role_admin);
 				$register->roles()->attach($role_master);
+                $register->roles()->attach($role_public);
 
 				$register = App\Models\User::create($developer_user);
 				$register->save();
 				$register->roles()->attach($role_admin);
 				$register->roles()->attach($role_master);
 				$register->roles()->attach($role_dev);
+                $register->roles()->attach($role_public);
 			},
 			5
 		);

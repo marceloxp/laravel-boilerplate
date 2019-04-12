@@ -21,7 +21,7 @@ class Category extends MasterModel
 		(
 			function($model)
 			{
-				$model->slug = str_slugfy($model->name);
+				$model->slug = str_slugify($model->name);
 			}
 		);
 
@@ -29,7 +29,7 @@ class Category extends MasterModel
 		(
 			function($model)
 			{
-				$model->slug = str_slugfy($model->name);
+				$model->slug = str_slugify($model->name);
 			}
 		);
 	}

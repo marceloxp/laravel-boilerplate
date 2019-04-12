@@ -92,7 +92,7 @@ if (!function_exists('db_select_one'))
 		{
 			if (empty($result))
 			{
-				throw new Exception('Falha na captura dos dados solicitados.');
+				throw new Exception('Falha na captura dos dados solicitados (1).');
 			}
 		}
 		return $result;
@@ -107,7 +107,7 @@ if (!function_exists('db_select_id'))
 		$result = $p_model::where($p_where)->get(['id'])->take(1)->first();
 		if ($raise_if_empty && empty($result))
 		{
-			throw new Exception('Falha na captura dos dados solicitados.');
+			throw new Exception('Falha na captura dos dados solicitados (2).');
 		}
 		return (!empty($result)) ? $result->id : null;
 	}

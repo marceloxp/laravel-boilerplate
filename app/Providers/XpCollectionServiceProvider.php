@@ -164,5 +164,22 @@ class XpCollectionServiceProvider extends ServiceProvider
 				return $this;
 			}
 		);
+
+		\Illuminate\Support\Collection::macro
+		(
+			'toArrayDeep',
+			function()
+			{
+				$this->transform
+				(
+					function($item, $key)
+					{
+						$item->child = collect($item->child)->toArrayDeep();
+						return $item->toArray();
+					}
+				);
+				return $this->toArray();
+			}
+		);
 	}
 }

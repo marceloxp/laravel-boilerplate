@@ -11,7 +11,7 @@ class MenusTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		$public = [];
+		$public = ['Public'];
 		$developer = ['Developer'];
 		$master_developer = ['Master','Developer'];
 		$master_admin_developer = ['Master','Admin','Developer'];

@@ -81,6 +81,7 @@ if (!function_exists('array_to_dropdown'))
 			$result[] = sprintf('<option value="0" data-caption="Topo" data-slug="topo">Topo</option>');
 		}
 
+		$p_array = collect($p_array)->toArrayDeep();
 		foreach ($p_array as $_key => $_value)
 		{
 			$result[] = implode(PHP_EOL, __itemToOptions($_value, $level, $options));
