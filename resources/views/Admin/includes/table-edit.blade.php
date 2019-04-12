@@ -118,6 +118,12 @@
 									$url_image
 								);
 
+								if ( (!empty($required)) && ($is_edit == true) )
+								{
+									$required = '';
+									$asterisk = '';
+								}
+								
 								$input = sprintf
 								(
 									'<div class="image_form_group">%s<input type="file" name="%s" class="input_image_file" id="%s" %s></div>',
