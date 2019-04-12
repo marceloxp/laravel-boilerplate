@@ -38,23 +38,6 @@ class Menu extends MasterModel
 		return $this->belongsToMany(\App\Models\Role::class);
 	}
 
-	public static function ajustRoles($p_tree_array)
-	{
-		$p_tree_array->transform
-		(
-			function ($item, $key)
-			{
-				$item['roles'] = self::getRoles($item['id'])->toArray();
-				if (!empty($item['child']))
-				{
-					$item['child'] = self::ajustRoles(collect($item['child']))->toArray();
-				}
-				return $item;
-			}
-		);
-		return $p_tree_array;
-	}
-
 	public static function getRoles($p_id)
 	{
 		$result = self::where('id', $p_id)->get();

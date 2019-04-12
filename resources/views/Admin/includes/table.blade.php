@@ -256,6 +256,7 @@
 												$field_align = 'center';
 											break;
 											case 'pivot':
+												$pivot_table = $fields_schema[$field_name]['name'];
 												$pivot_model = sprintf('\App\Models\%s', db_table_name_to_model($fields_schema[$field_name]['name']));
 												$admin_index_function_exists = method_exists($pivot_model, 'onAdminIndex');
 												if ($admin_index_function_exists)
@@ -264,7 +265,7 @@
 												}
 												else
 												{
-													$display_value = $register->tags->toBootstrapLabels()->toText();
+													$display_value = $register->$pivot_table->toBootstrapLabels()->toText();
 												}
 											break;
 										}

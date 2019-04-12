@@ -65,10 +65,10 @@
 							<td><input type="checkbox" class="ck-row" data-ids="{{ $register['id'] }}"></td>
 							@foreach($display_fields as $field_name)
 								@php
-									$field_align = 'left';
-									$field_type = $fields_schema[$field_name]['type'];
+									$field_align   = 'left';
+									$field_type    = $fields_schema[$field_name]['type'];
 									$display_value = $register[$field_name];
-									$prefix = ($field_name == 'name') ? str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $register['level']) . '&nbsp;' : '';
+									$prefix        = ($field_name == 'name') ? str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $register['level']) . '&nbsp;' : '';
 
 									switch ($field_type)
 									{
@@ -90,6 +90,26 @@
 										break;
 										case 'tinyint':
 											$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
+										break;
+										case 'pivot':
+											$pivot_table = $fields_schema[$field_name]['name'];
+											$pivot_model = sprintf('\App\Models\%s', db_table_name_to_model($fields_schema[$field_name]['name']));
+											$admin_index_function_exists = method_exists($pivot_model, 'onAdminShow');
+											if ($admin_index_function_exists)
+											{
+												$display_value = $pivot_model::onAdminShow($register);
+											}
+											else
+											{
+												if ($register->$pivot_table)
+												{
+													$display_value = $register->$pivot_table->toBootstrapLabels()->toText();
+												}
+												else
+												{
+													$display_value = '&nbsp;';
+												}
+											}
 										break;
 										case 'decimal':
 											$display_value = new \App\Http\Utilities\Money($display_value);

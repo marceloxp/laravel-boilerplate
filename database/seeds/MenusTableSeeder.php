@@ -32,15 +32,15 @@ class MenusTableSeeder extends Seeder
 			$item = \App\Models\Menu::addMenuLink($group, 'Categorias', 'fa-folder', $public, 'admin_category');
 
 		$group_order += 10;
-		$group = \App\Models\Menu::addMenuHeader($menu, 'Cache', 'fa-rocket', $public, $group_order);
-			$item = \App\Models\Menu::addMenuLink($group, 'Listar', 'fa-list', $public, 'admin_cache_list');
-			$item = \App\Models\Menu::addMenuLink($group, 'Configurar', 'fa-gears', $public, 'admin_cache');
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Cache', 'fa-rocket', $master_admin_developer, $group_order);
+			$item = \App\Models\Menu::addMenuLink($group, 'Listar', 'fa-list', $master_admin_developer, 'admin_cache_list');
+			$item = \App\Models\Menu::addMenuLink($group, 'Configurar', 'fa-gears', $master_admin_developer, 'admin_cache');
 
 		$group_order += 10;
-		$group = \App\Models\Menu::addMenuHeader($menu, 'Developer', 'fa-terminal', $developer, $group_order);
+		$group = \App\Models\Menu::addMenuHeader($menu, 'Developer', 'fa-terminal', $master_developer, $group_order);
 			$item = \App\Models\Menu::addMenuLink($group, 'Admin Menu', 'fa-list-ul', $master_developer, 'admin_menu');
-			$item = \App\Models\Menu::addMenuLink($group, 'phpinfo', 'fa-info-circle', $developer, 'admin_phpinfo');
-			$item = \App\Models\Menu::addMenuInternalLink($group, 'Adminer', 'fa-database', $developer, 'adminer', '_blank');
+			$item = \App\Models\Menu::addMenuLink($group, 'phpinfo', 'fa-info-circle', $master_developer, 'admin_phpinfo');
+			$item = \App\Models\Menu::addMenuInternalLink($group, 'Adminer', 'fa-database', $master_developer, 'adminer', '_blank');
 
 		$group_order += 10;
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Comum', 'fa-circle', $public, $group_order);

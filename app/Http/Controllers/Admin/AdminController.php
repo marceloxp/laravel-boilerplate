@@ -691,7 +691,6 @@ class AdminController extends Controller
 				$appends = ['roles' => 'Permissões'];
 				$fields_schema = \App\Models\Menu::getFieldsMetaData($appends);
 				$table = \App\Models\Menu::getTree(['id','type','order','name','ico','roles','link','target','route','created_at'], $fields_schema, $appends);
-				$table = \App\Models\Menu::ajustRoles($table);
 				return $table;
 			}
 		);

@@ -105,7 +105,9 @@ trait TreeModelTrait
 	{
 		$result = array_merge($p_array);
 
-		if (array_key_exists('id', $p_nodes))
+		$id = @$p_nodes->id;
+
+		if ($id)
 		{
 			array_push($result, $p_nodes);
 		}
@@ -123,11 +125,10 @@ trait TreeModelTrait
 	public static function alignTreeToLeft($p_array)
 	{
 		$result = [];
-		if (!is_array($p_array)) { ddd(['ops', $p_array]); }
-		if (array_key_exists('level', $p_array)) { ddd('ops'); }
+		if (!is_array($p_array)) { ddd(['Error!', $p_array]); }
+		if (array_key_exists('level', $p_array)) { ddd('Error!'); }
 		else
 		{
-			reset($p_array);
 			foreach ($p_array as $key => $value)
 			{
 				if (!empty($value['child']))
@@ -169,7 +170,7 @@ trait TreeModelTrait
 			}
 		)['data'];
 
-		$registers      = collect($registers->toArray())->map(function ($item, $key) { return (array)$item; });
+		$registers      = collect($registers->toArray())->map(function($item, $key) { return (array)$item; });
 		$default_fields = config('nestable.body');
 		$array_fields   = array_merge($default_fields, $use_fields);
 		\Config::set('nestable.body', $array_fields);
@@ -178,13 +179,33 @@ trait TreeModelTrait
 		$registers = collect($registers->renderAsArray());
 		$registers = self::getLevel($registers->toArray());
 
+		$registers = self::transformToDatabase($registers);
+
 		return $registers;
+	}
+
+	private static function transformToDatabase($registers)
+	{
+		$result = [];
+		foreach ($registers as $register)
+		{
+			$item = self::where('id', $register['id'])->first();
+			$childs = [];
+			if ($register['child'])
+			{
+				$childs = self::transformToDatabase($register['child']);
+			}
+			$item->child = $childs;
+			$item->level = $register['level'];
+			$result[] = $item;
+		}
+		return $result;
 	}
 
 	public static function getTreeAligned($p_fields, $fields_schema)
 	{
 		$registers = self::getTree($p_fields, $fields_schema);
-		$registers = self::alignTreeToLeft($registers->toArray());
+		$registers = self::alignTreeToLeft($registers);
 		return collect($registers);
 	}
 }

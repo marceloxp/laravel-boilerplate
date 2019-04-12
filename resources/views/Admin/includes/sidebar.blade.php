@@ -2,7 +2,7 @@
 	<aside class="main-sidebar">
 		<section class="sidebar">
 			<ul class="sidebar-menu">
-				@foreach ($menus->toArray() as $header)
+				@foreach ($menus as $header)
 					@php
 						$header = collect($header);
 						$print_menu = true;

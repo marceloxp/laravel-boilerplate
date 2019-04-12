@@ -13,7 +13,7 @@ class MenuController extends AdminController
 {
 	public function __construct()
 	{
-		$this->appends = ['roles' => 'Permissões'];
+		$this->appends = [];
 		$this->setModel(\App\Models\Menu::class);
 		$this->setCaptionByModel($this->model);
 		parent::__construct();
@@ -48,20 +48,6 @@ class MenuController extends AdminController
 			function($display_value, $register)
 			{
 				return fa_ico($register['ico'], $display_value);
-			},
-			10, 2
-		);
-
-		Hook::add_filter
-		(
-			sprintf('admin_index_%s_%s', $table_name, 'roles'),
-			function($display_value, $register)
-			{
-				$roles = $this->model::getRoles($register['id']);
-				if ($roles->isEmpty()) { return bs_label(0, 'Public'); }
-				\App\Models\Role::ajustCollectionRolesColor($roles);
-				$display_value = $roles->toBootstrapLabel()->toText('&nbsp;');
-				return $display_value;
 			},
 			10, 2
 		);
