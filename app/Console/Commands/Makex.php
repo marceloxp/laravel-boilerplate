@@ -38,6 +38,11 @@ class Makex extends \App\Console\MakexCommand
 	 */
 	public function handle()
 	{
+		$this->showMenu();
+	}
+
+	public function showMenu()
+	{
 		$this->clear();
 		$this->printLogo();
 
@@ -78,5 +83,8 @@ class Makex extends \App\Console\MakexCommand
 		{
 			$this->call($command[0], $command[1]);
 		}
+
+		$this->waitKey();
+		$this->showMenu();
 	}
 }
