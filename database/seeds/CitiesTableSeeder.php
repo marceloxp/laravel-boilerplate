@@ -12,8 +12,16 @@ class CitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = Carbon::now();
+		$console = $this->command->getOutput();
 
+		$console->writeln('Removing old registers...');
+		\DB::select(sprintf('TRUNCATE TABLE %s;', db_prefixed_table('cities')));
+
+		$console->writeln('Changing column [position] definition...');
+		\DB::select(sprintf('ALTER TABLE %s MODIFY `position` int(10) unsigned COMMENT "Posição";', db_prefixed_table('cities')));
+		
+		$console->writeln('Prepare seeding table...');
+        $now = Carbon::now();
 		$data = $this->getData();
 
 		$states = [];
@@ -32,7 +40,17 @@ class CitiesTableSeeder extends Seeder
 			$cities[] = ['name' => $name, 'state_id' => $states[$uf], 'created_at' => $now, 'updated_at' => $now];
 		}
 
+		$console->writeln('Seeding table...');
 		App\Models\City::insert($cities);
+
+		$console->writeln('Ajust [position] field value');
+		\DB::select(sprintf('UPDATE %s SET `position` = `id` WHERE id >= 0;', db_prefixed_table('cities')));
+
+		$console->writeln('Restore column [position] definition...');
+		\DB::select(sprintf('ALTER TABLE %s MODIFY `position` int(10) unsigned DEFAULT NULL COMMENT "Posição";', db_prefixed_table('cities')));
+
+		$console->writeln('Done');
+		$console->newLine();
     }
 
 	public function getData()
