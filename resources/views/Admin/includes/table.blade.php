@@ -116,7 +116,7 @@
 <div class="box box-success">
 	<div class="box-header with-border">
 		<div class="row">
-			<div class="btn-group col-xs-10">
+			<div class="btn-group col-xs-9">
 				@php $buttons_edit = isset($editable) ? $editable : true; @endphp
 				@if ($buttons_edit)
 					<button type="button" id="btn-table-add" class="btn btn-success {{ $class_pivot }}"><i class="fa fa-fw fa-plus"></i> Adicionar</button>
@@ -140,6 +140,15 @@
 						<button type="button" id="btn-table-del" class="btn btn-danger {{ $class_pivot }} disabled"><i class="fa fa-close"></i> Excluir</button>
 					@endif
 				@endif
+			</div>
+			<div class="btn-group col-xs-3">
+				<div class="form-group" style="margin-bottom: 0px;">
+					<select class="form-control" id="cb-table-order" name="cb-table-order">
+						@foreach(config('admin.index.pagination.perpages', [20,50,100,200,300]) as $item_page)
+							<option value="{{ $item_page }}" {{ ($item_page == $perpage) ? 'selected="selected' : '' }}>{{ $item_page }} Registros por Página</option>
+						@endforeach
+					</select>
+				</div>
 			</div>
 			@if ($has_table)
 				@php $print_button = isset($exportable) ? $exportable : true; @endphp

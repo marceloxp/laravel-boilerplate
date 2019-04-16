@@ -143,7 +143,7 @@ class AdminController extends Controller
 
 	public function getPerPage($p_request)
 	{
-        $result = intval($p_request->query('perpage', 15));
+        $result = intval($p_request->query('perpage', 20));
 		$result = min($result, 50);
 		return $result;
 	}
@@ -452,6 +452,7 @@ class AdminController extends Controller
 
 		extract($params, EXTR_OVERWRITE);
 
+		$page              = $request->get('page', 1);
 		$is_pivot          = (!empty($pivot_scope));
 		$class_pivot       = ($is_pivot) ? 'pivot' : '';
 		$panel_title       = $this->caption;
@@ -473,7 +474,7 @@ class AdminController extends Controller
 		$has_table     = ($table->total() > 0);
 		$search_dates  = ['created_at'];
 
-		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many');
+		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage');
 		
 		View::share($share_params);
 

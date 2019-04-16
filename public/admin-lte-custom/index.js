@@ -207,6 +207,17 @@ umsappadmin.Tindex = function($, objname, options)
 				self.onButtonInvertClick($(this));
 			}
 		);
+
+		$(document).on
+		(
+			'change',
+			'#cb-table-order',
+			function(e)
+			{
+				e.preventDefault();
+				self.changeRegistersPerPage($(this).val());
+			}
+		);
 	};
 
 	this.execute = function()
@@ -237,6 +248,13 @@ umsappadmin.Tindex = function($, objname, options)
 				return;
 			}
 		}
+	};
+
+	this.changeRegistersPerPage = function(p_perpage)
+	{
+		Url.updateSearchParam('perpage', p_perpage);
+		Url.updateSearchParam('page');
+		window.location.reload();
 	};
 
 	this.checkButtonsEdit = function()
