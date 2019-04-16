@@ -8,6 +8,8 @@ use App\Http\Utilities\Result;
 
 class City extends MasterModel
 {
+	use \App\Traits\OrderTrait;
+
     public static function getByUf($p_uf)
 	{
 		$uf_id = \App\Models\State::getStateIdByUf($p_uf);
@@ -25,5 +27,10 @@ class City extends MasterModel
 				return \App\Models\City::select('id','name')->where('state_id', $uf_id)->get()->pluck('name','id')->toArray();
 			}
 		);
+	}
+
+	public function state()
+	{
+		return $this->hasOne(\App\Models\State::class, 'id', 'state_id');
 	}
 }

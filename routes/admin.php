@@ -116,6 +116,20 @@ Route::group
 					}
 				);
 
+				// Cities
+				Route::group
+				(
+					['prefix' => 'cities'],
+					function()
+					{
+						Route::get ('/'         , 'CityController@index'  )->name('admin_city'       )->group('admin_city');
+						Route::get ('edit/{id?}', 'CityController@create' )->name('admin_city_edit'  )->group('admin_city');
+						Route::post('edit/{id?}', 'CityController@store'  )->name('admin_city_save'  )->group('admin_city');
+						Route::get ('show/{id}' , 'CityController@show'   )->name('admin_city_show'  )->group('admin_city');
+						Route::post('delete/'   , 'CityController@destroy')->name('admin_city_delete')->group('admin_city');
+					}
+				);
+
 				// Galeria de Imagens
 				Route::group
 				(

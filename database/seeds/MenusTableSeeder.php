@@ -47,6 +47,7 @@ class MenusTableSeeder extends Seeder
 			$item = \App\Models\Menu::addMenuLink($group, 'Galeria', 'fa-picture-o', $public, 'admin_gallery');
 			$item = \App\Models\Menu::addMenuLink($group, 'Tags', 'fa-tags', $public, 'admin_tag');
 			$item = \App\Models\Menu::addMenuLink($group, 'Vídeos', 'fa-youtube', $public, 'admin_video');
+			$item = \App\Models\Menu::addMenuLink($group, 'Cidades', 'fa-globe', $public, 'admin_city');
 
 		$group_order += 10;
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Sistema', 'fa-gears', $public, $group_order);
