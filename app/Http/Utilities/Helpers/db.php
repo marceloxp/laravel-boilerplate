@@ -154,14 +154,6 @@ if (!function_exists('db_trim_table_prefix'))
 	}
 }
 
-if (!function_exists('ln'))
-{
-	function ln()
-	{
-		echo PHP_EOL;
-	}
-}
-
 if (!function_exists('db_prefixed_table'))
 {
 	function db_prefixed_table($table_name)
@@ -175,5 +167,13 @@ if (!function_exists('db_table_exists'))
 	function db_table_exists($table_name)
 	{
 		return \Schema::hasTable($table_name);
+	}
+}
+
+if (!function_exists('ln'))
+{
+	function ln()
+	{
+		echo PHP_EOL;
 	}
 }
