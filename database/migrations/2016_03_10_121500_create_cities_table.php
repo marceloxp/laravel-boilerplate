@@ -20,12 +20,13 @@ class CreateCitiesTable extends Migration
 			{
 				$table->increments('id');
 				$table->integer('state_id')->unsigned()->comment('Estado');
-				$table->integer('position')->default(0)->comment('Posição');
+				$table->integer('position')->unsigned()->default(0)->comment('Posição');
 				$table->string('name',150)->comment('Cidade');
 				$table->timestamps();
 				$table->softDeletes();
 
 				$table->index(['deleted_at']);
+				$table->unique(['position']);
 
 				$table->foreign('state_id')->references('id')->on('states');
 			}
