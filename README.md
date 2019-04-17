@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.2.4
+> Version 0.2.5
 
 ## Install
 
