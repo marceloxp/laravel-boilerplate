@@ -5,12 +5,15 @@ namespace App\Models;
 use App\Http\Utilities\MasterModel;
 use App\Http\Utilities\Cached;
 use App\Http\Utilities\Result;
+use \App\Traits\OrderTrait;
 
 class City extends MasterModel
 {
-	use \App\Traits\OrderTrait;
+	use OrderTrait;
+	protected $dates   = ['created_at','updated_at','deleted_at'];
+	protected $guarded = ['created_at','updated_at','deleted_at'];
 
-    public static function getByUf($p_uf)
+	public static function getByUf($p_uf)
 	{
 		$uf_id = \App\Models\State::getStateIdByUf($p_uf);
 		if (!$uf_id)
@@ -33,4 +36,15 @@ class City extends MasterModel
 	{
 		return $this->hasOne(\App\Models\State::class, 'id', 'state_id');
 	}
+
+	public static function validate($request, $id = '')
+	{
+		$rules = 
+		[
+			'state_id'   => 'required',
+			'name'       => 'required|max:150',
+		];
+		return Role::_validate($request, $rules, $id);
+	}
 }
+

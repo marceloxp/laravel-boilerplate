@@ -43,6 +43,9 @@ Route::group
 			{
 				Route::get('/'      , 'DashboardController@index'  )->name('admin_dashboard');
 				Route::get('phpinfo', 'DeveloperController@phpinfo')->name('admin_phpinfo');
+				
+				// Admin table reorder
+				Route::post('{table}/reorder', 'AdminController@reorder');
 
 				// Search Modal
 				Route::get('modal-search', 'SearchmodalController@index');

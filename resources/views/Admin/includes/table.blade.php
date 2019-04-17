@@ -162,7 +162,7 @@
 	</div>
 	<div class="box-body">
 		@if ($has_table)
-			<table class="table table-bordered table-striped table-condensed table-hover table-responsive">
+			<table class="table table-bordered table-striped table-condensed table-hover table-responsive" id="main-table">
 				<tbody>
 					<tr>
 						<th style="width:20px"><input id="ch-rows-all" type="checkbox"></th>
@@ -204,7 +204,14 @@
 								$hook_name   = hook_name(sprintf('admin_index_title_align_%s_%s', $table_name, $field_name));
 								$title_align = Hook::apply_filters($hook_name, $title_align);
 							@endphp
-							<th style="text-align: {{ $title_align }};" data-field="{{ $field_name }}">{{ $column_title }}</i></th>
+							<th style="text-align: {{ $title_align }};" data-field="{{ $field_name }}">
+								@if ( ($field_name == 'id') && ($sortable) )
+									<span style="cursor:help" title="Clique e arrasque qualquer registro abaixo para ordenar.">
+										{!! fa_ico('fa-arrows') !!}
+									</span>
+								@endif
+								{{ $column_title }}
+							</i></th>
 						@endforeach
 					</tr>
 					@foreach($table as $register)
@@ -291,9 +298,15 @@
 
 									$hook_name   = hook_name(sprintf('admin_index_field_align_%s_%s', $table_name, $field_name));
 									$field_align = Hook::apply_filters($hook_name, $field_align, $register->toArray());
+
+									$sortable_class = ( ($field_name == 'id') && ($sortable) ) ? 'sortable-row' : '';
 								}
 							@endphp
-							<td align="{{ $field_align }}">{!! $display_value !!}</td>
+							<td align="{{ $field_align }}">
+								<div class="{{ $field_name }} {{ $sortable_class }}">
+									{!! $display_value !!}
+								</div>
+							</td>
 						@endforeach
 					</tr>
 					@endforeach

@@ -13,6 +13,7 @@
 		<meta name="now" content="{{ date('Y-m-d H:i:s') }}">
 		<meta name="framework-version" content="{{ App::VERSION() }}">
 		<meta name="app-version" content="{{ app_version() }}">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		<title>{{ env('ADMIN_TITLE', 'Admin') }}</title>
 		<link rel="shortcut icon" type="image/png" href="{{ url('/favicon.png') }}"/>

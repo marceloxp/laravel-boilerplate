@@ -30,6 +30,7 @@ class CityController extends AdminController
 			[
 				'request'        => $request,
 				'model'          => $this->model,
+				'sortable'       => true,
 				'display_fields' => ['id','position','state_id','name','created_at']
 			]
 		);
@@ -53,9 +54,8 @@ class CityController extends AdminController
 				'display_fields' => 
 				[
 					'id'         => 0,
-					'position'   => 4,
-					'state_id'   => 4,
-					'name'       => 4,
+					'state_id'   => 6,
+					'name'       => 6,
 					'created_at' => 6,
 					'updated_at' => 6,
 				]

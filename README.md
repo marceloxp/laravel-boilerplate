@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.2.4
+> Version 0.2.6
 
 ## Install
 
@@ -86,11 +86,12 @@ php artisan migrate:refresh --seed
 
 ## Libraries
 
-| Local  | Library          | Site                                           | Description                          |
-| ------ | ---------------- | ---------------------------------------------- | ------------------------------------ |
-| Global | cjsbaseclass.js  | <https://www.npmjs.com/package/cjsbaseclass>   | Base JS class                        |
-| Admin  | prism.js         | <http://prismjs.com/>                          | Syntax highlighter                   |
-| Admin  | sweetalert.js    | <https://sweetalert.js.org/>                   | A beautiful replacement for messages |
+| Local  | Library          | Site                                           | Description                                                                       |
+| ------ | ---------------- | ---------------------------------------------- | --------------------------------------------------------------------------------- |
+| Global | cjsbaseclass.js  | <https://www.npmjs.com/package/cjsbaseclass>   | Base JS class                                                                     |
+| Admin  | prism.js         | <http://prismjs.com/>                          | Syntax highlighter                                                                |
+| Admin  | sweetalert.js    | <https://sweetalert.js.org/>                   | A beautiful replacement for messages                                              |
+| Admin  | RowSorter.js     | <https://github.com/arteyazilim/rowsorter/>    | Drag & drop table row sorter pluging with touch support for Vanilla JS and jQuery |
 
 ## Admin Template
 
@@ -181,9 +182,9 @@ return Result::success('Dados cadastrados com sucesso.');
 return Result::success('Dados cadastrados com sucesso.', ['id': 396]);
 return Result::error('Ocorreu um erro na gravação do registro');
 return Result::cached('', { 'id': 1, 'uf': 'sp' });
-return Result::undefined();   // Ocorreu um erro na solcitação.
+return Result::undefined();   // Ocorreu um erro na solicitação.
 return Result::invalid();     // Entrada de dados inválida.
-return Result::exception($e); // Ocorreu um erro na solcitação.
+return Result::exception($e); // Ocorreu um erro na solicitação.
 ```
 
 ### RouteLang `\App\Http\Utilities\RouteLang`
