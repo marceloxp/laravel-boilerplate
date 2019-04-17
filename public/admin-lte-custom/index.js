@@ -225,6 +225,7 @@ umsappadmin.Tindex = function($, objname, options)
 		self.addDateRangePicker();
 		self.ajustSearchForm();
 		self.checkButtonsEdit();
+		self.sortable();
 	};
 
 	this.onCheckRowClick = function()
@@ -836,6 +837,113 @@ umsappadmin.Tindex = function($, objname, options)
 				var element_prefix = $element.attr('data-prefix');
 				$('#' + element_prefix + '_ini').val('');
 				$('#' + element_prefix + '_end').val('');
+			}
+		);
+	};
+
+	this.sortable = function()
+	{
+		if (!datasite.params.sortable) { return; }
+
+		var addStyle = function(p_text_style)
+		{
+			$('<style type="text/css">' + p_text_style + '</style>').appendTo('head');
+		}
+
+		addStyle
+		(
+			'table.sorting-table div.sortable-row { cursor: default; }' + 
+			'div.sortable-row { cursor: move; }' + 
+			'table tr.sorting-row td { background-color: #226507; color: #ffffff; }' + 
+			'table.sorting-table tbody tr:not(.sorting-row) td { opacity: 0.6; }; }'
+		);
+
+		var page_reload = function() { window.location.reload(); }
+
+		var executeReorder = function(p_callback)
+		{
+			$.ajax({
+				'url'      : sprintf('%s/%s/reorder', datasite.url.admin, datasite.params.table_name),
+				'type'     : 'POST',
+				'autowait' : 'auto',
+				'dataType' : 'json',
+				'headers'  : { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+				'data'     : self.positions
+			})
+			.done(function(json)
+			{
+				if (json.result)
+				{
+					if (json.success)
+					{
+						swal('', (json.message) ? json.message : 'Solicitação efetuada com sucesso.', 'success').then(page_reload);
+					}
+					else
+					{
+						swal('', (json.message) ? json.message : 'Ocorreu um erro na solicitação.', 'error').then(page_reload);
+					}
+				}
+				else
+				{
+					swal('', 'A solicitação não retornou os resultados esperados.', 'error').then(page_reload);
+				}
+			})
+			.fail(function() {
+				swal('', 'Ocorreu uma falha na solicitação.', 'error').then(page_reload);
+			})
+			.always(function() {
+
+			});
+		};
+
+		var getPositions = function(p_ini = true)
+		{
+			var prop = 'ids_ini';
+			if (p_ini)
+			{
+				self.positions = 
+				{
+					'pos_ini' : parseInt($('#main-table tr td div.position:first').text().trim()),
+					'ids_ini' : [],
+					'ids_end' : []
+				};
+			}
+			else
+			{
+				prop = 'ids_end'
+			}
+
+			$('#main-table tr td div.id').each
+			(
+				function()
+				{
+					self.positions[prop].push(parseInt($(this).text().trim()));
+				}
+			);
+			console.log(self.positions);
+		};
+
+		jQuery('#main-table').rowSorter
+		(
+			{
+				'handler'       : 'div.sortable-row',
+				'stickFirstRow' : true,
+				'stickTopRows'  : 1,
+				onDragStart: function(tbody, row, old_index)
+				{
+					getPositions(true);
+				},
+				onDrop: function(tbody, row, new_index, old_index)
+				{
+					getPositions(false);
+					executeReorder
+					(
+						function()
+						{
+							alert('Done');
+						}
+					);
+				}
 			}
 		);
 	};

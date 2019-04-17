@@ -43,6 +43,9 @@ Route::group
 			{
 				Route::get('/'      , 'DashboardController@index'  )->name('admin_dashboard');
 				Route::get('phpinfo', 'DeveloperController@phpinfo')->name('admin_phpinfo');
+				
+				// Admin table reorder
+				Route::post('{table}/reorder', 'AdminController@reorder');
 
 				// Search Modal
 				Route::get('modal-search', 'SearchmodalController@index');
@@ -113,6 +116,20 @@ Route::group
 						Route::post('edit/{id?}', 'CategoryController@store'  )->name('admin_category_save'  )->group('admin_category');
 						Route::get ('show/{id}' , 'CategoryController@show'   )->name('admin_category_show'  )->group('admin_category');
 						Route::post('delete/'   , 'CategoryController@destroy')->name('admin_category_delete')->group('admin_category');
+					}
+				);
+
+				// Cities
+				Route::group
+				(
+					['prefix' => 'cities'],
+					function()
+					{
+						Route::get ('/'         , 'CityController@index'  )->name('admin_city'       )->group('admin_city');
+						Route::get ('edit/{id?}', 'CityController@create' )->name('admin_city_edit'  )->group('admin_city');
+						Route::post('edit/{id?}', 'CityController@store'  )->name('admin_city_save'  )->group('admin_city');
+						Route::get ('show/{id}' , 'CityController@show'   )->name('admin_city_show'  )->group('admin_city');
+						Route::post('delete/'   , 'CityController@destroy')->name('admin_city_delete')->group('admin_city');
 					}
 				);
 

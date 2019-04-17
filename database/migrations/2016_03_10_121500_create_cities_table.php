@@ -19,14 +19,16 @@ class CreateCitiesTable extends Migration
 			function(Blueprint $table)
 			{
 				$table->increments('id');
-				$table->integer('state_id')->unsigned()->comment('Cidade');
-				$table->string('name',150)->comment('Estado');
+				$table->integer('state_id')->unsigned()->comment('Estado');
+				$table->integer('position')->unsigned()->default(0)->comment('Posição');
+				$table->string('name',150)->comment('Cidade');
 				$table->timestamps();
 				$table->softDeletes();
 
 				$table->index(['deleted_at']);
+				$table->unique(['position']);
 
-				$table->foreign('state_id')->references('id')->on('cities');
+				$table->foreign('state_id')->references('id')->on('states');
 			}
 		);
 		db_comment_table('cities', 'Cidades');

@@ -460,13 +460,16 @@ class MasterModel extends Model
 								COLUMN_NAME = "%s"
 								AND
 								REFERENCED_TABLE_NAME = "%s"
+								AND
+								TABLE_NAME LIKE "%%%s%%"
 							ORDER BY
 								TABLE_NAME, COLUMN_NAME
 							;
 						',
 						db_database_name(),
 						sprintf('%s_id', str_plural_2_singular($table_name)),
-						db_prefixed_table($table_name)
+						db_prefixed_table($table_name),
+						str_singular(db_trim_table_prefix($table_name))
 					);
 					$pivot_tables = DB::select($query);
 
@@ -499,7 +502,6 @@ class MasterModel extends Model
 						$pivot_field_name      = db_trim_table_prefix($referenced_table_name);
 						$pivot_relations[]     = $pivot_field_name;
 					}
-					// r($pivot_relations);
 				}
 
 				// TABLE SCHEMA

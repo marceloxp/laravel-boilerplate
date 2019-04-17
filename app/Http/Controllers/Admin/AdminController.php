@@ -440,6 +440,7 @@ class AdminController extends Controller
 			'where'        => [],
 			'appends'      => [],
 			'editable'     => true,
+			'sortable'     => false,
 			'exportable'   => false
 		];
 
@@ -474,7 +475,7 @@ class AdminController extends Controller
 		$has_table     = ($table->total() > 0);
 		$search_dates  = ['created_at'];
 
-		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage');
+		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage','sortable');
 		
 		View::share($share_params);
 
@@ -498,6 +499,7 @@ class AdminController extends Controller
 			'where'       => [],
 			'appends'     => [],
 			'editable'    => true,
+			'sortable'    => false,
 			'exportable'  => false
 		];
 
@@ -510,6 +512,7 @@ class AdminController extends Controller
 
 		extract($params, EXTR_OVERWRITE);
 
+		$sortable          = false;
 		$is_pivot          = (!empty($pivot_scope));
 		$class_pivot       = ($is_pivot) ? 'pivot' : '';
 		$panel_title       = $this->caption;
@@ -679,6 +682,19 @@ class AdminController extends Controller
 		extract($params, EXTR_OVERWRITE);
 
 		return $this->destroy_register($model, $request);
+	}
+
+	public function reorder(Request $request, $table)
+	{
+		try
+		{
+			$model = db_table_name_to_model_path($table);
+			return $model::reorder($request->pos_ini, $request->ids_ini, $request->ids_end);
+		}
+		catch (Exception $e)
+		{
+			return Result::exception($e);
+		}
 	}
 
 	private function buildMenus()

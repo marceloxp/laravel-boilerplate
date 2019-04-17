@@ -55,7 +55,7 @@ class Result
 		return self::get(false, $message, $data, false, $message_log);
 	}
 
-	public static function ifthen($boolean_value, $success_message = 'Solicitação realizada com sucesso.', $error_message = 'Ocorreu um erro na solcitação.')
+	public static function ifthen($boolean_value, $success_message = 'Solicitação realizada com sucesso.', $error_message = 'Ocorreu um erro na solicitação.')
 	{
 		return ($boolean_value) ? self::success($success_message) : self::error($error_message);
 	}
@@ -70,13 +70,13 @@ class Result
 		$use_message = $message;
 		if (empty($message))
 		{
-			$use_message = 'Ocorreu um erro na solcitação.';
+			$use_message = 'Ocorreu um erro na solicitação.';
 		}
 		return self::get(false, $use_message, $data, false, $message_log);
 	}
 
 	public static function exception($exception)
 	{
-		return self::get(false, 'Ocorreu um erro na solcitação.', [], false, $exception->getMessage());
+		return self::get(false, 'Ocorreu um erro na solicitação.', [], false, $exception->getMessage());
 	}
 }
