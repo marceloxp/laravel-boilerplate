@@ -8,18 +8,18 @@ use App\Http\Utilities\MasterModel;
 class Tag extends MasterModel
 {
 	use SoftDeletes;
-    protected $dates   = ['created_at','updated_at','deleted_at'];
+	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
-    public static function validate($request, $id = '')
-    {
+	public static function validate($request, $id = '')
+	{
 		$rules = 
 		[
 			'name' => 'required|min:3|max:150'
 		];
 
 		return Tag::_validate($request, $rules, $id);
-    }
+	}
 
 	/**
 	* Retrieve Videos pivot Table
