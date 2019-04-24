@@ -28,6 +28,10 @@ if (!function_exists('db_get_comment_table'))
 	function db_get_comment_table($table_name)
 	{
 		$register = DB::select(sprintf('SHOW TABLE STATUS WHERE Name="%s"', db_prefixed_table($table_name)));
+		if (empty($register))
+		{
+			throw new \Exception(sprintf('Table %s not found!', $table_name));
+		}
 		$register = $register[0];
 		return $register->Comment;
 	}
