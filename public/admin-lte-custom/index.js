@@ -905,7 +905,8 @@ umsappadmin.Tindex = function($, objname, options)
 				{
 					'pos_ini' : parseInt($('#main-table tr td div.position:first').text().trim()),
 					'ids_ini' : [],
-					'ids_end' : []
+					'ids_end' : [],
+					'order'   : ( (Url.queryString('orders') === undefined) || (Url.queryString('orders') === 'ASC') ) ? 'asc' : 'desc'
 				};
 			}
 			else

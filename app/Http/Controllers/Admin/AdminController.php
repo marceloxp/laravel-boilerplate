@@ -453,6 +453,26 @@ class AdminController extends Controller
 
 		extract($params, EXTR_OVERWRITE);
 
+		if ($sortable)
+		{
+			$sort_fields = $request->get('fields', '');
+			if (!empty($sort_fields))
+			{
+				$fields = explode(',', $sort_fields);
+				if (count($fields) > 1)
+				{
+					$sortable = false;
+				}
+				else
+				{
+					if (!in_array('position', $fields))
+					{
+						$sortable = false;
+					}
+				}
+			}
+		}
+
 		$page              = $request->get('page', 1);
 		$is_pivot          = (!empty($pivot_scope));
 		$class_pivot       = ($is_pivot) ? 'pivot' : '';
@@ -689,7 +709,7 @@ class AdminController extends Controller
 		try
 		{
 			$model = db_table_name_to_model_path($table);
-			return $model::reorder($request->pos_ini, $request->ids_ini, $request->ids_end);
+			return $model::reorder($request->pos_ini, $request->ids_ini, $request->ids_end, $request->order);
 		}
 		catch (Exception $e)
 		{

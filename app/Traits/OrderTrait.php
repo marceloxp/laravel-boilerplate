@@ -27,53 +27,36 @@ trait OrderTrait
 		return (self::max('position') + 1);
 	}
 
-	public static function reorder($pos_ini, $ids_ini, $ids_end)
+	public static function reorder($pos_ini, $ids_ini, $ids_end, $p_order)
 	{
 		try
 		{
-			$order = ($ids_ini[0] < $ids_ini[1]) ? 'asc' : 'desc';
-			$asc   = ($order == 'asc');
-			$fator = ($asc) ? 1 : -1;
+			$order     = $p_order;
+			$asc       = ($order == 'asc');
+			$fator     = ($asc) ? 1 : -1;
+			$table_max = self::max('position');
 
-			$use_pos = 0;
 			$use_ini = [];
-			$use_end = [];
-
-			foreach ($ids_ini as $key => $id_ini)
+			foreach ($ids_ini as $key => $id)
 			{
-				if ($id_ini != $ids_end[$key])
-				{
-					$use_ini[] = $id_ini;
-					$use_end[] = $ids_end[$key];
-					if ($use_pos === 0)
-					{
-						$use_pos = ($asc) ? ($pos_ini + $key) : ($pos_ini - $key);
-					}
-				}
+				$use_ini[intval($id)] = intval($pos_ini+$key*$fator) + $table_max;
 			}
 
-			$range_count = count($use_ini);
-			$table_max   = self::max('position');
-			$range_ini   = $table_max + $use_pos;
-			$range_end   = $range_ini + $range_count;
-			$randoms     = range($range_ini, $range_end-1);
+			$use_end = [];
+			foreach ($ids_end as $key => $id)
+			{
+				$use_end[intval($id)] = intval($pos_ini+$key*$fator);
+			}
 
 			\DB::beginTransaction();
-
-			foreach ($randoms as $key => $rand_position)
+			$ajusts = [$use_ini, $use_end];
+			foreach ($ajusts as $ajust)
 			{
-				$ids = $use_ini[$key];
-				$position = $rand_position;
-				self::where('id', $ids)->update(['position' => $position]);
+				foreach ($ajust as $ids => $position)
+				{
+					self::where('id', $ids)->update(['position' => $position]);
+				}
 			}
-
-			$position = $use_pos;
-			foreach ($use_end as $ids)
-			{
-				self::where('id', $ids)->update(['position' => $position]);
-				$position = $position + $fator;
-			}
-
 			\DB::commit();
 			return Result::success('Registros reordenados com sucesso.');
 		}
