@@ -359,10 +359,10 @@
 		<div class="box-footer">
 			<div class="row">
 				<div class="col-xs-6">
-					<button type="button" class="btn btn-danger" onClick="javascript:history.back();"><i class="fa fa-fw fa-arrow-left"></i> Voltar</button>
+					<button type="button" class="btn btn-danger" onClick="javascript:history.back();"><i class="fas fa-arrow-circle-left"></i>&nbsp;&nbsp;Voltar</button>
 				</div>
 				<div class="col-xs-6">
-					<button type="submit" class="btn btn-success pull-right"><i class="fa fa-fw fa-save"></i> Gravar</button>
+					<button type="submit" class="btn btn-success pull-right"><i class="fas fa-save"></i>&nbsp;&nbsp;Gravar</button>
 				</div>
 			</div>
 		</div>

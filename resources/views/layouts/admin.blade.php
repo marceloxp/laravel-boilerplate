@@ -69,7 +69,7 @@
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="#"><span class="glyphicon glyphicon-user">&nbsp;</span>{{ $user->name }}</a>
+								<a href="#"><span class="fas fa-user-alt"></span>&nbsp;&nbsp;{{ $user->name }}</a>
 							</li>
 						</ul>
 					</div>

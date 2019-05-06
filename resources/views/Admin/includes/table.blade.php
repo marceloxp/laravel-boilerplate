@@ -26,7 +26,7 @@
 							<label>Busca</label>
 							<div class="input-group">
 								<div class="input-group-btn">
-									<button id="btn-search-field" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-fw fa-search"></i> <span>Buscar por</span>&nbsp;
+									<button id="btn-search-field" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i>&nbsp;&nbsp;<span>Buscar por</span>&nbsp;
 									<span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu" id="search-fields-items">
 										@foreach($search_fields as $field_name)
@@ -59,7 +59,7 @@
 							<label>Período</label><br>
 							<div class="input-group">
 								<div class="input-group-addon">
-									<i class="fa fa-calendar"></i>
+									<i class="fas fa-calendar"></i>
 								</div>
 								<input type="text" class="form-control daterangepicker" id="search-date" data-prefix="range">
 								<input type="hidden" name="range_ini" id="range_ini" value="">
@@ -85,8 +85,8 @@
 					<div class="col-xs-4 col-md-4">
 						<label>Adicionar</label><br>
 						<div class="btn-group">
-							<button type="button" data-dir="down" class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do menor para o maior (ASC)"  data-placement="bottom"><i class="fa fa-fw fa-arrow-down"></i></button>
-							<button type="button" data-dir="up"   class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do maior para o menor (DESC)" data-placement="bottom"><i class="fa fa-fw fa-arrow-up"></i></button>
+							<button type="button" data-dir="down" class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do menor para o maior (ASC)"  data-placement="bottom"><i class="fas fa-arrow-down"></i></button>
+							<button type="button" data-dir="up"   class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do maior para o menor (DESC)" data-placement="bottom"><i class="fas fa-arrow-up"></i></button>
 						</div>
 					</div>
 				</div>
@@ -103,7 +103,7 @@
 					<div class="col-xs-8">
 						<div class="form-group">
 							<label>&nbsp;</label><br>
-							<button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-filter"></i> Filtrar</button>
+							<button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filtrar</button>
 						</div>
 					</div>
 				</div>
