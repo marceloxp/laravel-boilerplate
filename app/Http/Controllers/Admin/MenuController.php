@@ -29,7 +29,7 @@ class MenuController extends AdminController
 		return $this->defaultTreeIndex
 		(
 			[
-				'pivot'          => $this->model::getPivotConfig(['roles' => 'fa-key']),
+				// 'pivot'       => $this->model::getPivotConfig(['roles' => 'fa-key']),
 				'appends'        => $this->appends,
 				'slug'           => 'menu',
 				'request'        => $request,
@@ -82,12 +82,13 @@ class MenuController extends AdminController
 				[
 					'id'         => 0,
 					'order'      => 3,
+					'roles'      => 9,
 					'name'       => 3,
 					'slug'       => 3,
 					'parent_id'  => 3,
 					'type'       => 3,
 					'color'      => 3,
-					'ico'        => 6,
+					'ico'        => 3,
 					'link'       => 3,
 					'target'     => 3,
 					'model'      => 3,
