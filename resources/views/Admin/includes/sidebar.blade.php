@@ -19,7 +19,7 @@
 					@if ($print_menu)
 						<li class="treeview active menu-open">
 							<a href="#">
-								<i class="fa {{ $header->get('ico') }}"></i> <span>{{ $header->get('name') }}</span>
+								<i class="fa {{ $header->get('ico') }}"></i>&nbsp;&nbsp;<span>{{ $header->get('name') }}</span>
 								<span class="pull-right-container">
 									<i class="fa fa-angle-left pull-right"></i>
 								</span>
@@ -73,7 +73,7 @@
 										}
 									@endphp
 									@if ($print_menu)
-										<li class="{{ $active }}"><a href="{{ $link }}" target="{{ $target }}"><i class="fa {{ $item->get('ico') }}"></i> {{ $item->get('name') }}</a></li>
+										<li class="{{ $active }}"><a href="{{ $link }}" target="{{ $target }}"><i class="{{ $item->get('ico') }}"></i>&nbsp;&nbsp;{{ $item->get('name') }}</a></li>
 									@endif
 								@endforeach
 							</ul>

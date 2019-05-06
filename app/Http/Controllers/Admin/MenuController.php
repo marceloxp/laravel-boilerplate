@@ -47,7 +47,7 @@ class MenuController extends AdminController
 			sprintf('admin_index_%s_%s', $table_name, 'name'),
 			function($display_value, $register)
 			{
-				return fa_ico($register['ico'], $display_value);
+				return fa_ico_v5($register['ico'], $display_value);
 			},
 			10, 2
 		);
@@ -101,7 +101,16 @@ class MenuController extends AdminController
 
 	public function hooks_edit($table_name)
 	{
-		//
+		Hook::add_filter
+		(
+			sprintf('admin_edit_%s_%s', $table_name, 'ico'),
+			function($display_value, $value)
+			{
+				$result = combo_fa_ico_v5('ico', $value);
+				return $result;
+			},
+			10, 2
+		);
 	}
 
 	/**

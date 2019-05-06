@@ -90,7 +90,7 @@
 
 								$input = array_to_dropdown
 								(
-									$array_tree->toArray(),
+									$array_tree,
 									[
 										'name'      => 'parent_id',
 										'value'     => $field_value,

@@ -83,6 +83,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/public/js/admin/jQuery.SimpleMask.min.js',
 			'laravel-boilerplate-stable/resources/views/layouts/admin.blade.php',
 			'laravel-boilerplate-stable/public/admin-lte-custom/fontawesome-iconpicker',
+			'laravel-boilerplate-stable/public/admin-lte-custom/fontawesome-free-5.8.1-web',
 			'laravel-boilerplate-stable/public/admin-lte-custom/index.js',
 			'laravel-boilerplate-stable/public/admin-lte-custom/edit.js',
 			'laravel-boilerplate-stable/public/admin-lte-custom/tree.js',

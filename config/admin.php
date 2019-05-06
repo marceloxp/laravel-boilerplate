@@ -8,7 +8,7 @@ return [
 			'roles'   => ['Master','Admin','Developer'],
 			'caption' => 'Vídeos',
 			'color'   => 'bg-green',
-			'ico'     => 'fa-video-camera',
+			'ico'     => 'fab fa-youtube',
 			'link'    => 'admin_video',
 			'model'   => 'Video'
 		]

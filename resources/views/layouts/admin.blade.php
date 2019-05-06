@@ -22,7 +22,7 @@
 		<!-- Bootstrap 3.3.6 -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/bootstrap/css/bootstrap.min.css') }}">
 		<!-- Font Awesome -->
-		<link rel="stylesheet" href="{{ vasset('/admin-lte/fonts/font-awesome.min.css') }}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte-custom/fontawesome-free-5.8.1-web/css/all.min.css') }}">
 		<!-- Ionicons -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/fonts/ionicons.min.css') }}">
 		<!-- Select2 -->
@@ -114,6 +114,8 @@
 		<script src="{{ vasset('/js/admin/jQuery.SimpleMask.min.js') }}"></script>
 		<!-- jQueryPriceFormat -->
 		<script src="{{ vasset('/js/admin/jquery.priceformat.min.js') }}"></script>
+		<!-- Font Awesome -->
+		<script src="{{ vasset('/admin-lte-custom/fontawesome-free-5.8.1-web/js/all.min.js') }}"></script>
 		<!-- Scripts -->
 		<script type="text/javascript" src="{{ vasset('/lib/cjsbaseclass.min.js') }}" data-jquery-exclusive="true" data-silent-host="www.site-production.com"></script>
 		{{ javascript('/lib/sweetalert.min.js') }}
