@@ -119,25 +119,25 @@
 			<div class="btn-group col-xs-9">
 				@php $buttons_edit = isset($editable) ? $editable : true; @endphp
 				@if ($buttons_edit)
-					<button type="button" id="btn-table-add" class="btn btn-success {{ $class_pivot }}"><i class="fas fa-plus-circle"></i> Adicionar</button>
+					<button type="button" id="btn-table-add" class="btn btn-success {{ $class_pivot }}"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Adicionar</button>
 					@if ($has_table)
 						@if (!$is_pivot)
-							<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fas fa-edit"></i> Editar</button>
+							<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fas fa-edit"></i>&nbsp;&nbsp;Editar</button>
 						@endif
 					@endif
 				@endif
 				@if ($has_table)
-					<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fas fa-eye"></i> Visualizar</button>
+					<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fas fa-eye"></i>&nbsp;&nbsp;Visualizar</button>
 					@if (!empty($table_many))
-						<button type="button" id="btn-table-many" data-parent="{{ $table_name }}" data-link="{{ $table_many['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $table_many['icon'] }}"></i> {{ $table_many['caption'] }}</button>
+						<button type="button" id="btn-table-many" data-parent="{{ $table_name }}" data-link="{{ $table_many['name'] }}" class="btn btn-warning disabled"><i class="{{ $table_many['icon'] }}"></i>&nbsp;&nbsp;{{ $table_many['caption'] }}</button>
 					@endif
 					@if (!empty($pivot))
 						@foreach($pivot as $pivot_config)
-							<button type="button" id="btn-table-pvt" data-link="{{ $pivot_config['name'] }}" class="btn-table-pvt btn btn-warning disabled"><i class="fa {{ $pivot_config['icon'] }}"></i> {{ $pivot_config['caption'] }}</button>
+							<button type="button" id="btn-table-pvt" data-link="{{ $pivot_config['name'] }}" class="btn-table-pvt btn btn-warning disabled"><i class="{{ $pivot_config['icon'] }}"></i>&nbsp;&nbsp;{{ $pivot_config['caption'] }}</button>
 						@endforeach
 					@endif
 					@if ($buttons_edit)
-						<button type="button" id="btn-table-del" class="btn btn-danger {{ $class_pivot }} disabled"><i class="fas fa-times-circle"></i> Excluir</button>
+						<button type="button" id="btn-table-del" class="btn btn-danger {{ $class_pivot }} disabled"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;Excluir</button>
 					@endif
 				@endif
 			</div>
@@ -154,7 +154,7 @@
 				@php $print_button = isset($exportable) ? $exportable : true; @endphp
 				@if ($print_button)
 					<div class="btn-group col-xs-2">
-						<button type="button" id="btn-table-exp" class="btn btn-success pull-right"><i class="fa fa-fw fa-file-excel-o"></i> Exportar</button>
+						<button type="button" id="btn-table-exp" class="btn btn-success pull-right"><i class="fas fa-file-excel"></i> Exportar</button>
 					</div>
 				@endif
 			@endif
@@ -207,7 +207,7 @@
 							<th style="text-align: {{ $title_align }};" data-field="{{ $field_name }}">
 								@if ( ($field_name == 'id') && ($sortable) )
 									<span style="cursor:help" title="Clique e arrasque qualquer registro abaixo para ordenar.">
-										{!! fa_ico('fa-arrows') !!}
+										{!! fa_ico_v5('fas fa-arrows-alt') !!}
 									</span>
 								@endif
 								{{ $column_title }}
