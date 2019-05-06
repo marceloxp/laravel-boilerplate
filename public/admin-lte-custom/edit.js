@@ -72,6 +72,7 @@ umsappadmin.Tedit = function($, objname, options)
 		self.verifySlugFields();
 		self.addSummerNote();
 		self.setFirstFocus();
+		jQuery('.icp-auto').iconpicker();
 	};
 
 	this.addSummerNote = function()

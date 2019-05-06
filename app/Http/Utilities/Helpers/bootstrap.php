@@ -40,3 +40,34 @@ if (!function_exists('fa_ico'))
 		return sprintf('<i class="fa fa-fw %s"></i> ', $p_icon) . $p_text;
 	}
 }
+
+if (!function_exists('fa_ico_v5'))
+{
+	// echo fa_ico_v5('fas fa-table', 'Table');
+	function fa_ico_v5($p_icon, $p_text = '')
+	{
+		return sprintf('<i class="%s"></i> ', $p_icon) . $p_text;
+	}
+}
+
+if (!function_exists('combo_fa_ico_v5'))
+{
+	// echo combo_fa_ico_v5('fa-table');
+	$combo_fa_ico_scripts = false;
+	function combo_fa_ico_v5($p_name, $p_icon = '')
+	{
+		global $combo_fa_ico_v5_scripts;
+		if (!$combo_fa_ico_v5_scripts)
+		{
+			$combo_fa_ico_v5_scripts = true;
+			$result = '
+				<div class="input-group">
+					<input type="text" name="' . $p_name . '" id="' . $p_name . '" data-placement="bottomRight" class="form-control icp icp-auto" value="' .  $p_icon. '"/>
+					<span class="input-group-addon"></span>
+				</div>
+			';
+		}
+
+		return $result;
+	}
+}
