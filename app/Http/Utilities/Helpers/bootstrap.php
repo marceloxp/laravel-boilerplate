@@ -46,7 +46,7 @@ if (!function_exists('fa_ico_v5'))
 	// echo fa_ico_v5('fas fa-table', 'Table');
 	function fa_ico_v5($p_icon, $p_text = '')
 	{
-		return sprintf('<i class="%s"></i> ', $p_icon) . $p_text;
+		return sprintf('<i class="%s"></i>&nbsp;&nbsp;', $p_icon) . $p_text;
 	}
 }
 
