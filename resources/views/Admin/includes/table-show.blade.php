@@ -57,7 +57,8 @@
 									}
 									else
 									{
-										$display_value = $register->tags->toBootstrapLabels()->toText();
+										$_field = $fields_schema[$field_name]['name'];
+										$display_value = $register->$_field->toBootstrapLabels()->toText();
 									}
 								break;
 								case 'enum':

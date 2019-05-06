@@ -147,13 +147,10 @@ class MenuController extends AdminController
 	{
 		Hook::add_filter
 		(
-			sprintf('admin_show_%s_%s', $table_name, 'roles'),
+			sprintf('admin_show_%s_%s', $table_name, 'ico'),
 			function($display_value, $register)
 			{
-				$display_value = collect($display_value->toArray());
-				if ($display_value->isEmpty()) { return bs_label(0, 'Public'); }
-				\App\Models\Role::ajustCollectionRolesColor($display_value);
-				return $display_value->toBootstrapLabel()->toText('&nbsp;');
+				return sprintf('%s %s', fa_ico_v5($display_value), $display_value);
 			},
 			10, 2
 		);
