@@ -8,13 +8,13 @@
 			<div class="btn-group col-xs-10">
 				@php $buttons_edit = isset($editable) ? $editable : true; @endphp
 				@if ($buttons_edit)
-					<button type="button" id="btn-table-add" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> Adicionar</button>
+					<button type="button" id="btn-table-add" class="btn btn-success"><i class="fas fa-plus-circle"></i> Adicionar</button>
 					@if ($has_table)
-						<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fa fa-edit"></i> Editar</button>
+						<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fas fa-edit"></i> Editar</button>
 					@endif
 				@endif
 				@if ($has_table)
-					<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fa fa-eye"></i> Visualizar</button>
+					<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fas fa-eye"></i> Visualizar</button>
 					@if (!empty($table_many))
 						<button type="button" id="btn-table-many" data-parent="{{ $table_name }}" data-link="{{ $table_many['name'] }}" class="btn btn-warning disabled"><i class="fa {{ $table_many['icon'] }}"></i> {{ $table_many['caption'] }}</button>
 					@endif
@@ -24,7 +24,7 @@
 						@endforeach
 					@endif
 					@if ($buttons_edit)
-						<button type="button" id="btn-table-del" class="btn btn-danger disabled"><i class="fa fa-close"></i> Excluir</button>
+						<button type="button" id="btn-table-del" class="btn btn-danger disabled"><i class="fas fa-times-circle"></i> Excluir</button>
 					@endif
 				@endif
 			</div>
