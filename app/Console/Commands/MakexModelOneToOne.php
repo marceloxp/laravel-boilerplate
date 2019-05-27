@@ -88,7 +88,8 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 			$route_prefix      = $table_target;
 			$model_description = sprintf('%s_%s', $comment_target, $comment_list);
 			$controller_name   = $model_list;
-			$name_group        = sprintf('%s_%s', $table_target, $table_list);
+			$route_name        = sprintf('%s_%s', $table_target, $table_list);
+			$route_group       = sprintf('%s', $table_target);
 
 			$template = "
 	// Begin " . $model_description . "
@@ -97,11 +98,11 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 		['prefix' => '" . $route_prefix . "'],
 		function()
 		{
-			Route::get ('{one_table_id}/" . $table_list . "'           , '" . $controller_name . "Controller@index'  )->name('admin_" . $name_group . "'       )->group('admin_" . $name_group . "');
-			Route::get ('{one_table_id}/" . $table_list . "/edit/{id?}', '" . $controller_name . "Controller@create' )->name('admin_" . $name_group . "_edit'  )->group('admin_" . $name_group . "');
-			Route::post('{one_table_id}/" . $table_list . "/edit/{id?}', '" . $controller_name . "Controller@store'  )->name('admin_" . $name_group . "_save'  )->group('admin_" . $name_group . "');
-			Route::get ('{one_table_id}/" . $table_list . "/show/{id}' , '" . $controller_name . "Controller@show'   )->name('admin_" . $name_group . "_show'  )->group('admin_" . $name_group . "');
-			Route::post('{one_table_id}/" . $table_list . "/delete/'   , '" . $controller_name . "Controller@destroy')->name('admin_" . $name_group . "_delete')->group('admin_" . $name_group . "');
+			Route::get ('{one_table_id}/" . $table_list . "'           , '" . $controller_name . "Controller@index'  )->name('admin_" . $route_name . "'       )->group('admin_" . $route_group . "');
+			Route::get ('{one_table_id}/" . $table_list . "/edit/{id?}', '" . $controller_name . "Controller@create' )->name('admin_" . $route_name . "_edit'  )->group('admin_" . $route_group . "');
+			Route::post('{one_table_id}/" . $table_list . "/edit/{id?}', '" . $controller_name . "Controller@store'  )->name('admin_" . $route_name . "_save'  )->group('admin_" . $route_group . "');
+			Route::get ('{one_table_id}/" . $table_list . "/show/{id}' , '" . $controller_name . "Controller@show'   )->name('admin_" . $route_name . "_show'  )->group('admin_" . $route_group . "');
+			Route::post('{one_table_id}/" . $table_list . "/delete/'   , '" . $controller_name . "Controller@destroy')->name('admin_" . $route_name . "_delete')->group('admin_" . $route_group . "');
 		}
 	);
 	// End " . $model_description;
