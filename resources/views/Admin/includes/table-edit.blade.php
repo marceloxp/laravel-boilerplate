@@ -19,9 +19,6 @@
 @endphp
 
 <div class="box box-primary">
-	<div class="box-header with-border">
-		<h3 class="box-title"><i class="fa {{ $panel_title[2] }}"></i> {{ $panel_title[1] }}</h3>
-	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
 	<form name="frmTable" id="frmTable" method="post" enctype="multipart/form-data" action="{{ url()->current() }}">
@@ -160,48 +157,67 @@
 								}
 								else
 								{
-									$display_text = '';
-									if (!$is_creating)
+									if ($one_table->field == $field_name)
 									{
-										if (array_key_exists('description', $fields_schema))
-										{
-											$display_text = $register->$ref_model->description;
-										}
-										else
-										{
-											$display_text = $register->$ref_model->name;
-										}
-									}
-									$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $display_text) : '');
-									$field_value = old($field_name) ?? $register->$field_name;
-									
-									$input = sprintf
-									(
-										'
-											<div class="input-group">
-												<input type="text" class="form-control dontsend" readonly="readonly" disabled id="%s_text" name="%s_text" value="%s">
-												<span class="input-group-btn">
-													<button data-field="%s" data-model="%s" data-caption="%s" type="button" class="btn btn-primary btn-flat search-modal-field"><i class="fa fa-fw fa-search"></i> Procurar</button>
-												</span>
-											</div>
-											<input type="hidden" readonly="readonly" id="%s" name="%s" value="%s">
-										',
-										// input with formated value "id - name"
-										$field_name,
-										$field_name,
-										$field_text,
-										
-										// data values to modal search
-										$field_name,
-										$ref_model,
-										$field_label,
+										$display_text = sprintf('%s - %s', $one_table->id, db_get_name($one_table->name, $one_table->id));
+										$input = sprintf
+										(
+											'<input type="text" data-type="%s" class="form-control" name="show_%s" id="show_%s" maxlength="%s" autocomplete="no" placeholder="" value="%s" %s %s>',
+											$field_type,
+											$field_name,
+											$field_name,
+											$maxlength,
+											$display_text,
+											false,
+											' disabled="disabled" '
+										);
 
-										// oficial input with value
-										$field_name,
-										$field_name,
-										$field_value
-										// $register->$field_name
-									);
+										$input .= sprintf
+										(
+											'<input type="hidden" name="%s" id="%s" value="%s">',
+											$field_name,
+											$field_name,
+											$one_table->id
+										);
+									}
+									else
+									{
+										$display_text = '';
+										if (!$is_creating)
+										{
+											$display_text = ($register->$ref_model->name) ? $register->$ref_model->name : $register->$ref_model->description;
+										}
+										$field_text  = old(sprintf('%s_text', $field_name)) ?? (($register->id) ? sprintf('%s - %s', $register->$field_name, $display_text) : '');
+										$field_value = old($field_name) ?? $register->$field_name;
+
+										$input = sprintf
+										(
+											'
+												<div class="input-group">
+													<input type="text" class="form-control dontsend" readonly="readonly" disabled id="%s_text" name="%s_text" value="%s">
+													<span class="input-group-btn">
+														<button data-field="%s" data-model="%s" data-caption="%s" type="button" class="btn btn-primary btn-flat search-modal-field"><i class="fa fa-fw fa-search"></i> Procurar</button>
+													</span>
+												</div>
+												<input type="hidden" readonly="readonly" id="%s" name="%s" value="%s">
+											',
+											// input with formated value "id - name"
+											$field_name,
+											$field_name,
+											$field_text,
+											
+											// data values to modal search
+											$field_name,
+											$ref_model,
+											$field_label,
+
+											// oficial input with value
+											$field_name,
+											$field_name,
+											$field_value
+											// $register->$field_name
+										);
+									}
 								}
 							}
 							else

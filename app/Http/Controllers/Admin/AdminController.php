@@ -290,6 +290,11 @@ class AdminController extends Controller
 			}
 		}
 
+		if ($one_table->has)
+		{
+			$table->where(sprintf('%s.%s', $table_name, $one_table->field), $one_table->id);
+		}
+
 		if (!empty($where))
 		{
 			$table->where($where);
@@ -430,6 +435,34 @@ class AdminController extends Controller
 		return Result::undefined();
 	}
 
+	public function getOneTable()
+	{
+		$table_id = Route::getCurrentRoute()->parameter('id');
+		$result = (object)
+		[
+			'has'      => false,
+			'table_id' => $table_id,
+			'id'       => null,
+			'name'     => null,
+			'field'    => null,
+		];
+
+		$one_table_id = Route::getCurrentRoute()->parameter('one_table_id');
+		if (!empty($one_table_id))
+		{
+			$result = (object)
+			[
+				'has'      => true,
+				'table_id' => $table_id,
+				'id'       => $one_table_id,
+				'name'     => request()->segment(2),
+				'field'    => db_table_name_to_field_id(request()->segment(2)),
+			];
+		}
+
+		return $result;
+	}
+
 	public function defaultIndex($p_args)
 	{
 		$default_params = 
@@ -445,6 +478,19 @@ class AdminController extends Controller
 		];
 
 		$params = array_merge($default_params, $p_args);
+
+		$one_table = $this->getOneTable();
+		if (!$one_table->has)
+		{
+			$id            = $one_table->table_id;
+			$array_caption = ['Home', $this->caption];
+		}
+		else
+		{
+			$pre_caption   = db_get_name($one_table->name, $one_table->id);
+			$array_caption = ['Home', $pre_caption, $this->caption];
+		}
+		$params['one_table'] = $one_table;
 
 		if (!empty($params['pivot_scope']))
 		{
@@ -476,7 +522,7 @@ class AdminController extends Controller
 		$page              = $request->get('page', 1);
 		$is_pivot          = (!empty($pivot_scope));
 		$class_pivot       = ($is_pivot) ? 'pivot' : '';
-		$panel_title       = $this->caption;
+		$panel_title       = admin_breadcrumb($array_caption, 'fas fa-plus-square');
 		$panel_description = $this->description;
 		$table_name        = $model::getTableName();
 		$model_name        = $model::getModelName();
@@ -580,9 +626,9 @@ class AdminController extends Controller
 			$this->hooks_show($table_name);
 		}
 
-		$register       = ($id) ? $model::find($id) : new $model;
-		$panel_title    = [$this->caption, 'Visualizar', 'fa-fw fa-eye'];
-		$fields_schema  = $model::getFieldsMetaData($appends);
+		$register      = ($id) ? $model::find($id) : new $model;
+		$panel_title   = admin_breadcrumb([$this->caption, 'Visualizar'], 'fas fa-eye');
+		$fields_schema = $model::getFieldsMetaData($appends);
 
 		View::share(compact('register','panel_title','display_fields','fields_schema','table_name'));
 
@@ -600,10 +646,24 @@ class AdminController extends Controller
 		$params = array_merge($default_params, $p_args);
 		extract($params, EXTR_OVERWRITE);
 
+		$one_table = $this->getOneTable();
+		if (!$one_table->has)
+		{
+			$id = $one_table->table_id;
+			$array_caption = ['Home', $this->caption];
+			$is_creating = (empty($id));
+		}
+		else
+		{
+			$is_creating = (empty($id));
+			$pre_caption = db_get_name($one_table->name, $one_table->id);
+			$array_caption = ['Home', $pre_caption, $this->caption];
+			$array_caption[] = ($is_creating) ? 'Adicionar' : 'Editar';
+		}
+
 		$table_name    = $model::getTableName();
 		$register      = ($id) ? $model::find($id) : new $model;
-		$is_creating   = (empty($id));
-		$panel_title   = [$this->caption, ($is_creating ? 'Adicionar' : 'Editar'), 'fa-fw fa-plus'];
+		$panel_title   = admin_breadcrumb($array_caption, 'fas fa-plus-square');
 		$fields_schema = $model::getFieldsMetaData($appends);
 		$field_names   = array_keys($fields_schema);
 
@@ -612,7 +672,9 @@ class AdminController extends Controller
 			$this->hooks_edit($table_name);
 		}
 
-		View::share(compact('request','model','register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled'));
+		// r($one_table);
+
+		View::share(compact('request','model','register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled','one_table'));
 
 		return view('Admin.generic_add');
 	}

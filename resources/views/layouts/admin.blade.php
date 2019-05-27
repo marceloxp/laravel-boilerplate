@@ -48,6 +48,21 @@
 			
 		@show
 
+		<style>
+			.content-header
+			{
+				position: relative;
+				padding: 52px 15px 0 15px;
+			}
+
+			.content-header>.breadcrumb
+			{
+				float: left;
+				font-size: 18px;
+				right: auto;
+			}
+		</style>
+
 		@section('datasite')
 			<script>window.datasite = @json(Datasite::get())</script>
 		@show
@@ -80,9 +95,7 @@
 
 			<div class="content-wrapper">
 				<section class="content-header">
-					<h1>
-						@yield('content-header')
-					</h1>
+					@yield('content-header')
 					@yield('content-description')
 				</section>
 				<section class="content">
