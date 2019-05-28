@@ -102,7 +102,6 @@ class Create{ClassName}Table extends Migration
 		$this->br();
 
 		$folder_name = 'Models/';
-
 		$model_name = $this->ask('Master Model name (Singular)', 'cancel');
 		if ($model_name == 'cancel')
 		{
@@ -112,6 +111,7 @@ class Create{ClassName}Table extends Migration
 		$class_name        = str_plural($model_name);
 		$model_description = $this->ask('Model description');
 		$table_name        = db_model_to_table_name($model_name);
+		$model_description = $model_description ?? $table_name;
 
 		$this->info('Model Name: ' . $model_name);
 		$this->info('Table Name: ' . $table_name);
@@ -283,18 +283,17 @@ class Create{ClassName}Table extends Migration
 		{
 			foreach ($metadata->where('has_relation', 'true') as $field)
 			{
-				$model_list   = db_table_name_to_model($field['relation']['ref_table']);
-				$model_target = db_table_name_to_model($field['relation']['table_name']);
-				$this->info(sprintf('MODEL RELATION ONE TO ONE: %s => %s', $model_list, $model_target));
+				$model_target = db_table_name_to_model($field['relation']['ref_table']);
+				$model_list   = db_table_name_to_model($field['relation']['table_name']);
+				$this->info(sprintf('MODEL RELATION ONE TO ONE: %s => %s', $model_target, $model_list));
 				$call_options =
 				[
 					'model_target' => $model_target,
 					'model_list'   => $model_list,
 					'--onetoone'   => true
 				];
-
-				$command = sprintf('php artisan makex:model %s %s --onetoone', $model_target, $model_list);
-				system($command);
+				dump($call_options);
+				$this->call('makex:model', $call_options);
 			}
 		}
 

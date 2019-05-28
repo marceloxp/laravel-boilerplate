@@ -32,6 +32,7 @@ class UserCustomInputController extends AdminController
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
+				'table_many'     => null,
 				'display_fields' => [display_fields]
 			]
 		);
@@ -47,7 +48,7 @@ class UserCustomInputController extends AdminController
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create(Request $request, $id = null)
+	public function create(Request $request, $one_table_id = null, $id = null)
 	{
 		return $this->defaultCreate
 		(

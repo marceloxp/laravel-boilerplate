@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content-header')
-	{{ $panel_title }}
+	{!! $panel_title !!}
 @endsection
 
 @section('content-description')

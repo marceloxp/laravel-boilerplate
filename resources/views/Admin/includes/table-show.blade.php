@@ -3,9 +3,6 @@
 @endphp
 
 <div class="box box-primary">
-	<div class="box-header with-border">
-		<h3 class="box-title"><i class="fa {{$panel_title[2]}}"></i> {{$panel_title[1]}}</h3>
-	</div>
 	<!-- /.box-header -->
 	<div class="box-body">
 		<table class="table table-bordered">
@@ -23,7 +20,7 @@
 					</td>
 					<td>
 						@php
-							$field_type  = $fields_schema[$field_name]['type'];
+							$field_type = $fields_schema[$field_name]['type'];
 							
 							if ($fields_schema[$field_name]['has_relation'])
 							{
