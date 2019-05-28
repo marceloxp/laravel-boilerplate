@@ -262,20 +262,20 @@ umsappadmin.Tindex = function($, objname, options)
 	{
 		if ($('.ck-row:checked').length == 1)
 		{
-			$('#btn-table-edt,#btn-table-viw,.btn-table-pvt,#btn-table-many').removeClass('disabled');
+			$('.btn-check-one').removeClass('disabled');
 		}
 		else
 		{
-			$('#btn-table-edt,#btn-table-viw,.btn-table-pvt,#btn-table-many').addClass('disabled');
+			$('.btn-check-one').addClass('disabled');
 		}
 
 		if ($('.ck-row:checked').length > 0)
 		{
-			$('#btn-table-del').removeClass('disabled');
+			$('.btn-check-many').removeClass('disabled');
 		}
 		else
 		{
-			$('#btn-table-del').addClass('disabled');
+			$('.btn-check-many').addClass('disabled');
 		}
 	};
 

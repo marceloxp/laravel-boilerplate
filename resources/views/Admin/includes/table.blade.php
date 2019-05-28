@@ -122,22 +122,22 @@
 					<button type="button" id="btn-table-add" class="btn btn-success {{ $class_pivot }}"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Adicionar</button>
 					@if ($has_table)
 						@if (!$is_pivot)
-							<button type="button" id="btn-table-edt" class="btn btn-info disabled"><i class="fas fa-edit"></i>&nbsp;&nbsp;Editar</button>
+							<button type="button" id="btn-table-edt" class="btn-check-one btn btn-info disabled"><i class="fas fa-edit"></i>&nbsp;&nbsp;Editar</button>
 						@endif
 					@endif
 				@endif
 				@if ($has_table)
-					<button type="button" id="btn-table-viw" class="btn btn-default disabled"><i class="fas fa-eye"></i>&nbsp;&nbsp;Visualizar</button>
+					<button type="button" id="btn-table-viw" class="btn-check-one btn btn-default disabled"><i class="fas fa-eye"></i>&nbsp;&nbsp;Visualizar</button>
 					@if (!empty($table_many))
-						<button type="button" id="btn-table-many" data-parent="{{ $table_name }}" data-link="{{ $table_many['name'] }}" class="btn btn-warning disabled"><i class="{{ $table_many['icon'] }}"></i>&nbsp;&nbsp;{{ $table_many['caption'] }}</button>
+						<button type="button" id="btn-table-many" data-parent="{{ $table_name }}" data-link="{{ $table_many['name'] }}" class="btn-check-one btn btn-warning disabled"><i class="{{ $table_many['icon'] }}"></i>&nbsp;&nbsp;{{ $table_many['caption'] }}</button>
 					@endif
 					@if (!empty($pivot))
 						@foreach($pivot as $pivot_config)
-							<button type="button" id="btn-table-pvt" data-link="{{ $pivot_config['name'] }}" class="btn-table-pvt btn btn-warning disabled"><i class="{{ $pivot_config['icon'] }}"></i>&nbsp;&nbsp;{{ $pivot_config['caption'] }}</button>
+							<button type="button" id="btn-table-pvt" data-link="{{ $pivot_config['name'] }}" class="btn-check-one btn-table-pvt btn btn-warning disabled"><i class="{{ $pivot_config['icon'] }}"></i>&nbsp;&nbsp;{{ $pivot_config['caption'] }}</button>
 						@endforeach
 					@endif
 					@if ($buttons_edit)
-						<button type="button" id="btn-table-del" class="btn btn-danger {{ $class_pivot }} disabled"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;Excluir</button>
+						<button type="button" id="btn-table-del" class="btn-check-many btn btn-danger {{ $class_pivot }} disabled"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;Excluir</button>
 					@endif
 				@endif
 			</div>
