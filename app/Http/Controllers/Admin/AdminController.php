@@ -522,7 +522,7 @@ class AdminController extends Controller
 		$page              = $request->get('page', 1);
 		$is_pivot          = (!empty($pivot_scope));
 		$class_pivot       = ($is_pivot) ? 'pivot' : '';
-		$panel_title       = admin_breadcrumb($array_caption, 'fas fa-plus-square');
+		$panel_title       = admin_breadcrumb($array_caption, 'fas fa-folder');
 		$panel_description = $this->description;
 		$table_name        = $model::getTableName();
 		$model_name        = $model::getModelName();
@@ -578,10 +578,12 @@ class AdminController extends Controller
 
 		extract($params, EXTR_OVERWRITE);
 
+		$array_caption = ['Home', $this->caption];
+
 		$sortable          = false;
 		$is_pivot          = (!empty($pivot_scope));
 		$class_pivot       = ($is_pivot) ? 'pivot' : '';
-		$panel_title       = $this->caption;
+		$panel_title       = admin_breadcrumb($array_caption, 'fas fa-folder');
 		$panel_description = $this->description;
 		$table_name        = $model::getTableName();
 		$model_name        = $model::getModelName();
