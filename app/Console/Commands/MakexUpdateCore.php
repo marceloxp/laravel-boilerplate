@@ -77,7 +77,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/app/Providers/XpCollectionServiceProvider.php',
 			'laravel-boilerplate-stable/app/routes/admin.php',
 			'laravel-boilerplate-stable/app/Traits',
-			'laravel-boilerplate-stable/public/admin-lte-custom'
+			'laravel-boilerplate-stable/public/admin-lte-custom',
 			'laravel-boilerplate-stable/public/js/admin',
 			'laravel-boilerplate-stable/resources/views/Admin',
 			'laravel-boilerplate-stable/resources/views/layouts/admin.blade.php',
