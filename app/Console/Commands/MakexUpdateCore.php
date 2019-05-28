@@ -65,6 +65,7 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/app/config/brasil.php',
 			'laravel-boilerplate-stable/app/config/cep.php',
 			'laravel-boilerplate-stable/app/config/codetrait.php',
+			'laravel-boilerplate-stable/app/config/hook.php',
 			'laravel-boilerplate-stable/app/Http/Utilities',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/AdminController.php',
 			'laravel-boilerplate-stable/app/Http/Controllers/Admin/CacheController.php',

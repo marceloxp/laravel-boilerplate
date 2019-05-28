@@ -107,6 +107,13 @@
 
 		@include('Admin.includes.modal_search')
 
+		@php
+			if (config('hook.print', false))
+			{
+				r(App\Http\Utilities\HookPrint::get());
+			}
+		@endphp
+
 		<!-- jQuery 2.2.3 -->
 		<script src="{{ vasset('/admin-lte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 		<!-- Bootstrap 3.3.6 -->

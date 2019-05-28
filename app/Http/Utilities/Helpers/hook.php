@@ -15,6 +15,11 @@ if (!function_exists('hook_name'))
 			}
 		}
 
+		if (config('hook.print', false))
+		{
+			App\Http\Utilities\HookPrint::add($name);
+		}
+
 		return $name;
 	}
 }

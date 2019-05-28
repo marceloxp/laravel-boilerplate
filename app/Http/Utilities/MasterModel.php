@@ -605,7 +605,7 @@ class MasterModel extends Model
 		{
 			$field_type = 'appends';
 			$hook_name  = hook_name(sprintf('master_model_field_type_%s_%s', $table_name, $field_name));
-			$field_type = \Hook::apply_filters($hook_name, $field_type);
+			$field_type = Hook::apply_filters($hook_name, $field_type);
 
 			$result['data'][$field_name] =
 			[
