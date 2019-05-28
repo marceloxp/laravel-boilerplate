@@ -1,4 +1,46 @@
 <?php
+	// Categorias
+	Route::group
+	(
+		['prefix' => 'categories'],
+		function()
+		{
+			Route::get ('/'         , 'CategoryController@index'  )->name('admin_category'       )->group('admin_category');
+			Route::get ('edit/{id?}', 'CategoryController@create' )->name('admin_category_edit'  )->group('admin_category');
+			Route::post('edit/{id?}', 'CategoryController@store'  )->name('admin_category_save'  )->group('admin_category');
+			Route::get ('show/{id}' , 'CategoryController@show'   )->name('admin_category_show'  )->group('admin_category');
+			Route::post('delete/'   , 'CategoryController@destroy')->name('admin_category_delete')->group('admin_category');
+		}
+	);
+
+	// Cities
+	Route::group
+	(
+		['prefix' => 'cities'],
+		function()
+		{
+			Route::get ('/'         , 'CityController@index'  )->name('admin_city'       )->group('admin_city');
+			Route::get ('edit/{id?}', 'CityController@create' )->name('admin_city_edit'  )->group('admin_city');
+			Route::post('edit/{id?}', 'CityController@store'  )->name('admin_city_save'  )->group('admin_city');
+			Route::get ('show/{id}' , 'CityController@show'   )->name('admin_city_show'  )->group('admin_city');
+			Route::post('delete/'   , 'CityController@destroy')->name('admin_city_delete')->group('admin_city');
+		}
+	);
+
+	// Galeria de Imagens
+	Route::group
+	(
+		['prefix' => 'galleries'],
+		function()
+		{
+			Route::get ('/'         , 'GalleryController@index'  )->name('admin_gallery'       )->group('admin_gallery');
+			Route::get ('edit/{id?}', 'GalleryController@create' )->name('admin_gallery_edit'  )->group('admin_gallery');
+			Route::post('edit/{id?}', 'GalleryController@store'  )->name('admin_gallery_save'  )->group('admin_gallery');
+			Route::get ('show/{id}' , 'GalleryController@show'   )->name('admin_gallery_show'  )->group('admin_gallery');
+			Route::post('delete/'   , 'GalleryController@destroy')->name('admin_gallery_delete')->group('admin_gallery');
+		}
+	);
+
 	// Begin Vídeos
 	Route::group
 	(
