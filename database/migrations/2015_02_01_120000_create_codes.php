@@ -19,11 +19,12 @@ class CreateCodes extends Migration
 			function(Blueprint $table)
 			{
 				$table->increments('id');
-				$table->string('code',8)->unique()->comment('Código');
+				$table->string('name', 24)->unique()->comment('Código');
+				$table->integer('attempts')->comment('Tentativas');
 				$table->timestamps();
 				$table->softDeletes();
 
-				$table->index(['code','deleted_at']);
+				$table->index(['name','deleted_at']);
 			}
 		);
 		db_comment_table('codes', 'Códigos');

@@ -5,9 +5,15 @@ namespace App\Models;
 use App\Http\Utilities\MasterModel;
 use App\Http\Utilities\Cached;
 use App\Http\Utilities\Result;
+use App\Traits\CodeTrait;
 
 class State extends MasterModel
 {
+	use CodeTrait;
+
+	protected $dates   = ['created_at','updated_at','deleted_at'];
+	protected $guarded = ['created_at','updated_at','deleted_at'];
+
     public static function getStateIdByUf($p_uf)
 	{
 		try

@@ -21,9 +21,11 @@ class CreateStatesTable extends Migration
 				$table->increments('id');
 				$table->string('name',150)->comment('Estado');
 				$table->string('uf',2)->comment('UF');
+				$table->string('code', 24)->comment('Código');
 				$table->timestamps();
 				$table->softDeletes();
 
+				$table->index(['code']);
 				$table->index(['deleted_at']);
 			}
 		);
