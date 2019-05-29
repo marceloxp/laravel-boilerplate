@@ -170,7 +170,8 @@ if (!function_exists('db_table_exists'))
 {
 	function db_table_exists($table_name)
 	{
-		return \Schema::hasTable($table_name);
+		$result = \Schema::hasTable(db_trim_table_prefix($table_name));
+		return (!empty($result)) ? $result : false;
 	}
 }
 

@@ -105,6 +105,10 @@ Route::group
 					}
 				);
 
+				// Admin Ajax
+				// http://www.local.laravel-boilerplate.com.br/admin/users/admin/ajax/users/btn-send-mail
+				Route::post('ajax/{table}/{action}', 'AjaxController@index');
+
 				include('custom_admin.php');
 			}
 		);

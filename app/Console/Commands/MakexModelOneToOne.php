@@ -71,7 +71,7 @@ class MakexModelOneToOne extends \App\Console\MakexCommand
 			$table_list   = db_model_to_table_name($model_list);
 
 			$comment_target = db_get_comment_table($table_target);
-			$comment_list = db_get_comment_table($table_list);
+			$comment_list   = db_get_comment_table($table_list);
 
 			$controller_name = sprintf('%sController', $model_target);
 			$controller_file = app_path('Http/Controllers/Admin/' . $controller_name . '.php');

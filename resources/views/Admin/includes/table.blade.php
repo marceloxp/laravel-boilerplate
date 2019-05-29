@@ -140,6 +140,23 @@
 						<button type="button" id="btn-table-del" class="btn-check-many btn btn-danger {{ $class_pivot }} disabled"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;Excluir</button>
 					@endif
 				@endif
+
+				@php
+					$buttons = config(sprintf('tables.%s.admin.index.buttons', $table_name), []);
+					foreach ($buttons as $button)
+					{
+						echo admin_index_button
+						(
+							$button['button_id'],
+							$button['type'],
+							$button['color_style'],
+							$button['disabled'],
+							$button['icon'],
+							$button['text']
+						);
+					}
+				@endphp
+
 			</div>
 			<div class="btn-group col-xs-3">
 				<div class="form-group" style="margin-bottom: 0px;">

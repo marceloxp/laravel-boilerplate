@@ -540,8 +540,9 @@ class AdminController extends Controller
 		$ids           = $table->pluck('id')->toJson();
 		$has_table     = ($table->total() > 0);
 		$search_dates  = ['created_at'];
+		$tableconfig   = config(sprintf('tables.%s', $table_name));
 
-		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage','sortable');
+		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage','sortable','tableconfig');
 		
 		View::share($share_params);
 

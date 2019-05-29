@@ -69,7 +69,8 @@
 			"app/Http/Utilities/Helpers/bootstrap.php",
 			"app/Http/Utilities/Helpers/forms.php",
 			"app/Http/Utilities/Helpers/html.php",
-			"app/Http/Utilities/Helpers/adminlte.php"
+			"app/Http/Utilities/Helpers/adminlte.php",
+			"app/Http/Utilities/Helpers/array.php"
 		]
 	},
 	"autoload-dev": {

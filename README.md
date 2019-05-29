@@ -42,7 +42,7 @@ php artisan migrate:refresh --seed
 
 ### Dev URL
 
-> http://www.local.laravel-boilerplate.com.br
+> <http://www.local.laravel-boilerplate.com.br>
 
 ### Updates
 
@@ -83,6 +83,11 @@ php artisan migrate:refresh --seed
 | chumper/zipper                   | <https://github.com/Chumper/Zipper>                      |
 | marceloxp/laravel_commands       | <https://github.com/marceloxp/laravel_commands>          |
 | danielstjules/stringy            | <https://github.com/danielstjules/Stringy>               |
+| atayahmet/laravel-nestable       | <https://github.com/atayahmet/laravel-nestable>          |
+| ezyang/htmlpurifier              | <https://github.com/ezyang/htmlpurifier>                 |
+| laravelcollective/html           | <https://github.com/LaravelCollective/html>              |
+| summernote/summernote            | <https://github.com/summernote/summernote>               |
+| technoknol/log-my-queries        | <https://github.com/technoknol/LogMyQueries>             |
 
 ## Libraries
 
@@ -115,6 +120,48 @@ php artisan makex:mastermodel
 
 ```bash
 php artisan makex:updatecore
+```
+
+> Add Pivot to Table
+
+```bash
+makex:add_pivot_to_table
+```
+
+> Clear cached files
+
+```bash
+makex:cached --clear
+```
+
+> List cached files
+
+```bash
+makex:cached --list
+```
+
+> Count cached files
+
+```bash
+makex:cached --count
+```
+
+> Create a new Table, Migration, Model and Admin Page
+
+```bash
+makex:create_simple_table
+```
+
+> Add List Model to Target Model
+
+```bash
+makex:model {model_target} {model_list} --onetoone
+```
+
+> Add Rules Validation to Model
+
+```bash
+makex:model_rules
 ```
 
 ## Custom Classes
@@ -292,10 +339,23 @@ echo print_alert(); // Auto print messages from Session
 #### DB
 
 ```php
-echo db_comment_table('table_name', 'comment_table'); // Define table comment
-echo db_get_primary_key('table_name');                // Returns id
-echo db_get_name('table_name', 10);                   // Returns `name` field value
-echo db_model_to_table_name('Product');               // Returns table name from model name
+echo db_database_name();                                // Returns current database name
+echo db_prefix();                                       // Returns current database prefix tables
+echo db_comment_table('table_name', 'comment_table');   // Define table comment
+echo db_get_comment_table('table_name');                // Returns table comment
+echo db_get_pivot_table_name(['videos','tags'], true);  // Returns pivot table name (Ex: blp_tag_video)
+echo db_get_pivot_scope_name([Model1, Model2]);         // Returns a pivot scope name (Ex: db_get_pivot_scope_name([Video::class, Tag::class]) => tagVideo)
+echo db_get_primary_key('table_name');                  // Returns id
+echo db_get_name('table_name', 10);                     // Returns `name` field value
+echo db_select_one(Model, ['fields'], ['where'], true); // Returns only one register (Ex: echo db_select_one(\App\Models\City::class, ['id','name'], ['name' => 'São Paulo'], true) => {"id":5325,"name":"São Paulo"})
+echo db_select_id(Model, ['where'], false);             // Returns only if by where (Ex: echo db_select_id(\App\Models\City::class, ['name' => 'São Paulo'], true) => 5325)
+echo db_model_to_table_name('City');                    // Returns table name from model name => cities
+echo db_table_name_to_model('cities');                  // Returns model name from table name => City
+echo db_table_name_to_model_path('cities');             // Returns path model from table name => \App\Models\City
+echo db_table_name_to_field_id('cities');               // Returns relative field id to another table => city_id
+echo db_trim_table_prefix('blp_cities');                // Returns table name without database table prefix => cities
+echo db_prefixed_table('cities');                       // Returns table with database table prefix => blp_cities
+echo db_table_exists('cities');                         // Returns if table exists in database
 ```
 
 #### vasset
@@ -365,14 +425,18 @@ echo str2bool('foo');   // Returns false;
 
 ### Custom configs
 
-| Config          | Description              |
-| --------------- | ------------------------ |
-| admin.php       | Menu                     |
-| brasil.php      | Estados                  |
-| cep.php         | Faixas de cep por estado |
-| colors.php      | Bootstrap colors         |
-| metasocial.php  | Headers metatags         |
-| social.php      | Facebook, Twitter, etc   |
+| Config          | Description                    |
+| --------------- | ------------------------------ |
+| admin.php       | Menu                           |
+| brasil.php      | Estados                        |
+| cep.php         | Faixas de CEP por estado       |
+| colors.php      | Bootstrap colors               |
+| metasocial.php  | Headers metatags               |
+| social.php      | Facebook, Twitter, etc         |
+| hook.php        | On/Off Print Admin hooks       |
+| codetrait.php   | Length of model uniq code      |
+| tables.php      | Custom configs on admin tables |
+| payment.php     | Payments Type                  |
 
 ### Automatic Assets
 
@@ -395,3 +459,31 @@ echo str2bool('foo');   // Returns false;
 ### Logs Folder
 
 - `\storage\logs`
+
+### Custom Buttons on Admin Index
+
+> On Controller Admin => function index, add:
+
+```txt
+admin_table_index_set_button('table_name', 'button_id', 'type', 'button_style', button_disabled, 'font-awesome-icon', 'Button Text', 'Confirm Message');
+button_id         : HTML Element ID and Route
+type              : many, one
+button_style      : btn-default, btn-primary, btn-success, btn-info, btn-danger, btn-warning
+button_disabled   : true, false
+font-awesome-icon : <https://fontawesome.com/icons?d=gallery&m=free>
+```
+
+```php
+// Example:
+admin_table_index_set_button('users', 'btn-send-mail', 'many', 'btn-success', true, 'fas fa-envelope', 'Send Mail', 'Deseja enviar os e-mails para os registros selecionados?');
+
+// Ajax Controller:
+public function onUsersBtnSendMail(Request $request, $ids)
+{
+	return Result::success('Solicitação efetuada com sucesso.', $ids);
+}
+```
+
+Route: <http://www.host.com.br/admin/ajax/{table}/{button_id}>
+Controller: AjaxController
+Action: Camel Case of table and button_id. Example AjaxController->onUsersBtnSendMail

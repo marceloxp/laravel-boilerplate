@@ -218,6 +218,17 @@ umsappadmin.Tindex = function($, objname, options)
 				self.changeRegistersPerPage($(this).val());
 			}
 		);
+
+		$(document).on
+		(
+			'click',
+			'.admin-index-button',
+			function(e)
+			{
+				e.preventDefault();
+				self.onAdminIndexButtonClick($(this));
+			}
+		);
 	};
 
 	this.execute = function()
@@ -947,6 +958,105 @@ umsappadmin.Tindex = function($, objname, options)
 				}
 			}
 		);
+	};
+
+	this.getCheckedIds = function()
+	{
+		var result = [];
+		$('.ck-row:checked').each
+		(
+			function()
+			{
+				result.push(parseInt($(this).attr('data-ids')));
+			}
+		);
+		return result;
+	};
+
+	this.modalWait = function(p_callback)
+	{
+		self.swal_opened = true;
+		swal('Aguarde...', { buttons: false });
+		setTimeout(function() { if (p_callback !== undefined) { p_callback(); } }, 750);
+	};
+
+	this.onAdminIndexButtonClick = function($button)
+	{
+		var ids = self.getCheckedIds();
+		if (ids.length <= 0) { return; }
+
+		var button_name = $button.attr('id');
+		var config = datasite.params.tableconfig.admin.index.buttons[button_name];
+		self.log.print(config);
+
+		var execute_action = function()
+		{
+			self.modalWait();
+			self.ajax
+			(
+				{
+					'options':
+					{
+						slug     : sprintf('%s_click', button_name),
+						exclusive: true,
+						url      : sprintf('%s/ajax/%s/%s', datasite.url.admin, datasite.params.table_name, button_name),
+						type     : 'POST',
+						dataType : 'json',
+						data     :
+						{
+							'_token': datasite.csrf_token,
+							'ids'   : ids
+						}
+					},
+					'success': function(p_result, p_message)
+					{
+						self.log.print('Success!!! :D', p_message);
+
+						swal('Sucesso!', p_message || 'Solicitação efetuada com sucesso.', 'success')
+						.then
+						(
+							function()
+							{
+								window.location.reload();
+							}
+						);
+					},
+					'error': function(p_message, p_data)
+					{
+						var message = p_message || 'Ocorreu um erro na solicitação.';
+						self.log.danger(message, p_data);
+						swal('Atenção!', message, 'error');
+					}
+				}
+			);
+		};
+
+		if (empty(config.confirm_text))
+		{
+			self.modalWait(execute_action);
+		}
+		else
+		{
+			swal
+			(
+				{
+					title     : 'Atenção!',
+					text      : config.confirm_text,
+					icon      : 'warning',
+					buttons   : true,
+					dangerMode: true,
+			})
+			.then
+			(
+				(confirmAction) =>
+				{
+					if (confirmAction)
+					{
+						self.modalWait(execute_action);
+					}
+				}
+			);
+		}
 	};
 
 	CjsBaseClass.call(this, $, objname, options);
