@@ -70,7 +70,7 @@ Route::group
 					['prefix' => 'cache'],
 					function()
 					{
-						Route::get ('/'    , 'CacheController@index' )->name('admin_cache'      )->menu('admin_cache_index');
+						Route::get ('/'    , 'CacheController@index' )->name('admin_cache_index')->menu('admin_cache_index');
 						Route::get ('list' , 'CacheController@list'  )->name('admin_cache_list' )->menu('admin_cache_list');
 						Route::get ('clear', 'CacheController@clear' )->name('admin_cache_clear');
 						Route::post('use'  , 'CacheController@setuse')->name('admin_cache_use'  );
@@ -115,4 +115,4 @@ Route::group
 	}
 );
 
-Route::any('adminer', '\Miroc\LaravelAdminer\AdminerAutologinController@index')->middleware('adminer');
+Route::any('adminer', '\Miroc\LaravelAdminer\AdminerAutologinController@index')->middleware('adminer')->name('adminer');

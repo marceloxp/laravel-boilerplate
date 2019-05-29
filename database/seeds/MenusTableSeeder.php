@@ -34,7 +34,7 @@ class MenusTableSeeder extends Seeder
 		$group_order += 10;
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Cache', 'fas fa-rocket', $master_admin_developer, $group_order);
 			$item = \App\Models\Menu::addMenuLink($group, 'Listar', 'fas fa-list', $master_admin_developer, 'admin_cache_list');
-			$item = \App\Models\Menu::addMenuLink($group, 'Configurar', 'fas fa-cogs', $master_admin_developer, 'admin_cache');
+			$item = \App\Models\Menu::addMenuLink($group, 'Configurar', 'fas fa-cogs', $master_admin_developer, 'admin_cache_index');
 
 		$group_order += 10;
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Developer', 'fas fa-terminal', $master_developer, $group_order);
