@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content-header')
-	Dashboard
+	{!! admin_breadcrumb(['Home', 'Dashboard'], 'fa fa-tachometer-alt') !!}
 @endsection
 
 @section('sidebar')

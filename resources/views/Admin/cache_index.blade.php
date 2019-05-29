@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content-header')
-	Cache Config
+	{!! admin_breadcrumb(['Home', 'Cache Config'], 'fa fa-cogs') !!}
 @endsection
 
 @section('sidebar')

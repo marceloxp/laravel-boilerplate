@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content-header')
-	Cache List
+	{!! admin_breadcrumb(['Home', 'Cache List'], 'fa fa-list') !!}
 @endsection
 
 @section('sidebar')
