@@ -182,7 +182,12 @@
 			<table class="table table-bordered table-striped table-condensed table-hover table-responsive" id="main-table">
 				<tbody>
 					<tr>
-						<th style="width:20px"><input id="ch-rows-all" type="checkbox"></th>
+						<th style="width:20px">
+							<span class="switch">
+								<input type="checkbox" class="switch" id="ch-rows-all">
+								<label for="ch-rows-all"></label>
+							</span>
+						</th>
 						@foreach($display_fields as $field_name)
 							@php
 								if (!array_key_exists($field_name, $fields_schema))
@@ -233,7 +238,12 @@
 					</tr>
 					@foreach($table as $register)
 					<tr>
-						<td><input type="checkbox" class="ck-row" data-ids="{{ $register['id'] }}"></td>
+						<td>
+							<span class="switch">
+								<input type="checkbox" class="switch ck-row" id="checkbox{{ $register['id'] }}" data-ids="{{ $register['id'] }}">
+								<label for="checkbox{{ $register['id'] }}"></label>
+							</span>
+						</td>
 						@foreach($display_fields as $field_name)
 							@php
 								if (!array_key_exists($field_name, $fields_schema))

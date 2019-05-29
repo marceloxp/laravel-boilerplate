@@ -36,6 +36,8 @@
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/bootstrap-daterangepicker/daterangepicker.css') }}">
 		<!-- summernote -->
 		<link rel="stylesheet" href="{{ vasset('/vendor/summernote/summernote.css') }}">
+		<!-- switch -->
+		<link rel="stylesheet" href="{{ vasset('/admin-lte-custom/css/switch.css') }}">
 		<!-- <link rel="stylesheet" href="/admin-lte/plugins/daterangepicker/daterangepicker.css"> -->
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
