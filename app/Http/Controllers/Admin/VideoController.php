@@ -30,7 +30,7 @@ class VideoController extends AdminController
 		return $this->defaultIndex
 		(
 			[
-				'pivot'          => $this->model::getPivotConfig(['tags' => 'fa-tags']),
+				'pivot'          => $this->model::getPivotConfig(['tags' => 'fas fa-tags']),
 				'request'        => $request,
 				'model'          => $this->model,
 				'display_fields' => ['id','category_id','tags','name','youtube','created_at']
