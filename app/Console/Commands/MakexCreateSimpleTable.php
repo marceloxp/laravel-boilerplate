@@ -251,7 +251,7 @@ class Create{ClassName}Table extends Migration
 		// ██║ ╚═╝ ██║███████╗██║ ╚████║╚██████╔╝
 		// ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝ 
 
-		\App\Models\Menu::addMenuLinkToTablesItem($model_description, 'fa-folder', [], 'admin_' . $table_name);
+		\App\Models\Menu::addMenuLinkToTablesItem($model_description, 'fas fa-folder', [], 'admin_' . $table_name);
 
 		//  ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗     ███╗   ███╗██╗ ██████╗ ██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
 		// ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝     ████╗ ████║██║██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
