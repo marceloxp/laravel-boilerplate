@@ -10,10 +10,11 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Utilities\MasterModel;
+use App\Traits\AuditTrait;
 
 class User extends MasterModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-	use Authenticatable, Authorizable, CanResetPassword;
+	use Authenticatable, Authorizable, CanResetPassword, AuditTrait;
 
 	use SoftDeletes;
 	protected $dates   = ['created_at','updated_at','deleted_at'];

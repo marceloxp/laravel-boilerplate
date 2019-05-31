@@ -194,7 +194,7 @@ class UserController extends AdminController
 
 			$table_name = (new User())->getTable();
 			$message = ($id) ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.';
-			return redirect(Route('admin_' . $table_name))->with('messages', [$message]);
+			return redirect(Route('admin_user'))->with('messages', [$message]);
 		}
 		else
 		{

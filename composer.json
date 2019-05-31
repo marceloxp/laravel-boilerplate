@@ -18,6 +18,7 @@
 		"ezyang/htmlpurifier": "^4.10",
 		"fideloper/proxy": "~4.0",
 		"guzzlehttp/guzzle": "~6.0",
+		"jenssegers/agent": "^2.6",
 		"laravel/framework": "5.7.*",
 		"laravel/tinker": "~1.0",
 		"laravelcollective/html": "^5.7",

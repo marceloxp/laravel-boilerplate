@@ -105,6 +105,18 @@ Route::group
 					}
 				);
 
+				// Begin Auditoria
+				Route::group
+				(
+					['prefix' => 'audits'],
+					function()
+					{
+						Route::get ('/'         , 'AuditController@index'  )->name('admin_audits'       )->group('admin_audits');
+						Route::get ('show/{id}' , 'AuditController@show'   )->name('admin_audits_show'  )->group('admin_audits');
+					}
+				);
+				// End Auditoria
+
 				// Admin Ajax
 				// http://www.local.laravel-boilerplate.com.br/admin/users/admin/ajax/users/btn-send-mail
 				Route::post('ajax/{table}/{action}', 'AjaxController@index');
