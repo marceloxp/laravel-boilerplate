@@ -34,7 +34,7 @@ class CacheController extends AdminController
 	public function clear()
 	{
 		Cached::flush();
-		return redirect()->route('admin_cache')->with('messages', ['Cache limpo com sucesso.']);
+		return redirect()->route('admin_cache_index')->with('messages', ['Cache limpo com sucesso.']);
 	}
 
 	public function setuse(Request $request)
