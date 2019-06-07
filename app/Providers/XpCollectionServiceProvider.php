@@ -201,5 +201,24 @@ class XpCollectionServiceProvider extends ServiceProvider
 				return $result;
 			}
 		);
+
+		// collect(['id' => 1, 'name' => 'Marcelo', 'color' => 'bg-green'])->toHtmlTable();
+		\Illuminate\Support\Collection::macro
+		(
+			'toHtmlTable',
+			function($p_properties = '')
+			{
+				$result = '<table ' . $p_properties . '>' . PHP_EOL;
+				$result .= $this->map
+				(
+					function($value, $key)
+					{
+						return chr(9) . '<tr><td width="200" align="right"><strong>' . $key . '</strong></td><td>' . $value . '</td></tr>' . PHP_EOL;
+					}
+				)->toText();
+				$result .= '</table>';
+				return $result;
+			}
+		);
 	}
 }
