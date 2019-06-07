@@ -83,6 +83,8 @@ class MakexUpdateCore extends \App\Console\MakexCommand
 			'laravel-boilerplate-stable/public/js/admin',
 			'laravel-boilerplate-stable/resources/views/Admin',
 			'laravel-boilerplate-stable/resources/views/layouts/admin.blade.php',
+
+			'laravel-boilerplate-stable/database/migrations/2010_01_01_120000_maintenance.php'
 		];
 
 		$this->info('Extracting zip...');

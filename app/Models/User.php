@@ -66,7 +66,7 @@ class User extends MasterModel implements AuthenticatableContract, AuthorizableC
 		$rules = 
 		[
 			'name'  => 'required|min:3|max:150',
-			'email' => 'required|min:5|max:255|unique:users,email,' . $id
+			'email' => 'required|min:5|max:255|unique:users,email,' . $id . ',id,deleted_at,NULL'
 		];
 
 		if (!$id)

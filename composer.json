@@ -15,6 +15,7 @@
 		"chumper/zipper": "1.0.x",
 		"danielstjules/stringy": "~3.1.0",
 		"digitalnature/php-ref": "dev-master",
+		"doctrine/dbal": "^2.9",
 		"ezyang/htmlpurifier": "^4.10",
 		"fideloper/proxy": "~4.0",
 		"guzzlehttp/guzzle": "~6.0",

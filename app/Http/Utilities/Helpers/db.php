@@ -74,6 +74,21 @@ if (!function_exists('db_get_primary_key'))
 	}
 }
 
+if (!function_exists('db_field_as_unique_index'))
+{
+	function db_field_as_unique_index($table_name, $field_names)
+	{
+		$fields = \Illuminate\Support\Collection::wrap($field_names)->implode('_');
+		$index_name = sprintf('%s_%s_unique', db_trim_table_prefix($table_name), $fields);
+		$sm = Schema::getConnection()->getDoctrineSchemaManager();
+		$indexes = \Illuminate\Support\Collection::wrap($sm->listTableIndexes(db_prefixed_table($table_name)));
+		$result = $indexes->has($index_name);
+		return $result;
+	}
+}
+
+// db_field_as_unique_index('users', 'email');
+
 if (!function_exists('db_get_name'))
 {
 	function db_get_name($table_name, $id)
