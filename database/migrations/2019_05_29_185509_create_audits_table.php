@@ -19,9 +19,10 @@ class CreateAuditsTable extends Migration
 			function (Blueprint $table)
 			{
 				$table->increments('id');
-				$table->bigInteger('user_id')->comment('Cód Usuário');
-				$table->string('username', 255)->comment('Usuário');
+				$table->bigInteger('user_id')->nullable()->comment('Cód Usuário');
+				$table->string('username', 255)->nullable()->comment('Usuário');
 				$table->enum('name', ['created','updated','removed'])->comment('Evento');
+				$table->string('table', 255)->comment('Tabela');
 				$table->text('url')->comment('URL');
 				$table->string('ip', 124)->comment('IP');
 				$table->string('useragent', 255)->comment('User-Agent');

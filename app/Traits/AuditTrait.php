@@ -14,14 +14,15 @@ trait AuditTrait
 			function($model)
 			{
 				$user = Auth::user();
-				$user_id = @$user->id ?? '';
-				$user_name = @$user->name ?? '';
+				$user_id = @$user->id ?? null;
+				$user_name = @$user->name ?? null;
 
 				$data = 
 				[
 					'user_id'    => $user_id,
 					'username'   => $user_name,
 					'name'       => 'created',
+					'table'      => $model->table,
 					'url'        => url()->full(),
 					'ip'         => request()->ip(),
 					'useragent'  => request()->server('HTTP_USER_AGENT'),
@@ -39,14 +40,15 @@ trait AuditTrait
 			function($model)
 			{
 				$user = Auth::user();
-				$user_id = @$user->id ?? '';
-				$user_name = @$user->name ?? '';
+				$user_id = @$user->id ?? null;
+				$user_name = @$user->name ?? null;
 
 				$data = 
 				[
 					'user_id'    => $user_id,
 					'username'   => $user_name,
 					'name'       => 'updated',
+					'table'      => $model->table,
 					'url'        => url()->full(),
 					'ip'         => request()->ip(),
 					'useragent'  => request()->server('HTTP_USER_AGENT'),

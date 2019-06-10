@@ -21,13 +21,14 @@ class CreateUsersTable extends Migration
 			{
 				$table->increments('id');
 				$table->string('name')->comment('Nome');
-				$table->string('email')->unique()->comment('E-Mail');
+				$table->string('email')->comment('E-Mail');
 				$table->string('password')->comment('Senha');
 				$table->rememberToken();
 				$table->timestamps();
 				$table->softDeletes();
 
 				$table->index(['name','deleted_at']);
+				$table->unique(['email','deleted_at']);
 			}
 		);
 		db_comment_table('users', 'Usuários');

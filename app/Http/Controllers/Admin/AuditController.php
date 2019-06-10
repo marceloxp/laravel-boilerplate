@@ -34,7 +34,7 @@ class AuditController extends AdminController
 				'model'          => $this->model,
 				'editable'       => false,
 				'table_many'     => null,
-				'display_fields' => ['id','user_id','username','name','url','ip','useragent','created_at','updated_at']
+				'display_fields' => ['id','user_id','table','username','name','url','ip','useragent','created_at','updated_at']
 			]
 		);
 	}
@@ -57,7 +57,7 @@ class AuditController extends AdminController
 			[
 				'id'             => $id,
 				'model'          => $this->model,
-				'display_fields' => ['id','user_id','username','name','url','ip','useragent','oldvalue','newvalue','flags','created_at','updated_at','deleted_at']
+				'display_fields' => ['id','user_id','table','username','name','url','ip','useragent','oldvalue','newvalue','flags','created_at','updated_at','deleted_at']
 			]
 		);
 	}
@@ -91,9 +91,10 @@ class AuditController extends AdminController
 			sprintf('admin_show_%s_%s', $table_name, 'useragent'),
 			function($display_value, $register)
 			{
-				$agent = new Agent();
-				$agent->setUserAgent($display_value);
-				r($agent);
+				return $display_value;
+				// $agent = new Agent();
+				// $agent->setUserAgent($display_value);
+				// r($agent);
 			},
 			10, 2
 		);
