@@ -19,9 +19,11 @@ class Maintenance extends Migration
 				'users',
 				function(Blueprint $table)
 				{
-					$table->string('email')->unique()->comment('E-Mail')->change();
-					// $table->dropUnique('users_email_unique');
-					// $table->unique(['email','deleted_at']);
+					$table->string('email')->comment('E-Mail')->change();
+					if (db_table_has_index('users', 'users_email_unique'))
+					{
+						$table->dropUnique('users_email_unique');
+					}
 				}
 			);
 		}
