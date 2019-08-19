@@ -15,14 +15,20 @@ class AutoAssets
 		{
 			if (strpos($routename, 'admin_') === false)
 			{
-				$asset_file = sprintf('%s/%s.%s', $p_type, $routename, $p_type);
+				$asset_file     = sprintf('%s/%s.%s', $p_type, $routename, $p_type);
+				$asset_file_min = sprintf('%s/%s.min.%s', $p_type, $routename, $p_type);
 			}
 			else
 			{
-				$asset_file = sprintf('%s/admin/%s.%s', $p_type, $routename, $p_type);
+				$asset_file     = sprintf('%s/admin/%s.%s'    , $p_type, $routename, $p_type);
+				$asset_file_min = $asset_file;
 			}
 
-			if (file_exists(public_path($asset_file)))
+			if ((!env_is_local()) && file_exists(public_path($asset_file_min)))
+			{
+				$auto_assets[] = $asset_file_min;
+			}
+			elseif (file_exists(public_path($asset_file)))
 			{
 				$auto_assets[] = $asset_file;
 			}

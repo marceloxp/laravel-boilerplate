@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use \App\Http\Utilities\Cached;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Http\Utilities\Carbex;
 
 class MasterModel extends Model
 {
@@ -22,7 +23,15 @@ class MasterModel extends Model
 	public function getUpdatedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
 	public function getDeletedAtAttribute($value) { return ($value) ? Carbon::parse($value)->format('d/m/Y H:i:s') : ''; }
 
-	public static function getPìvotFields()
+	public function getCarbonCreatedAtAttribute() { $value = self::getOriginal()['created_at']; return ($value) ? Carbon::parse($value) : null; }
+	public function getCarbonUpdatedAtAttribute() { $value = self::getOriginal()['updated_at']; return ($value) ? Carbon::parse($value) : null; }
+	public function getCarbonDeletedAtAttribute() { $value = self::getOriginal()['deleted_at']; return ($value) ? Carbon::parse($value) : null; }
+
+	public function getCarbexCreatedAtAttribute() { $value = self::getOriginal()['created_at']; return ($value) ? Carbex::parse($value) : null; }
+	public function getCarbexUpdatedAtAttribute() { $value = self::getOriginal()['updated_at']; return ($value) ? Carbex::parse($value) : null; }
+	public function getCarbexDeletedAtAttribute() { $value = self::getOriginal()['deleted_at']; return ($value) ? Carbex::parse($value) : null; }
+
+	public static function getPivotFields()
 	{
 		return collect(self::getFieldsMetaData())->where('type', 'pivot')->keys()->all();
 	}
@@ -52,6 +61,96 @@ class MasterModel extends Model
 			}
 		}
 		return false;
+	}
+
+	public function scopeLoopNext($q)
+	{
+		$table_name   = self::getTableName();
+		$session_name = sprintf('mode.db.loop.%s.id', $table_name);
+		$id           = session($session_name);
+		if (!$id)
+		{
+			$register = with(clone $q)->orderById()->first();
+		}
+		else
+		{
+			$register = with(clone $q)->where('id', '>', $id)->orderById()->first();
+			if (!$register)
+			{
+				$register = with(clone $q)->orderById()->first();
+			}
+		}
+		session([$session_name => $register->id]);
+		return $q->where('id', $register->id)->first();
+	}
+
+	public function scopeLoopReset($q)
+	{
+		$table_name   = self::getTableName();
+		$session_name = sprintf('mode.db.loop.%s.id', $table_name);
+		$register     = self::orderById()->first();
+		session([$session_name => $register->id]);
+		return $q->where('id', $register->id);
+	}
+
+	public function scopeRandom($q)
+	{
+		return $q->inRandomOrder();
+	}
+
+	public function scopeFirstRandom($q)
+	{
+		return $q->random()->first();
+	}
+
+	public function scopeOrderById($q)
+	{
+		return $q->orderBy('id', 'ASC');
+	}
+
+	public function scopeOrderByIdDesc($q)
+	{
+		return $q->orderBy('id', 'DESC');
+	}
+
+	public function scopeLastById($q)
+	{
+		return $q->orderBy('id', 'DESC')->first();
+	}
+
+	public function scopeSelectId($q)
+	{
+		return $q->select('id');
+	}
+
+	public function scopeById($q, $p_id)
+	{
+		return $q->where('id', $p_id);
+	}
+
+	public function scopeSlimExists($q)
+	{
+		return $q->select('id')->exists();
+	}
+
+	public static function scopeDateBetweenNow($q, $p_field_ini, $p_field_end)
+	{
+		return $q->where($p_field_ini, '<=', Carbex::now()->toSqlDate())->where($p_field_end, '>=', Carbex::now()->toSqlDate());
+	}
+
+	public static function scopeDateTimeBetweenNow($q, $p_field_ini, $p_field_end)
+	{
+		return $q->where($p_field_ini, '<=', Carbex::now())->where($p_field_end, '>=', Carbex::now());
+	}
+
+	public static function scopeDateBetween($q, $p_date, $p_field_ini, $p_field_end)
+	{
+		return $q->where($p_field_ini, '<=', $p_date)->where($p_field_end, '>=', $p_date);
+	}
+
+	public static function scopeGetRandom($q)
+	{
+		return $q->inRandomOrder()->first();
 	}
 
 	public function cacheKey($p_str_append = '')
@@ -161,6 +260,32 @@ class MasterModel extends Model
 			];
 		}
 		return $result;
+	}
+
+	public static function getUpdateValues($p_field_name)
+	{
+		return
+		[
+			'old' => self::getOriginal()->$p_field_name,
+			'new' => self::toArray()[$p_field_name],
+		];
+	}
+
+	public function isChanging($p_field_name)
+	{
+		$old = $this->getOriginal();
+		if (empty($old))
+		{
+			return true;
+		}
+		$new = $this->toArray();
+
+		if ( (!array_key_exists($p_field_name, $old)) || (!array_key_exists($p_field_name, $new)) )
+		{
+			return false;
+		}
+
+		return ($old[$p_field_name] != $new[$p_field_name]);
 	}
 
 	public static function ajustFormValues($request)
@@ -745,24 +870,31 @@ class MasterModel extends Model
 		$metadata = self::getFieldMetaData($p_field_name);
 		$options =
 		[
-			'errors' => new \Illuminate\Support\ViewErrorBag(),
-			'label'  => true,
-			'attr'   => []
+			'errors'        => new \Illuminate\Support\ViewErrorBag(),
+			'default_value' => '',
+			'label'         => true,
+			'divwrap'       => false,
+			'field_attr'    => []
 		];
 		$options = array_merge($options, $p_options);
 		extract($options, EXTR_PREFIX_ALL, 'opt');
+		$field_attr = array_merge($opt_field_attr);
 
 		$result = '';
+		if ($opt_divwrap)
+		{
+			$result = sprintf('<div class="%s">', $p_field_name);
+		}
 
-		$field_value = $this->$p_field_name ?? old($p_field_name, '');
+		$field_value = $this->$p_field_name ?? old($p_field_name, $opt_default_value);
 
-		$field_attr = ['class' => 'form-control', 'placeholder' => $metadata['comment']];
 		$required = false;
 		if (!$metadata['nullable'])
 		{
 			$required = true;
 			$field_attr['required'] = 'required';
 		}
+		$field_attr = array_merge($field_attr, ['class' => 'form-control', 'placeholder' => $metadata['comment'] . (($required) ? ' *' : '')]);
 
 		if ($opt_label)
 		{
@@ -773,6 +905,41 @@ class MasterModel extends Model
 		{
 			unset($field_attr['required']);
 			$result = \Form::hidden($p_field_name, $field_value, $field_attr);
+		}
+		elseif ($p_field_name == 'city_id')
+		{
+			$state_id = null;
+			if ($this->hasField('state_id'))
+			{
+				// TODO
+			}
+			else
+			{
+				$state_value = $this->state ?? old('state');
+				if (!empty($state_value))
+				{
+					$state = db_select_one(\App\Models\State::class, ['id'], ['uf' => $state_value], true);
+					$state_id = $state->id;
+				}
+			}
+
+			if (\App\Models\City::hasField('state_id'))
+			{
+				if (!empty($state_id))
+				{
+					$options = \App\Models\City::select(['id','name'])
+						->where('state_id', $state_id)
+						->get()
+						->pluck('name','id')
+						->toArray()
+					;
+				}
+				else
+				{
+					$options = [];
+				}
+				$result .= \Form::select($p_field_name, $options, $field_value, $field_attr);
+			}
 		}
 		elseif ($metadata['has_relation'])
 		{
@@ -789,15 +956,32 @@ class MasterModel extends Model
 			switch ($metadata['type'])
 			{
 				case 'varchar':
-					$field_attr['maxlength'] = $metadata['max_length'];
+					if (!array_key_exists('maxlength', $field_attr))
+					{
+						$field_attr['maxlength'] = $metadata['max_length'];
+					}
 					switch ($p_field_name)
 					{
+						case 'cellphone':
+						case 'phone':
+						case 'cep':
+						case 'cpf':
+						case 'born':
+							$result .= \Form::tel($p_field_name, $field_value, $field_attr);
+						break;
 						case 'email':
 						case 'mail':
 							$result .= \Form::email($p_field_name, $field_value, $field_attr);
 						break;
 						case 'password':
-							$result .= \Form::text($p_field_name, null, $field_attr);
+							$field_value = '';
+							$field_attr['autocomplete'] = 'new-password';
+							if (!empty($this->id))
+							{
+								$field_attr['placeholder'] = str_replace(' *', '', $field_attr['placeholder']);
+							}
+							$required = false;
+							$result .= \Form::password($p_field_name, $field_attr);
 						break;
 						default:
 							$result .= \Form::text($p_field_name, $field_value, $field_attr);
@@ -827,8 +1011,15 @@ class MasterModel extends Model
 				break;
 				case 'tinyint':
 					$result  = '<div class="form-check">';
-					$result .= \Form::checkbox($p_field_name, '1', true, ['class' => 'form-check-input']);
-					$result .= \Form::label($p_field_name, ($metadata['comment'] ?? $p_field_name), ['class' => 'form-check-label']);
+					$result .= \Form::checkbox($p_field_name, '1', $field_value, ['class' => 'form-check-input']);
+
+					$asterisk   = ($required) ? '&nbsp;*' : '';
+					$label_text = ($metadata['comment'] ?? $p_field_name);
+					$hook_name  = hook_name(sprintf('site_cadastro_label_%s', $p_field_name));
+					$label_text = \Hook::apply_filters($hook_name, $label_text);
+					$label_text = $label_text . $asterisk;
+
+					$result .= \Form::label($p_field_name, $label_text, ['class' => 'form-check-label'], false);
 					$result .= '</div>';
 					if (!empty($this->hasError($p_field_name)))
 					{
@@ -842,14 +1033,23 @@ class MasterModel extends Model
 			}
 		}
 
+		if ($opt_divwrap)
+		{
+			$result .= '</div>';
+		}
+
 		return $result;
 	}
 
 	public function label($p_field_name, $p_required = false)
 	{
-		$metadata = self::getFieldMetaData($p_field_name);
-		$asterisk = ($p_required) ? '&nbsp;*' : '';
-		$label_text = ($metadata['comment'] ?? $p_field_name) . $asterisk;
+		$metadata   = self::getFieldMetaData($p_field_name);
+		$asterisk   = ($p_required) ? '&nbsp;*' : '';
+		$label_text = ($metadata['comment'] ?? $p_field_name);
+		$hook_name  = hook_name(sprintf('site_cadastro_label_%s', $p_field_name));
+		$label_text = \Hook::apply_filters($hook_name, $label_text);
+		$label_text = $label_text . $asterisk;
+
 		return \Form::label($p_field_name, $label_text, ['class' => 'control-label']);
 	}
 }
