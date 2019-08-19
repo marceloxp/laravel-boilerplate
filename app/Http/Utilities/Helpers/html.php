@@ -9,4 +9,14 @@ if (!function_exists('html_purifier'))
 		$result = $purifier->purify($p_html);
 		return $result;
 	}
+
+	function html_data($p_array)
+	{
+		$result = [];
+		foreach ($p_array as $name => $value)
+		{
+			$result[] = sprintf(' data-%s="%s" ', $name, $value);
+		}
+		return implode(' ', $result);
+	}
 }

@@ -50,15 +50,6 @@ if (!function_exists('get_disk_name'))
 	}
 }
 
-if (!function_exists('uploaded_file'))
-{
-	function uploaded_file($p_file_name)
-	{
-		$disk_name = get_disk_name($p_file_name);
-		return \Illuminate\Support\Facades\Storage::disk($disk_name)->url($p_file_name);
-	}
-}
-
 if (!function_exists('disk_new_file_name'))
 {
 	function disk_new_file_name($p_disk_name, $p_file_name)
@@ -89,9 +80,18 @@ if (!function_exists('disk_new_file_name'))
 	}
 }
 
-if (!function_exists('uploaded_file'))
+if (!function_exists('uploaded_file_url'))
 {
-	function uploaded_file($p_file_name, $p_attr = '')
+	function uploaded_file_url($p_file_name)
+	{
+		$disk_name = get_disk_name($p_file_name);
+		return \Illuminate\Support\Facades\Storage::disk($disk_name)->url($p_file_name);
+	}
+}
+
+if (!function_exists('img_uploaded_file'))
+{
+	function img_uploaded_file($p_file_name, $p_attr = '')
 	{
 		if (empty($p_file_name))
 		{
@@ -107,10 +107,10 @@ if (!function_exists('uploaded_file'))
 			case 'jpg':
 			case 'jpeg':
 			case 'gif':
-				return sprintf('<img src="%s" %s >', uploaded_file($p_file_name), $p_attr);
+				return sprintf('<img src="%s?v=%s" %s >', uploaded_file_url($p_file_name), app_version('0.0.1'), $p_attr);
 			break;
 			case 'pdf':
-				return sprintf('<img src="%s" %s >', vasset('/images/admin/fileextensions/pdf.png'), $p_attr);
+				return sprintf('<img src="%s?v=%s" %s >', vasset('/images/admin/fileextensions/pdf.png'), app_version('0.0.1'), $p_attr);
 			break;
 		}
 	}
@@ -135,9 +135,10 @@ if (!function_exists('link_uploaded_img'))
 			case 'gif':
 				return sprintf
 				(
-					'<a href="%s" target="_blank"><img src="%s" %s ></a>',
-					uploaded_file($p_file_name),
-					uploaded_file($p_file_name),
+					'<a href="%s" target="_blank"><img src="%s?v=%s" %s ></a>',
+					uploaded_file_url($p_file_name),
+					uploaded_file_url($p_file_name),
+					app_version('0.0.1'),
 					$p_attr
 				);
 			break;
@@ -145,7 +146,7 @@ if (!function_exists('link_uploaded_img'))
 				return sprintf
 				(
 					'<a href="%s" target="_blank"><img src="%s" %s ></a>',
-					uploaded_file($p_file_name),
+					uploaded_file_url($p_file_name),
 					vasset('/images/admin/fileextensions/pdf.png'),
 					$p_attr
 			);

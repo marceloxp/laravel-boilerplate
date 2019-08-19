@@ -1,4 +1,8 @@
 <?php
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 if (!function_exists('db_database_name'))
 {
 	function db_database_name()
@@ -129,12 +133,13 @@ if (!function_exists('db_select_one'))
 
 if (!function_exists('db_select_id'))
 {
-	// echo db_select_id(\App\Models\Menu::class, ['slug' => 'tabelas'], true);
+	// db_select_id(\App\Models\Menu::class, ['slug' => 'tabelas'], true);
 	function db_select_id($p_model, $p_where, $raise_if_empty = false)
 	{
 		$result = $p_model::where($p_where)->get(['id'])->take(1)->first();
 		if ($raise_if_empty && empty($result))
 		{
+			logger('Falha na captura dos dados solicitados (2).', [$p_model, $p_where, $raise_if_empty]);
 			throw new Exception('Falha na captura dos dados solicitados (2).');
 		}
 		return (!empty($result)) ? $result->id : null;
@@ -204,5 +209,77 @@ if (!function_exists('ln'))
 	function ln()
 	{
 		echo PHP_EOL;
+	}
+}
+
+if (!function_exists('generate_unique_code'))
+{
+	function generate_unique_code()
+	{
+		$codelength = config('codetrait.length', 10);
+		$code = null;
+		$k = 0;
+		$valid = false;
+		while (!$valid)
+		{
+			try
+			{
+				$k++;
+				$code  = mb_strtolower(\Illuminate\Support\Str::random($codelength));
+				$id    = \DB::table('codes')->insertGetId(['name' => $code, 'attempts' => $k]);
+				$valid = ($id > 0);
+			}
+			catch (\Exception $e)
+			{
+
+			}
+		}
+
+		return $code;
+	}
+}
+
+if (!function_exists('cep_to_address'))
+{
+	function cep_to_address($cep)
+	{
+		return \App\Http\Utilities\Cached::get
+		(
+			'brasil_cep',
+			[$cep],
+			function() use ($cep)
+			{
+				$query = 'call cep_endereco(?);';
+				$address = collect(DB::select($query, [str_to_formatted_cep($cep)]))->first();
+				if (empty($address->endereco))
+				{
+					return \App\Http\Utilities\Result::error('Endereço não localizado.');
+				}
+				return \App\Http\Utilities\Result::success('Endereço localizado', collect($address)->toArray());
+			},
+			60
+		);
+	}
+}
+
+if (!function_exists('db_log_info'))
+{
+	function db_log_info($message, $context = [])
+	{
+		$filename = sprintf('/storage/logs/mysql.%s.log', \App\Http\Utilities\Carbex::now()->toSqlDate());
+		$view_log = new Logger('View Logs');
+		$view_log->pushHandler(new StreamHandler(app_path($filename), Logger::INFO));
+		$view_log->addInfo($message, $context);
+	}
+}
+
+if (!function_exists('db_log_slow'))
+{
+	function db_log_slow($message, $context = [])
+	{
+		$filename = sprintf('/storage/logs/mysql.slow.%s.log', \App\Http\Utilities\Carbex::now()->toSqlDate());
+		$view_log = new Logger('View Logs');
+		$view_log->pushHandler(new StreamHandler(app_path($filename), Logger::INFO));
+		$view_log->addInfo($message, $context);
 	}
 }

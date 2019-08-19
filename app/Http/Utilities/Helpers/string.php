@@ -1,5 +1,13 @@
 <?php
 
+if (!function_exists('str_random'))
+{
+	function str_random($quant = 10)
+	{
+		return Illuminate\Support\Str::random($quant);
+	}
+}
+
 if (!function_exists('delete_all_between'))
 {
 	function delete_all_between($beginning, $end, $string)
@@ -157,5 +165,24 @@ if (!function_exists('str2bool'))
 	function str2bool($text)
 	{
 		return (strtolower($text) == 'true');
+	}
+}
+
+if (!function_exists('str_only_numbers'))
+{
+	function str_only_numbers($text)
+	{
+		return preg_replace('/[^0-9]/','',$text);
+	}
+}
+
+if (!function_exists('str_to_formatted_cep'))
+{
+	function str_to_formatted_cep($cep)
+	{
+		$result = str_only_numbers($cep);
+		$result = str_pad($result, 8, '0', STR_PAD_LEFT);
+		$result = sprintf('%s-%s', substr($result, 0, 5), substr($result, -3));
+		return $result;
 	}
 }

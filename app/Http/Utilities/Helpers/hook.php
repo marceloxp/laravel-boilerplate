@@ -3,6 +3,12 @@ if (!function_exists('hook_name'))
 {
 	function hook_name($name)
 	{
+		$name = str_replace('<br>', '_', $name);
+		$name = str_replace('<br/>', '_', $name);
+		$name = strtolower(strip_tags($name));
+		$name = str_replace(' ', '_', $name);
+		$name = str_slugify($name, '_');
+
 		if (config('debugbar.enabled'))
 		{
 			if (config('debugbar.collectors.hooks'))

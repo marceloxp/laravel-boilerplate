@@ -1,9 +1,17 @@
 <?php
+if (!function_exists('dashboard_item'))
+{
+	function dashboard_item($color, $link, $ico, $text, $number)
+	{
+		return compact('color', 'link', 'ico', 'text', 'number');
+	}
+}
+
 if (!function_exists('admin_label_status'))
 {
 	function admin_label_status($value)
 	{
-		$color = (in_array(strtolower($value), ['inativo','não','i','n','no','0','excluido'])) ? 'red' : 'green';
+		$color = (in_array(strtolower($value), ['inativo','não','i','n','no','0','excluido','false'])) ? 'red' : 'green';
 		return sprintf('<small class="label pull-center bg-%s">%s</small>', $color, $value);
 	}
 }
@@ -116,11 +124,11 @@ if (!function_exists('admin_table_config_set'))
 		return true;
 	}
 
-	// admin_table_index_set_button('users', 'btn-custom-action', 'one', 'btn-info', true, 'fas fa-times-circle', 'More info', '');
-	// admin_table_index_set_button('users', 'btn-send-mail', 'many', 'btn-success', true, 'fas fa-envelope', 'Send Mail', 'Confirma envio?');
-	function admin_table_index_set_button($p_table, $p_button_id, $p_type, $p_color_style, $p_disabled, $p_icon, $p_text, $p_confirm_text)
+	// admin_table_index_build_button('users', 'btn-custom-action', 'one', 'btn-info', true, 'fas fa-times-circle', 'More info', '');
+	// admin_table_index_build_button('users', 'btn-send-mail', 'many', 'btn-success', true, 'fas fa-envelope', 'Send Mail', 'Confirma envio?');
+	function admin_table_index_build_button($p_table, $p_route, $p_button_id, $p_type, $p_color_style, $p_disabled, $p_icon, $p_text, $p_confirm_text)
 	{
-		$button = 
+		$button =
 		[
 			'button_id'    => $p_button_id,
 			'type'         => $p_type,
@@ -131,34 +139,15 @@ if (!function_exists('admin_table_config_set'))
 			'confirm_text' => $p_confirm_text
 		];
 
-		$config = 
-		[
-			'admin' =>
-			[
-				'index' =>
-				[
-					'buttons' =>
-					[
-						$p_button_id => $button
-					]
-				]
-			]
-		];
+		echo '<script>' . PHP_EOL;
+		echo 'window.datasite.params = window.datasite.params || {};' . PHP_EOL;
+		echo 'window.datasite.params.tableconfig = window.datasite.params.tableconfig || {};' . PHP_EOL;
+		echo 'window.datasite.params.tableconfig.admin = window.datasite.params.tableconfig.admin || {};' . PHP_EOL;
+		echo 'window.datasite.params.tableconfig.admin["' . $p_route . '"] = window.datasite.params.tableconfig.admin["' . $p_route . '"] || {};' . PHP_EOL;
+		echo 'window.datasite.params.tableconfig.admin["' . $p_route . '"].buttons = window.datasite.params.tableconfig.admin["' . $p_route . '"].buttons || {};' . PHP_EOL;
+		echo 'window.datasite.params.tableconfig.admin["' . $p_route . '"].buttons["' . $p_button_id . '"] = ' . collect($button)->toJson() . PHP_EOL;
+		echo '</script>' . PHP_EOL;
 
-		return admin_table_config_set($p_table, $config);
-	}
-
-	function admin_table_index_remove_button($p_table, $p_button_id)
-	{
-		$config = config(sprintf('tables.%s.admin.index.buttons', $p_table));
-		if (array_key_exists($p_button_id, $config))
-		{
-			unset($config[$p_button_id]);
-			config([sprintf('tables.%s.admin.index.buttons', $p_table) => $config]);
-			config(['tables.updated_at' => \Carbon\Carbon::now()]);
-			$content = '<?php return' . PHP_EOL . var_export(config('tables'), true) . ';';
-			File::put(config_path('tables.php'), $content);
-		}
-		return true;
+		return $button;
 	}
 }
