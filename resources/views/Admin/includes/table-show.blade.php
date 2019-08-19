@@ -43,7 +43,7 @@
 									$display_value = (new \App\Http\Utilities\Money(floatval($display_value), 1))->formated;
 								break;
 								case 'tinyint':
-									$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
+									$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fas fa-times-circle"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
 								break;
 								case 'pivot':
 									$pivot_model = sprintf('\App\Models\%s', db_table_name_to_model($fields_schema[$field_name]['name']));

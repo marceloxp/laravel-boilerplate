@@ -1,4 +1,6 @@
 @php
+	$current_route = Route::currentRouteName();
+
 	$search_fields = array_merge($display_fields);
 	$hook_name     = hook_name(sprintf('admin_index_search_fields_%s', $table_name));
 	$search_fields = Hook::apply_filters($hook_name, $search_fields);
@@ -7,116 +9,131 @@
 	$hook_name     = hook_name(sprintf('admin_index_sort_fields_%s', $table_name));
 	$sort_fields   = Hook::apply_filters($hook_name, $sort_fields);
 
+	$show_search   = true;
+	$hook_name     = hook_name(sprintf('admin_index_show_search_%s', $table_name));
+	$show_search   = Hook::apply_filters($hook_name, $show_search);
+
 	$image_fields = $image_fields ?? [];
 @endphp
 
 @if ($has_table)
-	<form name="frmTable" method="get" id="frmTable" action="{{url()->current()}}">
-		<div class="box box-info collapsed-box">
-			<div class="box-header with-border">
-				<h3 class="box-title">Ordenação e Busca</h3>
-				<div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+	@if ($show_search)
+		<form name="frmTable" method="get" id="frmTable" action="{{url()->current()}}">
+			<div class="box box-info collapsed-box">
+				<div class="box-header with-border">
+					<h3 class="box-title">Ordenação e Busca</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+					</div>
 				</div>
-			</div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="form-group">
-							<label>Busca</label>
-							<div class="input-group">
-								<div class="input-group-btn">
-									<button id="btn-search-field" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i>&nbsp;&nbsp;<span>Buscar por</span>&nbsp;
-									<span class="fa fa-caret-down"></span></button>
-									<ul class="dropdown-menu" id="search-fields-items">
-										@foreach($search_fields as $field_name)
-											@if (array_key_exists($field_name, $fields_schema))
-												<li><a class="search_field" data-field="{{ $field_name }}" data-caption="{{ $fields_schema[$field_name]['comment'] }}" href="#">{{ $fields_schema[$field_name]['comment'] }}</a></li>
-											@endif
-										@endforeach
-										<li class="divider"></li>
-										<li><a class="search_field" data-field="___clear" href="#">Limpar Busca</a></li>
-									</ul>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label>Busca</label>
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button id="btn-search-field" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i>&nbsp;&nbsp;<span>Buscar por</span>&nbsp;
+										<span class="fa fa-caret-down"></span></button>
+										<ul class="dropdown-menu" id="search-fields-items">
+											@foreach($search_fields as $field_name)
+												@if (array_key_exists($field_name, $fields_schema))
+													<li><a class="search_field" data-field="{{ $field_name }}" data-caption="{{ $fields_schema[$field_name]['comment'] }}" href="#">{{ $fields_schema[$field_name]['comment'] }}</a></li>
+												@endif
+											@endforeach
+											<li class="divider"></li>
+											<li><a class="search_field" data-field="___clear" href="#">Limpar Busca</a></li>
+										</ul>
+									</div>
+									<input type="text" name="table_search" id="table_search" class="form-control" placeholder="Busca">
 								</div>
-								<input type="text" name="table_search" id="table_search" class="form-control" placeholder="Busca">
 							</div>
 						</div>
 					</div>
-				</div>
-				@if (!empty($search_dates))
+					@if (!empty($search_dates))
+						<div class="row">
+							<div class="col-xs-6 col-md-3">
+								<div class="form-group">
+									<label>Filtrar por data</label>
+									<select id="select-field-date" class="form-control">
+										@foreach($search_dates as $field_name)
+											<option class="option_search_date" value="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-6 col-md-3">
+								<label>Período</label><br>
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="fas fa-calendar"></i>
+									</div>
+									<input type="text" class="form-control daterangepicker" id="search-date" data-prefix="range">
+									<input type="hidden" name="range_ini" id="range_ini" value="">
+									<input type="hidden" name="range_end" id="range_end" value="">
+								</div>
+							</div>
+						</div>
+					@endif
 					<div class="row">
-						<div class="col-xs-6 col-md-3">
+						<div class="col-xs-6 col-md-6">
 							<div class="form-group">
-								<label>Filtrar por data</label>
-								<select id="select-field-date" class="form-control">
-									@foreach($search_dates as $field_name)
-										<option class="option_search_date" value="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</option>
+								<label>Ordernar por</label>
+								<select id="select-field-order" class="form-control">
+									<option class="option_search_field" value="0">Selecione</option>
+									@foreach($sort_fields as $field_name)
+										@if (array_key_exists($field_name, $fields_schema))
+											<option class="option_search_field" value="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</option>
+										@endif
 									@endforeach
 								</select>
 							</div>
 						</div>
-						<div class="col-xs-6 col-md-3">
-							<label>Período</label><br>
-							<div class="input-group">
-								<div class="input-group-addon">
-									<i class="fas fa-calendar"></i>
-								</div>
-								<input type="text" class="form-control daterangepicker" id="search-date" data-prefix="range">
-								<input type="hidden" name="range_ini" id="range_ini" value="">
-								<input type="hidden" name="range_end" id="range_end" value="">
+						<div class="col-xs-4 col-md-4">
+							<label>Adicionar</label><br>
+							<div class="btn-group">
+								<button type="button" data-dir="down" class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do menor para o maior (ASC)"  data-placement="bottom"><i class="fas fa-arrow-down"></i></button>
+								<button type="button" data-dir="up"   class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do maior para o menor (DESC)" data-placement="bottom"><i class="fas fa-arrow-up"></i></button>
 							</div>
 						</div>
 					</div>
-				@endif
-				<div class="row">
-					<div class="col-xs-6 col-md-6">
-						<div class="form-group">
-							<label>Ordernar por</label>
-							<select id="select-field-order" class="form-control">
-								<option class="option_search_field" value="0">Selecione</option>
-								@foreach($sort_fields as $field_name)
-									@if (array_key_exists($field_name, $fields_schema))
-										<option class="option_search_field" value="{{ $field_name }}">{{ $fields_schema[$field_name]['comment'] }}</option>
-									@endif
-								@endforeach
-							</select>
-						</div>
-					</div>
-					<div class="col-xs-4 col-md-4">
-						<label>Adicionar</label><br>
-						<div class="btn-group">
-							<button type="button" data-dir="down" class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do menor para o maior (ASC)"  data-placement="bottom"><i class="fas fa-arrow-down"></i></button>
-							<button type="button" data-dir="up"   class="btn btn-default btn-order-add" data-toggle="tooltip" data-original-title="Do maior para o menor (DESC)" data-placement="bottom"><i class="fas fa-arrow-up"></i></button>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="form-group">
-							<div class="btn-group" id="div-orders">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="btn-group" id="div-orders">
 
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-8">
+							<div class="form-group">
+								<label>&nbsp;</label><br>
+								<button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filtrar</button>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-xs-8">
-						<div class="form-group">
-							<label>&nbsp;</label><br>
-							<button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filtrar</button>
-						</div>
-					</div>
-				</div>
+				<!-- /.box-body -->
 			</div>
-			<!-- /.box-body -->
-		</div>
-	</form>
+		</form>
+	@endif
+@endif
+
+@php
+	$include_file = null;
+	$hook_name    = hook_name(sprintf('admin_index_include_file_%s', $current_route));
+	$include_file = Hook::apply_filters($hook_name, $include_file);
+@endphp
+@if ($include_file)
+	@include($include_file)
 @endif
 
 <div class="box box-success">
 	<div class="box-header with-border">
 		<div class="row">
-			<div class="btn-group col-xs-9">
+			<div class="btn-group col-xs-7">
 				@php $buttons_edit = isset($editable) ? $editable : true; @endphp
 				@if ($buttons_edit)
 					<button type="button" id="btn-table-add" class="btn btn-success {{ $class_pivot }}"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Adicionar</button>
@@ -142,30 +159,26 @@
 				@endif
 
 				@php
-					$buttons = config(sprintf('tables.%s.admin.index.buttons', $table_name), []);
-					foreach ($buttons as $button)
+					$custom_buttons = [];
+					$hook_name      = hook_name(sprintf('admin_index_custom_buttons_%s_%s', $table_name, $route_name));
+					$custom_buttons = Hook::apply_filters($hook_name, $custom_buttons, $table);
+
+					if ($custom_buttons)
 					{
-						echo admin_index_button
-						(
-							$button['button_id'],
-							$button['type'],
-							$button['color_style'],
-							$button['disabled'],
-							$button['icon'],
-							$button['text']
-						);
+						foreach ($custom_buttons as $button)
+						{
+							echo admin_index_button
+							(
+								$button['button_id'],
+								$button['type'],
+								$button['color_style'],
+								$button['disabled'],
+								$button['icon'],
+								$button['text']
+							);
+						}
 					}
 				@endphp
-
-			</div>
-			<div class="btn-group col-xs-3">
-				<div class="form-group" style="margin-bottom: 0px;">
-					<select class="form-control" id="cb-table-order" name="cb-table-order">
-						@foreach(config('admin.index.pagination.perpages', [20,50,100,200,300]) as $item_page)
-							<option value="{{ $item_page }}" {{ ($item_page == $perpage) ? 'selected="selected' : '' }}>{{ $item_page }} Registros por Página</option>
-						@endforeach
-					</select>
-				</div>
 			</div>
 			@if ($has_table)
 				@php $print_button = isset($exportable) ? $exportable : true; @endphp
@@ -175,6 +188,15 @@
 					</div>
 				@endif
 			@endif
+			<div class="btn-group col-xs-3">
+				<div class="form-group" style="margin-bottom: 0px;">
+					<select class="form-control" id="cb-table-order" name="cb-table-order">
+						@foreach(config('admin.index.pagination.perpages', [20,50,100,200,300]) as $item_page)
+							<option value="{{ $item_page }}" {{ ($item_page == $perpage) ? 'selected="selected' : '' }}>{{ $item_page }} Registros por Página</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="box-body">
@@ -238,11 +260,24 @@
 					</tr>
 					@foreach($table as $register)
 					<tr>
+						@php
+							$show_check = $register->show_check;
+							if ($show_check === null)
+							{
+								$show_check = true;
+							}
+
+							$show_check = array_merge($display_fields);
+							$hook_name  = hook_name(sprintf('admin_index_show_check_%s', $table_name));
+							$show_check = Hook::apply_filters($hook_name, $show_check, $register);
+						@endphp
 						<td>
-							<span class="switch">
-								<input type="checkbox" class="switch ck-row" id="checkbox{{ $register['id'] }}" data-ids="{{ $register['id'] }}">
-								<label for="checkbox{{ $register['id'] }}"></label>
-							</span>
+							@if ($show_check)
+								<span class="switch">
+									<input type="checkbox" class="switch ck-row" id="checkbox{{ $register['id'] }}" data-ids="{{ $register['id'] }}">
+									<label for="checkbox{{ $register['id'] }}"></label>
+								</span>
+							@endif
 						</td>
 						@foreach($display_fields as $field_name)
 							@php
@@ -287,7 +322,7 @@
 												}
 											break;
 											case 'tinyint':
-												$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fa fa-fw fa-close"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
+												$display_value = (intval($display_value) === 0) ? '<span class="label label-danger"><i class="fas fa-times-circle"></i></span>' : '<span class="label label-success"><i class="fa fa-fw fa-check"></i></span>';
 											break;
 											case 'decimal':
 												$display_value = new \App\Http\Utilities\Money($display_value);

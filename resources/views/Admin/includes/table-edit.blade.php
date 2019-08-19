@@ -101,7 +101,9 @@
 								$url_image = url('images/admin/no-image.png');
 								if ($register->$field_name)
 								{
-									$url_image = uploaded_file($register->$field_name);
+									$url_image = uploaded_file_url($register->$field_name);
+									$hook_name = hook_name(sprintf('admin_edit_%s_%s_image_src', $table_name, $field_name));
+									$url_image = Hook::apply_filters($hook_name, $url_image, $register);
 								}
 
 								$preview_image = sprintf
