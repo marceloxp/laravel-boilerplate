@@ -134,6 +134,32 @@ class Menu extends MasterModel
 		return $menu_id;
 	}
 
+	public static function addInternalMenuLink($parent_id, $p_caption, $p_ico, $p_roles, $p_link, $p_target_blank = false)
+	{
+		$now = \Carbon\Carbon::now();
+		$menu_id = \App\Models\Menu::insertGetId
+		(
+			[
+				'parent_id'  => $parent_id,
+				'type'       => 'internal-link',
+				'name'       => $p_caption,
+				'slug'       => str_slugify($p_caption),
+				'ico'        => $p_ico,
+				'link'      => $p_link,
+				'target'     => ($p_target_blank) ? '_blank' : '_self',
+				'created_at' => $now
+			]
+		);
+		if (!$menu_id) { throw new Exception('Falha na inserção do Menu.'); }
+
+		foreach ($p_roles as $role)
+		{
+			\App\Models\Menu::addRole($menu_id, $role);
+		}
+
+		return $menu_id;
+	}
+
 	public static function menuExists($p_parent_id, $p_caption)
 	{
 		return self::where(['name' => $p_caption, 'parent_id' => $p_parent_id])->exists();

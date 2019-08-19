@@ -14,9 +14,9 @@ use App\Traits\AuditTrait;
 
 class User extends MasterModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-	use Authenticatable, Authorizable, CanResetPassword, AuditTrait;
-
-	use SoftDeletes;
+	use Authenticatable, Authorizable, CanResetPassword;
+	use SoftDeletes, AuditTrait;
+	
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
@@ -41,6 +41,26 @@ class User extends MasterModel implements AuthenticatableContract, AuthorizableC
 	public function hasRole($role)
 	{
 		return null !== $this->roles()->where('name', $role)->first();
+	}
+
+	public function isModerator()
+	{
+		return $this->roles->pluck('name')->contains('Moderador');
+	}
+
+	public function isAdmin()
+	{
+		return $this->roles->pluck('name')->contains('Admin');
+	}
+
+	public function isDeveloper()
+	{
+		return $this->roles->pluck('name')->contains('Developer');
+	}
+
+	public function isJury()
+	{
+		return $this->roles->pluck('name')->contains('Júri');
 	}
 
 	/**
@@ -77,3 +97,4 @@ class User extends MasterModel implements AuthenticatableContract, AuthorizableC
 		return User::_validate($request, $rules, $id);
     }
 }
+
