@@ -42,6 +42,7 @@ class AdminController extends Controller
 				$roles      = $this->getPagePermission($route_name, $menus);
 				$user->authorizeRoles($roles);
 				$this->user = $user;
+				$this->route_name = $route_name;
 
 				$route_parts = 
 				[
@@ -59,10 +60,14 @@ class AdminController extends Controller
 		);
 	}
 
-	public function getUploadedFile($p_file_name, $p_height = 100)
+	public function getUploadedFile($p_file_name, $p_height = 100, $add_link = true)
 	{
 		if (empty($p_file_name)) { return $p_file_name; }
-		return sprintf('%s<br/>%s', link_uploaded_file($p_file_name, sprintf('height="%s"', $p_height)), $p_file_name);
+		if ($add_link)
+		{
+			return sprintf('%s<br/>%s', link_uploaded_file($p_file_name, sprintf('class="uploaded-file" height="%s"', $p_height)), $p_file_name);
+		}
+		return sprintf('%s<br/>%s', img_uploaded_file($p_file_name, sprintf('class="uploaded-file" height="%s"', $p_height)), $p_file_name);
 	}
 
 	private function getPagePermission($route_name, $menus)
@@ -319,6 +324,12 @@ class AdminController extends Controller
 			$table->{$scope_name}($scope_param);
 		}
 
+		$hook_name = hook_name(sprintf('admin_index_table_before_paginate_%s', $table_name));
+		$table     = \Hook::apply_filters($hook_name, $table);
+
+		$hook_name = hook_name(sprintf('admin_index_table_before_paginate_%s_%s', $table_name, $this->route_name));
+		$table     = \Hook::apply_filters($hook_name, $table);
+
 		$table = $table->paginate($p_perpage);
 
 		return $table;
@@ -472,6 +483,7 @@ class AdminController extends Controller
 			'table_many'   => [],
 			'where'        => [],
 			'appends'      => [],
+			'render'       => 'Admin.generic',
 			'editable'     => true,
 			'sortable'     => false,
 			'exportable'   => false
@@ -537,12 +549,13 @@ class AdminController extends Controller
 		$perpage       = $this->getPerPage($request);
 		$table         = $this->getTableSearch($model, $perpage, $request, $display_fields, $fields_schema, $params);
 		$paginate      = $this->ajustPaginate($request, $table);
+		$hook_name     = hook_name(sprintf('admin_index_table_%s', $table_name));
+		$table         = \Hook::apply_filters($hook_name, $table);
 		$ids           = $table->pluck('id')->toJson();
 		$has_table     = ($table->total() > 0);
 		$search_dates  = ['created_at'];
-		$tableconfig   = config(sprintf('tables.%s', $table_name));
 
-		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage','sortable','tableconfig');
+		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage','sortable');
 		
 		View::share($share_params);
 
@@ -553,7 +566,7 @@ class AdminController extends Controller
 		
 		datasite_add(['params' => $jsvars]);
 
-		return view('Admin.generic');
+		return view($render);
 	}
 
 	public function defaultTreeIndex($p_args)
@@ -675,8 +688,6 @@ class AdminController extends Controller
 			$this->hooks_edit($table_name);
 		}
 
-		// r($one_table);
-
 		View::share(compact('request','model','register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled','one_table'));
 
 		return view('Admin.generic_add');
@@ -700,10 +711,13 @@ class AdminController extends Controller
 		$form = $request->all();
 
 		$syncs = [];
-		$pivot_fields = $model::getPìvotFields();
+		$pivot_fields = $model::getPivotFields();
 		foreach ($pivot_fields as $pivot_table)
 		{
-			$syncs[$pivot_table] = $request->$pivot_table;
+			if (!empty($request->$pivot_table))
+			{
+				$syncs[$pivot_table] = $request->$pivot_table;
+			}
 			unset($form[$pivot_table]);
 		}
 
@@ -714,6 +728,10 @@ class AdminController extends Controller
 			if (empty($form['password']))
 			{
 				unset($form['password']);
+			}
+			else
+			{
+				$form['password'] = \Illuminate\Support\Facades\Hash::make($form['password']);
 			}
 		}
 

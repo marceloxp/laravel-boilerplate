@@ -15,6 +15,12 @@ class SearchmodalController extends AdminController
 		$options['fields'] = collect($options['fields'])->filter(function($value, $key) use ($model) { return $model::hasField($value); })->toArray();
 		$options['find']['fields'] = collect($options['find']['fields'])->filter(function($value, $key) use ($model) { return $model::hasField($value); })->toArray();
 
+		$has_image = $model::hasField('image');
+		if ($has_image)
+		{
+			$options['fields'][] = 'image';
+		}
+
 		$table = $model::select();
 		if (array_key_exists('find', $options))
 		{
@@ -49,7 +55,7 @@ class SearchmodalController extends AdminController
 		)->values()->implode('');
 		$table_header = '<tr>' . $table_header . '</tr>';
 
-		$table = '<table class="table table-bordered table-condensed table-hover table-striped">';
+		$table = '<table class="table table-bordered table-condensed table-hover table-striped modal-search">';
 		$table .= $table_header;
 
 		$trs = collect($data)->transform
@@ -74,6 +80,10 @@ class SearchmodalController extends AdminController
 								$checked       = ($ids == $value) ? 'checked' : '';
 								$display_value = sprintf('<div class="radio" style="margin-top: 0px; margin-bottom: 0px;"><label><input data-ids="%s" type="radio" %s name="register"> %s </label></div>', $ids, $checked, $field_value);
 							}
+						}
+						elseif ($field_name == 'image')
+						{
+							$display_value = $this->getUploadedFile($display_value, 150, false);
 						}
 						if (is_array($display_value))
 						{

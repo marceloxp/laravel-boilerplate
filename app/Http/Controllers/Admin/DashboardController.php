@@ -17,8 +17,16 @@ class DashboardController extends AdminController
 			{
 				$model           = sprintf('\App\Models\%s', $item['model']);
 				$item['link']    = route($item['link']);
-				$item['quant']   = $model::count();
 				$item['visible'] = true;
+
+				if (array_key_exists('where', $item))
+				{
+					$item['quant'] = $model::where($item['where'])->count();
+				}
+				else
+				{
+					$item['quant'] = $model::count();
+				}
 
 				if (array_key_exists('roles', $item))
 				{
