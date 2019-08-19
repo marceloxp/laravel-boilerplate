@@ -86,6 +86,9 @@
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
 							<li>
+								<a href="{{ route('home') }}" target="_blank"><span class="fas fa-home"></span>&nbsp;&nbsp;Ir Ao Site</a>
+							</li>
+							<li>
 								<a href="#"><span class="fas fa-user-alt"></span>&nbsp;&nbsp;{{ $user->name }}</a>
 							</li>
 						</ul>
