@@ -26,7 +26,7 @@ class Cached
 				$use_cache = config('cache.use', 's');
 				if ($use_cache == 's')
 				{
-					Cache::put($cache_name, $data, $minutes);
+					Cache::put($cache_name, $data, now()->addMinutes(30));
 
 					$caches = Cache::get('gcache-prefixes') ?? collect([]);
 					if (!$caches->has($prefix))

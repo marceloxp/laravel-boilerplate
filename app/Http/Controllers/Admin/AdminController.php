@@ -805,7 +805,7 @@ class AdminController extends Controller
 		$result = \Cache::remember
 		(
 			'blp_admin_menu',
-			60,
+			now()->addSeconds(60),
 			function()
 			{
 				$appends = ['roles' => 'Permissões'];
