@@ -107,8 +107,8 @@ class Create{ClassName}Table extends Migration
 		{
 			exit;
 		}
-		$model_name        = ucfirst(camel_case(strtolower($model_name)));
-		$class_name        = str_plural($model_name);
+		$model_name        = ucfirst(Illuminate\Support\Str::camel(strtolower($model_name)));
+		$class_name        = Illuminate\Support\Str::plural($model_name);
 		$model_description = $this->ask('Model description');
 		$table_name        = db_model_to_table_name($model_name);
 		$model_description = $model_description ?? $table_name;
@@ -209,7 +209,7 @@ class Create{ClassName}Table extends Migration
 		$body = [];
 		foreach ($temp as $line)
 		{
-			if (!str_contains($line, '{delete_line}'))
+			if (!Illuminate\Support\Str::contains($line, '{delete_line}'))
 			{
 				$body[] = $line;
 			}

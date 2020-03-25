@@ -11,7 +11,7 @@ class Pocket
 
 	private static function getName($p_name)
 	{
-		return starts_with($p_name, self::prefix) ? $p_name : sprintf(self::prefix . $p_name);
+		return Illuminate\Support\Str::startsWith($p_name, self::prefix) ? $p_name : sprintf(self::prefix . $p_name);
 	}
 
 	public static function get($p_name)

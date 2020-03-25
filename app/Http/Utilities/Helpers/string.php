@@ -1,13 +1,5 @@
 <?php
 
-if (!function_exists('str_random'))
-{
-	function str_random($quant = 10)
-	{
-		return Illuminate\Support\Str::random($quant);
-	}
-}
-
 if (!function_exists('delete_all_between'))
 {
 	function delete_all_between($beginning, $end, $string)

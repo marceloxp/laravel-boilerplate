@@ -449,7 +449,7 @@ class MasterModel extends Model
 					$table = trim($table, $table_name);
 					$table = trim($table, '_');
 					$model = $table;
-					$table = str_plural($table);
+					$table = Illuminate\Support\Str::plural($table);
 					$prop  = $table;
 					$table = db_prefixed_table($table);
 
@@ -555,13 +555,13 @@ class MasterModel extends Model
 					$value =
 					[
 						'table_name'    => db_trim_table_prefix($value['table_name']),
-						'table_model'   => str_singular(db_trim_table_prefix($value['table_name'])),
+						'table_model'   => Illuminate\Support\Str::singular(db_trim_table_prefix($value['table_name'])),
 						'field_name'    => $value['field_name'],
 						'ref_table'     => db_trim_table_prefix($value['ref_table']),
 						'ref_table'     => db_trim_table_prefix($value['ref_table']),
-						'ref_model'     => str_singular(db_trim_table_prefix($value['ref_table'])),
+						'ref_model'     => Illuminate\Support\Str::singular(db_trim_table_prefix($value['ref_table'])),
 						'field_index'   => $value['field_index'],
-						'custom_field'  => str_singular(db_trim_table_prefix($value['ref_table'])),
+						'custom_field'  => Illuminate\Support\Str::singular(db_trim_table_prefix($value['ref_table'])),
 						'has_parent_id' => self::getHasParentId($value['ref_table']),
 						'comment'       => ''
 					];
@@ -594,7 +594,7 @@ class MasterModel extends Model
 						db_database_name(),
 						sprintf('%s_id', str_plural_2_singular($table_name)),
 						db_prefixed_table($table_name),
-						str_singular(db_trim_table_prefix($table_name))
+						Illuminate\Support\Str::singular(db_trim_table_prefix($table_name))
 					);
 					$pivot_tables = DB::select($query);
 

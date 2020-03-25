@@ -63,7 +63,7 @@ class %s extends MasterModel
 		{
 			exit;
 		}
-		$model_name = ucfirst(camel_case(strtolower($model_name)));
+		$model_name = ucfirst(Illuminate\Support\Str::camel(strtolower($model_name)));
 
 		$use_soft_deletes = ($this->confirm('Use SoftDeletes?', 1));
 		$changes = 
@@ -89,7 +89,7 @@ class %s extends MasterModel
 		$body = [];
 		foreach ($temp as $line)
 		{
-			if (!str_contains($line, '{delete_line}'))
+			if (!Illuminate\Support\Str::contains($line, '{delete_line}'))
 			{
 				$body[] = $line;
 			}
