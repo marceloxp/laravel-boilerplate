@@ -29,3 +29,4 @@ storage/framework/cache/data/
 public/vendor/summernote
 
 config/tables\.php
+.env
