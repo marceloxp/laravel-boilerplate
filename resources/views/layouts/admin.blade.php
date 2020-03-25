@@ -29,6 +29,7 @@
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/plugins/select2/select2.min.css') }}">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/dist/css/AdminLTE.min.css') }}">
+		<link rel="stylesheet" href="{{ vasset('/admin-lte-custom/css/adminlte.css') }}">
 		<!-- AdminLTE Skins. Choose a skin from the css/skins
 			folder instead of downloading all of them to reduce the load. -->
 		<link rel="stylesheet" href="{{ vasset('/admin-lte/dist/css/skins/_all-skins.min.css') }}">
