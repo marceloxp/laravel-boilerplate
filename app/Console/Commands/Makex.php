@@ -61,7 +61,6 @@ class Makex extends \App\Console\MakexCommand
 			'makex:create_simple_table',
 			'makex:add_pivot_to_table',
 			['makex:cached', ['--clear' => true]],
-			'makex:updatecore',
 		];
 
 		$this->printLine('COMMANDS');

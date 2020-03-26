@@ -117,7 +117,7 @@ class MakexModelRules extends \App\Console\MakexCommand
 
 	private function getRules()
 	{
-		$table = Illuminate\Support\Str::plural(strtolower($this->model_target));
+		$table = \Illuminate\Support\Str::plural(strtolower($this->model_target));
 		$fields = $this->__getFieldsMetadata($table);
 
 		$data = [];

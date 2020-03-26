@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Http\Utilities\Result;
-use Stringy as S;
 
 class AdminController extends Controller
 {
@@ -141,7 +140,7 @@ class AdminController extends Controller
 
 	public function setParent($p_model)
 	{
-		$field_name = sprintf('%s_id', Illuminate\Support\Str::singular($p_model::getTableName()));
+		$field_name = sprintf('%s_id', \Illuminate\Support\Str::singular($p_model::getTableName()));
 		$this->parent['model'] = $p_model;
 		$this->parent['field'] = $field_name;
 	}
@@ -181,7 +180,7 @@ class AdminController extends Controller
 
 	public function ajustPaginate($p_request, $p_table)
 	{
-        $result = $p_table->appends($p_request->query())->links()->toHtml();
+    $result = $p_table->appends($p_request->query())->links()->toHtml();
 		$result = str_replace('<ul class="pagination">', '<ul class="pagination pagination-sm no-margin pull-right">', $result);
 		return $result;
 	}

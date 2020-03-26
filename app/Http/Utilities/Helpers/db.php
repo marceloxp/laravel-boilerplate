@@ -150,7 +150,7 @@ if (!function_exists('db_model_to_table_name'))
 {
 	function db_model_to_table_name($model_name)
 	{
-		return Illuminate\Support\Str::plural(mb_strtolower($model_name));
+		return \Illuminate\Support\Str::plural(mb_strtolower($model_name));
 	}
 }
 
@@ -158,7 +158,7 @@ if (!function_exists('db_table_name_to_model'))
 {
 	function db_table_name_to_model($table_name)
 	{
-		return Illuminate\Support\Str::singular(ucfirst(mb_strtolower($table_name)));
+		return \Illuminate\Support\Str::singular(ucfirst(mb_strtolower($table_name)));
 	}
 }
 

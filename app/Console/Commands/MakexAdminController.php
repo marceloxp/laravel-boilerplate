@@ -60,7 +60,7 @@ class MakexAdminController extends \App\Console\MakexCommand
 		{
 			exit;
 		}
-		$table_name = Illuminate\Support\Str::plural(Illuminate\Support\Str::snake($model));
+		$table_name = \Illuminate\Support\Str::plural(\Illuminate\Support\Str::snake($model));
 
 		$controller_name = $this->ask('Controller file name [Input]Controller.php');
 		if (empty($controller_name))

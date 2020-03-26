@@ -22,7 +22,7 @@ class MasterManyController extends AdminController
 		$this->order_name  = [$this->master_name, $this->many_name];
 		$this->pivotName   = sprintf('%s%s', strtolower($this->order_name[0]), $this->order_name[1]);
 
-		$this->master_many_method = Illuminate\Support\Str::plural(strtolower(class_basename($this->ManyModel)));
+		$this->master_many_method = \Illuminate\Support\Str::plural(strtolower(class_basename($this->ManyModel)));
 		$this->setCaption($p_caption);
 
 		parent::__construct();

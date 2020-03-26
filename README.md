@@ -80,10 +80,8 @@ php artisan migrate:refresh --seed
 | digitalnature/php-ref            | <https://github.com/digitalnature/php-ref>               |
 | barryvdh/laravel-debugbar        | <https://github.com/barryvdh/laravel-debugbar>           |
 | miroc/laravel-adminer            | <https://github.com/miroc/Laravel-Adminer>               |
-| chumper/zipper                   | <https://github.com/Chumper/Zipper>                      |
 | marceloxp/laravel_commands       | <https://github.com/marceloxp/laravel_commands>          |
-| danielstjules/stringy            | <https://github.com/danielstjules/Stringy>               |
-| atayahmet/laravel-nestable       | <https://github.com/atayahmet/laravel-nestable>          |
+| webreinvent/laravel-nestable     | <https://github.com/atayahmet/laravel-nestable>          |
 | ezyang/htmlpurifier              | <https://github.com/ezyang/htmlpurifier>                 |
 | laravelcollective/html           | <https://github.com/LaravelCollective/html>              |
 | summernote/summernote            | <https://github.com/summernote/summernote>               |
@@ -114,12 +112,6 @@ php artisan makex:admin_controller
 
 ```bash
 php artisan makex:mastermodel
-```
-
-> Update framework core files
-
-```bash
-php artisan makex:updatecore
 ```
 
 > Add Pivot to Table

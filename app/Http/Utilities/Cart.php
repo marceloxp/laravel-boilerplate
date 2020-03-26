@@ -11,7 +11,7 @@ class Cart
 
 	private static function getName($p_id)
 	{
-		return Illuminate\Support\Str::startsWith($p_id, self::prefix) ? $p_id : sprintf('%s%s', self::prefix, $p_id);
+		return \Illuminate\Support\Str::startsWith($p_id, self::prefix) ? $p_id : sprintf('%s%s', self::prefix, $p_id);
 	}
 
 	public static function quant($p_id)

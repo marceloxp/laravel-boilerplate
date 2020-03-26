@@ -16,11 +16,11 @@ class Gallery extends MasterModel
 		parent::boot();
 
 		self::creating(function($model){
-			$model->name = Illuminate\Support\Str::slug($model->name);
+			$model->name = \Illuminate\Support\Str::slug($model->name);
 		});
 
 		self::updating(function($model){
-			$model->name = Illuminate\Support\Str::slug($model->name);
+			$model->name = \Illuminate\Support\Str::slug($model->name);
 		});
 	}
 

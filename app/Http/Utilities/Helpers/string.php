@@ -24,7 +24,7 @@ if (!function_exists('str_slugify'))
 {
 	function str_slugify($p_string, $p_separator = '-')
 	{
-		return Illuminate\Support\Str::slug($p_string, $p_separator);
+		return \Illuminate\Support\Str::slug($p_string, $p_separator);
 	}
 }
 
