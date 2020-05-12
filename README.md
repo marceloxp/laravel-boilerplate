@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.2.9
+> Version 0.3.0
 
 ## Install
 
@@ -27,11 +27,11 @@ php artisan migrate:refresh --seed
 
 ## Framework
 
-- Laravel 5.7.x: <https://laravel.com/>
+- Laravel 6.2.x: <https://laravel.com/>
 
 ### Server Requirements
 
-- PHP >= 7.1.3
+- PHP >= 7.2.5
 - OpenSSL PHP Extension
 - PDO PHP Extension
 - Mbstring PHP Extension
