@@ -13,9 +13,9 @@ class CategoriesTableSeeder extends Seeder
 	{
 		try
 		{
-			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', db_prefixed_table('tag_video')));
-			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', db_prefixed_table('videos')));
-			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', db_prefixed_table('categories')));
+			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', 'tag_video'));
+			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', 'videos'));
+			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', 'categories'));
 			
 			$categories = 
 			[

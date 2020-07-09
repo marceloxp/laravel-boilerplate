@@ -15,17 +15,15 @@ class CitiesTableSeeder extends Seeder
 		$console = $this->command->getOutput();
 
 		$console->writeln('Removing old registers...');
-		\DB::select(sprintf('TRUNCATE TABLE %s;', db_prefixed_table('cities')));
+		\DB::select(sprintf('TRUNCATE TABLE %s;', 'cities'));
 
-		$console->writeln('Changing column [position] definition...');
-		\DB::select(sprintf('ALTER TABLE %s MODIFY `position` int(10) unsigned COMMENT "Posição";', db_prefixed_table('cities')));
-		
 		$console->writeln('Prepare seeding table...');
         $now = Carbon::now();
 		$data = $this->getData();
 
 		$states = [];
 		$cities = [];
+		$position = 0;
 		foreach ($data as $city)
 		{
 			$uf   = key($city);
@@ -37,17 +35,12 @@ class CitiesTableSeeder extends Seeder
 				$states[$uf] = $state->id;
 			}
 
-			$cities[] = ['name' => $name, 'state_id' => $states[$uf], 'created_at' => $now, 'updated_at' => $now];
+			$cities[] = ['name' => $name, 'state_id' => $states[$uf], 'position' => $position, 'created_at' => $now, 'updated_at' => $now];
+			$position++;
 		}
 
 		$console->writeln('Seeding table...');
 		App\Models\City::insert($cities);
-
-		$console->writeln('Ajust [position] field value');
-		\DB::select(sprintf('UPDATE %s SET `position` = `id` WHERE id >= 0;', db_prefixed_table('cities')));
-
-		$console->writeln('Restore column [position] definition...');
-		\DB::select(sprintf('ALTER TABLE %s MODIFY `position` int(10) unsigned DEFAULT NULL COMMENT "Posição";', db_prefixed_table('cities')));
 
 		$console->writeln('Done');
 		$console->newLine();

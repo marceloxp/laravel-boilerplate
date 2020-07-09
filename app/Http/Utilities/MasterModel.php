@@ -389,9 +389,23 @@ class MasterModel extends Model
 			{
 				$query = sprintf
 				(
-					'SELECT "caption", COLUMN_COMMENT AS `caption` FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "%s" AND COLUMN_NAME = "%s" LIMIT 1;',
+					"
+						SELECT (
+								   SELECT pg_catalog.col_description(c.oid, cols.ordinal_position::int)
+								   FROM pg_catalog.pg_class c
+								   WHERE c.oid = (SELECT cols.table_name::regclass::oid)
+									 AND c.relname = cols.table_name
+							   ) as caption
+
+						FROM information_schema.columns cols
+						WHERE cols.table_catalog = '%s'
+						  AND cols.table_schema = '%s'
+						  AND cols.table_name = '%s'
+						  AND column_name = '%s';
+					",
 					db_database_name(),
-					db_prefixed_table($p_table_name),
+					db_schema_name(),
+					$p_table_name,
 					$p_field_name
 				);
 				$result = collect(DB::select($query))->pluck('caption')->first();
@@ -478,29 +492,31 @@ class MasterModel extends Model
 
 				$query = sprintf
 				(
-					'
-						SELECT exists
+					"
+						SELECT EXISTS
 						(
 							SELECT
-								COLUMN_NAME
+								column_name
 							FROM
-								information_schema.COLUMNS
+								information_schema.columns
 							WHERE
-								TABLE_SCHEMA = "%s"
+								table_catalog = '%s'
 								AND
-								TABLE_NAME = "%s"
+								table_schema = '%s'
 								AND
-								COLUMN_NAME = "parent_id"
+								table_name = '%s'
+								AND
+								column_name = 'parent_id'
 						) AS has_parent_id;
-					',
+					",
 					db_database_name(),
-					db_prefixed_table($p_table_name)
+					db_schema_name(),
+					$p_table_name
 				);
 
 				$register      = DB::select($query);
 				$has_parent_id = intval($register[0]->has_parent_id);
 				$result        = ($has_parent_id == 1);
-
 				return $result;
 			}
 		);
@@ -527,24 +543,32 @@ class MasterModel extends Model
 				// SIMPLE RELATIONS
 				$query = sprintf
 				(
-					'
-						SELECT
-							`TABLE_NAME` AS table_name,
-							`COLUMN_NAME` AS field_name,
-							`REFERENCED_TABLE_NAME` AS ref_table,
-							`REFERENCED_COLUMN_NAME` AS field_index
+					"
+						SELECT tc.table_schema,
+							   tc.constraint_name,
+							   tc.table_name,
+							   kcu.column_name  AS field_name,
+							   ccu.table_schema AS foreign_table_schema,
+							   ccu.table_name   AS ref_table,
+							   ccu.column_name  AS field_index
 						FROM
-							`INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE`
+						     information_schema.table_constraints AS tc
+								 JOIN information_schema.key_column_usage AS kcu
+									  ON tc.constraint_name = kcu.constraint_name
+										  AND tc.table_schema = kcu.table_schema
+								 JOIN information_schema.constraint_column_usage AS ccu
+									  ON ccu.constraint_name = tc.constraint_name
+										  AND ccu.table_schema = tc.table_schema
 						WHERE
-							`TABLE_SCHEMA` = "%s"
-							AND
-							`REFERENCED_TABLE_NAME` IS NOT NULL
-							AND
-							`TABLE_NAME` = "%s"
+						      tc.table_schema = '%s'
+						      AND
+						      tc.table_name = '%s'
+						      AND
+						      tc.constraint_type = 'FOREIGN KEY';
 						;
-					',
-					db_database_name(),
-					db_prefixed_table($table_name)
+					",
+					db_schema_name(),
+					$table_name
 				);
 
 				$fields_relations = DB::select($query);
@@ -554,14 +578,14 @@ class MasterModel extends Model
 					$value = (array)$ref;
 					$value =
 					[
-						'table_name'    => db_trim_table_prefix($value['table_name']),
-						'table_model'   => \Illuminate\Support\Str::singular(db_trim_table_prefix($value['table_name'])),
+						'table_name'    => $value['table_name'],
+						'table_model'   => \Illuminate\Support\Str::singular($value['table_name']),
 						'field_name'    => $value['field_name'],
-						'ref_table'     => db_trim_table_prefix($value['ref_table']),
-						'ref_table'     => db_trim_table_prefix($value['ref_table']),
-						'ref_model'     => \Illuminate\Support\Str::singular(db_trim_table_prefix($value['ref_table'])),
+						'ref_table'     => $value['ref_table'],
+						'ref_table'     => $value['ref_table'],
+						'ref_model'     => \Illuminate\Support\Str::singular($value['ref_table']),
 						'field_index'   => $value['field_index'],
-						'custom_field'  => \Illuminate\Support\Str::singular(db_trim_table_prefix($value['ref_table'])),
+						'custom_field'  => \Illuminate\Support\Str::singular($value['ref_table']),
 						'has_parent_id' => self::getHasParentId($value['ref_table']),
 						'comment'       => ''
 					];
@@ -574,29 +598,35 @@ class MasterModel extends Model
 					// PIVOT RELATION
 					$query = sprintf
 					(
-						'
+						"
 							SELECT
-								TABLE_NAME
-							FROM
-								`INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE`
-							WHERE
-								`TABLE_SCHEMA` = "%s"
-								AND
-								COLUMN_NAME = "%s"
-								AND
-								REFERENCED_TABLE_NAME = "%s"
-								AND
-								TABLE_NAME LIKE "%%%s%%"
-							ORDER BY
-								TABLE_NAME, COLUMN_NAME
+								tc.table_name
+							FROM information_schema.table_constraints AS tc
+									 JOIN information_schema.key_column_usage AS kcu
+										  ON tc.constraint_name = kcu.constraint_name
+											  AND tc.table_schema = kcu.table_schema
+									 JOIN information_schema.constraint_column_usage AS ccu
+										  ON ccu.constraint_name = tc.constraint_name
+											  AND ccu.table_schema = tc.table_schema
+							WHERE tc.constraint_catalog = '%s'
+							  AND tc.table_schema = '%s'
+							  AND tc.constraint_type = 'FOREIGN KEY'
+							  AND ccu.table_name = '%s'
+							  AND kcu.column_name = '%s_id'
+							  AND tc.table_name LIKE '%%%s%%'
 							;
-						',
+						",
 						db_database_name(),
+						db_schema_name(),
+						$table_name,
 						sprintf('%s_id', str_plural_2_singular($table_name)),
-						db_prefixed_table($table_name),
-						\Illuminate\Support\Str::singular(db_trim_table_prefix($table_name))
+						str_plural_2_singular($table_name),
 					);
 					$pivot_tables = DB::select($query);
+					if (!empty($pivot_tables))
+					{
+						dump($pivot_tables); die;
+					}
 
 					$pivot_relations = [];
 					foreach ($pivot_tables as $pivot_table)
@@ -632,28 +662,59 @@ class MasterModel extends Model
 				// TABLE SCHEMA
 				$query = sprintf
 				(
-					'
-						SELECT
-							COLUMN_NAME              AS `name`,
-							DATA_TYPE                AS `type`,
-							COLUMN_TYPE              AS `rawtype`,
-							(COLUMN_KEY = "PRI")     AS `pri`,
-							COLUMN_DEFAULT           AS `default_value`,
-							COLUMN_COMMENT           AS `comment`,
-							CHARACTER_MAXIMUM_LENGTH AS `max_length`,
-							(IS_NULLABLE = "YES")    AS `nullable`
-						FROM
-							information_schema.COLUMNS
-						WHERE
-							TABLE_SCHEMA = "%s"
-							AND
-							TABLE_NAME = "%s"
-						ORDER BY
-							ORDINAL_POSITION
-						;
-					',
+					"
+					SELECT column_name                                                          AS name,
+						   udt_name                                                             AS type,
+						   (SELECT EXISTS(select kcu.table_schema,
+												 kcu.table_name,
+												 tco.constraint_name,
+												 kcu.ordinal_position as position,
+												 kcu.column_name      as key_column
+										  from information_schema.table_constraints tco
+												   join information_schema.key_column_usage kcu
+														on kcu.constraint_name = tco.constraint_name and
+														   kcu.constraint_schema = tco.constraint_schema and
+														   kcu.constraint_name = tco.constraint_name
+										  where tco.constraint_type = 'PRIMARY KEY'
+											and kcu.table_name = information_schema.columns.table_name
+											and kcu.column_name = information_schema.columns.column_name
+										  order by kcu.table_schema, kcu.table_name, position)) AS pri,
+						   column_default                                                       AS default_value,
+						   (SELECT pgd.description
+							FROM pg_catalog.pg_statio_all_tables as st
+									 inner join pg_catalog.pg_description pgd on (pgd.objoid = st.relid)
+									 inner join information_schema.columns c
+												on (pgd.objsubid = c.ordinal_position and c.table_schema = st.schemaname and
+													c.table_name = st.relname)
+							WHERE table_name = information_schema.columns.table_name AND st.schemaname = information_schema.columns.table_schema
+							  AND column_name = information_schema.columns.column_name)         AS comment,
+						   (select cc.check_clause
+							from information_schema.table_constraints tc
+									 join information_schema.check_constraints cc
+										  on tc.constraint_schema = cc.constraint_schema and tc.constraint_name = cc.constraint_name
+									 join pg_namespace nsp on nsp.nspname = cc.constraint_schema
+									 join pg_constraint pgc
+										  on pgc.conname = cc.constraint_name and pgc.connamespace = nsp.oid and pgc.contype = 'c'
+									 join information_schema.columns col
+										  on col.table_schema = tc.table_schema and col.table_name = tc.table_name and
+											 col.ordinal_position = ANY (pgc.conkey)
+							where tc.constraint_schema not in ('pg_catalog', 'information_schema')
+							  and tc.table_name = information_schema.columns.table_name
+							  and col.column_name = information_schema.columns.column_name
+						      and tc.table_schema = information_schema.columns.table_schema
+							group by tc.table_schema, tc.table_name, tc.constraint_name, cc.check_clause, col.column_name
+							order by tc.table_schema, tc.table_name),
+						   character_maximum_length                                             AS max_length,
+						   is_nullable                                                          AS nullable
+						FROM information_schema.columns
+						WHERE table_catalog = '%s'
+						  AND table_schema = '%s'
+						  AND table_name = '%s'
+						ORDER BY table_name, ordinal_position;
+					",
 					db_database_name(),
-					db_prefixed_table($table_name)
+					db_schema_name(),
+					$table_name
 				);
 
 				$result = [];
@@ -682,15 +743,29 @@ class MasterModel extends Model
 						break;
 					}
 
-					if ($value['type'] == 'enum')
+					if (strpos($value['check_clause'], ')::text = ANY ((ARRAY[') !== false)
 					{
-						$str = $value['rawtype'];
-						preg_match("/^enum\(\'(.*)\'\)$/", $str, $matches);
-						$enum = explode("','", $matches[1]);
+						$str = $value['check_clause'];
+						$str = str_replace('(((' . $field_name . ')::text = ANY ((ARRAY[', '', $str);
+						$str = str_replace('::character varying', '', $str);
+						$str = str_replace('])::text[])))', '', $str);
+						$str = str_replace("'", '', $str);
+						$str = str_replace(", ", ',', $str);
+						$enum = explode(",", $str);
 						$value['options'] = $enum;
 					}
+					unset($value['check_clause']);
 
-					unset($value['rawtype']);
+					if (strpos($value['default_value'], 'nextval(') !== false)
+					{
+						$value['default_value'] = null;
+					}
+
+					if (strpos($value['default_value'], '::character varying') !== false)
+					{
+						$value['default_value'] = str_replace('::character varying', '', $value['default_value']);
+						$value['default_value'] = trim($value['default_value'], "'");
+					}
 
 					$value['has_relation'] = false;
 					if (array_key_exists($field_name, $relations))

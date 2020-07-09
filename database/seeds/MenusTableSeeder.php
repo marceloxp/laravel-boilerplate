@@ -16,8 +16,8 @@ class MenusTableSeeder extends Seeder
 		$master_developer = ['Master','Developer'];
 		$master_admin_developer = ['Master','Admin','Developer'];
 
-		\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', db_prefixed_table('menu_role')));
-		\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', db_prefixed_table('menus')));
+		\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', 'menu_role'));
+		\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', 'menus'));
 
 		$group_order = 0;
 		
