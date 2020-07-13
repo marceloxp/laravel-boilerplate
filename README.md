@@ -1,7 +1,7 @@
 # Laravel Boilerplate
 
 > Basic site boilerplate start.
-> Version 0.4.0
+> Version 0.4.1
 
 ## Install
 
@@ -27,7 +27,7 @@ php artisan migrate:refresh --seed
 
 ## Framework
 
-- Laravel 6.2.x: <https://laravel.com/>
+- Laravel 7.x: <https://laravel.com/>
 
 ### Server Requirements
 
