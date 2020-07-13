@@ -40,7 +40,6 @@ class MenusTableSeeder extends Seeder
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Developer', 'fas fa-terminal', $master_developer, $group_order);
 			$item = \App\Models\Menu::addMenuLink($group, 'Admin Menu', 'fas fa-bars', $master_developer, 'admin_menu');
 			$item = \App\Models\Menu::addMenuLink($group, 'phpinfo', 'fas fa-info-circle', $master_developer, 'admin_phpinfo');
-			$item = \App\Models\Menu::addMenuInternalLink($group, 'Adminer', 'fas fa-database', $master_developer, 'adminer', '_blank');
 
 		$group_order += 10;
 		$group = \App\Models\Menu::addMenuHeader($menu, 'Comum', 'fas fa-circle', $public, $group_order);
