@@ -50,24 +50,32 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => public_path('public'),
+            'url' => env('APP_URL') . '/',
             'visibility' => 'public',
         ],
 
         'upload_images' => 
         [
             'driver'     => 'local',
-            'root'       => storage_path('app/public/uploads/images'),
-            'url'        => env('APP_URL') . '/storage/uploads/images',
+            'root'       => public_path('uploads/images'),
+            'url'        => env('APP_URL') . '/uploads/images',
             'visibility' => 'public',
         ],
 
         'upload_pdfs' => 
 		[
             'driver'     => 'local',
-            'root'       => storage_path('app/public/uploads/pdfs'),
-            'url'        => env('APP_URL') . '/storage/uploads/pdfs',
+            'root'       => public_path('uploads/pdfs'),
+            'url'        => env('APP_URL') . '/uploads/pdfs',
+            'visibility' => 'public',
+        ],
+
+        'upload_xls' => 
+        [
+            'driver'     => 'local',
+            'root'       => public_path('uploads/xls'),
+            'url'        => env('APP_URL') . '/uploads/xls',
             'visibility' => 'public',
         ],
 
