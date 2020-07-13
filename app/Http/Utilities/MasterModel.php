@@ -308,15 +308,7 @@ class MasterModel extends Model
 			['getTableCaption', $table_name],
 			function() use ($table_name)
 			{
-				$query = sprintf
-				(
-					'SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "%s";',
-					db_database_name(),
-					db_prefixed_table($table_name)
-				);
-				$result = collect(DB::select($query))->pluck('TABLE_COMMENT')->first();
-
-				return $result;
+				return db_get_comment_table($table_name);
 			},
 			5
 		);
@@ -612,7 +604,7 @@ class MasterModel extends Model
 							  AND tc.table_schema = '%s'
 							  AND tc.constraint_type = 'FOREIGN KEY'
 							  AND ccu.table_name = '%s'
-							  AND kcu.column_name = '%s_id'
+							  AND kcu.column_name = '%s'
 							  AND tc.table_name LIKE '%%%s%%'
 							;
 						",
@@ -620,41 +612,46 @@ class MasterModel extends Model
 						db_schema_name(),
 						$table_name,
 						sprintf('%s_id', str_plural_2_singular($table_name)),
-						str_plural_2_singular($table_name),
+						str_plural_2_singular($table_name)
 					);
 					$pivot_tables = DB::select($query);
-					if (!empty($pivot_tables))
-					{
-						dump($pivot_tables); die;
-					}
 
 					$pivot_relations = [];
 					foreach ($pivot_tables as $pivot_table)
 					{
 						$query = sprintf
 						(
-							'
-							SELECT
-								REFERENCED_TABLE_NAME
-							FROM
-								`INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE`
-							WHERE
-								`TABLE_SCHEMA` = "%s"
-								AND
-								TABLE_NAME = "%s"
-								AND
-								POSITION_IN_UNIQUE_CONSTRAINT = 1
-								AND
-								COLUMN_NAME != "%s"
+							"
+								SELECT
+									ccu.table_name   AS ref_table
+								FROM
+									information_schema.table_constraints AS tc
+									JOIN information_schema.key_column_usage AS kcu
+									ON tc.constraint_name = kcu.constraint_name
+									AND tc.table_schema = kcu.table_schema
+									JOIN information_schema.constraint_column_usage AS ccu
+									ON ccu.constraint_name = tc.constraint_name
+									AND ccu.table_schema = tc.table_schema
+								WHERE
+									tc.constraint_catalog = '%s'
+									AND
+									tc.table_schema = '%s'
+									AND
+									tc.table_name = '%s'
+									AND
+									tc.constraint_type = 'FOREIGN KEY'
+									AND
+									kcu.column_name != '%s'
 								;
-							',
+							",
 							db_database_name(),
-							$pivot_table->TABLE_NAME,
+							db_schema_name(),
+							$pivot_table->table_name,
 							sprintf('%s_id', str_plural_2_singular($table_name))
 						);
 						$pivot_table           = DB::select($query);
-						$referenced_table_name = $pivot_table[0]->REFERENCED_TABLE_NAME;
-						$pivot_field_name      = db_trim_table_prefix($referenced_table_name);
+						$referenced_table_name = $pivot_table[0]->ref_table;
+						$pivot_field_name      = $referenced_table_name;
 						$pivot_relations[]     = $pivot_field_name;
 					}
 				}

@@ -152,7 +152,12 @@ trait TreeModelTrait
 	public static function getTree($p_fields, $fields_schema)
 	{
 		$use_fields = (!in_array('parent_id', $p_fields)) ? array_merge($p_fields, ['parent_id']) : array_merge($p_fields);
-		$select_fields = collect($use_fields)->filter(function ($key, $value) use ($fields_schema) { return $fields_schema[$key]['is_appends'] == false; })->toArray();
+		$select_fields = collect($use_fields)->filter(
+			function ($key, $value) use ($fields_schema)
+			{
+				return $fields_schema[$key]['is_appends'] == false;
+			}
+		)->toArray();
 
 		$ids       = [];
 		$master_id = 0;

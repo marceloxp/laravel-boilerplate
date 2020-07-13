@@ -35,7 +35,7 @@ class MenuController extends AdminController
 				'request'        => $request,
 				'model'          => $this->model,
 				'editable'       => true,
-				'display_fields' => ['id','order','name','ico','roles','link','created_at']
+				'display_fields' => ['id','order','name','roles','ico','link','created_at']
 			]
 		);
 	}
@@ -82,8 +82,8 @@ class MenuController extends AdminController
 				[
 					'id'         => 0,
 					'order'      => 3,
-					'roles'      => 9,
 					'name'       => 3,
+					'roles'      => 9,
 					'slug'       => 3,
 					'parent_id'  => 3,
 					'type'       => 3,
