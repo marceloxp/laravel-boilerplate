@@ -747,6 +747,10 @@ class AdminController extends Controller
 		}
 		else
 		{
+			if (array_key_exists('id', $form))
+			{
+				unset($form['id']);
+			}
 			$register = $model::create($form);
 		}
 

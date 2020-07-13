@@ -19,6 +19,8 @@ public/adminer/plugin\.php
 
 public/adminer/struct-comments\.php
 
+public/uploads/*
+
 _temp/
 
 app/Console/Commands/master/laravel-boilerplate-master/
