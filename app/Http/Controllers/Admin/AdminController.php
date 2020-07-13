@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Http\Utilities\Result;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -505,7 +506,7 @@ class AdminController extends Controller
 
 		if (!empty($params['pivot_scope']))
 		{
-			$params['pivot_scope']['model'] = (string)S::create($params['pivot_scope']['name'])->underscored();
+			$params['pivot_scope']['model'] = Str::snake($params['pivot_scope']['name']);
 		}
 
 		extract($params, EXTR_OVERWRITE);

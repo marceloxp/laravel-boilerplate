@@ -102,7 +102,7 @@ if (!function_exists('db_get_name'))
 {
 	function db_get_name($table_name, $id)
 	{
-		$register = DB::select(sprintf('SELECT `name` FROM `%s` WHERE `id` = "%s";', $table_name, $id));
+		$register = DB::select(sprintf('SELECT name FROM %s WHERE id = %s;', $table_name, $id));
 		if (empty($register))
 		{
 			return '';
