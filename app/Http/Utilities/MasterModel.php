@@ -750,6 +750,7 @@ class MasterModel extends Model
 						$str = str_replace(", ", ',', $str);
 						$enum = explode(",", $str);
 						$value['options'] = $enum;
+						$value['type'] = 'enum';
 					}
 					unset($value['check_clause']);
 
