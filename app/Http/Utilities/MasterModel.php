@@ -1091,7 +1091,7 @@ class MasterModel extends Model
 					$label_text = \Hook::apply_filters($hook_name, $label_text);
 					$label_text = $label_text . $asterisk;
 
-					$result .= \Form::label($p_field_name, $label_text, ['class' => 'form-check-label'], false);
+					$result .= \Form::label($p_field_name, ($metadata['comment'] ?? $p_field_name) . (($required) ? ' *' : ''), ['class' => 'form-check-label']);
 					$result .= '</div>';
 					if (!empty($this->hasError($p_field_name)))
 					{
