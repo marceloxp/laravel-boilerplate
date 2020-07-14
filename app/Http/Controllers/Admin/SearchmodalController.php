@@ -123,7 +123,7 @@ class SearchmodalController extends AdminController
 						' . $links . '
 					</div>
 					<div class="col-xs-6 col-md-6">
-						<button type="button" class="btn btn-danger"  id="search-modal-cancel"><i class="fa fa-fw fa-close"></i> Cancelar</button>
+						<button type="button" class="btn btn-danger"  id="search-modal-cancel"><i class="fas fa-times"></i> Cancelar</button>
 						<button type="button" class="btn btn-success" id="search-modal-select"><i class="fa fa-fw fa-check"></i> Selecionar</button>
 					</div>
 				</div>
