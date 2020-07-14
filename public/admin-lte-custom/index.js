@@ -986,8 +986,7 @@ umsappadmin.Tindex = function($, objname, options)
 		if (ids.length <= 0) { return; }
 
 		var button_name = $button.attr('id');
-		var config = datasite.params.tableconfig.admin.index.buttons[button_name];
-		self.log.print(config);
+		var config = datasite.params.tableconfig.admin[datasite.url.name].buttons[button_name];
 
 		var execute_action = function()
 		{
