@@ -32,13 +32,15 @@ php artisan migrate:refresh --seed
 ### Server Requirements
 
 - PHP >= 7.2.5
+- BCMath PHP Extension
+- Ctype PHP Extension
+- Fileinfo PHP extension
+- JSON PHP Extension
+- Mbstring PHP Extension
 - OpenSSL PHP Extension
 - PDO PHP Extension
-- Mbstring PHP Extension
 - Tokenizer PHP Extension
 - XML PHP Extension
-- Ctype PHP Extension
-- JSON PHP Extension
 
 ### Dev URL
 
