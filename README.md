@@ -79,7 +79,6 @@ php artisan migrate:refresh --seed
 | shridharkaushik29/laravel-hooks  | <https://github.com/shridharkaushik29/laravel-hooks>     |
 | digitalnature/php-ref            | <https://github.com/digitalnature/php-ref>               |
 | barryvdh/laravel-debugbar        | <https://github.com/barryvdh/laravel-debugbar>           |
-| miroc/laravel-adminer            | <https://github.com/miroc/Laravel-Adminer>               |
 | marceloxp/laravel_commands       | <https://github.com/marceloxp/laravel_commands>          |
 | webreinvent/laravel-nestable     | <https://github.com/atayahmet/laravel-nestable>          |
 | ezyang/htmlpurifier              | <https://github.com/ezyang/htmlpurifier>                 |
@@ -99,62 +98,6 @@ php artisan migrate:refresh --seed
 ## Admin Template
 
 > AdminLTE: <https://adminlte.io/themes/AdminLTE/>
-
-## Artisan commands
-
-> Create a new Admin Controller
-
-```bash
-php artisan makex:admin_controller
-```
-
-> Create a new Single Master Model
-
-```bash
-php artisan makex:mastermodel
-```
-
-> Add Pivot to Table
-
-```bash
-makex:add_pivot_to_table
-```
-
-> Clear cached files
-
-```bash
-makex:cached --clear
-```
-
-> List cached files
-
-```bash
-makex:cached --list
-```
-
-> Count cached files
-
-```bash
-makex:cached --count
-```
-
-> Create a new Table, Migration, Model and Admin Page
-
-```bash
-makex:create_simple_table
-```
-
-> Add List Model to Target Model
-
-```bash
-makex:model {model_target} {model_list} --onetoone
-```
-
-> Add Rules Validation to Model
-
-```bash
-makex:model_rules
-```
 
 ## Custom Classes
 
@@ -332,7 +275,6 @@ echo print_alert(); // Auto print messages from Session
 
 ```php
 echo db_database_name();                                // Returns current database name
-echo db_prefix();                                       // Returns current database prefix tables
 echo db_comment_table('table_name', 'comment_table');   // Define table comment
 echo db_get_comment_table('table_name');                // Returns table comment
 echo db_get_pivot_table_name(['videos','tags'], true);  // Returns pivot table name (Ex: blp_tag_video)
@@ -345,8 +287,6 @@ echo db_model_to_table_name('City');                    // Returns table name fr
 echo db_table_name_to_model('cities');                  // Returns model name from table name => City
 echo db_table_name_to_model_path('cities');             // Returns path model from table name => \App\Models\City
 echo db_table_name_to_field_id('cities');               // Returns relative field id to another table => city_id
-echo db_trim_table_prefix('blp_cities');                // Returns table name without database table prefix => cities
-echo db_prefixed_table('cities');                       // Returns table with database table prefix => blp_cities
 echo db_table_exists('cities');                         // Returns if table exists in database
 ```
 
