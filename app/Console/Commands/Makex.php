@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Hook;
 
-class Makex extends \App\Console\MakexCommand
+class Makex extends \App\Console\Makex\MakexCommand
 {
 	/**
 	 * The name and signature of the console command.

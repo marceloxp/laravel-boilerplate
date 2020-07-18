@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class MakexAddPivotToTable extends \App\Console\MakexCommand
+class MakexAddPivotToTable extends \App\Console\Makex\MakexCommand
 {
 	/**
 	 * The name and signature of the console command.

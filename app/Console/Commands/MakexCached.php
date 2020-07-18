@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Utilities\Cached;
 
-class MakexCached extends \App\Console\MakexCommand
+class MakexCached extends \App\Console\Makex\MakexCommand
 {
 	/**
 	 * The name and signature of the console command.

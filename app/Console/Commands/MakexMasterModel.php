@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class MakexMasterModel extends \App\Console\MakexCommand
+class MakexMasterModel extends \App\Console\Makex\MakexCommand
 {
 	/**
 	 * The name and signature of the console command.

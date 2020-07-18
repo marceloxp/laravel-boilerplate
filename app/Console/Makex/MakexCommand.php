@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console;
+namespace App\Console\Makex;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;

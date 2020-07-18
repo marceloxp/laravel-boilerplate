@@ -91,6 +91,7 @@
 			"@php artisan package:discover --ansi"
 		],
 		"post-create-project-cmd": [
+			"cp .env.local .env",
 			"@php artisan key:generate --ansi"
 		]
 	}

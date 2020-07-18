@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class MakexCreateSimpleTable extends \App\Console\MakexCommand
+class MakexCreateSimpleTable extends \App\Console\Makex\MakexCommand
 {
 	/**
 	 * The name and signature of the console command.
@@ -331,7 +331,7 @@ class Create{ClassName}Table extends Migration
 		}
 		$colunmed_str = implode(PHP_EOL, $colunmed);
 
-		$source_file = app_path('Console/Makex/TemplateController.php');
+		$source_file = app_path('Console/Makex/TemplateController.php.txt');
 		$dest_file   = app_path('Http/Controllers/Admin/' . $controller_name . 'Controller.php');
 
 		if (file_exists($dest_file))
