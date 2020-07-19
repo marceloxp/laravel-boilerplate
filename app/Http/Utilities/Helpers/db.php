@@ -315,7 +315,7 @@ if (!function_exists('generate_unique_code'))
 			try
 			{
 				$k++;
-				$code  = mb_strtolower(\Illuminate\Support\Str::random($codelength));
+				$code  = md5(\Carbon\Carbon::now()->format('Ym') . \Illuminate\Support\Str::random($codelength));
 				$id    = \DB::table('codes')->insertGetId(['name' => $code, 'attempts' => $k]);
 				$valid = ($id > 0);
 			}

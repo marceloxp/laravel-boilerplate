@@ -18,8 +18,8 @@ class CreateCodes extends Migration
 			'codes',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
-				$table->string('name', 24)->unique()->comment('Código');
+				$table->bigIncrements('id');
+				$table->string('name', 32)->unique()->comment('Código');
 				$table->integer('attempts')->comment('Tentativas');
 				$table->timestamps();
 				$table->softDeletes();
