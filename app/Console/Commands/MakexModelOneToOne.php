@@ -78,7 +78,7 @@ class MakexModelOneToOne extends \App\Console\Makex\MakexCommand
 
 			$table_name = db_model_to_table_name($model_list);
 			$caption    = db_get_comment_table($table_name);
-			$line       = sprintf("'table_many'     => ['name' => '%s', 'caption' => '%s', 'icon' => 'far fa-folder'],", $table_name, $caption);
+			$line       = sprintf("'table_many'     => [['name' => '%s', 'caption' => '%s', 'icon' => 'far fa-folder']],", $table_name, $caption);
 			$body       = file_get_contents($controller_file);
 			$body       = str_replace("'table_many'     => null,", $line, $body);
 			file_put_contents($controller_file, $body);
