@@ -18,9 +18,9 @@ class CreateTagvideosTable extends Migration
 			'tag_video',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
-				$table->unsignedInteger('video_id')->index();
-				$table->unsignedInteger('tag_id')->index();
+				$table->bigIncrements('id');
+				$table->bigInteger('video_id')->index();
+				$table->bigInteger('tag_id')->index();
 				$table->timestamps();
 
 				$table->unique(['video_id','tag_id']);

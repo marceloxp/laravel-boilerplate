@@ -18,7 +18,7 @@ class CreateMenusTable extends Migration
 			'menus',
 			function (Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->bigInteger('parent_id')->comment('Parent');
 				$table->integer('order')->default(0)->comment('Ordem');
 				$table->enum('type', ['root','dashboard','header','link','internal-link'])->default('link')->comment('Tipo');

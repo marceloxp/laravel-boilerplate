@@ -18,9 +18,9 @@ class CreateMenuroleTable extends Migration
 			'menu_role',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
-				$table->unsignedInteger('menu_id')->index();
-				$table->unsignedInteger('role_id')->index();
+				$table->bigIncrements('id');
+				$table->bigInteger('menu_id')->index();
+				$table->bigInteger('role_id')->index();
 				$table->timestamps();
 
 				$table->unique(['menu_id','role_id']);

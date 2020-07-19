@@ -18,7 +18,7 @@ class CreateTagsTable extends Migration
 			'tags',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->string('name',150)->unique()->comment('Tag');
 				$table->timestamps();
 				$table->softDeletes();

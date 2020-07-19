@@ -18,7 +18,7 @@ class CreateAuditsTable extends Migration
 			'audits',
 			function (Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->bigInteger('user_id')->nullable()->comment('Cód Usuário');
 				$table->string('username', 255)->nullable()->comment('Usuário');
 				$table->enum('name', ['created','updated','removed'])->comment('Evento');

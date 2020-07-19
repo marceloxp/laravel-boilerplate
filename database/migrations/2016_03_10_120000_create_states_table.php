@@ -18,7 +18,7 @@ class CreateStatesTable extends Migration
 			'states',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->string('name',150)->comment('Estado');
 				$table->string('uf',2)->comment('UF');
 				$table->string('code', 24)->comment('Código');

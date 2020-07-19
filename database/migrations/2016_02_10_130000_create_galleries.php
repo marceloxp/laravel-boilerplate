@@ -18,7 +18,7 @@ class CreateGalleries extends Migration
 			'galleries',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->string('category',150)->comment('Categoria');
 				$table->string('name',150)->comment('Slug');
 				$table->string('description',255)->nullable()->comment('Descrição');

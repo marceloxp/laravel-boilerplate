@@ -18,8 +18,8 @@ class CreateVideosTable extends Migration
 			'videos',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
-				$table->integer('category_id')->unsigned()->comment('Categoria');
+				$table->bigIncrements('id');
+				$table->bigInteger('category_id')->unsigned()->comment('Categoria');
 				$table->string('name',150)->comment('Nome');
 				$table->string('youtube',150)->comment('YouTube');
 				$table->timestamps();

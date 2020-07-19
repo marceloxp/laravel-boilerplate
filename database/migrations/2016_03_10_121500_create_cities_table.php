@@ -18,8 +18,8 @@ class CreateCitiesTable extends Migration
 			'cities',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
-				$table->integer('state_id')->unsigned()->comment('Estado');
+				$table->bigIncrements('id');
+				$table->bigInteger('state_id')->unsigned()->comment('Estado');
 				$table->integer('position')->unsigned()->default(0)->comment('Posição');
 				$table->string('name',150)->comment('Cidade');
 				$table->timestamps();

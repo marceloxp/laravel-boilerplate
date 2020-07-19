@@ -18,7 +18,7 @@ class CreateRolesTable extends Migration
 			'roles',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->string('name',150)->comment('Nome');
 				$table->string('description',255)->comment('Descrição');
 				$table->enum('color', ['Azul','Azul Escuro','Roxo','Vermelho','Verde','Laranja','Cinza','Preto'])->default('Azul')->comment('Cor');

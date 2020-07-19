@@ -18,7 +18,7 @@ class CreateConfigsTable extends Migration
 			'configs',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->string('name',150)->unique()->comment('Nome');
 				$table->text('value')->comment('Valor');
 				$table->integer('flags')->nullable()->comment('Flags');

@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
 			'categories',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->string('name',150)->comment('Nome');
 				$table->string('slug', 255)->comment('Slug');
 				$table->bigInteger('parent_id')->comment('Parent');

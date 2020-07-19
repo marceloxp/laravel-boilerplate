@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
 			'users',
 			function(Blueprint $table)
 			{
-				$table->increments('id');
+				$table->bigIncrements('id');
 				$table->string('name')->comment('Nome');
 				$table->string('email')->comment('E-Mail');
 				$table->string('password')->comment('Senha');
