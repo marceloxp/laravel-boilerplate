@@ -122,9 +122,11 @@
 @endif
 
 @php
-	$include_file = null;
-	$hook_name    = hook_name(sprintf('admin_index_include_file_%s', $current_route));
-	$include_file = Hook::apply_filters($hook_name, $include_file);
+	$include_file   = null;
+	$hook_name      = hook_name(sprintf('admin_index_include_file_%s', $current_route));
+	$include_file   = Hook::apply_filters($hook_name, $include_file);
+	$has_exportable = $print_button = isset($exportable) ? $exportable : true;
+	$cols           = ($has_exportable) ? ['col-xs-7','col-xs-2','col-xs-3'] : ['col-xs-10','col','col-xs-2'];
 @endphp
 @if ($include_file)
 	@include($include_file)
@@ -133,7 +135,7 @@
 <div class="box box-success">
 	<div class="box-header with-border">
 		<div class="row">
-			<div class="btn-group col-xs-7">
+			<div class="btn-group {{ $cols[0] }}">
 				@php $buttons_edit = isset($editable) ? $editable : true; @endphp
 				@if ($buttons_edit)
 					<button type="button" id="btn-table-add" class="btn btn-success {{ $class_pivot }}"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Adicionar</button>
@@ -185,12 +187,12 @@
 			@if ($has_table)
 				@php $print_button = isset($exportable) ? $exportable : true; @endphp
 				@if ($print_button)
-					<div class="btn-group col-xs-2">
+					<div class="btn-group {{ $cols[1] }}">
 						<button type="button" id="btn-table-exp" class="btn btn-success pull-right"><i class="fas fa-file-excel"></i> Exportar</button>
 					</div>
 				@endif
 			@endif
-			<div class="btn-group col-xs-3">
+			<div class="btn-group {{ $cols[2] }}">
 				<div class="form-group" style="margin-bottom: 0px;">
 					<select class="form-control" id="cb-table-order" name="cb-table-order">
 						@foreach(config('admin.index.pagination.perpages', [20,50,100,200,300]) as $item_page)
