@@ -109,11 +109,11 @@ umsappadmin.Tindex = function($, objname, options)
 		$(document).on
 		(
 			'click',
-			'#btn-table-many',
+			'.btn-table-many',
 			function(e)
 			{
 				e.preventDefault();
-				self.onManyButtonClick();
+				self.onManyButtonClick($(this));
 			}
 		);
 
@@ -606,14 +606,14 @@ umsappadmin.Tindex = function($, objname, options)
 		window.open(new_url);
 	};
 
-	this.onManyButtonClick = function()
+	this.onManyButtonClick = function($element)
 	{
 		if ($('.ck-row:checked').length !== 1)
 		{
 			return;
 		}
 		var ids = $('.ck-row:checked').attr('data-ids');
-		var route = $('#btn-table-many').attr('data-link');
+		var route = $element.attr('data-link');
 		if (empty(ids)){ return; }
 		var new_url = datasite.url.admin + '/' + datasite.params.table_name + '/' + ids + '/' + route;
 		window.open(new_url);
