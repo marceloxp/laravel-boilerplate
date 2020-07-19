@@ -382,18 +382,19 @@ class MasterModel extends Model
 				$query = sprintf
 				(
 					"
-						SELECT (
-								   SELECT pg_catalog.col_description(c.oid, cols.ordinal_position::int)
-								   FROM pg_catalog.pg_class c
-								   WHERE c.oid = (SELECT cols.table_name::regclass::oid)
-									 AND c.relname = cols.table_name
-							   ) as caption
-
-						FROM information_schema.columns cols
-						WHERE cols.table_catalog = '%s'
-						  AND cols.table_schema = '%s'
-						  AND cols.table_name = '%s'
-						  AND column_name = '%s';
+						SELECT
+							column_name,
+							col_description((table_schema||'.'||table_name)::regclass::oid, ordinal_position) as caption
+						FROM
+							information_schema.columns
+						WHERE
+							table_catalog = '%s'
+							AND
+							table_schema = '%s'
+							AND
+							table_name = '%s'
+							AND
+							column_name = '%s';
 					",
 					db_database_name(),
 					db_schema_name(),
@@ -544,7 +545,7 @@ class MasterModel extends Model
 							   ccu.table_name   AS ref_table,
 							   ccu.column_name  AS field_index
 						FROM
-						     information_schema.table_constraints AS tc
+							 information_schema.table_constraints AS tc
 								 JOIN information_schema.key_column_usage AS kcu
 									  ON tc.constraint_name = kcu.constraint_name
 										  AND tc.table_schema = kcu.table_schema
@@ -552,11 +553,11 @@ class MasterModel extends Model
 									  ON ccu.constraint_name = tc.constraint_name
 										  AND ccu.table_schema = tc.table_schema
 						WHERE
-						      tc.table_schema = '%s'
-						      AND
-						      tc.table_name = '%s'
-						      AND
-						      tc.constraint_type = 'FOREIGN KEY';
+							  tc.table_schema = '%s'
+							  AND
+							  tc.table_name = '%s'
+							  AND
+							  tc.constraint_type = 'FOREIGN KEY';
 						;
 					",
 					db_schema_name(),
@@ -698,7 +699,7 @@ class MasterModel extends Model
 							where tc.constraint_schema not in ('pg_catalog', 'information_schema')
 							  and tc.table_name = information_schema.columns.table_name
 							  and col.column_name = information_schema.columns.column_name
-						      and tc.table_schema = information_schema.columns.table_schema
+							  and tc.table_schema = information_schema.columns.table_schema
 							group by tc.table_schema, tc.table_name, tc.constraint_name, cc.check_clause, col.column_name
 							order by tc.table_schema, tc.table_name),
 						   character_maximum_length                                             AS max_length,

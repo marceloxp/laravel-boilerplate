@@ -58,55 +58,17 @@ class MakexCommand extends Command
 
 	public function __getTables()
 	{
-		$tables_in_db = \DB::select('SHOW TABLES');
-		$db = sprintf('Tables_in_%s', env('DB_DATABASE'));
-		$table_prefix = env('DB_TABLE_PREFIX');
-		$tables = [];
-		foreach($tables_in_db as $table)
-		{
-			$table_name = str_replace($table_prefix, '', $table->{$db});
-			$tables[] = $table_name;
-		}
-
-		return $tables;
+		return collect(\Schema::getAllTables())->pluck('tablename')->toArray();
 	}
 
 	public function __getFieldsMetadata($p_table)
 	{
-		$query = sprintf
-		(
-			'SELECT * FROM `information_schema`.`COLUMNS` WHERE `table_schema` = "%s" AND table_name = "%s%s"',
-			env('DB_DATABASE'),
-			env('DB_TABLE_PREFIX'),
-			$p_table
-		);
-		$result = \DB::select($query);
-		$result = collect($result)->map(function($x){ return (array) $x; })->toArray();
-
-		return $result;
+		return db_get_fields_metadata($p_table);
 	}
 
 	public function __getFieldNames($p_table, $p_add_comments = false)
 	{
-		$fields = $this->__getFieldsMetadata($p_table);
-		if (empty($fields))
-		{
-			return null;
-		}
-		$result = [];
-		foreach ($fields as $field)
-		{
-			if ($p_add_comments)
-			{
-				$result[$field['COLUMN_NAME']] = $field['COLUMN_COMMENT'];
-			}
-			else
-			{
-				$result[] = $field['COLUMN_NAME'];
-			}
-		}
-
-		return $result;
+		return db_get_field_names($p_table, $p_add_comments);
 	}
 
 	public function printSingleLine()

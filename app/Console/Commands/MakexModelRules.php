@@ -123,17 +123,15 @@ class MakexModelRules extends \App\Console\Makex\MakexCommand
 		$data = [];
 		foreach ($fields as $field)
 		{
-			$field_name        = $field['COLUMN_NAME'];
-			$field_length      = $field['CHARACTER_MAXIMUM_LENGTH'];
-			$field_required    = ($field['IS_NULLABLE'] == 'NO');
-			$field_enum        = (substr($field['COLUMN_TYPE'], 0, 4) == 'enum');
+			$field_name        = $field->column_name;
+			$field_length      = $field->character_maximum_length;
+			$field_required    = ($field->is_nullable == 'NO');
+			$field_enum        = $field->hasEnum;
 			$data[$field_name] = [];
 
 			if ($field_enum)
 			{
-				preg_match("/^enum\(\'(.*)\'\)$/", $field['COLUMN_TYPE'], $matches);
-				$options = explode("','", $matches[1]);
-				$options = implode(',', $options);
+				$options = implode(',', $field->options);
 				$data[$field_name][] = sprintf('in:%s', $options);
 			}
 

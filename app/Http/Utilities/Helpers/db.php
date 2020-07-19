@@ -41,6 +41,117 @@ if (!function_exists('db_get_comment_table'))
 	}
 }
 
+if (!function_exists('db_get_field_names'))
+{
+	function db_get_field_names($p_table, $p_add_comments = false)
+	{
+		$query = sprintf
+		(
+			"
+				SELECT
+					column_name,
+					col_description((table_schema || '.' || table_name)::regclass::oid, ordinal_position) as caption
+				FROM
+					information_schema.columns
+				WHERE
+					table_catalog = '%s'
+					AND
+					table_schema = '%s'
+					AND
+					table_name = '%s'
+			",
+			db_database_name(),
+			db_schema_name(),
+			$p_table
+		);
+		$result = DB::select($query);
+
+		if ($p_add_comments)
+		{
+			return collect($result)->map(function($item) {
+				return [$item->column_name => $item->caption];
+			})->collapse()->toArray();
+		}
+		else
+		{
+			return collect($result)->pluck('column_name')->toArray();
+		}
+	}
+}
+
+if (!function_exists('db_get_fields_metadata'))
+{
+	function db_get_fields_metadata($p_table)
+	{
+		$query = sprintf
+		(
+			"
+				SELECT
+					column_name, table_catalog, table_schema, table_name,
+					col_description((table_schema||'.'||table_name)::regclass::oid, ordinal_position) as caption,
+					column_default, is_nullable, data_type, udt_name, character_maximum_length,
+					numeric_precision, numeric_precision_radix, numeric_scale,
+					(select cc.check_clause
+					from information_schema.table_constraints tc
+					join information_schema.check_constraints cc
+					on tc.constraint_schema = cc.constraint_schema and tc.constraint_name = cc.constraint_name
+					join pg_namespace nsp on nsp.nspname = cc.constraint_schema
+					join pg_constraint pgc
+					on pgc.conname = cc.constraint_name and pgc.connamespace = nsp.oid and pgc.contype = 'c'
+					join information_schema.columns col
+					on col.table_schema = tc.table_schema and col.table_name = tc.table_name and
+					col.ordinal_position = ANY (pgc.conkey)
+					where tc.constraint_schema not in ('pg_catalog', 'information_schema')
+					and tc.table_name = information_schema.columns.table_name
+					and col.column_name = information_schema.columns.column_name
+					and tc.table_schema = information_schema.columns.table_schema
+					group by tc.table_schema, tc.table_name, tc.constraint_name, cc.check_clause, col.column_name
+					order by tc.table_schema, tc.table_name)
+				FROM
+					information_schema.columns
+				WHERE
+					table_catalog = '%s'
+					AND
+					table_schema = '%s'
+					AND
+					table_name = '%s'
+			",
+			db_database_name(),
+			db_schema_name(),
+			$p_table
+		);
+		$result = DB::select($query);
+		collect($result)->transform(function($item)
+		{
+			$item->hasEnum = false;
+			if (strpos($item->check_clause, ')::text = ANY ((ARRAY[') !== false)
+			{
+				$str = $item->check_clause;
+				$str = str_replace('(((' . $item->column_name . ')::text = ANY ((ARRAY[', '', $str);
+				$str = str_replace('::character varying', '', $str);
+				$str = str_replace('])::text[])))', '', $str);
+				$str = str_replace("'", '', $str);
+				$str = str_replace(", ", ',', $str);
+				$enum = explode(",", $str);
+				$item->hasEnum = true;
+				$item->options = $enum;
+			}
+
+			if (strpos($item->column_default, 'nextval(') !== false)
+			{
+				$item->column_default = null;
+			}
+
+			if (strpos($item->column_default, '::character varying') !== false)
+			{
+				$item->column_default = str_replace('::character varying', '', $item->column_default);
+				$item->column_default = trim($item->column_default, "'");
+			}
+		});
+		return $result;
+	}
+}
+
 if (!function_exists('db_get_pivot_table_name'))
 {
 	function db_get_pivot_table_name($p_table_names)
