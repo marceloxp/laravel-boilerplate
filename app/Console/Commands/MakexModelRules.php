@@ -12,7 +12,7 @@ class MakexModelRules extends \App\Console\Makex\MakexCommand
 	 *
 	 * @var string
 	 */
-	protected $signature = 'makex:model_rules {model_target}';
+	protected $signature = 'makex:model_rules {model_schema} {model_target}';
 
 	/**
 	 * The console command description.
@@ -26,7 +26,7 @@ class MakexModelRules extends \App\Console\Makex\MakexCommand
 	 *
 	 * @var string
 	 */
-	protected $example = 'php artisan makex:model_rules Post';
+	protected $example = 'php artisan makex:model_rules support Post';
 
 	/**
 	 * Create a new command instance.
@@ -51,6 +51,7 @@ class MakexModelRules extends \App\Console\Makex\MakexCommand
 		$this->br();
 
 		$this->model_target = $this->argument('model_target');
+		$this->model_schema = $this->argument('model_schema');
 		$this->addRulesToModel();
 
 		$this->info($this->__getLine());
@@ -59,9 +60,7 @@ class MakexModelRules extends \App\Console\Makex\MakexCommand
 
 	private function addRulesToModel()
 	{
-		$folder_model  = 'Models';
-		$folder_model  = (empty($folder_model)) ? 'Models' : $folder_model;
-		$folder_model .= '/';
+		$folder_model  = 'Models/' . ucfirst($this->model_schema) . '/';
 
 		$class_path_model = '\\App\\' . str_replace('/', '\\', $folder_model);
 
@@ -92,7 +91,7 @@ class MakexModelRules extends \App\Console\Makex\MakexCommand
 				"		[",
 				"	" . $str_rules,
 				"		];",
-				"		return Role::_validate(\$request, \$rules, \$id);",
+				"		return " . $this->model_target . "::_validate(\$request, \$rules, \$id);",
 				"	}",
 				"}",
 				PHP_EOL,
@@ -118,7 +117,7 @@ class MakexModelRules extends \App\Console\Makex\MakexCommand
 	private function getRules()
 	{
 		$table = \Illuminate\Support\Str::plural(strtolower($this->model_target));
-		$fields = $this->__getFieldsMetadata($table);
+		$fields = db_get_fields_metadata($this->model_schema, $table);
 
 		$data = [];
 		foreach ($fields as $field)

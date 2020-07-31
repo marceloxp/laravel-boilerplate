@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\_schema_model;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\ModelName;
+use App\Http\Controllers\Admin\AdminController;
+use App\Models\_schema_model\ModelName;
 use Hook;
 
 class UserCustomInputController extends AdminController

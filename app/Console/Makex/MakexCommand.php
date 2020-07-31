@@ -66,9 +66,9 @@ class MakexCommand extends Command
 		return db_get_fields_metadata($p_table);
 	}
 
-	public function __getFieldNames($p_table, $p_add_comments = false)
+	public function __getFieldNames($p_schema_name, $p_table, $p_add_comments = false)
 	{
-		return db_get_field_names($p_table, $p_add_comments);
+		return db_get_field_names($p_schema_name, $p_table, $p_add_comments);
 	}
 
 	public function printSingleLine()
