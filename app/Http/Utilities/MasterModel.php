@@ -305,10 +305,10 @@ class MasterModel extends Model
 		$result = Cached::get
 		(
 			'sys-model',
-			['getTableCaption', $table_name],
+			['getTableCaption', self::getSchemaName(), $table_name],
 			function() use ($table_name)
 			{
-				return db_get_comment_table($table_name);
+				return db_get_comment_table(self::getSchemaName(), $table_name);
 			},
 			5
 		);
@@ -316,10 +316,25 @@ class MasterModel extends Model
 		return $result['data'];
 	}
 
-	public static function getTableName()
+	public static function getTableName($add_schema = false)
 	{
 		$instanced_model = with(new static);
-		$result = $instanced_model->getTable();
+		if ($add_schema)
+		{
+			$result = sprintf('%s.%s', $instanced_model->getConnection()->getConfig()['schema'], $instanced_model->getTable());
+		}
+		else
+		{
+			$result = $instanced_model->getTable();
+		}
+		unset($instanced_model);
+		return $result;
+	}
+
+	public static function getSchemaName()
+	{
+		$instanced_model = with(new static);
+		$result = $instanced_model->getConnection()->getConfig()['schema'];
 		unset($instanced_model);
 		return $result;
 	}
@@ -376,7 +391,7 @@ class MasterModel extends Model
 		$result = Cached::get
 		(
 			'sys-model',
-			['getTableFieldCaption', $p_table_name, $p_field_name],
+			['getTableFieldCaption', self::getSchemaName(), $p_table_name, $p_field_name],
 			function() use ($p_table_name, $p_field_name)
 			{
 				$query = sprintf
@@ -397,7 +412,7 @@ class MasterModel extends Model
 							column_name = '%s';
 					",
 					db_database_name(),
-					db_schema_name(),
+					self::getSchemaName(),
 					$p_table_name,
 					$p_field_name
 				);
@@ -478,7 +493,7 @@ class MasterModel extends Model
 		$result = Cached::get
 		(
 			'sys-model',
-			['getHasParentId', $p_table_name],
+			['getHasParentId', self::getSchemaName(), $p_table_name],
 			function() use ($p_table_name)
 			{
 				$result = [];
@@ -503,7 +518,7 @@ class MasterModel extends Model
 						) AS has_parent_id;
 					",
 					db_database_name(),
-					db_schema_name(),
+					self::getSchemaName(),
 					$p_table_name
 				);
 
@@ -530,7 +545,7 @@ class MasterModel extends Model
 		$result = Cached::get
 		(
 			'sys-model',
-			['getFieldsMetaData', $table_name],
+			['getFieldsMetaData', self::getSchemaName(), $table_name],
 			function() use ($table_name, $appends, $level)
 			{
 				// SIMPLE RELATIONS
@@ -560,7 +575,7 @@ class MasterModel extends Model
 							  tc.constraint_type = 'FOREIGN KEY';
 						;
 					",
-					db_schema_name(),
+					self::getSchemaName(),
 					$table_name
 				);
 
@@ -610,7 +625,7 @@ class MasterModel extends Model
 							;
 						",
 						db_database_name(),
-						db_schema_name(),
+						self::getSchemaName(),
 						$table_name,
 						sprintf('%s_id', str_plural_2_singular($table_name)),
 						str_plural_2_singular($table_name)
@@ -646,7 +661,7 @@ class MasterModel extends Model
 								;
 							",
 							db_database_name(),
-							db_schema_name(),
+							self::getSchemaName(),
 							$pivot_table->table_name,
 							sprintf('%s_id', str_plural_2_singular($table_name))
 						);
@@ -711,12 +726,14 @@ class MasterModel extends Model
 						ORDER BY table_name, ordinal_position;
 					",
 					db_database_name(),
-					db_schema_name(),
+					self::getSchemaName(),
 					$table_name
 				);
 
 				$result = [];
 				$fields_schema = DB::select($query);
+				//dd($query);
+				//dd($fields_schema);
 				foreach ($fields_schema as $value)
 				{
 					$field_name = $value->name;

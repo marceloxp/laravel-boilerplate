@@ -21,7 +21,7 @@
 		"laravel/tinker": "^2.0",
 		"laravel/ui": "^2.0",
 		"laravelcollective/html": "^6.1",
-		"marceloxp/laravel_commands": "^1.0",
+		"pagarme/pagarme-php": "^4.1",
 		"shridharkaushik29/laravel-hooks": "^1.0",
 		"summernote/summernote": "^0.8.8",
 		"technoknol/log-my-queries": "^1.0",

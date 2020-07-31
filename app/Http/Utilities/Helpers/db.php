@@ -11,27 +11,19 @@ if (!function_exists('db_database_name'))
 	}
 }
 
-if (!function_exists('db_schema_name'))
-{
-	function db_schema_name()
-	{
-		return env('DB_SCHEMA');
-	}
-}
-
 if (!function_exists('db_comment_table'))
 {
-	function db_comment_table($table_name, $table_comment)
+	function db_comment_table($schema_name, $table_name, $table_comment)
 	{
-		DB::select(sprintf("COMMENT ON TABLE %s.%s IS '%s'", db_schema_name(), $table_name, $table_comment));
+		DB::select(sprintf("COMMENT ON TABLE %s.%s IS '%s'", $schema_name, $table_name, $table_comment));
 	}
 }
 
 if (!function_exists('db_get_comment_table'))
 {
-	function db_get_comment_table($table_name)
+	function db_get_comment_table($schema_name, $table_name)
 	{
-		$register = DB::select(sprintf("SELECT obj_description('%s.%s'::regclass) AS Comment;", db_schema_name(), $table_name));
+		$register = DB::select(sprintf("SELECT obj_description('%s.%s'::regclass) AS Comment;", $schema_name, $table_name));
 		if (empty($register))
 		{
 			throw new \Exception(sprintf('Table %s not found!', $table_name));
@@ -43,7 +35,7 @@ if (!function_exists('db_get_comment_table'))
 
 if (!function_exists('db_get_field_names'))
 {
-	function db_get_field_names($p_table, $p_add_comments = false)
+	function db_get_field_names($p_schema_name, $p_table, $p_add_comments = false)
 	{
 		$query = sprintf
 		(
@@ -61,7 +53,7 @@ if (!function_exists('db_get_field_names'))
 					table_name = '%s'
 			",
 			db_database_name(),
-			db_schema_name(),
+			$p_schema_name,
 			$p_table
 		);
 		$result = DB::select($query);
@@ -81,7 +73,7 @@ if (!function_exists('db_get_field_names'))
 
 if (!function_exists('db_get_fields_metadata'))
 {
-	function db_get_fields_metadata($p_table)
+	function db_get_fields_metadata($p_schema_name, $p_table)
 	{
 		$query = sprintf
 		(
@@ -117,7 +109,7 @@ if (!function_exists('db_get_fields_metadata'))
 					table_name = '%s'
 			",
 			db_database_name(),
-			db_schema_name(),
+			$p_schema_name,
 			$p_table
 		);
 		$result = DB::select($query);
@@ -287,10 +279,11 @@ if (!function_exists('db_table_name_to_field_id'))
 
 if (!function_exists('db_table_exists'))
 {
-	function db_table_exists($table_name)
+	function db_table_exists($schema_name, $table_name)
 	{
-		$result = \Schema::hasTable($table_name);
-		return (!empty($result)) ? $result : false;
+		$query = "SELECT table_catalog, table_schema, table_name FROM information_schema.tables WHERE table_catalog = '%s' AND table_schema = '%s' AND table_name = '%s';";
+		$query = sprintf($query, db_database_name(), $schema_name, $table_name);
+		return collect(DB::select($query))->count() > 0;
 	}
 }
 
