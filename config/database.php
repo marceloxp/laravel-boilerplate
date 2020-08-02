@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'pgsql'),
+    'default' => env('DB_CONNECTION', 'common'),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,7 +63,33 @@ return [
             'password' => env('DB_PASSWORD'),
             'charset' => 'utf8',
             'prefix' => '',
-            'schema' => env('DB_SCHEMA'),
+            'schema' => env('DB_SCHEMA_PUBLIC'),
+            'sslmode' => 'prefer',
+        ],
+
+        'common' => [
+            'driver' => 'pgsql',
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => env('DB_SCHEMA_COMMON'),
+            'sslmode' => 'prefer',
+        ],
+
+        'examples' => [
+            'driver' => 'pgsql',
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => env('DB_SCHEMA_EXAMPLES'),
             'sslmode' => 'prefer',
         ],
 

@@ -255,7 +255,7 @@ class MasterModel extends Model
 			$result[] =
 			[
 				'name'    => db_get_pivot_table_name([self::getTableName(), $table_name], false),
-				'caption' => db_get_comment_table($table_name),
+				'caption' => db_get_comment_table(self::getSchemaName(), $table_name),
 				'icon'    => $icon
 			];
 		}
@@ -797,7 +797,7 @@ class MasterModel extends Model
 				{
 					foreach ($pivot_relations as $pivot_table_name)
 					{
-						$pivot_model = db_table_name_to_model($pivot_table_name);
+						$pivot_model = db_table_name_to_model(self::getSchemaName(), $pivot_table_name);
 
 						$metadata = sprintf('\App\Models\%s', $pivot_model)::getFieldsMetaData($appends, ($level+1));
 						if (array_key_exists('name', $metadata))
@@ -1009,16 +1009,16 @@ class MasterModel extends Model
 				$state_value = $this->state ?? old('state');
 				if (!empty($state_value))
 				{
-					$state = db_select_one(\App\Models\State::class, ['id'], ['uf' => $state_value], true);
+					$state = db_select_one(\App\Models\Common\State::class, ['id'], ['uf' => $state_value], true);
 					$state_id = $state->id;
 				}
 			}
 
-			if (\App\Models\City::hasField('state_id'))
+			if (\App\Models\Common\City::hasField('state_id'))
 			{
 				if (!empty($state_id))
 				{
-					$options = \App\Models\City::select(['id','name'])
+					$options = \App\Models\Common\City::select(['id','name'])
 						->where('state_id', $state_id)
 						->get()
 						->pluck('name','id')

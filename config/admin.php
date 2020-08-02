@@ -10,7 +10,7 @@ return [
 			'color'   => 'bg-green',
 			'ico'     => 'fab fa-youtube',
 			'link'    => 'admin_video',
-			'model'   => 'Video'
+			'model'   => 'Examples\Video'
 		]
 	],
 	'index' =>

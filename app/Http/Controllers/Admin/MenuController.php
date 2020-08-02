@@ -14,7 +14,7 @@ class MenuController extends AdminController
 	public function __construct()
 	{
 		$this->appends = [];
-		$this->setModel(\App\Models\Menu::class);
+		$this->setModel(\App\Models\Common\Menu::class);
 		$this->setCaptionByModel($this->model);
 		parent::__construct();
 	}

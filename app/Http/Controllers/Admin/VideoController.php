@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\Admin;
 use App\Http\Utilities\Youtube;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Video;
+use App\Models\Examples\Video;
 use Hook;
 
 class VideoController extends AdminController
@@ -55,7 +55,7 @@ class VideoController extends AdminController
 			sprintf('admin_index_%s_category_id', $table_name),
 			function($display_value, $register)
 			{
-				return \App\Models\Category::getStrPath($register['category_id']);
+				return \App\Models\Examples\Category::getStrPath($register['category_id']);
 			},
 			10, 2
 		);

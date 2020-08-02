@@ -42,8 +42,9 @@ class MasterManyController extends AdminController
 
 		$model = new $this->MasterModel;
 		$table_name = $model->getTable();
+		$table_schema = $model->getSchemaName();
 
-		$this->setCaption($this->caption, db_get_name($table_name, $master_id));
+		$this->setCaption($this->caption, db_get_name($table_schema, $table_name, $master_id));
 
 		return $this->defaultIndex
 		(

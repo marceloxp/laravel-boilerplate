@@ -14,8 +14,8 @@ class MenuRoleController extends AdminController
 {
 	public function __construct()
 	{
-		$this->setModel(\App\Models\Role::class);
-		$this->setMasterModel(\App\Models\Menu::class);
+		$this->setModel(\App\Models\Common\Role::class);
+		$this->setMasterModel(\App\Models\Common\Menu::class);
 		$this->setCaptionByModel($this->master, $this->model);
 		parent::__construct();
 	}

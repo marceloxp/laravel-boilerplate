@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
-use App\Models\User;
+use App\Models\Common\User;
 use App\Http\Utilities\Cached;
 use App\Http\Utilities\Result;
 use App\Http\Utilities\DBConfig;

@@ -12,9 +12,9 @@ class VideosTableSeeder extends Seeder
 	public function run()
 	{
 		$now = \Carbon\Carbon::now();
-		$category_id = \App\Models\Category::select('id')->where(['name' => 'Space'])->first()->toArray()['id'];
+		$category_id = \App\Models\Examples\Category::select('id')->where(['name' => 'Space'])->first()->toArray()['id'];
 
-		\App\Models\Video::insert
+		\App\Models\Examples\Video::insert
 		(
 			[
 				[

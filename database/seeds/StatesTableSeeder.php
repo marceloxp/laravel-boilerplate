@@ -24,7 +24,10 @@ class StatesTableSeeder extends Seeder
 
 		foreach ($states as $state)
 		{
-			App\Models\State::create($state)->save();
+			var_dump($state);
+			$result = App\Models\Common\State::create($state)->save();
+			var_dump($result);
+			die;
 		}
     }
 }

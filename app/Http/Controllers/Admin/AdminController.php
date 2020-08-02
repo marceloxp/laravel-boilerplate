@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-use App\Models\User;
+use App\Models\Common\User;
 use App\Http\Utilities\Result;
 use Illuminate\Support\Str;
 
@@ -99,7 +99,7 @@ class AdminController extends Controller
 
 	public function setPivotCaption($p_master_id)
 	{
-		$this->setCaption($this->master::getTableCaption() . ' - ' . db_get_name($this->master::getTableName(), $p_master_id), $this->model::getTableCaption());
+		$this->setCaption($this->master::getTableCaption() . ' - ' . db_get_name($this->master::getSchemaName(), $this->master::getTableName(), $p_master_id), $this->model::getTableCaption());
 	}
 
 	public function setModel($p_model)
@@ -544,6 +544,7 @@ class AdminController extends Controller
 			$this->hooks_index($table_name);
 		}
 
+		$table_schema  = $model::getSchemaName();
 		$fields_schema = $model::getFieldsMetaData($appends);
 		$field_names   = array_keys($fields_schema);
 		$perpage       = $this->getPerPage($request);
@@ -555,7 +556,7 @@ class AdminController extends Controller
 		$has_table     = ($table->total() > 0);
 		$search_dates  = ['created_at'];
 
-		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage','sortable');
+		$share_params = compact('panel_title','panel_description','fields_schema','field_names','table_schema','table_name','model_name','display_fields','table','ids','paginate','page','has_table','search_dates','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable','table_many','perpage','sortable');
 		
 		View::share($share_params);
 
@@ -607,12 +608,13 @@ class AdminController extends Controller
 			$this->hooks_index($table_name);
 		}
 
+		$table_schema  = $model::getSchemaName();
 		$fields_schema = $model::getFieldsMetaData($appends);
 		$field_names   = array_keys($fields_schema);
 		$table         = $model::getTreeAligned($display_fields, $fields_schema);
 		$has_table     = ($table->count() > 0);
 
-		$share_params = compact('model','panel_title','panel_description','fields_schema','field_names','table_name','model_name','display_fields','table','has_table','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');
+		$share_params = compact('model','panel_title','panel_description','fields_schema','field_names','table_name','table_schema','model_name','display_fields','table','has_table','pivot','pivot_scope','is_pivot','class_pivot','exportable','editable');
 		
 		View::share($share_params);
 
@@ -677,6 +679,7 @@ class AdminController extends Controller
 			$array_caption[] = ($is_creating) ? 'Adicionar' : 'Editar';
 		}
 
+		$table_schema  = $model::getSchemaName();
 		$table_name    = $model::getTableName();
 		$register      = ($id) ? $model::find($id) : new $model;
 		$panel_title   = admin_breadcrumb($array_caption, 'fas fa-plus-square');
@@ -688,7 +691,7 @@ class AdminController extends Controller
 			$this->hooks_edit($table_name);
 		}
 
-		View::share(compact('request','model','register','is_creating','panel_title','display_fields','fields_schema','field_names','image_fields','table_name','disabled','one_table'));
+		View::share(compact('request','model','register','is_creating','panel_title','display_fields','fields_schema','table_schema','field_names','image_fields','table_name','disabled','one_table'));
 
 		return view('Admin.generic_add');
 	}
@@ -813,8 +816,8 @@ class AdminController extends Controller
 			function()
 			{
 				$appends = ['roles' => 'Permissões'];
-				$fields_schema = \App\Models\Menu::getFieldsMetaData($appends);
-				$table = \App\Models\Menu::getTree(['id','type','order','name','ico','roles','link','target','route','created_at'], $fields_schema, $appends);
+				$fields_schema = \App\Models\Common\Menu::getFieldsMetaData($appends);
+				$table = \App\Models\Common\Menu::getTree(['id','type','order','name','ico','roles','link','target','route','created_at'], $fields_schema, $appends);
 				return $table;
 			}
 		);

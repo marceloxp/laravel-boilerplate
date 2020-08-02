@@ -15,7 +15,7 @@ class CitiesTableSeeder extends Seeder
 		$console = $this->command->getOutput();
 
 		$console->writeln('Removing old registers...');
-		\DB::select(sprintf('TRUNCATE TABLE %s;', 'cities'));
+		\DB::select(sprintf('TRUNCATE TABLE %s;', 'common.cities'));
 
 		$console->writeln('Prepare seeding table...');
         $now = Carbon::now();
@@ -31,7 +31,7 @@ class CitiesTableSeeder extends Seeder
 
 			if (!array_key_exists($uf, $states))
 			{
-				$state = \App\Models\State::select('id')->where('uf', $uf)->first();
+				$state = \App\Models\Common\State::select('id')->where('uf', $uf)->first();
 				$states[$uf] = $state->id;
 			}
 
@@ -40,7 +40,7 @@ class CitiesTableSeeder extends Seeder
 		}
 
 		$console->writeln('Seeding table...');
-		App\Models\City::insert($cities);
+		App\Models\Common\City::insert($cities);
 
 		$console->writeln('Done');
 		$console->newLine();

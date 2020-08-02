@@ -584,7 +584,7 @@ class LaravelCommands extends LaravelCommandsBase
 				}
 
 				$this->beginWindow('EXECUTING MIGRATE');
-				system('php artisan migrate:fresh' . $seed);
+				system('php artisan migrate:fresh --path=database/migrations --path=database/migrations/* ' . $seed);
 				$this->endWindow();
 
 				$this->waitKey();

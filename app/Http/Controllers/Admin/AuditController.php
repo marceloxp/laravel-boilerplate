@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Audit;
+use App\Models\Common\Audit;
 use Jenssegers\Agent\Agent;
 use Hook;
 

@@ -14,7 +14,7 @@ class CityController extends AdminController
 	public function __construct()
 	{
 		$this->setCaption('Cidades');
-		$this->setModel(\App\Models\City::class);
+		$this->setModel(\App\Models\Common\City::class);
 		parent::__construct();
 	}
 

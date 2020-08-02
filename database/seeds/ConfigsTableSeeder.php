@@ -19,6 +19,6 @@ class ConfigsTableSeeder extends Seeder
             ['name' => 'cache.use'     , 'value' => 's', 'created_at' => $now]
         ];
 
-        \App\Models\Config::insert($data);
+        \App\Models\Common\Config::insert($data);
     }
 }

@@ -192,10 +192,10 @@ if (!function_exists('db_field_as_unique_index'))
 
 if (!function_exists('db_table_has_index'))
 {
-	function db_table_has_index($table_name, $index_name)
+	function db_table_has_index($schema_name, $table_name, $index_name)
 	{
 		$sm = Schema::getConnection()->getDoctrineSchemaManager();
-		$indexes = \Illuminate\Support\Collection::wrap($sm->listTableIndexes($table_name));
+		$indexes = \Illuminate\Support\Collection::wrap($sm->listTableIndexes($schema_name . '.' . $table_name));
 		$result = $indexes->has($index_name);
 		return $result;
 	}
@@ -203,9 +203,9 @@ if (!function_exists('db_table_has_index'))
 
 if (!function_exists('db_get_name'))
 {
-	function db_get_name($table_name, $id)
+	function db_get_name($table_schema, $table_name, $id)
 	{
-		$register = DB::select(sprintf('SELECT name FROM %s WHERE id = %s;', $table_name, $id));
+		$register = DB::select(sprintf('SELECT name FROM %s.%s WHERE id = %s;', $table_schema, $table_name, $id));
 		if (empty($register))
 		{
 			return '';
@@ -232,7 +232,7 @@ if (!function_exists('db_select_one'))
 
 if (!function_exists('db_select_id'))
 {
-	// db_select_id(\App\Models\Menu::class, ['slug' => 'tabelas'], true);
+	// db_select_id(\App\Models\Common\Menu::class, ['slug' => 'tabelas'], true);
 	function db_select_id($p_model, $p_where, $raise_if_empty = false)
 	{
 		$result = $p_model::where($p_where)->get(['id'])->take(1)->first();
@@ -255,17 +255,17 @@ if (!function_exists('db_model_to_table_name'))
 
 if (!function_exists('db_table_name_to_model'))
 {
-	function db_table_name_to_model($table_name)
+	function db_table_name_to_model($schema_name, $table_name)
 	{
-		return \Illuminate\Support\Str::singular(ucfirst(mb_strtolower($table_name)));
+		return sprintf('%s\%s', ucfirst($schema_name), \Illuminate\Support\Str::singular(ucfirst(mb_strtolower($table_name))));
 	}
 }
 
 if (!function_exists('db_table_name_to_model_path'))
 {
-	function db_table_name_to_model_path($table_name)
+	function db_table_name_to_model_path($schema_name, $table_name)
 	{
-		return sprintf('\App\Models\%s', db_table_name_to_model($table_name));
+		return sprintf('\App\Models\%s', db_table_name_to_model($schema_name, $table_name));
 	}
 }
 

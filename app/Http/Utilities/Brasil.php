@@ -10,11 +10,11 @@ class Brasil
 
 	public static function getStates()
 	{
-		return \App\Models\State::getAll();
+		return \App\Models\Common\State::getAll();
     }
 
 	public static function getCitiesByUf($p_uf)
 	{
-		return \App\Models\City::getByUf($p_uf);
+		return \App\Models\Common\City::getByUf($p_uf);
     }
 }

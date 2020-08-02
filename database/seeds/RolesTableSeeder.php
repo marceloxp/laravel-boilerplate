@@ -21,7 +21,7 @@ class RolesTableSeeder extends Seeder
 			'created_at'  => $now
 		];
 
-		$register = App\Models\Role::create($public_role);
+		$register = App\Models\Common\Role::create($public_role);
 		$register->save();
 		
 		$admin_role = 
@@ -32,7 +32,7 @@ class RolesTableSeeder extends Seeder
 			'created_at'  => $now
 		];
 
-		$register = App\Models\Role::create($admin_role);
+		$register = App\Models\Common\Role::create($admin_role);
 		$register->save();
 
 		$master_role = 
@@ -43,7 +43,7 @@ class RolesTableSeeder extends Seeder
 			'created_at'  => $now
 		];
 
-		$register = App\Models\Role::create($master_role);
+		$register = App\Models\Common\Role::create($master_role);
 		$register->save();
 
 		$developer_role = 
@@ -54,7 +54,7 @@ class RolesTableSeeder extends Seeder
 			'created_at'  => $now
 		];
 
-		$register = App\Models\Role::create($developer_role);
+		$register = App\Models\Common\Role::create($developer_role);
 		$register->save();
 	}
 }

@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\Common\User;
 use Hook;
 
 class UserController extends AdminController
@@ -45,7 +45,7 @@ class UserController extends AdminController
 		$display_value = $display_value->pluck('name', 'id');
 		foreach ($display_value as $role_id => $role_name)
 		{
-			$bg_color = \App\Models\Role::getBgColorByRole($role_name);
+			$bg_color = \App\Models\Common\Role::getBgColorByRole($role_name);
 			$result[] = sprintf('<small class="label pull-center %s">%s</small>', $bg_color, $role_name);
 		}
 		$result = implode('&nbsp;', $result);
@@ -113,7 +113,7 @@ class UserController extends AdminController
 			{
 				$field_name = $field_schema['name'];
 				$required   = (!$field_schema['nullable']) ? 'required' : '';
-				$options    = \App\Models\Role::select('id', 'name')->get()->pluck('name', 'id')->all();
+				$options    = \App\Models\Common\Role::select('id', 'name')->get()->pluck('name', 'id')->all();
 				$register   = (!is_array($register)) ? $register->roles->pluck('id') : collect($register);
 
 				$input = '';
@@ -188,7 +188,7 @@ class UserController extends AdminController
 
 			foreach ($roles as $role_id)
 			{
-				$role = \App\Models\Role::where('id', $role_id)->first();
+				$role = \App\Models\Common\Role::where('id', $role_id)->first();
 				$register->roles()->attach($role);
 			}
 

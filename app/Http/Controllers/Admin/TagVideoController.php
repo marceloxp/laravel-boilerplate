@@ -14,8 +14,8 @@ class TagVideoController extends AdminController
 {
 	public function __construct()
 	{
-		$this->setMasterModel(\App\Models\Video::class);
-		$this->setModel(\App\Models\Tag::class);
+		$this->setMasterModel(\App\Models\Examples\Video::class);
+		$this->setModel(\App\Models\Examples\Tag::class);
 		$this->setCaptionByModel($this->master, $this->model);
 		parent::__construct();
 	}

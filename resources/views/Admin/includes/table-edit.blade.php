@@ -141,7 +141,7 @@
 
 								if ($rel_parent_id)
 								{
-									$ref_model_path    = db_table_name_to_model_path($ref_table);
+									$ref_model_path    = db_table_name_to_model_path($table_schema, $ref_table);
 									$ref_fields_schema = $ref_model_path::getFieldsMetaData();
 									$array_tree        = $ref_model_path::getTree(['id','name','slug'], $ref_fields_schema);
 
@@ -270,7 +270,7 @@
 										);
 									break;
 									case 'pivot':
-										$pivot_model = db_table_name_to_model_path($fields_schema[$field_name]['name']);
+										$pivot_model = db_table_name_to_model_path($table_schema, $fields_schema[$field_name]['name']);
 										$table_options = $pivot_model::get(['id','name']);
 										$list_field_id = $fields_schema[$field_name]['list_field_id'];
 

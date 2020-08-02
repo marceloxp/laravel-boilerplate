@@ -18,11 +18,11 @@ class TagsTableSeeder extends Seeder
 		foreach ($tags as $tag)
 		{
 	        $data = array('name' => $tag, 'created_at' => $now);
-	        App\Models\Tag::insert($data);
+	        App\Models\Examples\Tag::insert($data);
 		}
 
-        $videos = \App\Models\Video::get();
-        $tags   = \App\Models\Tag::get();
+        $videos = \App\Models\Examples\Video::get();
+        $tags   = \App\Models\Examples\Tag::get();
         foreach ($videos as $video)
         {
             foreach ($tags as $tag)

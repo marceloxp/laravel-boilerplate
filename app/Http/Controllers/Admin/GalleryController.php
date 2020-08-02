@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Admin;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Gallery;
+use App\Models\Examples\Gallery;
 use Hook;
 
 class GalleryController extends AdminController

@@ -13,9 +13,9 @@ class CategoriesTableSeeder extends Seeder
 	{
 		try
 		{
-			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', 'tag_video'));
-			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', 'videos'));
-			\DB::select(sprintf('DELETE FROM %s WHERE id >= 0', 'categories'));
+			\DB::select(sprintf('DELETE FROM examples.%s WHERE id >= 0', 'tag_video'));
+			\DB::select(sprintf('DELETE FROM examples.%s WHERE id >= 0', 'videos'));
+			\DB::select(sprintf('DELETE FROM examples.%s WHERE id >= 0', 'categories'));
 			
 			$categories = 
 			[
@@ -26,10 +26,10 @@ class CategoriesTableSeeder extends Seeder
 
 			foreach ($categories as $category)
 			{
-				$register = App\Models\Category::addRoot($category['name'], $category['description']);
+				$register = App\Models\Examples\Category::addRoot($category['name'], $category['description']);
 				foreach ($category['childs'] as $child)
 				{
-					App\Models\Category::addSubCategory($register->id, $child, '');
+					App\Models\Examples\Category::addSubCategory($register->id, $child, '');
 				}
 			}
 		}

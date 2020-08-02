@@ -277,7 +277,7 @@ class Create{schema_model}{ClassName}Table extends Migration
 		$menu_seeder_file = base_path('database/seeds/MenusTableSeeder.php');
 		$body_menu_seeder = file_get_contents($menu_seeder_file);
 		$next_auto_menu = '// next_auto_menu';
-		$item = sprintf("\$item = \App\Models\Menu::addMenuLink(\$group, '" . $schema_name . "', '" . $model_description . "', 'fas fa-file', \$public, 'admin_" . $schema_name . "_" . $table_name . "');");
+		$item = sprintf("\$item = \App\Models\Common\Menu::addMenuLink(\$group, '" . $schema_name . "', '" . $model_description . "', 'fas fa-file', \$public, 'admin_" . $schema_name . "_" . $table_name . "');");
 		$item = $item . "\n\t\t\t" . $next_auto_menu;
 		$body_menu_seeder = str_replace('// next_auto_menu', $item, $body_menu_seeder);
 		file_put_contents($menu_seeder_file, $body_menu_seeder);

@@ -31,7 +31,7 @@ trait AuditTrait
 					'flags'      => 0,
 				];
 
-				\App\Models\Audit::create($data)->save();
+				\App\Models\Common\Audit::create($data)->save();
 			}
 		);
 
@@ -57,7 +57,7 @@ trait AuditTrait
 					'flags'      => 0,
 				];
 
-				\App\Models\Audit::create($data)->save();
+				\App\Models\Common\Audit::create($data)->save();
 			}
 		);
 	}
