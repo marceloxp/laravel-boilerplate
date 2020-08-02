@@ -161,7 +161,7 @@
 								{
 									if ($one_table->field == $field_name)
 									{
-										$display_text = sprintf('%s - %s', $one_table->id, db_get_name($one_table->name, $one_table->id));
+										$display_text = sprintf('%s - %s', $one_table->id, db_get_name($one_table->schema, $one_table->name, $one_table->id));
 										$input = sprintf
 										(
 											'<input type="text" data-type="%s" class="form-control" name="show_%s" id="show_%s" maxlength="%s" autocomplete="no" placeholder="" value="%s" %s %s>',

@@ -149,7 +149,7 @@
 					<button type="button" id="btn-table-viw" class="btn-check-one btn btn-default disabled"><i class="fas fa-eye"></i>&nbsp;&nbsp;Visualizar</button>
 					@if (!empty($table_many))
 						@foreach ($table_many as $button_table)
-							<button type="button" data-parent="{{ $table_name }}" data-link="{{ $button_table['name'] }}" class="btn-table-many btn-check-one btn btn-warning disabled"><i class="{{ $button_table['icon'] }}"></i>&nbsp;&nbsp;{{ $button_table['caption'] }}</button>
+							<button type="button" data-parent="{{ $table_name }}" data-link="{{ $button_table['schema'] }}/{{ $button_table['name'] }}" class="btn-table-many btn-check-one btn btn-warning disabled"><i class="{{ $button_table['icon'] }}"></i>&nbsp;&nbsp;{{ $button_table['caption'] }}</button>
 						@endforeach
 					@endif
 					@if (!empty($pivot))

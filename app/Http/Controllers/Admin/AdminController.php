@@ -237,7 +237,8 @@ class AdminController extends Controller
 		extract($search_params, EXTR_OVERWRITE);
 		extract($p_params     , EXTR_OVERWRITE);
 
-		$table_name = $p_model::getTableName();
+		$table_name  = $p_model::getTableName();
+		$schema_name = $p_model::getSchemaName();
 
 		$table = $p_model::select('');
 
@@ -314,7 +315,7 @@ class AdminController extends Controller
 		}
 		else
 		{
-			$table->orderBy('id', 'DESC');
+			$table->orderBy(sprintf('%s.id', $table_name), 'DESC');
 		}
 
 		if (!empty($pivot_scope))
@@ -466,8 +467,9 @@ class AdminController extends Controller
 				'has'      => true,
 				'table_id' => $table_id,
 				'id'       => $one_table_id,
-				'name'     => request()->segment(2),
-				'field'    => db_table_name_to_field_id(request()->segment(2)),
+				'schema'   => request()->segment(2),
+				'name'     => request()->segment(3),
+				'field'    => db_table_name_to_field_id(request()->segment(3)),
 			];
 		}
 
@@ -499,7 +501,7 @@ class AdminController extends Controller
 		}
 		else
 		{
-			$pre_caption   = db_get_name($one_table->name, $one_table->id);
+			$pre_caption   = db_get_name($one_table->schema, $one_table->name, $one_table->id);
 			$array_caption = ['Home', $pre_caption, $this->caption];
 		}
 		$params['one_table'] = $one_table;
@@ -674,7 +676,7 @@ class AdminController extends Controller
 		else
 		{
 			$is_creating = (empty($id));
-			$pre_caption = db_get_name($one_table->name, $one_table->id);
+			$pre_caption = db_get_name($one_table->schema, $one_table->name, $one_table->id);
 			$array_caption = ['Home', $pre_caption, $this->caption];
 			$array_caption[] = ($is_creating) ? 'Adicionar' : 'Editar';
 		}
