@@ -26,7 +26,7 @@ class Menu extends CommonModel
 			'name'       => 'required|max:255',
 			'slug'       => 'required|max:255',
 		];
-		return Menu::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 
 	/**

@@ -44,7 +44,7 @@ class City extends CommonModel
 			'state_id'   => 'required',
 			'name'       => 'required|max:150',
 		];
-		return City::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 }
 

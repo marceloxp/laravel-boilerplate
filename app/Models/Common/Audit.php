@@ -25,7 +25,7 @@ class Audit extends CommonModel
 			'oldvalue'   => 'required|max:4294967295',
 			'newvalue'   => 'required|max:4294967295',
 		];
-		return Audit::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 }
 

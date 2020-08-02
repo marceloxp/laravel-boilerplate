@@ -20,6 +20,6 @@ class Lockregister extends CommonModel
 			'meme_id'    => 'required',
 			'user_id'    => 'required'
 		];
-		return Lockregister::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 }

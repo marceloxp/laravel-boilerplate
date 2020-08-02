@@ -35,6 +35,6 @@ class Gallery extends ExamplesModel
 
 		if (empty($id)) { $rules['image'] = 'required|max:3000'; }
 
-		return Gallery::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 }

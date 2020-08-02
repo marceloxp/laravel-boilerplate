@@ -310,7 +310,7 @@ class Create{schema_model}{ClassName}Table extends Migration
 		// ╚██████╔╝██║ ╚████║███████╗       ██║   ╚██████╔╝    ╚██████╔╝██║ ╚████║███████╗
 		//  ╚═════╝ ╚═╝  ╚═══╝╚══════╝       ╚═╝    ╚═════╝      ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
-		$this->call('makex:cache', ['--clear' => true]);
+		$this->call('makex:cached', ['--clear' => true]);
 		$model    = sprintf('\App\Models\%s\%s', $schema_model, $model_name);
 		$metadata = collect($model::getFieldsMetaData());
 		$quant    = $metadata->where('has_relation', 'true')->count();

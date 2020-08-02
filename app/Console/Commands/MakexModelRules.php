@@ -91,7 +91,7 @@ class MakexModelRules extends \App\Console\Makex\MakexCommand
 				"		[",
 				"	" . $str_rules,
 				"		];",
-				"		return " . $this->model_target . "::_validate(\$request, \$rules, \$id);",
+				"		return self::_validate(\$request, \$rules, \$id);",
 				"	}",
 				"}",
 				PHP_EOL,

@@ -19,7 +19,7 @@ class Video extends ExamplesModel
 			'youtube'     => 'required|min:5|max:150'
 		];
 
-		return Video::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
     }
 
 	public function category()

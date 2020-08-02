@@ -50,6 +50,6 @@ class Config extends CommonModel
 			'status' => 'required|in:Ativo,Inativo'
 		];
 
-		return Config::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 }

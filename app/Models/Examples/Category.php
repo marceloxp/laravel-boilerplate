@@ -55,7 +55,7 @@ class Category extends ExamplesModel
 			'image'       => 'max:255',
 			'status'      => 'in:Ativo,Inativo|max:7',
 		];
-		return Category::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 }
 

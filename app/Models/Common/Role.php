@@ -19,7 +19,7 @@ class Role extends CommonModel
 			'description' => 'required|min:5|max:255'
 		];
 
-		return Role::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
     }
 
 	public static function getColorBg($p_color_name)

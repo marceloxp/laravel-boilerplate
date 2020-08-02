@@ -18,7 +18,7 @@ class Tag extends ExamplesModel
 			'name' => 'required|min:3|max:150'
 		];
 
-		return Tag::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 
 	/**

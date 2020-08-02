@@ -94,7 +94,7 @@ class User extends CommonModel implements AuthenticatableContract, AuthorizableC
 			$rules['password'] = 'required|min:4|max:255';
 		}
 
-		return User::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
     }
 }
 

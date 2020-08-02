@@ -17,7 +17,7 @@ class Lock extends CommonModel
 		[
 			'name' => 'required|max:124',
 		];
-		return Lock::_validate($request, $rules, $id);
+		return self::_validate($request, $rules, $id);
 	}
 
 	private static function __try_lock($name)
