@@ -13,6 +13,11 @@ class StatesTableSeeder extends Seeder
     public function run()
     {
         $now = Carbon::now();
+    	$console = $this->command->getOutput();
+
+        $console->writeln('Removing old registers...');
+        \DB::select(sprintf('TRUNCATE TABLE %s;', 'common.cities'));
+        \DB::select(sprintf('TRUNCATE TABLE %s;', 'common.states'));
 
 		$data = config('brasil.estados');
 		$states = [];
@@ -22,12 +27,16 @@ class StatesTableSeeder extends Seeder
 			$states[] = ['name' => $state, 'uf' => $uf, 'created_at' => $now];
 		}
 
+		$console->writeln('Seeding table...');
+		$console->progressStart(count($states));
 		foreach ($states as $state)
 		{
-			var_dump($state);
 			$result = App\Models\Common\State::create($state)->save();
-			var_dump($result);
-			die;
+			$console->progressAdvance();
 		}
+		$console->progressFinish();
+
+		$console->writeln('Done');
+		$console->newLine();
     }
 }
