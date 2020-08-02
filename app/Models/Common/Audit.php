@@ -26,7 +26,7 @@ class Audit extends MasterModel
 			'oldvalue'   => 'required|max:4294967295',
 			'newvalue'   => 'required|max:4294967295',
 		];
-		return Role::_validate($request, $rules, $id);
+		return Audit::_validate($request, $rules, $id);
 	}
 }
 

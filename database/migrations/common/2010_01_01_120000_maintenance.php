@@ -12,7 +12,7 @@ class Maintenance extends Migration
 	 */
 	public function up()
 	{
-		if (db_table_exists('public', 'users'))
+		if (db_table_exists('common', 'users'))
 		{
 			Schema::table
 			(
@@ -20,7 +20,7 @@ class Maintenance extends Migration
 				function(Blueprint $table)
 				{
 					$table->string('email')->comment('E-Mail')->change();
-					if (db_table_has_index('common.users', 'users_email_unique'))
+					if (db_table_has_index('common', 'users', 'users_email_unique'))
 					{
 						$table->dropUnique('users_email_unique');
 					}

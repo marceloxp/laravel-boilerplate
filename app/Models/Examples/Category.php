@@ -56,7 +56,7 @@ class Category extends MasterModel
 			'image'       => 'max:255',
 			'status'      => 'in:Ativo,Inativo|max:7',
 		];
-		return Role::_validate($request, $rules, $id);
+		return Category::_validate($request, $rules, $id);
 	}
 }
 

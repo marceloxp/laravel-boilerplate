@@ -45,7 +45,7 @@ class City extends MasterModel
 			'state_id'   => 'required',
 			'name'       => 'required|max:150',
 		];
-		return Role::_validate($request, $rules, $id);
+		return City::_validate($request, $rules, $id);
 	}
 }
 

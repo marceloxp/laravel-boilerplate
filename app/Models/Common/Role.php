@@ -7,8 +7,8 @@ use App\Http\Utilities\MasterModel;
 
 class Role extends MasterModel
 {
-	protected $connection = 'common';
 	use SoftDeletes;
+	protected $connection = 'common';
     protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 

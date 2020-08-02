@@ -36,6 +36,6 @@ class Gallery extends MasterModel
 
 		if (empty($id)) { $rules['image'] = 'required|max:3000'; }
 
-		return Config::_validate($request, $rules, $id);
+		return Gallery::_validate($request, $rules, $id);
 	}
 }

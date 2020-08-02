@@ -10,11 +10,11 @@ use App\Traits\TreeModelTrait;
 
 class Menu extends MasterModel
 {
-	protected $connection = 'common';
 	use SoftDeletes;
 	use NestableTrait;
 	use TreeModelTrait;
 
+	protected $connection = 'common';
 	protected $parent = 'parent_id';
 
 	protected $dates   = ['created_at','updated_at','deleted_at'];
@@ -28,7 +28,7 @@ class Menu extends MasterModel
 			'name'       => 'required|max:255',
 			'slug'       => 'required|max:255',
 		];
-		return Role::_validate($request, $rules, $id);
+		return Menu::_validate($request, $rules, $id);
 	}
 
 	/**

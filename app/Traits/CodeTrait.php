@@ -28,7 +28,7 @@ trait CodeTrait
 			{
 				$k++;
 				$code  = md5(\Carbon\Carbon::now()->format('Ym') . \Illuminate\Support\Str::random($codelength));
-				$id    = \DB::table('codes')->insertGetId(['name' => $code, 'attempts' => $k]);
+				$id    = \DB::table('common.codes')->insertGetId(['name' => $code, 'attempts' => $k]);
 				$valid = ($id > 0);
 			}
 			catch (\Exception $e)

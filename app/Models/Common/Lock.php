@@ -18,7 +18,7 @@ class Lock extends MasterModel
 		[
 			'name' => 'required|max:124',
 		];
-		return Role::_validate($request, $rules, $id);
+		return Lock::_validate($request, $rules, $id);
 	}
 
 	private static function __try_lock($name)

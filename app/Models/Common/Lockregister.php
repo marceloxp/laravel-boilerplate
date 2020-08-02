@@ -8,8 +8,8 @@ use App\Http\Utilities\MasterModel;
 
 class Lockregister extends MasterModel
 {
-	protected $connection = 'common';
 	use SoftDeletes;
+	protected $connection = 'common';
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 	
@@ -21,6 +21,6 @@ class Lockregister extends MasterModel
 			'meme_id'    => 'required',
 			'user_id'    => 'required'
 		];
-		return Role::_validate($request, $rules, $id);
+		return Lockregister::_validate($request, $rules, $id);
 	}
 }
