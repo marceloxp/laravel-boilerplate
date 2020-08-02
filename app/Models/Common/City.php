@@ -2,15 +2,14 @@
 
 namespace App\Models\Common;
 
-use App\Http\Utilities\MasterModel;
+use App\Models\Masters\CommonModel;
 use App\Http\Utilities\Cached;
 use App\Http\Utilities\Result;
 use \App\Traits\OrderTrait;
 
-class City extends MasterModel
+class City extends CommonModel
 {
 	use OrderTrait;
-	protected $connection = 'common';
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 

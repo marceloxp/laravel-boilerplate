@@ -3,12 +3,11 @@
 namespace App\Models\Common;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Utilities\MasterModel;
+use App\Models\Masters\CommonModel;
 use App\Http\Utilities\Carbex;
 
-class Lock extends MasterModel
+class Lock extends CommonModel
 {
-	protected $connection = 'common';
 	protected $dates   = ['created_at','updated_at'];
 	protected $guarded = ['created_at','updated_at'];
 

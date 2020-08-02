@@ -4,12 +4,11 @@ namespace App\Models\Common;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Utilities\MasterModel;
+use App\Models\Masters\CommonModel;
 
-class Audit extends MasterModel
+class Audit extends CommonModel
 {
 	use SoftDeletes;
-	protected $connection = 'common';
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 

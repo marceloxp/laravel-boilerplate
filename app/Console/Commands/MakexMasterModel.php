@@ -34,7 +34,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 UseSoftDeletes1
-use App\Http\Utilities\MasterModel;
+use App\Models\Masters\MasterModel;
 
 class %s extends MasterModel
 {

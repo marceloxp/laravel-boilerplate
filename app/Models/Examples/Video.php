@@ -2,12 +2,11 @@
 namespace App\Models\Examples;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Utilities\MasterModel;
+use App\Models\Masters\ExamplesModel;
 
-class Video extends MasterModel
+class Video extends ExamplesModel
 {
 	use SoftDeletes;
-	protected $connection = 'examples';
     protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at','category_id_text'];
 

@@ -2,15 +2,14 @@
 namespace App\Models\Examples;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Utilities\MasterModel;
+use App\Models\Masters\ExamplesModel;
 use App\Traits\TreeModelTrait;
 
-class Category extends MasterModel
+class Category extends ExamplesModel
 {
 	use SoftDeletes;
 	use TreeModelTrait;
 
-    protected $connection = 'examples';
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 

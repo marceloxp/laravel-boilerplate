@@ -9,15 +9,14 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Utilities\MasterModel;
+use App\Models\Masters\CommonModel;
 use App\Traits\AuditTrait;
 
-class User extends MasterModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
+class User extends CommonModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
 	use Authenticatable, Authorizable, CanResetPassword;
 	use SoftDeletes, AuditTrait;
 
-	protected $connection = 'common';
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 

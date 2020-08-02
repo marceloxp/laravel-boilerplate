@@ -4,19 +4,17 @@ namespace App\Models\Common;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Utilities\MasterModel;
+use App\Models\Masters\CommonModel;
 use Nestable\NestableTrait;
 use App\Traits\TreeModelTrait;
 
-class Menu extends MasterModel
+class Menu extends CommonModel
 {
 	use SoftDeletes;
 	use NestableTrait;
 	use TreeModelTrait;
 
-	protected $connection = 'common';
-	protected $parent = 'parent_id';
-
+	protected $parent  = 'parent_id';
 	protected $dates   = ['created_at','updated_at','deleted_at'];
 	protected $guarded = ['created_at','updated_at','deleted_at'];
 
