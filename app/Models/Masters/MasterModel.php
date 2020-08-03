@@ -678,67 +678,101 @@ class MasterModel extends Model
 				}
 
 				// TABLE SCHEMA
-				$query = sprintf
-				(
-					"
-					SELECT column_name                                                          AS name,
-						   udt_name                                                             AS type,
-						   (SELECT EXISTS(select kcu.table_schema,
-												 kcu.table_name,
-												 tco.constraint_name,
-												 kcu.ordinal_position as position,
-												 kcu.column_name      as key_column
-										  from information_schema.table_constraints tco
-												   join information_schema.key_column_usage kcu
-														on kcu.constraint_name = tco.constraint_name and
-														   kcu.constraint_schema = tco.constraint_schema and
-														   kcu.constraint_name = tco.constraint_name
-										  where tco.constraint_type = 'PRIMARY KEY'
-											and kcu.table_name = information_schema.columns.table_name
-											and kcu.column_name = information_schema.columns.column_name
-										  order by kcu.table_schema, kcu.table_name, position)) AS pri,
-						   column_default                                                       AS default_value,
-						   (SELECT pgd.description
-							FROM pg_catalog.pg_statio_all_tables as st
-									 inner join pg_catalog.pg_description pgd on (pgd.objoid = st.relid)
-									 inner join information_schema.columns c
-												on (pgd.objsubid = c.ordinal_position and c.table_schema = st.schemaname and
-													c.table_name = st.relname)
-							WHERE table_name = information_schema.columns.table_name AND st.schemaname = information_schema.columns.table_schema
-							  AND column_name = information_schema.columns.column_name)         AS comment,
-						   (select cc.check_clause
-							from information_schema.table_constraints tc
-									 join information_schema.check_constraints cc
-										  on tc.constraint_schema = cc.constraint_schema and tc.constraint_name = cc.constraint_name
-									 join pg_namespace nsp on nsp.nspname = cc.constraint_schema
-									 join pg_constraint pgc
-										  on pgc.conname = cc.constraint_name and pgc.connamespace = nsp.oid and pgc.contype = 'c'
-									 join information_schema.columns col
-										  on col.table_schema = tc.table_schema and col.table_name = tc.table_name and
-											 col.ordinal_position = ANY (pgc.conkey)
-							where tc.constraint_schema not in ('pg_catalog', 'information_schema')
-							  and tc.table_name = information_schema.columns.table_name
-							  and col.column_name = information_schema.columns.column_name
-							  and tc.table_schema = information_schema.columns.table_schema
-							group by tc.table_schema, tc.table_name, tc.constraint_name, cc.check_clause, col.column_name
-							order by tc.table_schema, tc.table_name),
-						   character_maximum_length                                             AS max_length,
-						   is_nullable                                                          AS nullable
-						FROM information_schema.columns
-						WHERE table_catalog = '%s'
-						  AND table_schema = '%s'
-						  AND table_name = '%s'
-						ORDER BY table_name, ordinal_position;
-					",
-					db_database_name(),
-					self::getSchemaName(),
-					$table_name
-				);
+				if (substr($table_name, 0, 2) !== 'vw')
+				{
+					$query = sprintf
+					(
+						"
+						SELECT column_name                                                          AS name,
+							   udt_name                                                             AS type,
+							   (SELECT EXISTS(select kcu.table_schema,
+													 kcu.table_name,
+													 tco.constraint_name,
+													 kcu.ordinal_position as position,
+													 kcu.column_name      as key_column
+											  from information_schema.table_constraints tco
+													   join information_schema.key_column_usage kcu
+															on kcu.constraint_name = tco.constraint_name and
+															   kcu.constraint_schema = tco.constraint_schema and
+															   kcu.constraint_name = tco.constraint_name
+											  where tco.constraint_type = 'PRIMARY KEY'
+												and kcu.table_name = information_schema.columns.table_name
+												and kcu.column_name = information_schema.columns.column_name
+											  order by kcu.table_schema, kcu.table_name, position)) AS pri,
+							   column_default                                                       AS default_value,
+							   (SELECT pgd.description
+								FROM pg_catalog.pg_statio_all_tables as st
+										 inner join pg_catalog.pg_description pgd on (pgd.objoid = st.relid)
+										 inner join information_schema.columns c
+													on (pgd.objsubid = c.ordinal_position and c.table_schema = st.schemaname and
+														c.table_name = st.relname)
+								WHERE table_name = information_schema.columns.table_name AND st.schemaname = information_schema.columns.table_schema
+								  AND column_name = information_schema.columns.column_name)         AS comment,
+							   (select cc.check_clause
+								from information_schema.table_constraints tc
+										 join information_schema.check_constraints cc
+											  on tc.constraint_schema = cc.constraint_schema and tc.constraint_name = cc.constraint_name
+										 join pg_namespace nsp on nsp.nspname = cc.constraint_schema
+										 join pg_constraint pgc
+											  on pgc.conname = cc.constraint_name and pgc.connamespace = nsp.oid and pgc.contype = 'c'
+										 join information_schema.columns col
+											  on col.table_schema = tc.table_schema and col.table_name = tc.table_name and
+												 col.ordinal_position = ANY (pgc.conkey)
+								where tc.constraint_schema not in ('pg_catalog', 'information_schema')
+								  and tc.table_name = information_schema.columns.table_name
+								  and col.column_name = information_schema.columns.column_name
+								  and tc.table_schema = information_schema.columns.table_schema
+								group by tc.table_schema, tc.table_name, tc.constraint_name, cc.check_clause, col.column_name
+								order by tc.table_schema, tc.table_name),
+							   character_maximum_length                                             AS max_length,
+							   is_nullable                                                          AS nullable
+							FROM information_schema.columns
+							WHERE table_catalog = '%s'
+							  AND table_schema = '%s'
+							  AND table_name = '%s'
+							ORDER BY table_name, ordinal_position;
+						",
+						db_database_name(),
+						self::getSchemaName(),
+						$table_name
+					);
+				}
+				else
+				{
+					$query = sprintf
+					(
+						"
+							SELECT
+							    pg_attribute.attname        AS name,
+							    pg_catalog.pg_type.typname  AS type,
+							    pg_attribute.attname = 'id' AS pri,
+							    null                        AS default_value,
+							    col_description(pg_attribute.attrelid, pg_attribute.attnum) AS comment,
+							    null                        AS check_clause,
+							    null                        AS max_len,
+							    false                       AS nullable
+							FROM pg_catalog.pg_class
+							        INNER JOIN pg_catalog.pg_namespace
+							                    ON pg_class.relnamespace = pg_namespace.oid
+							        INNER JOIN pg_catalog.pg_attribute
+							                    ON pg_class.oid = pg_attribute.attrelid AND pg_attribute.attnum > 0
+							        INNER JOIN  pg_catalog.pg_type
+							                    ON pg_catalog.pg_type.oid = pg_attribute.atttypid
+							WHERE
+							    pg_class.relkind = 'm'
+							    AND pg_attribute.attnum >= 1
+							    AND pg_namespace.nspname = '%s'
+							    AND pg_class.relname = '%s'
+							ORDER BY
+							    pg_class.relname, pg_attribute.attnum, name;
+						",
+						self::getSchemaName(),
+						$table_name
+					);
+				}
 
 				$result = [];
 				$fields_schema = DB::select($query);
-				//dd($query);
-				//dd($fields_schema);
 				foreach ($fields_schema as $value)
 				{
 					$field_name = $value->name;
