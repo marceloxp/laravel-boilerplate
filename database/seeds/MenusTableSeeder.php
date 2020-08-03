@@ -52,6 +52,7 @@ class MenusTableSeeder extends Seeder
 		$group_order += 10;
 		$group = \App\Models\Common\Menu::addMenuHeader($menu, 'Sistema', 'fas fa-cogs', $public, $group_order);
 			$item = \App\Models\Common\Menu::addMenuLink($group, 'public', 'Configurações', 'fas fa-cogs', $master_admin_developer, 'admin_config');
+			$item = \App\Models\Common\Menu::addMenuLink($group, 'common', 'Listas Auxiliares', 'fas fa-list-alt', $public, 'admin_common_genericlists');
 			$item = \App\Models\Common\Menu::addMenuLink($group, 'public', 'Permissões', 'fas fa-unlock-alt', $master_admin_developer, 'admin_role');
 			$item = \App\Models\Common\Menu::addMenuLink($group, 'public', 'Auditoria', 'fas fa-glasses', $master_admin_developer, 'admin_audits');
 			$item = \App\Models\Common\Menu::addMenuLink($group, 'public', 'Usuários', 'fas fa-user-friends', $master_admin_developer, 'admin_user');

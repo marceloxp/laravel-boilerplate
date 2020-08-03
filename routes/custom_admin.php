@@ -114,3 +114,20 @@
 		}
 	);
 	// End Menu - Role
+
+	include('payment_admin.php');
+
+	// Begin Common Listas Auxiliares
+	Route::group
+	(
+		['prefix' => 'common/genericlists'],
+		function()
+		{
+			Route::get ('/'         , 'Common\GenericlistController@index'  )->name('admin_common_genericlists'       )->group('admin_common_genericlists');
+			Route::get ('edit/{id?}', 'Common\GenericlistController@create' )->name('admin_common_genericlists_edit'  )->group('admin_common_genericlists');
+			Route::post('edit/{id?}', 'Common\GenericlistController@store'  )->name('admin_common_genericlists_save'  )->group('admin_common_genericlists');
+			Route::get ('show/{id}' , 'Common\GenericlistController@show'   )->name('admin_common_genericlists_show'  )->group('admin_common_genericlists');
+			Route::post('delete/'   , 'Common\GenericlistController@destroy')->name('admin_common_genericlists_delete')->group('admin_common_genericlists');
+		}
+	);
+	// End Common Listas Auxiliares

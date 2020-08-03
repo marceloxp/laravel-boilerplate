@@ -35,7 +35,7 @@ namespace App\Models\_schema_model;
 
 use Illuminate\Database\Eloquent\Model;
 UseSoftDeletes1
-use App\Http\Utilities\schema_model_Model;
+use App\Models\Masters\schema_model_Model;
 HasParentId1
 
 class %s extends schema_model_Model

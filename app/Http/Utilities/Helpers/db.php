@@ -214,6 +214,15 @@ if (!function_exists('db_get_name'))
 	}
 }
 
+if (!function_exists('db_get_simple_list'))
+{
+	function db_get_simple_list($query)
+	{
+		// SELECT schema_name FROM information_schema.schemata;
+		return collect(json_decode(collect(\DB::select($query))->toJson(), true))->flatten()->toArray();
+	}
+}
+
 if (!function_exists('db_select_one'))
 {
 	function db_select_one($p_model, $p_fields, $p_where, $raise_if_empty = false)

@@ -64,6 +64,7 @@ class LaravelCommands extends LaravelCommandsBase
 			'MODELS',
 			'SYSTEM',
 			'DATABASE',
+			'WORKSPACES',
 			'X' => 'SAIR'
 		];
 
@@ -75,17 +76,20 @@ class LaravelCommands extends LaravelCommandsBase
 			case 'MIGRATE':
 				$this->printMigrateMenu();
 			break;
+			case 'SEEDS':
+				$this->printSeedsMenu();
+			break;
 			case 'MODELS':
 				$this->printModelMenu();
 			break;
-			case 'SEEDS':
-				$this->printSeedsMenu();
+			case 'SYSTEM':
+				$this->printSystemMenu();
 			break;
 			case 'DATABASE':
 				$this->printDatabaseMenu();
 			break;
-			case 'SYSTEM':
-				$this->printSystemMenu();
+			case 'WORKSPACES':
+				$this->printWorkspacesMenu();
 			break;
 		}
 	}
@@ -785,6 +789,87 @@ class LaravelCommands extends LaravelCommandsBase
 
 		$this->waitKey();
 		return $this->printSeedsMenu();
+	}
+
+	// ██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗███████╗██████╗  █████╗  ██████╗███████╗███████╗
+	// ██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██╔════╝██╔══██╗██╔══██╗██╔════╝██╔════╝██╔════╝
+	// ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ███████╗██████╔╝███████║██║     █████╗  ███████╗
+	// ██║███╗██║██║   ██║██╔══██╗██╔═██╗ ╚════██║██╔═══╝ ██╔══██║██║     ██╔══╝  ╚════██║
+	// ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗███████║██║     ██║  ██║╚██████╗███████╗███████║
+ 	// ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝
+
+	private function printWorkspacesMenu()
+	{
+		$caption = 'WORKSPACES COMMANDS';
+		$this->printLogo($caption);
+		$options = 
+		[
+			'LIST',
+			'CREATE',
+			'<' => 'VOLTAR'
+		];
+		$defaultIndex = '<';
+		$option = $this->choice($this->choice_text, $options, $defaultIndex);
+
+		switch ($options[$option])
+		{
+			case 'VOLTAR':
+				return $this->printMainMenu();
+			break;
+			case 'LIST':
+				$this->printLogo($caption, 'SHOW TABLES');
+
+				$tables = $this->__getTables();
+				if (!empty($tables))
+				{
+					$this->printSingleArray($tables, 3);
+				}
+				else
+				{
+					$this->info('No tables found.');
+				}
+
+				$this->waitKey();
+				return $this->printDatabaseMenu();
+			break;
+			case 'CREATE':
+				$this->printLogo($caption, 'CREATE WORKSPACE');
+
+				$workspace_name = $this->ask('Workspace name', 'cancel');
+				if ($workspace_name == 'cancel')
+				{
+					exit;
+				}
+				$workspace_name = strtolower($workspace_name);
+
+				$master_model_content = "<?php
+
+namespace App\Models\Masters;
+
+use App\Models\Masters\MasterModel;
+
+class " . ucfirst($workspace_name) . "Model extends MasterModel
+{
+	protected \$connection = '" . $workspace_name . "';
+}";
+
+				$master_model_filename = app_path('Models/Masters/' . ucfirst($workspace_name) . 'Model.php');
+				
+				\DB::unprepared(sprintf('CREATE SCHEMA IF NOT EXISTS %s;', $workspace_name));
+				$finish_text = 'created';
+				if (!\App\Models\Common\Genericlist::where(['group' => 'schema', 'name' => 'schema', 'value' => $workspace_name])->exists())
+				{
+					\App\Models\Common\Genericlist::create(['group' => 'schema', 'name' => 'schema', 'value' => $workspace_name]);
+					$finish_text = 'updated';
+				}
+				\File::put($master_model_filename, $master_model_content);
+
+				$this->info(sprintf('Workspace %s %s', $workspace_name, $finish_text));
+
+				$this->waitKey();
+				return $this->printDatabaseMenu();
+			break;
+		}
 	}
 
 	// ██████╗  █████╗ ████████╗ █████╗ ██████╗  █████╗ ███████╗███████╗
