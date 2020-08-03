@@ -539,7 +539,7 @@ class LaravelCommands extends LaravelCommandsBase
 			break;
 			case 'ROLLBACK':
 				$this->printLogo($caption, 'ROLLBACK MIGRATION');
-				system('php artisan migrate:status');
+				system('php artisan migrate:status --path=/database/migrations --path=/database/migrations/*');
 				$quant = $this->ask('Steps to back', 1);
 				$quant = intval($quant);
 				if ($quant < 1)
@@ -549,12 +549,12 @@ class LaravelCommands extends LaravelCommandsBase
 				}
 
 				$this->beginWindow('ROLLBACK PREVIEW');
-				system(sprintf('php artisan migrate:rollback --step=%s --pretend', $quant));
+				system(sprintf('php artisan migrate:rollback --path=/database/migrations --path=/database/migrations/* --step=%s --pretend', $quant));
 				$this->endWindow();
 
 				if ($this->confirm('Proceed Rollback?'))
 				{
-					system(sprintf('php artisan migrate:rollback --step=%s', $quant));
+					system(sprintf('php artisan migrate:rollback --path=/database/migrations --path=/database/migrations/* --step=%s', $quant));
 				}
 
 				$this->waitKey();
