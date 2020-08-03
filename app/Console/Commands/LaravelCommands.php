@@ -817,20 +817,20 @@ class LaravelCommands extends LaravelCommandsBase
 				return $this->printMainMenu();
 			break;
 			case 'LIST':
-				$this->printLogo($caption, 'SHOW TABLES');
+				$this->printLogo($caption, 'LIST');
 
-				$tables = $this->__getTables();
-				if (!empty($tables))
+				$schemas = \App\Models\Common\Genericlist::select('value')->where(['group' => 'schema', 'name' => 'schema'])->simpleList();
+				if (!empty($schemas))
 				{
-					$this->printSingleArray($tables, 3);
+					$this->printSingleArray($schemas, 3);
 				}
 				else
 				{
-					$this->info('No tables found.');
+					$this->info('No workspaces found.');
 				}
 
 				$this->waitKey();
-				return $this->printDatabaseMenu();
+				return $this->printWorkspacesMenu();
 			break;
 			case 'CREATE':
 				$this->printLogo($caption, 'CREATE WORKSPACE');
@@ -867,7 +867,7 @@ class " . ucfirst($workspace_name) . "Model extends MasterModel
 				$this->info(sprintf('Workspace %s %s', $workspace_name, $finish_text));
 
 				$this->waitKey();
-				return $this->printDatabaseMenu();
+				return $this->printWorkspacesMenu();
 			break;
 		}
 	}

@@ -153,6 +153,11 @@ class MasterModel extends Model
 		return $q->inRandomOrder()->first();
 	}
 
+	public static function scopeSimpleList($q)
+	{
+		return collect(json_decode(collect($q->get())->toJson(), true))->flatten()->toArray();
+	}
+
 	public function cacheKey($p_str_append = '')
 	{
 		if (!$p_str_append)
