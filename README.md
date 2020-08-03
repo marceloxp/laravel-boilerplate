@@ -25,6 +25,11 @@ composer create-project marceloxp/laravel www --no-interaction -s dev
 php artisan migrate:refresh --seed
 ```
 
+## Configure cron job
+```
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
 ## Framework
 
 - Laravel 7.x: <https://laravel.com/>
@@ -125,7 +130,7 @@ $result = Cached::get
 	['name_1', 'name_2'],
 	function() use ($args)
 	{
-		return \App\Models\Examples\Category::get()->first();
+		return \App\Models\Category::get()->first();
 	},
 	5
 );
@@ -283,11 +288,11 @@ echo db_get_pivot_table_name(['videos','tags'], true);  // Returns pivot table n
 echo db_get_pivot_scope_name([Model1, Model2]);         // Returns a pivot scope name (Ex: db_get_pivot_scope_name([Video::class, Tag::class]) => tagVideo)
 echo db_get_primary_key('table_name');                  // Returns id
 echo db_get_name('table_name', 10);                     // Returns `name` field value
-echo db_select_one(Model, ['fields'], ['where'], true); // Returns only one register (Ex: echo db_select_one(\App\Models\Common\City::class, ['id','name'], ['name' => 'São Paulo'], true) => {"id":5325,"name":"São Paulo"})
-echo db_select_id(Model, ['where'], false);             // Returns only if by where (Ex: echo db_select_id(\App\Models\Common\City::class, ['name' => 'São Paulo'], true) => 5325)
+echo db_select_one(Model, ['fields'], ['where'], true); // Returns only one register (Ex: echo db_select_one(\App\Models\City::class, ['id','name'], ['name' => 'São Paulo'], true) => {"id":5325,"name":"São Paulo"})
+echo db_select_id(Model, ['where'], false);             // Returns only if by where (Ex: echo db_select_id(\App\Models\City::class, ['name' => 'São Paulo'], true) => 5325)
 echo db_model_to_table_name('City');                    // Returns table name from model name => cities
-echo db_table_name_to_model('examples', 'cities');      // Returns model name from table name => Examples\City
-echo db_table_name_to_model_path('examples', cities');  // Returns path model from table name => \App\Models\Examples\City
+echo db_table_name_to_model('cities');                  // Returns model name from table name => City
+echo db_table_name_to_model_path('cities');             // Returns path model from table name => \App\Models\City
 echo db_table_name_to_field_id('cities');               // Returns relative field id to another table => city_id
 echo db_table_exists('cities');                         // Returns if table exists in database
 ```
