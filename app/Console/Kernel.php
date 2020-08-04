@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('db:refresh_materialized_views')->everyThirtyMinutes()->withoutOverlapping();
+        $schedule->command('db:refresh_materialized_views')->everyFiveMinutes()->withoutOverlapping();
     }
 
     /**
