@@ -615,7 +615,7 @@ umsappadmin.Tindex = function($, objname, options)
 		var ids = $('.ck-row:checked').attr('data-ids');
 		var route = $element.attr('data-link');
 		if (empty(ids)){ return; }
-		var new_url = datasite.url.admin + '/' + datasite.params.table_name + '/' + ids + '/' + route;
+		var new_url = datasite.url.admin + '/' + datasite.params.table_schema + '/' + datasite.params.table_name + '/' + ids + '/' + route;
 		window.open(new_url);
 	};
 
