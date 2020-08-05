@@ -1,9 +1,10 @@
 <?php
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchemas extends Migration
+class CreateSchemaCommon extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -13,7 +14,6 @@ class CreateSchemas extends Migration
 	public function up()
 	{
 		DB::unprepared('CREATE SCHEMA IF NOT EXISTS common;');
-		DB::unprepared('CREATE SCHEMA IF NOT EXISTS examples;');
 	}
 
 	/**
@@ -23,6 +23,6 @@ class CreateSchemas extends Migration
 	 */
 	public function down()
 	{
-		
+		//
 	}
 }
