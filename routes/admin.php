@@ -126,5 +126,3 @@ Route::group
 		);
 	}
 );
-
-Route::any('adminer', '\Miroc\LaravelAdminer\AdminerAutologinController@index')->middleware('adminer')->name('adminer');
