@@ -63,7 +63,7 @@ return [
             'password' => env('DB_PASSWORD'),
             'charset' => 'utf8',
             'prefix' => '',
-            'schema' => env('DB_SCHEMA_PUBLIC'),
+            'schema' => 'public',
             'sslmode' => 'prefer',
         ],
 
@@ -76,7 +76,7 @@ return [
             'password' => env('DB_PASSWORD'),
             'charset' => 'utf8',
             'prefix' => '',
-            'schema' => env('DB_SCHEMA_COMMON'),
+            'schema' => 'common',
             'sslmode' => 'prefer',
         ],
 
@@ -89,7 +89,7 @@ return [
             'password' => env('DB_PASSWORD'),
             'charset' => 'utf8',
             'prefix' => '',
-            'schema' => env('DB_SCHEMA_EXAMPLES'),
+            'schema' => 'examples',
             'sslmode' => 'prefer',
         ],
 
