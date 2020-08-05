@@ -273,26 +273,26 @@ umsappadmin.Tindex = function($, objname, options)
 	{
 		if ($('.ck-row:checked').length == 1)
 		{
-			$('.btn-check-one').removeClass('disabled');
+			$('.btn-check-one').removeAttr('disabled').removeClass('disabled');
 		}
 		else
 		{
-			$('.btn-check-one').addClass('disabled');
+			$('.btn-check-one').attr('disabled', 'disabled').addClass('disabled');
 		}
 
 		if ($('.ck-row:checked').length > 0)
 		{
-			$('.btn-check-many').removeClass('disabled');
+			$('.btn-check-many').removeAttr('disabled').removeClass('disabled');
 		}
 		else
 		{
-			$('.btn-check-many').addClass('disabled');
+			$('.btn-check-many').attr('disabled', 'disabled').addClass('disabled');
 		}
 	};
 
 	this.onCheckRowAllClick = function(p_checked)
 	{
-		$('.ck-row').prop('checked', p_checked);
+		$('.ck-row').not('[disabled]').prop('checked', p_checked);
 		self.checkButtonsEdit();
 	};
 
@@ -459,23 +459,16 @@ umsappadmin.Tindex = function($, objname, options)
 				{
 					if (p_response.success)
 					{
-						swal('Sucesso!', p_response.message, 'success')
-						.then
-						(
-							function()
-							{
-								window.location.reload();
-							}
-						);
+						swal('Sucesso!', p_response.message, 'success').then(function(){ window.location.reload(); } );
 					}
 					else
 					{
-						swal('Atenção!', p_response.message, 'warning');
+						swal('Atenção!', p_response.message, 'warning').then(function(){ window.location.reload(); } );
 					}
 				},
 				'fail': function()
 				{
-					swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+					swal('Atenção!', 'Ocorreu um erro na requisição.', 'error').then(function(){ window.location.reload(); } );
 				},
 				'always': function()
 				{
@@ -483,7 +476,7 @@ umsappadmin.Tindex = function($, objname, options)
 				},
 				'exception': function()
 				{
-					swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+					swal('Atenção!', 'Ocorreu um erro na requisição.', 'error').then(function(){ window.location.reload(); } );
 				}
 			}
 		);
@@ -537,23 +530,16 @@ umsappadmin.Tindex = function($, objname, options)
 						{
 							if (p_response.success)
 							{
-								swal('Sucesso!', p_response.message, 'success')
-								.then
-								(
-									function()
-									{
-										window.location.reload();
-									}
-								);
+								swal('Sucesso!', p_response.message, 'success').then(function(){ window.location.reload(); } );
 							}
 							else
 							{
-								swal('Atenção!', p_response.message, 'warning');
+								swal('Atenção!', p_response.message, 'warning').then(function(){ window.location.reload(); } );
 							}
 						},
 						'fail': function()
 						{
-							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error').then(function(){ window.location.reload(); } );
 						},
 						'always': function()
 						{
@@ -561,7 +547,7 @@ umsappadmin.Tindex = function($, objname, options)
 						},
 						'exception': function()
 						{
-							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error').then(function(){ window.location.reload(); } );
 						}
 					}
 				);
@@ -687,23 +673,16 @@ umsappadmin.Tindex = function($, objname, options)
 						{
 							if (p_response.success)
 							{
-								swal('Sucesso!', p_response.message, 'success')
-								.then
-								(
-									function()
-									{
-										window.location.reload();
-									}
-								);
+								swal('Sucesso!', p_response.message, 'success').then(function(){ window.location.reload(); } );
 							}
 							else
 							{
-								swal('Atenção!', p_response.message, 'warning');
+								swal('Atenção!', p_response.message, 'warning').then(function(){ window.location.reload(); } );
 							}
 						},
 						'fail': function()
 						{
-							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error').then(function(){ window.location.reload(); } );
 						},
 						'always': function()
 						{
@@ -711,7 +690,7 @@ umsappadmin.Tindex = function($, objname, options)
 						},
 						'exception': function()
 						{
-							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error');
+							swal('Atenção!', 'Ocorreu um erro na requisição.', 'error').then(function(){ window.location.reload(); } );
 						}
 					}
 				);
@@ -854,6 +833,7 @@ umsappadmin.Tindex = function($, objname, options)
 
 	this.sortable = function()
 	{
+		if (!datasite.params) { return; }
 		if (!datasite.params.sortable) { return; }
 
 		var addStyle = function(p_text_style)
@@ -935,29 +915,32 @@ umsappadmin.Tindex = function($, objname, options)
 			console.log(self.positions);
 		};
 
-		jQuery('#main-table').rowSorter
-		(
-			{
-				'handler'       : 'div.sortable-row',
-				'stickFirstRow' : true,
-				'stickTopRows'  : 1,
-				onDragStart: function(tbody, row, old_index)
+		if (jQuery('#main-table').length > 0)
+		{
+			jQuery('#main-table').rowSorter
+			(
 				{
-					getPositions(true);
-				},
-				onDrop: function(tbody, row, new_index, old_index)
-				{
-					getPositions(false);
-					executeReorder
-					(
-						function()
-						{
-							alert('Done');
-						}
-					);
+					'handler'       : 'div.sortable-row',
+					'stickFirstRow' : true,
+					'stickTopRows'  : 1,
+					onDragStart: function(tbody, row, old_index)
+					{
+						getPositions(true);
+					},
+					onDrop: function(tbody, row, new_index, old_index)
+					{
+						getPositions(false);
+						executeReorder
+						(
+							function()
+							{
+								alert('Done');
+							}
+						);
+					}
 				}
-			}
-		);
+			);
+		}
 	};
 
 	this.getCheckedIds = function()
@@ -1011,20 +994,13 @@ umsappadmin.Tindex = function($, objname, options)
 					{
 						self.log.print('Success!!! :D', p_message);
 
-						swal('Sucesso!', p_message || 'Solicitação efetuada com sucesso.', 'success')
-						.then
-						(
-							function()
-							{
-								window.location.reload();
-							}
-						);
+						swal('Sucesso!', p_message || 'Solicitação efetuada com sucesso.', 'success').then(function(){ window.location.reload(); } );
 					},
 					'error': function(p_message, p_data)
 					{
 						var message = p_message || 'Ocorreu um erro na solicitação.';
 						self.log.danger(message, p_data);
-						swal('Atenção!', message, 'error');
+						swal('Atenção!', message, 'error').then(function(){ window.location.reload(); } );
 					}
 				}
 			);
