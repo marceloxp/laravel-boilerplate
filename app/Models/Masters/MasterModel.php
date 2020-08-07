@@ -889,7 +889,8 @@ class MasterModel extends Model
 				'tag'     => 0,
 				'message' => '',
 				'fields'  => [],
-				'error'   => ''
+				'error'   => '',
+				'all'     => []
 			];
 
 			if ($id)
@@ -925,7 +926,8 @@ class MasterModel extends Model
 		{
 			$result['success'] = false;
 			$result['message'] = 'Ocorreu um erro na validação dos dados.';
-			$result['error'] = $e->getMessage();
+			$result['error']   = $e->getMessage();
+			$result['all']     = $e->getMessage();
 		}
 
 		return $result;

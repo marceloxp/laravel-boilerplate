@@ -85,11 +85,21 @@ class User extends CommonModel implements AuthenticatableContract, AuthorizableC
     {
 		$rules = 
 		[
-			'name'  => 'required|min:3|max:150',
-			'email' => 'required|min:5|max:255|unique:users,email,' . $id . ',id,deleted_at,NULL'
+			'name'  => 'required|min:3|max:150'
 		];
 
-		if (!$id)
+		$rules['email'] =
+		[
+			'required',
+			'min:5',
+			'max:255'
+		];
+
+		if ($id)
+		{
+			Rule::unique('common.users')->ignore($id);
+		}
+		else
 		{
 			$rules['password'] = 'required|min:4|max:255';
 		}

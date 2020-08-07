@@ -179,6 +179,8 @@ class UserController extends AdminController
 		}
 		else
 		{
+			unset($form['_token']);
+			unset($form['id']);
 			$register = User::create($form);
 		}
 
