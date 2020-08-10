@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
 		// MERGE DB_CONFIG WITH CONFIG FILES
 		try
 		{
-			$custom_configs = \DB::table('configs')->select('name','value')->where('status', 'Ativo')->get();
+			$custom_configs = \DB::table('common.configs')->select('name','value')->where('status', 'Ativo')->get();
 			collect($custom_configs)->each
 			(
 				function($item, $key)
