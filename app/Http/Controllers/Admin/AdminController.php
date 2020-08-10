@@ -148,8 +148,9 @@ class AdminController extends Controller
 
 	public function getPerPage($p_request)
 	{
-        $result = intval($p_request->query('perpage', 20));
-		$result = min($result, 50);
+		$max_results = collect(config('admin.index.pagination.perpages'))->max();
+        $result = intval($p_request->query('perpage', 50));
+		$result = min($result, $max_results);
 		return $result;
 	}
 
