@@ -230,6 +230,8 @@
 										$input = admin_select_simple($field_name, $fields_schema[$field_name]['options'], $fields_schema[$field_name]['default_value'], (old($field_name) ?? $register->$field_name), $required);
 									break;
 									case 'tinyint':
+									case 'boolean':
+									case 'bool':
 										$options = ['Não', 'Sim'];
 										$input = admin_select($field_name, $options, (old($field_name) ?? $register->$field_name), $required);
 									break;
