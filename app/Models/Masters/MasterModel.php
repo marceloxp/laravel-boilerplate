@@ -749,7 +749,7 @@ class MasterModel extends Model
 							    null                        AS default_value,
 							    col_description(pg_attribute.attrelid, pg_attribute.attnum) AS comment,
 							    null                        AS check_clause,
-							    null                        AS max_len,
+							    null                        AS max_length,
 							    false                       AS nullable
 							FROM pg_catalog.pg_class
 							        INNER JOIN pg_catalog.pg_namespace
