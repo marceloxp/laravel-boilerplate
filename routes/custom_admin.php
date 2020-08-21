@@ -115,8 +115,6 @@
 	);
 	// End Menu - Role
 
-	include('payment_admin.php');
-
 	// Begin Common Listas Auxiliares
 	Route::group
 	(
