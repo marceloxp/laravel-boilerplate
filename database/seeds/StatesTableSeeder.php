@@ -16,8 +16,8 @@ class StatesTableSeeder extends Seeder
     	$console = $this->command->getOutput();
 
         $console->writeln('Removing old registers...');
-        \DB::select(sprintf('TRUNCATE TABLE %s;', 'common.cities'));
-        \DB::select(sprintf('TRUNCATE TABLE %s;', 'common.states'));
+        \DB::select(sprintf('DELETE FROM %s;', 'common.states'));
+        \DB::select(sprintf('DELETE FROM %s;', 'common.cities'));
 
 		$data = config('brasil.estados');
 		$states = [];
