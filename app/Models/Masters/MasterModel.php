@@ -591,12 +591,14 @@ class MasterModel extends Model
 					$value = (array)$ref;
 					$value =
 					[
+						'prop_name'     => str_to_singular($value['ref_table']),
+						'schema_name'   => self::getSchemaName(),
 						'table_name'    => $value['table_name'],
-						'table_model'   => str_to_singular($value['table_name']),
+						'table_model'   => ucfirst(self::getSchemaName()) . '\\' . ucfirst(str_to_singular($value['table_name'])),
 						'field_name'    => $value['field_name'],
+						'ref_schema'    => $value['foreign_table_schema'],
 						'ref_table'     => $value['ref_table'],
-						'ref_table'     => $value['ref_table'],
-						'ref_model'     => str_to_singular($value['ref_table']),
+						'ref_model'     => ucfirst($value['foreign_table_schema']) . '\\' . ucfirst(str_to_singular($value['ref_table'])),
 						'field_index'   => $value['field_index'],
 						'custom_field'  => str_to_singular($value['ref_table']),
 						'has_parent_id' => self::getHasParentId($value['ref_table']),

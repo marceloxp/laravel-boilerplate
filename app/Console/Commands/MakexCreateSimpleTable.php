@@ -318,8 +318,8 @@ class Create{schema_model}{ClassName}Table extends Migration
 		{
 			foreach ($metadata->where('has_relation', 'true') as $field)
 			{
-				$model_target = db_table_name_to_model($field['relation']['ref_table']);
-				$model_list   = db_table_name_to_model($field['relation']['table_name']);
+				$model_target = db_table_name_to_model($schema_name, $field['relation']['ref_table']);
+				$model_list   = db_table_name_to_model($schema_name, $field['relation']['table_name']);
 				$this->info(sprintf('MODEL RELATION ONE TO ONE: %s => %s', $model_target, $model_list));
 				$call_options =
 				[

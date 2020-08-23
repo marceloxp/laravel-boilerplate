@@ -24,8 +24,8 @@
 							
 							if ($fields_schema[$field_name]['has_relation'])
 							{
-								$ref_model     = $fields_schema[$field_name]['relation']['ref_model'];
-								$display_value = $register->$ref_model->name;
+								$relat_prop_name = $fields_schema[$field_name]['relation']['prop_name'];
+								$display_value = $register->$relat_prop_name->name;
 							}
 							elseif (in_array($field_name, $image_fields) !== false)
 							{

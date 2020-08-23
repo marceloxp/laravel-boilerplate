@@ -258,7 +258,12 @@ if (!function_exists('db_model_to_table_name'))
 {
 	function db_model_to_table_name($model_name)
 	{
-		return \Illuminate\Support\Str::plural(mb_strtolower($model_name));
+		$str_temp = $model_name;
+		if (strpos($model_name, '\\') !== false)
+		{
+			$str_temp = explode('\\', $model_name)[1];
+		}
+		return \Illuminate\Support\Str::plural(mb_strtolower($str_temp));
 	}
 }
 

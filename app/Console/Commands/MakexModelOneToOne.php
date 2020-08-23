@@ -26,7 +26,7 @@ class MakexModelOneToOne extends \App\Console\Makex\MakexCommand
 	 *
 	 * @var string
 	 */
-	protected $example = 'php artisan makex:model Post Category --onetoone';
+	protected $example = 'php artisan makex:model Common\Post Common\Category --onetoone';
 
 
 	/**
@@ -51,9 +51,13 @@ class MakexModelOneToOne extends \App\Console\Makex\MakexCommand
 		$this->info(mb_strtoupper($this->description));
 		$this->br();
 
-		$model_target = $this->argument('model_target');
-		$model_list   = $this->argument('model_list');
-		$onetoone     = $this->option('onetoone');
+		$model_target  = $this->argument('model_target');
+		$model_list    = $this->argument('model_list');
+		$schema_target = mb_strtolower(explode('\\', $model_target)[0]);
+		$schema_list   = mb_strtolower(explode('\\', $model_list)[0]);
+		$table_target  = mb_strtolower(explode('\\', $model_target)[1]);
+		$table_list    = mb_strtolower(explode('\\', $model_list)[1]);
+		$onetoone      = $this->option('onetoone');
 
 		$this->info('Model Target: ' . $model_target);
 		$this->info('Model List  : ' . $model_list);
@@ -70,14 +74,19 @@ class MakexModelOneToOne extends \App\Console\Makex\MakexCommand
 			$table_target = db_model_to_table_name($model_target);
 			$table_list   = db_model_to_table_name($model_list);
 
-			$comment_target = db_get_comment_table($table_target);
-			$comment_list   = db_get_comment_table($table_list);
+			$comment_target = db_get_comment_table($schema_target, $table_target);
+			$comment_list   = db_get_comment_table($schema_list, $table_list);
 
-			$controller_name = sprintf('%sController', $model_target);
-			$controller_file = app_path('Http/Controllers/Admin/' . $controller_name . '.php');
+			$controller_name   = sprintf('%sController', $model_target);
+			$controller_file   = app_path(sprintf('Http/Controllers/Admin/%s/%sController.php', ucfirst($schema_target), ucfirst(str_to_singular($table_target))));
+			$controller_folder = app_path('Http/Controllers/Admin/' . ucfirst($schema_target));
+			if(!\File::exists($controller_folder))
+			{
+				\File::makeDirectory($controller_folder, 0755, true, true);
+			}
 
 			$table_name = db_model_to_table_name($model_list);
-			$caption    = db_get_comment_table($table_name);
+			$caption    = db_get_comment_table($schema_list, $table_name);
 			$line       = sprintf("'table_many'     => [['name' => '%s', 'caption' => '%s', 'icon' => 'far fa-folder']],", $table_name, $caption);
 			$body       = file_get_contents($controller_file);
 			$body       = str_replace("'table_many'     => null,", $line, $body);
@@ -125,12 +134,19 @@ class MakexModelOneToOne extends \App\Console\Makex\MakexCommand
 		$folder_model  = (empty($folder_model)) ? 'Models' : $folder_model;
 		$folder_model .= '/';
 
+		$schema_target = mb_strtolower(explode('\\', $model_target)[0]);
+		$schema_list   = mb_strtolower(explode('\\', $model_list)[0]);
+		$table_target  = mb_strtolower(explode('\\', $model_target)[1]);
+		$table_list    = mb_strtolower(explode('\\', $model_list)[1]);
+
 		$class_path_model   = '\\App\\' . str_replace('/', '\\', $folder_model);
-		$list_function_name = strtolower($model_list);
-		$master_path        = app_path(sprintf('%s%s.php', $folder_model, $model_target));
+		$str_class_target   = $class_path_model . $model_target;
+		$class_model_target = new $str_class_target();
+		$list_function_name = strtolower($table_list);
+		$master_path        = app_path(sprintf('%s%s.php', $folder_model, str_replace('\\', '/', $model_target)));
 		$string_body        = \File::get($master_path);
 		$master_body        = explode(PHP_EOL, $string_body);
-		$target_relation_id = sprintf('%s_id', mb_strtolower($model_list));
+		$target_relation_id = sprintf('%s_id', mb_strtolower(str_to_singular($class_model_target::getTableName())));
 
 		$func       = new \ReflectionClass($class_path_model . $model_target);
 		$filename   = $func->getFileName();
