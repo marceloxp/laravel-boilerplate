@@ -97,20 +97,20 @@ class MakexModelOneToOne extends \App\Console\Makex\MakexCommand
 			$route_prefix      = $table_target;
 			$model_description = sprintf('%s_%s', $comment_target, $comment_list);
 			$controller_name   = $model_list;
-			$name_group        = sprintf('%s_%s', $table_target, $table_list);
+			$name_group        = sprintf('%s_%s_%s_%s', $schema_target, $table_target, $schema_list, $table_list);
 
 			$template = "
 	// Begin " . $model_description . "
 	Route::group
 	(
-		['prefix' => '" . $route_prefix . "'],
+		['prefix' => '" . $schema_list . '/' . $route_prefix . "'],
 		function()
 		{
-			Route::get ('{one_table_id}/" . $table_list . "'           , '" . $controller_name . "Controller@index'  )->name('admin_" . $name_group . "'       )->group('admin_" . $name_group . "');
-			Route::get ('{one_table_id}/" . $table_list . "/edit/{id?}', '" . $controller_name . "Controller@create' )->name('admin_" . $name_group . "_edit'  )->group('admin_" . $name_group . "');
-			Route::post('{one_table_id}/" . $table_list . "/edit/{id?}', '" . $controller_name . "Controller@store'  )->name('admin_" . $name_group . "_save'  )->group('admin_" . $name_group . "');
-			Route::get ('{one_table_id}/" . $table_list . "/show/{id}' , '" . $controller_name . "Controller@show'   )->name('admin_" . $name_group . "_show'  )->group('admin_" . $name_group . "');
-			Route::post('{one_table_id}/" . $table_list . "/delete/'   , '" . $controller_name . "Controller@destroy')->name('admin_" . $name_group . "_delete')->group('admin_" . $name_group . "');
+			Route::get ('{one_table_id}/" . $schema_list . "/" . $table_list . "'           , '" . $controller_name . "Controller@index'  )->name('admin_" . $name_group . "'       )->group('admin_" . $name_group . "');
+			Route::get ('{one_table_id}/" . $schema_list . "/" . $table_list . "/edit/{id?}', '" . $controller_name . "Controller@create' )->name('admin_" . $name_group . "_edit'  )->group('admin_" . $name_group . "');
+			Route::post('{one_table_id}/" . $schema_list . "/" . $table_list . "/edit/{id?}', '" . $controller_name . "Controller@store'  )->name('admin_" . $name_group . "_save'  )->group('admin_" . $name_group . "');
+			Route::get ('{one_table_id}/" . $schema_list . "/" . $table_list . "/show/{id}' , '" . $controller_name . "Controller@show'   )->name('admin_" . $name_group . "_show'  )->group('admin_" . $name_group . "');
+			Route::post('{one_table_id}/" . $schema_list . "/" . $table_list . "/delete/'   , '" . $controller_name . "Controller@destroy')->name('admin_" . $name_group . "_delete')->group('admin_" . $name_group . "');
 		}
 	);
 	// End " . $model_description;
