@@ -141,7 +141,7 @@ class AdminController extends Controller
 
 	public function setParent($p_model)
 	{
-		$field_name = sprintf('%s_id', \Illuminate\Support\Str::singular($p_model::getTableName()));
+		$field_name = sprintf('%s_id', str_to_singular($p_model::getTableName()));
 		$this->parent['model'] = $p_model;
 		$this->parent['field'] = $field_name;
 	}

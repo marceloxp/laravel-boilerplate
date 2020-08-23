@@ -266,7 +266,7 @@ if (!function_exists('db_table_name_to_model'))
 {
 	function db_table_name_to_model($schema_name, $table_name)
 	{
-		return sprintf('%s\%s', ucfirst($schema_name), \Illuminate\Support\Str::singular(ucfirst(mb_strtolower($table_name))));
+		return sprintf('%s\%s', ucfirst($schema_name), str_to_singular(ucfirst(mb_strtolower($table_name))));
 	}
 }
 

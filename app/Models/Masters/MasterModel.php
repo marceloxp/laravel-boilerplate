@@ -592,13 +592,13 @@ class MasterModel extends Model
 					$value =
 					[
 						'table_name'    => $value['table_name'],
-						'table_model'   => \Illuminate\Support\Str::singular($value['table_name']),
+						'table_model'   => str_to_singular($value['table_name']),
 						'field_name'    => $value['field_name'],
 						'ref_table'     => $value['ref_table'],
 						'ref_table'     => $value['ref_table'],
-						'ref_model'     => \Illuminate\Support\Str::singular($value['ref_table']),
+						'ref_model'     => str_to_singular($value['ref_table']),
 						'field_index'   => $value['field_index'],
-						'custom_field'  => \Illuminate\Support\Str::singular($value['ref_table']),
+						'custom_field'  => str_to_singular($value['ref_table']),
 						'has_parent_id' => self::getHasParentId($value['ref_table']),
 						'comment'       => ''
 					];

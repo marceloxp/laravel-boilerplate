@@ -51,16 +51,34 @@ if (!function_exists('array_sort_ex'))
 
 if (!function_exists('str_to_singular'))
 {
+	function __str_to_singular($p_arg)
+	{
+		switch ($p_arg)
+		{
+			case 'lives':
+				return 'live';
+			break;
+			case 'Lives':
+				return 'Live';
+			break;
+			case 'LIVES':
+				return 'LIVE';
+			break;
+			default:
+				return \Illuminate\Support\Str::singular($p_arg);
+			break;
+		}
+	}
+
 	function str_to_singular($p_arg)
 	{
 		if (is_string($p_arg))
 		{
-			return \Illuminate\Support\Str::singular($p_arg);
+			return __str_to_singular($p_arg);
 		}
-
 		if (is_array($p_arg))
 		{
-			return collect($p_arg)->transform(function ($item, $key) { return \Illuminate\Support\Str::singular($item); })->toArray();
+			return collect($p_arg)->transform(function ($item, $key) { return __str_to_singular($item); })->toArray();
 		}
 	}
 }
